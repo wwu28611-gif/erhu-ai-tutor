@@ -251,6 +251,43 @@ body.noscroll main{overflow:hidden}
 .brk{z-index:38;justify-content:center;background:var(--bg)}
 .brkbox{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.75rem}.brki{font-size:3.5rem}.brkbox h2{margin:0;font-size:1.6rem}.brkbox p{margin:0;color:var(--mut);line-height:1.6;max-width:22rem}
 .brkc{font-size:4rem;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:.5rem 0}
+
+/* ---- compact sizing ---- */
+header{padding:.45rem 1rem}.brand{font-size:.9375rem;gap:.55rem}.logo{width:1.75rem;height:1.75rem;border-radius:.5rem}.chip{padding:.28rem .7rem;font-size:.75rem}
+main{padding:.25rem 1rem 1.25rem}
+.pt{padding:.2rem 2.75rem .7rem 0}.pt h1{font-size:1.45rem}.pt p{font-size:.8125rem;margin-top:.2rem}
+.hq{width:2rem;height:2rem;top:.1rem;font-size:.9rem}
+.card{padding:.95rem 1.05rem;border-radius:1rem}
+.cols{gap:.7rem}.gap{height:1rem}
+.lbl{margin:0 0 .5rem;font-size:.6875rem}
+.btn{padding:.58rem .95rem;border-radius:.75rem;font-size:.9375rem;gap:.45rem}.btn .ic{width:1.2rem;height:1.2rem}
+.btn.lg{padding:.68rem 1rem;font-size:.98rem}
+.seg{padding:.15rem;border-radius:.7rem}.seg button{padding:.38rem .35rem;font-size:.8125rem;border-radius:.55rem}
+.li{min-height:2.75rem;padding:.55rem .95rem;gap:.7rem}
+nav{padding:.2rem .35rem}nav button{padding:.3rem 0 .15rem;font-size:.625rem;gap:.1rem}nav button .ic{width:1.3rem;height:1.3rem}
+.hero{padding:1.1rem 1.2rem}.hero p{margin:.35rem 0 .9rem;font-size:.9375rem}
+.tiles{gap:.65rem}.tile{padding:.85rem;gap:.55rem}.ico{width:2.2rem;height:2.2rem;border-radius:.7rem}.ico .ic{width:1.25rem;height:1.25rem}.tile b{font-size:.9375rem}.tile span.mut{font-size:.75rem}
+.bpm{font-size:3.2rem}.bpmu{margin:.1rem 0 .5rem;font-size:.6875rem}
+input[type=range]{margin:.35rem 0}
+.step{margin-top:.6rem;gap:.4rem}.step button{padding:.42rem 0;font-size:.875rem}
+.dots{margin:.85rem 0 .1rem;gap:.6rem}.dots i{width:.75rem;height:.75rem}
+.note{font-size:2.6rem;margin-top:.1rem}.gauge{max-width:15.5rem}#v-tune .gap{height:.6rem!important}.sub{font-size:.8125rem}#status{margin-top:.6rem;font-size:.8125rem;padding:.3rem .8rem}
+canvas{height:5.5rem}
+.row2{margin-bottom:.55rem;gap:.55rem}
+#live{font-size:1rem;min-height:1.4rem}.dpos{font-size:.8125rem}
+#score{max-height:14.5rem;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.jh{font-size:.875rem;margin-bottom:.35rem}
+.jg{row-gap:.55rem}
+.jm{padding:.95rem .5rem .05rem .4rem}.jm::after{top:1.15rem;bottom:.45rem}.jm .dy{font-size:.7rem}
+.jb{margin-right:.4rem}
+.jc{grid-template-rows:.42rem 1.3rem .42rem .45rem;padding:0 .1rem}.jc .ul{margin:0 -.1rem}
+.jc .d{font-size:1.15rem}.jc .d small{font-size:.65rem}.jc .d .dt{font-size:.9rem}.jc .hi,.jc .lo{font-size:.45rem;line-height:.45rem}
+.jc.u2 .ul::after{top:.2rem}.jc.u1 .ul::before,.jc.u2 .ul::after{height:1.5px}
+.jc.tie::before{width:1.45rem;top:.05rem;height:.35rem}
+.qc{width:8.25rem;padding:.75rem .6rem .6rem;gap:.45rem}.qn{font-size:.8125rem;min-height:2.4em}.qv{font-size:1.35rem;width:2.9rem}.tkq{width:1.9rem;height:1.9rem;font-size:1.1rem}
+.tkb{width:2.1rem;height:2.1rem}.tkt{font-size:2.6rem}
+.m{margin:.45rem 0}
+.role{padding:.85rem;margin-top:.55rem}.ov h1{font-size:1.6rem;margin:1rem 0 .35rem}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -372,12 +409,12 @@ body.noscroll main{overflow:hidden}
   <div class="card"><input class="bpm bpmi" id="bpmv" type="number" inputmode="numeric" min="30" max="500" aria-label="BPM"><div class="bpmu">BPM</div>
    <input type="range" id="bpm" min="30" max="500">
    <div class="step"><button id="m5">−5</button><button id="m1">−1</button><button id="p1">+1</button><button id="p5">+5</button></div>
-   <p class="mut" data-i="bpmHint" style="font-size:.8125rem;margin:1rem 0 0;line-height:1.5"></p></div>
+</div>
   <div>
    <div class="card"><p class="lbl" data-i="beats"></p><div class="seg" id="beats"><button data-n="1">1</button><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button><button data-n="6">6</button></div>
-    <div class="gap" style="height:1.25rem"></div><p class="lbl" data-i="snd"></p><div class="seg" id="snd"><button data-s="click" data-i="sndC"></button><button data-s="wood" data-i="sndW"></button></div>
-    <div class="gap" style="height:1.5rem"></div><div class="dots" id="dots"></div></div>
-   <div class="gap" style="height:1rem"></div>
+    <div class="gap" style="height:.8rem"></div><p class="lbl" data-i="snd"></p><div class="seg" id="snd"><button data-s="click" data-i="sndC"></button><button data-s="wood" data-i="sndW"></button></div>
+    <div class="dots" id="dots"></div></div>
+   <div class="gap" style="height:.75rem"></div>
    <button class="btn lg" id="play"></button>
   </div>
  </div>
@@ -1125,7 +1162,7 @@ async function demo(){if(DM){stopDemo();return}if(!SC)return;if(P&&P.on)stopDril
   [['sawtooth',0,1],['square',7,.3]].forEach(([ty,dt,lv])=>{const x=a.createOscillator(),xg=a.createGain();x.type=ty;x.frequency.value=f;x.detune.value=dt;ld.connect(x.detune);xg.gain.value=lv;x.connect(xg).connect(lp);x.start(st);x.stop(en+.05);nodes.push(x)});
   lp.connect(g).connect(out);lfo.start(st);lfo.stop(en+.05);nodes.push(lfo)});
  if(O().gClick)SC.M.forEach(M=>{let q=0;M.g.forEach((g,i)=>{nodes.push(click(t0+(M.st+q)*spb,i,1));q+=g})});
- const L=SC.notes[SC.notes.length-1],end=t0+(L.t+L.d)*spb;DM={t0,spb,cur:-2,nodes,out};demoBtn();
+ const L=SC.notes[SC.notes.length-1],end=t0+(L.t+L.d)*spb;DM={t0,spb,cur:-2,nodes,out};demoBtn();$('#score').scrollTop=0;
  try{$('#score').closest('.card').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
  const loop=()=>{if(!DM)return;const now=a.currentTime;if(now>end+.25){stopDemo();return}if(now>=t0)cursor(now,DM,1);DM.raf=requestAnimationFrame(loop)};loop()}
 function regen(){if(P&&P.on)stopDrill();stopDemo();SC=gen();LR=null;P=null;syncD();show();$('#rep').hidden=true;live(t('ready'))}
@@ -1135,7 +1172,7 @@ async function startDrill(){
   const a=ctx();if(a.state==='suspended')await a.resume();const an2=a.createAnalyser();an2.fftSize=2048;a.createMediaStreamSource(st).connect(an2);
   meas(SC);const spb=60/SC.tempo,t1=a.currentTime+.4,m0=SC.M[0],t0=t1+m0.len*spb,osc=[],o=O();let off=0;m0.g.forEach((g,i)=>{osc.push(click(t1+off*spb,i,1));off+=g});
   if(o.gClick)SC.M.forEach(M=>{let q=0;M.g.forEach((g,i)=>{osc.push(click(t0+(M.st+q)*spb,i,1));q+=g})});
-  P={on:1,st,an:an2,buf:new Float32Array(2048),spb,t0,t1,osc,cur:-2,seg:null,idx:0,last:-1,res:SC.notes.map(()=>null)};LR=null;$('#rep').hidden=true;paint(P.res);setBtn();try{$('#score').closest('.card').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}dLoop()}
+  P={on:1,st,an:an2,buf:new Float32Array(2048),spb,t0,t1,osc,cur:-2,seg:null,idx:0,last:-1,res:SC.notes.map(()=>null)};LR=null;$('#rep').hidden=true;$('#score').scrollTop=0;paint(P.res);setBtn();try{$('#score').closest('.card').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}dLoop()}
  catch(e){live(t('micErr'))}}
 function stopDrill(){if(!P)return;cancelAnimationFrame(P.raf);(P.osc||[]).forEach(x=>{try{x&&x.stop(0)}catch(e){}});P.osc=[];$$('#score .now').forEach(e=>e.classList.remove('now'));$('#dPos').textContent='';P.st.getTracks().forEach(x=>x.stop());P.on=0;setBtn();paint(P.res,false)}
 function open_(st,ms,rms){P.seg={st,end:st,ms:[...ms],pk:rms,gap:0}}
@@ -1146,12 +1183,15 @@ function close_(){const g=P.seg;P.seg=null;if(!g||g.end-g.st<.08||g.ms.length<4)
  if(bj<0)return;
  const r=P.res[bj]={dt:(rel-N[bj].t)*P.spb*1000,rel,c:(m-N[bj].m)*100,db:g.pk>0?20*Math.log10(g.pk):-99};P.last=bj;P.idx=bj+1;while(N[P.idx]&&(N[P.idx].tie||N[P.idx].r))P.idx++;
  live(`${t('bar')} ${N[bj].bar+1}/${SC.bars} · ${dtT(r.dt)} · ${r.c>0?'+':''}${Math.round(r.c)}¢`);paint(P.res)}
-function cursor(now,st=P,force){if(!force&&!O().gPos)return;const el=(now-st.t0)/st.spb,N=SC.notes;let k=-1;
+function scoreScroll(b,st){if(st.bar===b)return;st.bar=b;const sc=$('#score'),el=sc.querySelector(`[data-m="${b}"]`);if(!el||sc.scrollHeight<=sc.clientHeight+2)return;
+ const top=b===0?0:el.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-4;if(Math.abs(top-sc.scrollTop)>3)sc.scrollTo({top:Math.max(0,top),behavior:'smooth'})}
+function cursor(now,st=P,force){const el=(now-st.t0)/st.spb,N=SC.notes;let k=-1;
+ if(el>=0&&SC.M){let bb=0;SC.M.forEach((M,i)=>{if(el>=M.st-1e-6)bb=i});scoreScroll(bb,st)}
+ if(!force&&!O().gPos)return;
  for(let i=0;i<N.length;i++)if(el>=N[i].t-1e-6&&el<N[i].t+N[i].d){k=i;break}
  if(k===st.cur)return;st.cur=k;$$('#score .now').forEach(e=>e.classList.remove('now'));if(k<0){$('#dPos').textContent='';return}
  $$(`#score [data-i="${k}"]`).forEach(e=>e.classList.add('now'));const b=N[k].bar,M=SC.M[b];$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===b));
- let q=0,n=0;M.g.forEach(g=>{if(el-M.st>=q-1e-6)n++;q+=g});$('#dPos').textContent=t('barN').replace('{b}',b+1).replace('{t}',SC.bars)+' · '+t('beatN').replace('{n}',n);
- const box=document.querySelector(`#score [data-m="${b}"]`);if(box&&box.scrollIntoView&&O().nt==='jian')box.scrollIntoView({block:'nearest',behavior:'smooth'})}
+ let q=0,n=0;M.g.forEach(g=>{if(el-M.st>=q-1e-6)n++;q+=g});$('#dPos').textContent=t('barN').replace('{b}',b+1).replace('{t}',SC.bars)+' · '+t('beatN').replace('{n}',n);}
 function dLoop(){if(!P||!P.on)return;P.raf=requestAnimationFrame(dLoop);
  const now=ac.currentTime,bf=P.buf;P.an.getFloatTimeDomainData(bf);let e=0;for(let i=0;i<2048;i++)e+=bf[i]*bf[i];const rms=Math.sqrt(e/2048);
  if(now<P.t0-.3*P.spb){const el=(now-P.t1)/P.spb;let n=0,o2=0;SC.M[0].g.forEach(x=>{if(el>=o2)n++;o2+=x});if(n>0)live(`${t('countin')} ${n}`);return}
