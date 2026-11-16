@@ -127,7 +127,7 @@ html.big nav button{font-size:.55rem}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 [hidden]{display:none!important}
-nav{grid-template-columns:repeat(6,1fr)}
+nav{grid-template-columns:repeat(7,1fr)}
 .wide{max-width:44rem}
 .sc{color:var(--fg)}.staff{width:100%;display:block}
 .staff .sl{stroke:var(--mut2);stroke-width:1;fill:none}.staff .ts{font:700 16px Georgia,serif;fill:currentColor}
@@ -174,6 +174,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .cd b{font-size:6rem;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}.cd span{font-size:1.0625rem;font-weight:600}
 .cd b.pop{animation:pop .9s var(--ease)}@keyframes pop{from{transform:scale(1.5);opacity:.2}to{transform:scale(1);opacity:1}}
 .seg button{white-space:nowrap}
+.row2.r2e{grid-template-columns:1fr 1fr}
 #dRhy button,#dLv button{padding:.55rem .2rem;font-size:.85rem}
 .nt.now{color:var(--ac)!important}#score svg .nt.now ellipse{stroke-width:3}
 .dpos{font-size:.9375rem;font-weight:600;color:var(--ac);min-height:1.4rem;margin-top:.25rem;font-variant-numeric:tabular-nums}
@@ -198,6 +199,30 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .jc.tie::before{content:"";position:absolute;right:50%;width:1.85rem;top:.15rem;height:.42rem;border:1.5px solid currentColor;border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0}
 .jc.now{background:var(--acs);border-radius:.35rem;box-shadow:0 0 0 2px var(--ac)}
 .rs.now{color:var(--ac)}.jc.rs.now{background:var(--acs);border-radius:.35rem;box-shadow:0 0 0 2px var(--ac)}
+
+.bpmi{display:block;width:100%;background:transparent;border:0;color:var(--fg);text-align:center;padding:0;border-radius:var(--rm);-moz-appearance:textfield;appearance:textfield;cursor:text}
+.bpmi::-webkit-outer-spin-button,.bpmi::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.bpmi:focus{outline:2px dashed var(--ac);outline-offset:4px}
+#walk{position:fixed;inset:0;z-index:40}
+.wring{position:fixed;border-radius:.9rem;box-shadow:0 0 0 9999px rgba(8,10,12,.62),0 0 0 3px var(--ac);transition:left .35s var(--ease),top .35s var(--ease),width .35s var(--ease),height .35s var(--ease);pointer-events:none}
+.wbub{position:fixed;width:min(22rem,calc(100vw - 2rem));background:var(--sf);color:var(--fg);border-radius:var(--r);padding:1.1rem 1.2rem;box-shadow:0 24px 48px -12px rgba(0,0,0,.55);transition:top .35s var(--ease),left .35s var(--ease)}
+.wbub h3{margin:.35rem 0 .35rem;font-size:1.125rem;letter-spacing:-.01em}.wbub p#wD{margin:0 0 1rem;line-height:1.55;color:var(--mut)}.wbub .btn{padding:.6rem 1rem}
+.tiles{grid-template-columns:1fr 1fr}
+.tkrun{border-color:var(--ac)}.tkn{font-size:1.125rem;font-weight:600}.tkt{font-size:3.5rem;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:.25rem 0 .75rem}
+.tk{gap:.5rem;align-items:center}.tk .t{min-width:0;display:flex;flex-direction:column;gap:.15rem}
+.tkname{font-weight:600;outline:0;border-radius:.3rem;word-break:break-word}.tkname:focus{box-shadow:0 0 0 2px var(--ac)}
+.tkmeta{font-size:.8125rem;color:var(--mut);font-variant-numeric:tabular-nums}
+.tkmi{width:3.2rem;background:var(--sf2);border:1px solid var(--ln);border-radius:.4rem;padding:.1rem .3rem;text-align:center;font-size:.8125rem;color:var(--fg)}
+.tkpb{height:.3rem;border-radius:1rem;background:var(--bd);overflow:hidden;margin-top:.15rem}.tkpb i{display:block;height:100%;background:var(--ac);transition:width .4s}
+.tkb{flex:none;width:2.4rem;height:2.4rem;border-radius:50%;border:1px solid var(--ln);background:var(--sf2);display:grid;place-items:center;cursor:pointer;font-size:1.05rem;color:var(--mut);padding:0}
+.tkb .ic{width:1.15rem;height:1.15rem}.tkb:active{transform:scale(.92)}
+.tks{border:0;background:none;width:1.9rem;font-size:1.3rem}.tk.star .tks{color:#e0a63a}
+.tk.star{background:color-mix(in srgb,#e0a63a 8%,transparent)}.tkfp{font-size:.625rem;width:fit-content;background:color-mix(in srgb,#e0a63a 18%,transparent);color:#b07b12}
+.tk.run{box-shadow:inset 3px 0 0 var(--ac)}.tk.run .tkp{background:var(--ac);color:var(--acf);border-color:var(--ac)}
+.tk.done .tkc{background:var(--ok);color:#fff;border-color:var(--ok)}.tk.done .tkname{color:var(--mut);text-decoration:line-through}
+.tkx{border:0;background:none;width:1.8rem;font-size:1.3rem}.tkx.arm{color:var(--bad);font-weight:700}
+.tkf{display:flex;gap:.5rem;align-items:center}.tki{flex:1;min-width:0;background:var(--sf2);border:1px solid var(--ln);border-radius:var(--rm);padding:.7rem .8rem;color:var(--fg)}.tki.tkm{flex:none;width:4.5rem;text-align:center}
+.tkadv{background:var(--hg);color:var(--hf);border:0}.tkadv .lbl{color:inherit;opacity:.7}.tkadv .q{font-size:1.0625rem;line-height:1.55;margin:.5rem 0;font-weight:500}.tkadv .q::before{content:"“";opacity:.6;margin-right:.15rem}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -214,7 +239,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6L7 7M17 17l1.400 1.400M18.400 5.600L17 7M7 17l-1.400 1.400"/></symbol>
 <symbol id="i-score" viewBox="0 0 24 24"><path d="M9 17.500V6l10-2v11.500"/><circle cx="7" cy="17.500" r="2"/><circle cx="17" cy="15.500" r="2"/></symbol>
 <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 13V6a1.500 1.500 0 0 1 3 0v5M11 10.500V4.500a1.500 1.500 0 0 1 3 0V11M14 11V6.500a1.500 1.500 0 0 1 3 0v7c0 4-2.500 6.500-6 6.500-2.500 0-4-1.200-5.500-3.500L4 14.500a1.500 1.500 0 0 1 2.500-1.500L8 14.500"/></symbol>
-<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.300 2.700-5.500 6-5.500s6 2.200 6 5.500M16 5.200a3.200 3.200 0 0 1 0 5.600M18 14c2 .7 3 2.300 3 5"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.500"/><path d="M12 7.500V12l3 2"/></symbol><symbol id="i-bow" viewBox="0 0 24 24"><path d="M4 19C6 10 12 5 20 5M5 20L20 5"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.300 2.700-5.500 6-5.500s6 2.200 6 5.500M16 5.200a3.200 3.200 0 0 1 0 5.600M18 14c2 .7 3 2.300 3 5"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.500"/><path d="M12 7.500V12l3 2"/></symbol><symbol id="i-spk" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></symbol><symbol id="i-bow" viewBox="0 0 24 24"><path d="M4 19C6 10 12 5 20 5M5 20L20 5"/></symbol>
 <symbol id="i-ai" viewBox="0 0 24 24"><path d="M12 3l1.800 5.200L19 10l-5.200 1.800L12 17l-1.800-5.200L5 10l5.200-1.800zM18.500 16l.8 2.200 2.200.8-2.200.8-.8 2.200-.8-2.200-2.200-.8 2.200-.8z"/></symbol>
 </defs></svg>
 
@@ -236,6 +261,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 <div class="ov" id="dataOv"><div><h1 data-i="sData"></h1><p class="mut" data-i="dataHint"></p><textarea id="dataTx" rows="12" readonly></textarea><div class="row"><button class="btn" id="dCopy" data-i="copy"></button><button class="btn alt" id="dClose" data-i="close"></button></div></div></div>
 <div class="coach" id="coach" hidden><p class="lbl" id="cStep" style="margin:0"></p><p id="cMsg"></p><div class="row"><button class="quiet" id="cSkip" data-i="skip"></button><button class="btn" id="cNext"></button></div></div>
 <div class="toast" id="toast"></div>
+<div id="walk" hidden><div class="wring" id="wRing"></div><div class="wbub" id="wBub"><p class="lbl" id="wStep" style="margin:0"></p><h3 id="wT"></h3><p id="wD"></p><div class="row sp"><button class="quiet" id="wSkip" data-i="skip"></button><div class="row"><button class="btn alt" id="wPrev" data-i="prev"></button><button class="btn" id="wNext"></button></div></div></div></div>
 <div class="ov" id="info"><div><h1 id="iTitle"></h1><div id="iBody" style="line-height:1.7"></div><textarea id="iTx" rows="6" hidden></textarea><div class="row" style="margin-top:1rem"><button class="btn" id="iOk" hidden></button><button class="btn alt" id="iClose" data-i="close"></button></div></div></div>
 <header><div class="brand hb"><span class="logo"><svg class="ic"><use href="#i-logo"/></svg></span><span data-i="app"></span></div><button class="chip" id="badge"></button></header>
 
@@ -246,6 +272,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 <button data-v="beat"><svg class="ic"><use href="#i-beat"/></svg><span data-i="nBeat"></span></button>
 <button data-v="cam"><svg class="ic"><use href="#i-hand"/></svg><span data-i="nCam"></span></button>
 <button data-v="drill"><svg class="ic"><use href="#i-score"/></svg><span data-i="nDrill"></span></button>
+<button data-v="task"><svg class="ic"><use href="#i-clock"/></svg><span data-i="nTask"></span></button>
 <button data-v="set"><svg class="ic"><use href="#i-set"/></svg><span data-i="nSet"></span></button>
 </nav>
 
@@ -257,6 +284,8 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
   <div class="tiles">
    <button class="tile" data-go="tune"><span class="ico"><svg class="ic"><use href="#i-tune"/></svg></span><span><b data-i="tTune"></b><span class="mut" data-i="dTune"></span></span></button>
    <button class="tile" data-go="beat"><span class="ico"><svg class="ic"><use href="#i-beat"/></svg></span><span><b data-i="tBeat"></b><span class="mut" data-i="dBeat"></span></span></button>
+   <button class="tile" data-go="drill"><span class="ico"><svg class="ic"><use href="#i-score"/></svg></span><span><b data-i="tDrill"></b><span class="mut" data-i="dDrillT"></span></span></button>
+   <button class="tile" data-go="task"><span class="ico"><svg class="ic"><use href="#i-clock"/></svg></span><span><b data-i="tTask"></b><span class="mut" data-i="dTaskT"></span></span></button>
   </div>
  </div>
 
@@ -301,12 +330,14 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 <section id="v-beat">
  <div class="pt"><h1 data-i="tBeat"></h1><p data-i="subBeat"></p><button class="hq" data-help="beat" aria-label="Help">?</button></div>
  <div class="cols">
-  <div class="card"><div class="bpm" id="bpmv">60</div><div class="bpmu">BPM</div>
-   <input type="range" id="bpm" min="30" max="200">
-   <div class="step"><button id="m5">−5</button><button id="m1">−1</button><button id="p1">+1</button><button id="p5">+5</button></div></div>
+  <div class="card"><input class="bpm bpmi" id="bpmv" type="number" inputmode="numeric" min="30" max="500" aria-label="BPM"><div class="bpmu">BPM</div>
+   <input type="range" id="bpm" min="30" max="500">
+   <div class="step"><button id="m5">−5</button><button id="m1">−1</button><button id="p1">+1</button><button id="p5">+5</button></div>
+   <p class="mut" data-i="bpmHint" style="font-size:.8125rem;margin:1rem 0 0;line-height:1.5"></p></div>
   <div>
-   <div class="card"><p class="lbl" data-i="beats"></p><div class="seg" id="beats"><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button><button data-n="6">6</button></div>
-    <div class="gap" style="height:1.75rem"></div><div class="dots" id="dots"></div></div>
+   <div class="card"><p class="lbl" data-i="beats"></p><div class="seg" id="beats"><button data-n="1">1</button><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button><button data-n="6">6</button></div>
+    <div class="gap" style="height:1.25rem"></div><p class="lbl" data-i="snd"></p><div class="seg" id="snd"><button data-s="click" data-i="sndC"></button><button data-s="wood" data-i="sndW"></button></div>
+    <div class="gap" style="height:1.5rem"></div><div class="dots" id="dots"></div></div>
    <div class="gap" style="height:1rem"></div>
    <button class="btn lg" id="play"></button>
   </div>
@@ -336,7 +367,8 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
  <div class="pt"><h1 data-i="tDrill"></h1><p data-i="subDrill"></p><button class="hq" data-help="drill" aria-label="Help">?</button></div>
  <div class="card"><div id="score" class="sc"></div><p class="mut" id="clefNote" style="font-size:.8125rem;margin:.5rem 0 0" hidden></p></div>
  <div class="gap" style="height:1rem"></div>
- <div class="row2"><button class="btn alt" id="dGen"><svg class="ic"><use href="#i-ai"/></svg><span data-i="gen"></span></button><button class="btn" id="dGo"></button></div>
+ <div class="row2 r2e"><button class="btn alt" id="dGen"><svg class="ic"><use href="#i-ai"/></svg><span data-i="gen"></span></button><button class="btn alt" id="dDemo"></button></div>
+ <button class="btn lg" id="dGo" style="margin-bottom:1rem"></button>
  <div class="card"><p class="lbl" data-i="rLive"></p><div id="live"></div><div id="dPos" class="dpos"></div><p class="mut" data-i="headph" style="margin:.5rem 0 0;font-size:.8125rem"></p></div>
  <div class="gap" style="height:1rem"></div>
  <div class="card" id="rep" hidden></div>
@@ -365,6 +397,22 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
   <img id="refImg" class="ref" alt="" hidden>
   <textarea id="txtIn" rows="3" placeholder="1 2 3 5- | 6 5. 3_ 2 1"></textarea>
   <button class="btn" id="useTxt" data-i="useTxt"></button></div>
+</div></section>
+<section id="v-task"><div class="narrow">
+ <div class="pt"><h1 data-i="tTask"></h1><p data-i="subTask"></p><button class="hq" data-help="task" aria-label="Help">?</button></div>
+ <div class="card tkrun" id="tkRun" hidden><p class="lbl" data-i="tkNow"></p><div class="tkn" id="tkName"></div><div class="tkt" id="tkTime">00:00</div><div class="bar"><i id="tkBar"></i></div>
+  <div class="row2 r2e" style="margin:1.25rem 0 0"><button class="btn alt" id="tkPause"></button><button class="btn alt" id="tkStop" data-i="tkStopL"></button></div></div>
+ <div class="card"><p class="lbl" data-i="tkToday"></p><div class="m"><span data-i="tkDone"></span><div class="bar"><i id="tkSumBar"></i></div><b id="tkSumPct"></b></div><p class="mut" id="tkSum" style="margin:.25rem 0 0;font-size:.875rem"></p><p class="mut" id="tkProNote" style="margin:.25rem 0 0;font-size:.875rem" data-i="tkPro" hidden></p></div>
+ <div class="gap"></div>
+ <p class="lbl" data-i="tkList"></p>
+ <div class="list" id="taskList"></div>
+ <div class="gap" style="height:1rem"></div>
+ <div class="card"><p class="lbl" data-i="tkAdd"></p><div class="tkf"><input class="tki" id="tkNewName" maxlength="30"><input class="tki tkm" id="tkNewMin" type="number" inputmode="numeric" min="1" max="600" value="20"><span class="mut" data-i="min"></span></div><button class="btn" id="tkAddBtn" style="margin-top:.9rem"><span data-i="tkAddL"></span></button></div>
+ <div class="gap"></div>
+ <div class="card tkadv"><p class="lbl" data-i="tkTips"></p><p class="q" data-i="tip1"></p><p class="q" data-i="tip2"></p></div>
+ <div class="gap"></div>
+ <p class="lbl" data-i="tkTpl"></p>
+ <div class="list"><label class="li"><span class="t" data-i="tkTplL"></span><select id="tkTplSel"></select></label><button class="li" id="tkApply"><span class="t" data-i="tkApplyL"></span></button></div>
 </div></section>
 <section id="v-set"><div class="narrow">
  <div class="pt"><h1 data-i="tSet"></h1><p data-i="subSet"></p><button class="hq" data-help="set" aria-label="Help">?</button></div>
@@ -525,10 +573,10 @@ to3|AI 運弓分析§偵測弓是否水平、弓速是否平均，也會提醒�
 to4|樂譜辨識§目前可由 AI 出五線譜或簡譜，也能輸入簡譜練習；拍照與 PDF 自動識譜即將推出。|Score recognition§The AI can write staff or jianpu scores and you can type jianpu to practice. Photo and PDF recognition is coming.
 to5|社群§和其他學習者分享練習成果，交流心得。|Community§Share your practice and swap tips with other learners.
 to6|練習紀錄§每次視譜視唱的成績會自動保存，隨時選一份重練。|Practice history§Every sight-reading result is saved automatically, so you can replay any score.
-to7|節拍器§穩定的節拍，30 到 200 BPM，可選 2 至 6 拍並有重拍。|Metronome§A steady beat from 30 to 200 BPM, 2 to 6 beats per bar, with an accented first beat.
+to7|節拍器§穩定的節拍，30 到 500 BPM，可直接輸入速度，1 至 6 拍，兩種音色。|Metronome§A steady beat from 30 to 500 BPM. Type the tempo directly, 1 to 6 beats, two sounds.
 to8|調音器§內弦 D、外弦 A 一眼看出偏高或偏低，支援 A=440 或 442。|Tuner§See at a glance whether the inner D and outer A strings are sharp or flat. Supports A=440 or 442.
 h_tune|協助你把內弦 D、外弦 A 調準，並檢查每個音的準確度。§選擇內弦、外弦或自由偵測，按「開始」並允許麥克風，拉一個長音，觀察指針。§請在安靜的地方，手機靠近琴筒約 30 公分。§即時音名、簡譜數字、頻率、偏高或偏低的音分，以及音準曲線。§拉空弦 D 時指針偏右 +12¢，代表偏高，把弦軸稍微放鬆。|Helps you tune the inner D and outer A strings and check every note.§Pick inner, outer or free detect, press Start, allow the microphone, play a long note and watch the needle.§Use a quiet room and keep the phone about 30 cm from the soundbox.§Live note name, jianpu number, frequency, cents sharp or flat, and a pitch curve.§Playing open D with the needle at +12¢ means sharp, so loosen the peg slightly.
-h_beat|讓你跟著穩定的節拍練習。§用滑桿或 ±按鈕設定速度，選擇每小節拍數，按「開始」。§第一拍是重拍。戴耳機時節拍更清楚。§節拍器本身不做分析；視譜視唱會用同樣的速度檢查你的節奏。§50 BPM、4 拍，每拍拉一個長弓。|Practice with a steady beat.§Set the tempo with the slider or ± buttons, choose the beats per bar and press Start.§The first beat is accented. Headphones make it clearer.§The metronome itself does no analysis; Drill uses the same tempo to check your rhythm.§50 BPM in 4 beats, one long bow per beat.
+h_beat|讓你跟著穩定的節拍練習。§點中間的數字可直接輸入速度（30–500），也可用滑桿或 ± 按鈕。選拍數（1 拍為每一下都一樣）與音色，按「開始」。電腦可直接用鍵盤打數字、Enter 確認、空白鍵開始或停止、方向鍵微調。§第一拍是重拍。戴耳機時節拍更清楚。§節拍器本身不做分析；視譜視唱會用同樣的節拍聲引導。§50 BPM、4 拍，每拍拉一個長弓。|Practice with a steady beat.§Tap the number to type a tempo (30–500), or use the slider and ± buttons. Pick beats per bar (1 means no accent) and a sound, then press Start. On a computer, type digits, Enter to confirm, Space to start or stop, arrow keys to adjust.§The first beat is accented. Headphones help.§The metronome itself does no analysis; sight-reading uses the same click.§50 BPM in 4, one long bow per beat.
 h_drill|由 AI 隨機出譜，聽你演奏並評分，培養視奏能力。§先選五線譜或簡譜、調式、拍號與節奏，按「開始演奏」，聽完一小節預備拍後開始拉。§可開啟「拍子引導」持續打拍、「位置引導」在譜上標出現在該拉的音。請戴耳機避免拍子聲被收音。音符變綠是正確，橘是一項不準，紅是漏掉。§目前演奏到第幾小節、提早或落後幾毫秒、音準、節奏、強弱對比，並給練習建議。§4/4、D 大調、四分與八分音符，速度 60，練到音準與節奏都超過 80%。|The AI writes a random score, listens and grades you to build sight-reading skill.§Choose staff or jianpu, mode, meter and rhythms, press Start, hear one bar of count-in, then play.§Use headphones so the count-in is not picked up. Green is correct, amber means one aspect is off, red is missed.§Current bar, how many ms early or late, pitch, rhythm, dynamic contrast and practice suggestions.§4/4 in D major with quarters and eighths at 60 BPM, until pitch and rhythm both pass 80%.
 h_set|管理身分、外觀、AI 與隱私。§在各群組中調整，變更會立即套用，並自動儲存在這台裝置。§目前資料只存在本機。清除瀏覽器資料或刪除帳號會一併刪除。§AI 回答的詳細程度、語音與練習建議都可以在這裡設定。§切換成「樂齡學習者」，字體與按鈕會立即放大。|Manage your role, appearance, AI and privacy.§Change any group and it applies instantly, saved on this device.§Data lives on this device only. Clearing browser data or deleting the account removes it.§Answer detail, voice and practice suggestions are all set here.§Switch to Senior learner and text and buttons grow immediately.
 g_tune|歡迎第一次使用 AI 音準分析，我將引導您完成第一次分析。§步驟 1：選擇要調的弦。內弦是 D，外弦是 A，也可以選自由偵測。§步驟 2：按下「開始」，並允許使用麥克風。§步驟 3：拉一個長音。指針偏左是偏低，偏右是偏高，到中間就準了。|Welcome to AI pitch analysis for the first time. I will guide you through your first analysis.§Step 1: Choose a string. Inner is D, outer is A, or use free detect.§Step 2: Press Start and allow the microphone.§Step 3: Play one long note. Needle left means flat, right means sharp, centered means in tune.
@@ -595,6 +643,72 @@ close|關閉|Close
 sDel|刪除帳號與所有資料|Delete account and all data
 sReplay|重新觀看新手導覽|Replay welcome tour
 gHelp|協助|Help
+nTask|任務|Tasks|課題
+tTask|練琴任務|Practice tasks|練習タスク
+subTask|排好今天要練的項目，按 ▶ 開始計時|Plan today's items and press ▶ to time each one|今日の練習を並べ、▶で計測
+dTaskT|排出每天的練習清單|Plan your daily practice|毎日の練習を計画
+dDrillT|AI 出題，示範並評分|AI scores, demo and grading|AI出題・模範・採点
+tkNow|正在練習|Now practicing|練習中
+tkStopL|結束|End|終了
+tkPauseL|暫停|Pause|一時停止
+tkResume|繼續|Resume|再開
+tkToday|今日進度|Today|今日の進捗
+tkDone|完成|Done|完了
+tkList|任務清單|Task list|タスク
+tkAdd|新增任務|Add a task|タスク追加
+tkAddL|新增|Add|追加
+tkNameP|例如：揉弦練習|e.g. Vibrato|例：ビブラート
+min|分鐘|min|分
+tkTpl|範本|Templates|テンプレート
+tkTplL|選擇範本|Template|テンプレート
+tkApplyL|套用範本（會取代目前清單）|Apply template (replaces your list)|テンプレートを適用（置き換え）
+tkApplied|已套用範本|Template applied|適用しました
+tkTips|老師的建議|Teacher's advice|先生のアドバイス
+tip1|想要專業級演奏，基本功是不可少的。|You cannot play at a professional level without solid fundamentals.|プロの演奏には基礎が欠かせません。
+tip2|每次練習從自己最想要克服的項目開始。點 ☆ 標記它，它會排到最上面。|Start every session with the item you most want to overcome. Tap ☆ to pin it to the top.|毎回、一番克服したい項目から始めましょう。☆で一番上に固定。
+tplPro|專業術科學生|Music-major student|音楽専攻生
+tplBeg|初學者|Beginner|初心者
+tplNone|空白（自己排）|Blank (build your own)|空白
+tk_long|長弓練習|Long bows|ロングボウ
+tk_cross|過弦練習|String crossing|移弦
+tk_into|音準練習|Intonation|音程
+tk_finger|指序練習|Finger patterns|指順
+tk_shift|換把練習|Position shifts|ポジション移動
+tk_scale|各調五聲、七聲音階與琶音|Pentatonic and heptatonic scales and arpeggios in all keys|全調の五音・七音音階とアルペジオ
+tk_seq|模進音型練習|Sequence patterns|反復進行
+tk_hard|練習曲困難片段一首|One difficult étude passage|練習曲の難所
+tk_etude|練習曲全曲|Full étude|練習曲全曲
+tk_exam|自己的考試或目標曲子|Your exam or goal piece|試験曲・目標曲
+tk_b1|持琴姿勢與空弦|Posture and open strings|構えと開放弦
+tk_b2|視譜視唱一首|One sight-reading piece|視唱1曲
+tk_b3|練習樂曲|Practice a piece|曲の練習
+tkTotal|已練 {d}，共 {p}|Practiced {d} of {p}|{p}中 {d}
+tkPro|專業術科建議每天至少練 6～8 小時。|Music majors: aim for at least 6–8 hours a day.|専攻生は1日6〜8時間以上が目安です。
+tkFin|完成：{n}|Done: {n}|完了：{n}
+tkStar|最想克服|Focus|最優先
+tkAll|查看全部任務|All tasks|すべてのタスク
+tkEmpty|還沒有任務，從下方新增或套用範本|No tasks yet. Add one below or apply a template.|タスクがありません
+hm|{h} 小時 {m} 分|{h} h {m} min|{h}時間{m}分
+mOnly|{m} 分|{m} min|{m}分
+h_task|把每天要練的項目排成清單，逐項計時。§按 ▶ 開始計時，時間到會響鈴並打勾；點名稱可改名，點分鐘可改時間，☆ 標記最想克服的項目會排到最上面，× 按兩次刪除。§計時在這個頁面開著時最準；手機鎖螢幕可能會暫停計時。資料只存在這台裝置。§顯示今天每個項目練了多久、整體完成百分比。§術科學生可套用「專業術科學生」範本，共約 6 小時 20 分。|Plan your daily items and time each one.§Press ▶ to start; a chime plays and the item is checked when time is up. Tap a name to rename, tap the minutes to change them, ☆ pins your focus item to the top, tap × twice to delete.§Timing is most accurate with this page open; a locked phone may pause it. Data stays on this device.§Shows how long you practiced each item today and overall completion.§Music majors can apply the Music-major template, about 6 h 20 min.
+snd|音色|Sound|音色
+sndC|電子音|Beep|電子音
+sndW|木魚|Woodblock|ウッドブロック
+bpmHint|點數字可直接輸入速度（30–500）。電腦可用鍵盤打數字、Enter 確認、空白鍵開始或停止。|Tap the number to type a tempo (30–500). On a computer, type digits, press Enter, and use Space to start or stop.|数字をタップして入力（30〜500）。PCは数字キー、Enter、スペースで開始/停止。
+demo|示範演奏|Play demo|模範演奏
+prev|上一步|Back|戻る
+w1|你的身分§這裡顯示你目前的身分。點它可以隨時切換初學者、學生或樂齡學習者。|Your role§This shows your current role. Tap it anytime to switch.
+w2|下方導覽列§從這裡切換各功能：調音、節拍、姿勢、視譜、任務與設定。|Navigation§Switch features here: tuner, metronome, posture, sight-reading, tasks and settings.
+w3|調音器§進到這頁就會自動開始聽。拉一個音，指針停在中間的綠色區就代表準。|Tuner§It starts listening as soon as you open this page. Play a note; the needle in the green zone means in tune.
+w4|選擇要調的弦§內弦 D、外弦 A，或用自由偵測檢查任何音。|Pick a string§Inner D, outer A, or free detect for any note.
+w5|直接輸入速度§點這個數字就能直接輸入 30 到 500 的速度。|Type the tempo§Tap the number to type any tempo from 30 to 500.
+w6|選擇音色§電子音或木魚，挑一個你聽得最清楚的。|Choose a sound§Beep or woodblock, whichever you hear best.
+w7|姿勢偵測§開啟相機後擺好姿勢按「校準」，畫面上的虛線幫你對齊弓。|Posture§Start the camera, hold your posture and press Calibrate; the dashed line helps you align the bow.
+w8|AI 出的譜§每次都能換一份新譜，可選五線譜或簡譜、難度與拍子。|AI score§Get a fresh score anytime, staff or jianpu, any level and meter.
+w9|先聽示範§按這裡，AI 會把譜演奏一次，譜上同步標出位置。|Hear the demo§Press here and the AI plays the score while highlighting each note.
+w10|換你演奏§按「開始演奏」，聽完預備拍後開始拉，AI 會即時告訴你準不準。|Your turn§Press Start, wait for the count-in, then play. The AI tells you how you did in real time.
+w11|練琴任務§排好每天要練的項目，按 ▶ 計時，☆ 標記最想克服的項目。|Practice tasks§Plan your daily items, press ▶ to time them, ☆ marks your focus item.
+w12|設定§身分、字體、語音、無障礙都在這裡。導覽隨時可以在設定裡重看。|Settings§Role, text size, voice and accessibility live here. Replay this tour anytime from Settings.
 rRest|休止符|Rests|休符
 gClickL|拍子引導|Beat guide|拍のガイド
 gClickD|演奏時持續打拍，第一拍較重|Keeps clicking while you play, accented downbeat|演奏中も拍を鳴らします
@@ -696,15 +810,15 @@ function apply(){
  $('#key').innerHTML=NN.filter((n,i)=>!n.includes('♯')).map(n=>`<option value="${NN.indexOf(n)}">${n}</option>`).join('');
  $('#key').value=S.key;$('#ref').value=S.ref;$('#voice').checked=S.voice;$('#click').checked=S.click;
 
- $('#bpm').value=S.bpm;$('#bpmv').textContent=S.bpm;$$('#beats button').forEach(b=>b.classList.toggle('sel',+b.dataset.n===+S.beats));
+ $('#bpm').value=S.bpm;if(document.activeElement!==$('#bpmv'))$('#bpmv').value=S.bpm;$$('#snd button').forEach(b=>b.classList.toggle('sel',b.dataset.s===(S.snd||'click')));$$('#beats button').forEach(b=>b.classList.toggle('sel',+b.dataset.n===+S.beats));
  const rl=S.role?t('r_'+S.role):'';$('#badge').textContent=rl;$('#curRole').textContent=rl;$('#heroRole').textContent=rl;
  $('#tip').textContent=S.role?t('tip_'+S.role):'';
  $$('.role').forEach(b=>b.classList.toggle('cur',b.dataset.r===S.role));
  const ic=n=>`<svg class="ic ${n==='stop'?'f':''}"><use href="#i-${n}"/></svg>`;$('#mic').innerHTML=ic(stream?'stop':'mic')+'<span>'+(stream?t('stop'):t('start'))+'</span>';$('#play').innerHTML=ic(playing?'stop':'play')+'<span>'+(playing?t('stop'):t('start'))+'</span>';document.documentElement.classList.toggle('big',S.scale>=1.5);fill();
  $('#nsub').textContent=stream?'':t('listen');
- dots();drillUI();syncSet();camUI();
+ dots();drillUI();syncSet();camUI();tkUI();
 }
-function setRole(r){const c=ROLES[r];Object.assign(S,{role:r,scale:c.scale,voice:c.voice,bpm:c.bpm,detail:c.detail,autoTips:c.autoTips,elder:r==='senior'?1:0});save();$('#ov').classList.remove('on');apply();if(!S.toured)setTimeout(()=>openTour(),300)}
+function setRole(r){const c=ROLES[r];if(S.task&&S.task.auto)delete S.task;Object.assign(S,{role:r,scale:c.scale,voice:c.voice,bpm:c.bpm,detail:c.detail,autoTips:c.autoTips,elder:r==='senior'?1:0});save();$('#ov').classList.remove('on');apply();if(!S.toured)setTimeout(()=>startWalk(),300)}
 $$('.role').forEach(b=>b.onclick=()=>setRole(b.dataset.r));
 $('#chg').onclick=()=>$('#ov').classList.add('on');
 $$('.langsel').forEach(s=>s.onchange=()=>{S.lang=s.value;save();apply()});
@@ -714,7 +828,7 @@ $('#voice').onchange=e=>{S.voice=e.target.checked;save()};
 $('#click').onchange=e=>{S.click=e.target.checked;save()};
 
 $('#reset').onclick=()=>{S=Object.assign({},def);norm();try{localStorage.removeItem('erhu')}catch(e){};apply();$('#ov').classList.add('on')};
-function view(v){if(v==='tune'&&!stream)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&P&&P.on)stopDrill();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$('main').scrollTop=0}
+function view(v){if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&P&&P.on)stopDrill();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$('main').scrollTop=0}
 $$('nav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
 $$('[data-go]').forEach(b=>b.onclick=()=>view(b.dataset.go));
 
@@ -770,19 +884,31 @@ $('#badge').onclick=()=>$('#ov').classList.add('on');
 let playing=false,nextT=0,beat=0,tm;
 function dots(){const d=$('#dots');if(d.children.length!==+S.beats)d.innerHTML='<i></i>'.repeat(S.beats)}
 function click(time,b,force){if(!S.click&&!force)return;const a=ctx(),o=a.createOscillator(),g=a.createGain();
+ if(S.snd==='wood'){const fl=a.createBiquadFilter(),hi=b===0;o.type='square';o.frequency.setValueAtTime(hi?1250:860,time);o.frequency.exponentialRampToValueAtTime(hi?920:600,time+.05);
+  fl.type='bandpass';fl.frequency.value=hi?1250:860;fl.Q.value=5;g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(1.2,time+.002);g.gain.exponentialRampToValueAtTime(.0001,time+.075);
+  o.connect(fl).connect(g).connect(a.destination);o.start(time);o.stop(time+.09);return o}
  o.frequency.value=b===0?1600:1000;g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(.6,time+.003);g.gain.exponentialRampToValueAtTime(.0001,time+.06);
  o.connect(g).connect(a.destination);o.start(time);o.stop(time+.08);return o}
-function sched(){const a=ctx();while(nextT<a.currentTime+.12){const b=beat,at=nextT;click(at,b);
+function sched(){const a=ctx();while(nextT<a.currentTime+.12){const b=beat,at=nextT;click(at,S.beats===1?1:b);
  setTimeout(()=>{if(!playing)return;const ds=$$('#dots i');ds.forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):'')},Math.max(0,(at-a.currentTime)*1000));
  nextT+=60/S.bpm;beat=(beat+1)%S.beats}}
 async function toggle(){
  if(playing){playing=false;clearInterval(tm);$$('#dots i').forEach(x=>x.className='');apply();return}
  const a=ctx();if(a.state==='suspended')await a.resume();playing=true;beat=0;nextT=a.currentTime+.05;sched();tm=setInterval(sched,25);apply()}
 $('#play').onclick=toggle;
-const setB=v=>{S.bpm=Math.max(30,Math.min(200,v));$('#bpm').value=S.bpm;$('#bpmv').textContent=S.bpm;fill();save()};
+const setB=v=>{if(!isFinite(v))v=S.bpm;S.bpm=Math.round(Math.max(30,Math.min(500,v)));$('#bpm').value=S.bpm;$('#bpmv').value=S.bpm;fill();save()};
 $('#bpm').oninput=e=>setB(+e.target.value);
 [['m5',-5],['m1',-1],['p1',1],['p5',5]].forEach(([i,d])=>$('#'+i).onclick=()=>setB(S.bpm+d));
 $$('#beats button').forEach(b=>b.onclick=()=>{S.beats=+b.dataset.n;beat=0;save();dots();apply()});
+$$('#snd button').forEach(b=>b.onclick=()=>{S.snd=b.dataset.s;save();apply();const a=ctx();if(a.state==='suspended')a.resume();click(a.currentTime+.03,0,1)});
+$('#bpmv').onchange=e=>setB(+e.target.value);
+$('#bpmv').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur()}};
+$('#bpmv').onfocus=e=>{try{e.target.select()}catch(x){}};
+document.addEventListener('keydown',e=>{if(!$('#v-beat').classList.contains('on')||walkOn)return;const tg=e.target.tagName;if(/INPUT|SELECT|TEXTAREA/.test(tg))return;
+ if(/^[0-9]$/.test(e.key)){e.preventDefault();const x=$('#bpmv');x.focus();x.value=e.key}
+ else if(e.key===' '){e.preventDefault();toggle()}
+ else if(e.key==='ArrowUp'||e.key==='ArrowRight'){e.preventDefault();setB(S.bpm+(e.shiftKey?5:1))}
+ else if(e.key==='ArrowDown'||e.key==='ArrowLeft'){e.preventDefault();setB(S.bpm-(e.shiftKey?5:1))}});
 
 
 /* ---- drill ---- */
@@ -918,10 +1044,26 @@ function paint(R,fin){const run=P&&P.on;
   g.classList.remove('ok','warn','miss');c&&g.classList.add(c)});
  if(run&&O().gPos)return;const cb=run?SC.notes[Math.max(0,P.last)].bar:-1;$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===cb))}
 const live=x=>$('#live').textContent=x,dtT=ms=>Math.abs(ms)<40?t('onbeat'):(ms<0?t('early'):t('late'))+' '+Math.abs(Math.round(ms))+' ms';
-function setBtn(){const on=P&&P.on;$('#dGo').innerHTML=IC(on?'stop':'play')+'<span>'+t(on?'stop':'begin')+'</span>'}
-function regen(){if(P&&P.on)stopDrill();SC=gen();LR=null;P=null;syncD();show();$('#rep').hidden=true;live(t('ready'))}
+function setBtn(){demoBtn();const on=P&&P.on;$('#dGo').innerHTML=IC(on?'stop':'play')+'<span>'+t(on?'stop':'begin')+'</span>'}
+let DM=null;
+function demoBtn(){const b=$('#dDemo');if(b)b.innerHTML=IC(DM?'stop':'spk')+'<span>'+t(DM?'stop':'demo')+'</span>'}
+function stopDemo(){if(!DM)return;cancelAnimationFrame(DM.raf);DM.nodes.forEach(x=>{try{x&&x.stop(0)}catch(e){}});try{DM.out.disconnect()}catch(e){}DM=null;
+ $$('#score .now').forEach(e=>e.classList.remove('now'));$$('#score [data-m]').forEach(e=>e.classList.remove('cur'));$('#dPos').textContent='';demoBtn()}
+async function demo(){if(DM){stopDemo();return}if(!SC)return;if(P&&P.on)stopDrill();const a=ctx();if(a.state==='suspended')await a.resume();meas(SC);
+ const spb=60/SC.tempo,t0=a.currentTime+.3,out=a.createGain(),nodes=[],DY={p:.09,mp:.14,mf:.2,f:.27};out.gain.value=.9;out.connect(a.destination);
+ SC.notes.forEach(n=>{if(n.r||n.tie)return;const st=t0+n.t*spb,du=(n.len||n.d)*spb,en=st+Math.max(.06,du-.03),f=S.ref*Math.pow(2,(n.m-69)/12),v=DY[SC.dyn[n.bar]]||.18,at=Math.min(.07,du*.3);
+  const g=a.createGain(),lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.value=Math.min(5200,f*6);lp.Q.value=.9;
+  g.gain.setValueAtTime(.0001,st);g.gain.linearRampToValueAtTime(v,st+at);g.gain.setValueAtTime(v,Math.max(st+at,en-.07));g.gain.linearRampToValueAtTime(.0001,en);
+  const lfo=a.createOscillator(),ld=a.createGain();lfo.frequency.value=5.6;ld.gain.setValueAtTime(0,st);ld.gain.linearRampToValueAtTime(du>.45?13:0,st+Math.min(.4,du));lfo.connect(ld);
+  [['sawtooth',0,1],['square',7,.3]].forEach(([ty,dt,lv])=>{const x=a.createOscillator(),xg=a.createGain();x.type=ty;x.frequency.value=f;x.detune.value=dt;ld.connect(x.detune);xg.gain.value=lv;x.connect(xg).connect(lp);x.start(st);x.stop(en+.05);nodes.push(x)});
+  lp.connect(g).connect(out);lfo.start(st);lfo.stop(en+.05);nodes.push(lfo)});
+ if(O().gClick)SC.M.forEach(M=>{let q=0;M.g.forEach((g,i)=>{nodes.push(click(t0+(M.st+q)*spb,i,1));q+=g})});
+ const L=SC.notes[SC.notes.length-1],end=t0+(L.t+L.d)*spb;DM={t0,spb,cur:-2,nodes,out};demoBtn();
+ try{$('#score').closest('.card').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
+ const loop=()=>{if(!DM)return;const now=a.currentTime;if(now>end+.25){stopDemo();return}if(now>=t0)cursor(now,DM,1);DM.raf=requestAnimationFrame(loop)};loop()}
+function regen(){if(P&&P.on)stopDrill();stopDemo();SC=gen();LR=null;P=null;syncD();show();$('#rep').hidden=true;live(t('ready'))}
 async function startDrill(){
- if(P&&P.on){stopDrill();return}
+ if(P&&P.on){stopDrill();return}stopDemo();
  try{const st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
   const a=ctx();if(a.state==='suspended')await a.resume();const an2=a.createAnalyser();an2.fftSize=2048;a.createMediaStreamSource(st).connect(an2);
   meas(SC);const spb=60/SC.tempo,t1=a.currentTime+.4,m0=SC.M[0],t0=t1+m0.len*spb,osc=[],o=O();let off=0;m0.g.forEach((g,i)=>{osc.push(click(t1+off*spb,i,1));off+=g});
@@ -937,9 +1079,9 @@ function close_(){const g=P.seg;P.seg=null;if(!g||g.end-g.st<.08||g.ms.length<4)
  if(bj<0)return;
  const r=P.res[bj]={dt:(rel-N[bj].t)*P.spb*1000,rel,c:(m-N[bj].m)*100,db:g.pk>0?20*Math.log10(g.pk):-99};P.last=bj;P.idx=bj+1;while(N[P.idx]&&(N[P.idx].tie||N[P.idx].r))P.idx++;
  live(`${t('bar')} ${N[bj].bar+1}/${SC.bars} · ${dtT(r.dt)} · ${r.c>0?'+':''}${Math.round(r.c)}¢`);paint(P.res)}
-function cursor(now){if(!O().gPos)return;const el=(now-P.t0)/P.spb,N=SC.notes;let k=-1;
+function cursor(now,st=P,force){if(!force&&!O().gPos)return;const el=(now-st.t0)/st.spb,N=SC.notes;let k=-1;
  for(let i=0;i<N.length;i++)if(el>=N[i].t-1e-6&&el<N[i].t+N[i].d){k=i;break}
- if(k===P.cur)return;P.cur=k;$$('#score .now').forEach(e=>e.classList.remove('now'));if(k<0){$('#dPos').textContent='';return}
+ if(k===st.cur)return;st.cur=k;$$('#score .now').forEach(e=>e.classList.remove('now'));if(k<0){$('#dPos').textContent='';return}
  $$(`#score [data-i="${k}"]`).forEach(e=>e.classList.add('now'));const b=N[k].bar,M=SC.M[b];$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===b));
  let q=0,n=0;M.g.forEach(g=>{if(el-M.st>=q-1e-6)n++;q+=g});$('#dPos').textContent=t('barN').replace('{b}',b+1).replace('{t}',SC.bars)+' · '+t('beatN').replace('{n}',n);
  const box=document.querySelector(`#score [data-m="${b}"]`);if(box&&box.scrollIntoView&&O().nt==='jian')box.scrollIntoView({block:'nearest',behavior:'smooth'})}
@@ -984,7 +1126,7 @@ $('#d_ties').onchange=e=>{O().ties=e.target.checked?1:0;save();regen()};
 $('#d_gClick').onchange=e=>{O().gClick=e.target.checked?1:0;save()};
 $('#d_gPos').onchange=e=>{O().gPos=e.target.checked?1:0;save();if(!e.target.checked){$$('#score .nt.now').forEach(x=>x.classList.remove('now'));$('#dPos').textContent=''}};
 $('#d_tempo').oninput=e=>{O().tempo=+e.target.value;if(SC&&!(P&&P.on))SC.tempo=O().tempo;save();syncD()};
-$('#dGen').onclick=regen;$('#dGo').onclick=startDrill;
+$('#dGen').onclick=regen;$('#dGo').onclick=startDrill;$('#dDemo').onclick=demo;
 $('#hist').onclick=e=>{const d=e.target.closest('[data-d]'),h=e.target.closest('[data-h]'),H=getH();
  if(d){setH(H.filter(x=>x.id!==+d.dataset.d));histUI();return}
  if(h){const x=H.find(y=>y.id===+h.dataset.h);if(x){if(P&&P.on)stopDrill();SC=meas(x.sc);LR=null;const o=O();Object.assign(o,{key:x.sc.key,mode:x.sc.mode,time:x.sc.time,tonal:x.sc.tonal,bars:x.sc.bars,tempo:x.sc.tempo,r:{...o.r,...x.sc.r},ties:x.sc.ties||0,level:x.sc.level||o.level});save();syncD();show();$('#rep').hidden=true;live(t('ready'));$('main').scrollTop=0}}};
@@ -996,7 +1138,7 @@ $('#useTxt').onclick=()=>{const sc=parseJ($('#txtIn').value);if(!sc)return;if(P&
 const DEF2={theme:'sys',detail:'simple',autoTips:true,autoSpeak:false,exam:0,goal:20,toured:0,guided:{},plan:{},log:{},notif:{p:1,a:1,c:1,o:1},priv:{pub:0,trend:0},prof:{name:'',email:'',av:''},hc:0,rm:0,bigBtn:0,read:0,fb:[],cam:{hand:'Right',strict:'m',calib:null}};
 function norm(){for(const k in DEF2)if(S[k]==null)S[k]=JSON.parse(JSON.stringify(DEF2[k]));if(S.elder==null)S.elder=S.role==='senior'?1:0}norm();
 const TOUR=[['ai',0],['tune',1],['hand',0],['bow',2],['score',2],['users',0],['clock',1],['beat',1],['tune',1]];
-const HELP={tune:[8,'h_tune','tTune'],beat:[7,'h_beat','tBeat'],drill:[1,'h_drill','tDrill'],set:[null,'h_set','tSet'],cam:[3,'h_cam','tCam']};
+const HELP={tune:[8,'h_tune','tTune'],beat:[7,'h_beat','tBeat'],drill:[1,'h_drill','tDrill'],set:[null,'h_set','tSet'],cam:[3,'h_cam','tCam'],task:[null,'h_task','tTask']};
 let TL=[],TI=0,GK=null,GI=0,GS=[];
 function speak(x){if(!(S.voice||S.read)||!window.speechSynthesis)return;const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
 function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove('on'),2800)}
@@ -1010,26 +1152,27 @@ $('#tNext').onclick=()=>{TI<TL.length-1?(TI++,drawTour()):endTour()};$('#tSkip')
 function openHelp(k){const [sl,key,ti]=HELP[k],B=t(key).split('§'),L=t('hl').split('§');
  $('#hTitle').textContent=t(ti);$('#hBody').innerHTML=B.map((x,i)=>`<p class="lbl" style="margin:1.25rem 0 .4rem">${L[i]}</p><p style="margin:0;line-height:1.6">${x}</p>`).join('');
  $('#hReplay').hidden=sl==null;$('#hReplay').onclick=()=>{$('#help').classList.remove('on');openTour([sl])};$('#help').classList.add('on');if(S.read)speak(B.join(' '))}
-$$('[data-help]').forEach(b=>b.onclick=()=>b.dataset.help==='home'?openTour():openHelp(b.dataset.help));
+$$('[data-help]').forEach(b=>b.onclick=()=>b.dataset.help==='home'?startWalk():openHelp(b.dataset.help));
 $('#hClose').onclick=()=>$('#help').classList.remove('on');
 const GUIDE={tune:'g_tune',drill:'g_drill'};
-function guide(k){if(!S.role||!$('#v-'+k).classList.contains('on')||S.guided[k]||$('#ov').classList.contains('on')||$('#tour').classList.contains('on'))return;GK=k;GI=0;GS=t(GUIDE[k]).split('§');drawG();$('#coach').hidden=false}
+function guide(k){if(walkOn||!S.role||!$('#v-'+k).classList.contains('on')||S.guided[k]||$('#ov').classList.contains('on')||$('#tour').classList.contains('on'))return;GK=k;GI=0;GS=t(GUIDE[k]).split('§');drawG();$('#coach').hidden=false}
 function drawG(){$('#cStep').textContent=(GI+1)+' / '+GS.length;$('#cMsg').textContent=GS[GI];$('#cNext').textContent=t(GI===GS.length-1?'done':'next');if(!GI)speak(GS[0])}
 function endG(){S.guided[GK]=1;save();$('#coach').hidden=true}
 $('#cNext').onclick=()=>{GI<GS.length-1?(GI++,drawG()):endG()};$('#cSkip').onclick=endG;
-$('#replay').onclick=()=>openTour();
+$('#replay').onclick=()=>startWalk();
 function suggest(rs){const d=S.detail==='detail'||S.exam,a=[];const f=k=>t(k).replace('{p}',rs.pitch).replace('{r}',rs.rhythm);
  if(rs.pitch<70)a.push(f(d?'sg_p2':'sg_p1'));if(rs.rhythm<70)a.push(f(d?'sg_r2':'sg_r1'));if(Math.abs(rs.dt)>120)a.push(t(rs.dt>0?'sg_late':'sg_early'));
  if(!a.length)a.push(t('sg_good'));if(S.exam&&rs.pitch>=70)a.push(t('sg_exam'));return a.slice(0,S.elder?1:9)}
 function afterReport(rs){if(!(S.autoTips||S.role==='beginner'))return;const a=suggest(rs);
  $('#rep').insertAdjacentHTML('beforeend',`<p class="lbl" style="margin-top:1.25rem">${t('sg')}</p>`+a.map(x=>`<p style="margin:.35rem 0">• ${x}</p>`).join(''));if(S.autoSpeak)speak(a.join(' '))}
 const today=()=>new Date().toLocaleDateString('sv');
-function stuUI(){const mins=Math.floor((S.log[today()]||0)/60),g=S.goal,items=['p1','p2','p3'].concat(S.exam?['p4']:[]),pl=S.plan[today()]||(S.plan[today()]=[]);
+function stuUI(){const mins=Math.floor((S.log[today()]||0)/60),g=S.goal;
  $('#goalBar').style.width=Math.min(100,mins/g*100)+'%';$('#goalTxt').textContent=mins+'/'+g+' min';$('#goalSel').value=g;
- $('#plan').innerHTML=items.map((k,i)=>`<label class="li"><span class="t">${t(k)}</span><input type="checkbox" data-p="${i}" ${pl[i]?'checked':''}></label>`).join('')}
-$('#plan').onchange=e=>{S.plan[today()][+e.target.dataset.p]=e.target.checked;save()};
+ tkInit();const L=tkLog();$('#plan').innerHTML=tkSorted().slice(0,3).map(k=>`<button class="li" data-gotask><span class="t">${k.star?'★ ':''}${esc(tkNm(k))}</span><span class="v">${Math.floor((L[k.id]||0)/60)} / ${k.min} ${t('min')}</span></button>`).join('')+`<button class="li" data-gotask><span class="t" style="color:var(--ac);font-weight:600">${t('tkAll')}</span><svg class="ic"><use href="#i-chev"/></svg></button>`}
+$('#plan').onclick=e=>{if(e.target.closest('[data-gotask]'))view('task')};
+
 $('#goalSel').onchange=e=>{S.goal=+e.target.value;save();stuUI()};
-setInterval(()=>{if(stream||(P&&P.on)||playing||camOn){S.log[today()]=(S.log[today()]||0)+5;save();if(S.role==='student')stuUI()}},5000);
+setInterval(()=>{if(stream||(P&&P.on)||playing||camOn||DM){S.log[today()]=(S.log[today()]||0)+5;save();if(S.role==='student')stuUI()}},5000);
 function syncSet(){const r=document.documentElement,p=S.prof;const dk=S.theme==='dark'||(S.theme==='sys'&&matchMedia('(prefers-color-scheme: dark)').matches);r.classList.toggle('sr',!!S.elder);r.classList.toggle('hc',!!S.hc);r.classList.toggle('hcd',!!S.hc&&dk);r.classList.toggle('rm',!!S.rm);r.classList.toggle('lb',!!(S.bigBtn||S.elder));[['hc','#hc'],['read','#read'],['rm','#rm'],['bigBtn','#bigBtn'],['elder','#elder']].forEach(([k,id])=>$(id).checked=!!S[k]);
  if(S.theme==='sys')delete r.dataset.theme;else r.dataset.theme=S.theme;
  $$('#thSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===S.theme));$$('#ftSeg button').forEach(b=>b.classList.toggle('sel',Math.abs(+b.dataset.v-S.scale)<.01));$$('#dtSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===S.detail));
@@ -1133,7 +1276,83 @@ $('#cCal').onclick=()=>{if(!camOn||calBusy)return;calBusy=true;const box=$('#ccd
   N.textContent='●';T.textContent=t('calNow');cSamples=[];setTimeout(()=>{const a=cSamples;cSamples=null;
    if(!a||a.length<5){done('calFail');return}S.cam.calib={bow:a.reduce((x,y)=>x+y[0],0)/a.length,sh:a.reduce((x,y)=>x+y[1],0)/a.length};save();done('calOk')},1200)};
  tick()};
-function fill(){[['#bpm',30,200]].forEach(([s,a,b])=>$(s).style.setProperty('--p',((+$(s).value-a)/(b-a)*100)+'%'))}
+
+/* ---- practice tasks ---- */
+const TPL={pro:[['tk_long',20],['tk_cross',20],['tk_into',30],['tk_finger',20],['tk_shift',20],['tk_scale',50],['tk_seq',40],['tk_hard',25],['tk_etude',35],['tk_exam',120]],
+ beg:[['tk_b1',10],['tk_long',15],['tk_into',10],['tk_b2',10],['tk_b3',15]],none:[]};
+const esc=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const mkTpl=k=>TPL[k].map(([key,min])=>({id:uid(),k:key,min,star:0}));
+function tkInit(){if(!S.task||!Array.isArray(S.task.list)){const p=S.role==='student'?'pro':'beg';S.task={tpl:p,list:mkTpl(p),log:{},done:{},auto:1}}}
+const tkTouch=()=>{if(S.task)S.task.auto=0};
+const tkLog=()=>{const d=today();return S.task.log[d]||(S.task.log[d]={})},tkDoneMap=()=>{const d=today();return S.task.done[d]||(S.task.done[d]={})};
+const tkNm=k=>k.name||t(k.k||'')||'',tkSorted=()=>[...S.task.list.filter(k=>k.star),...S.task.list.filter(k=>!k.star)];
+const fmtHM=sec=>{const m=Math.floor(sec/60),h=Math.floor(m/60);return h?t('hm').replace('{h}',h).replace('{m}',m%60):t('mOnly').replace('{m}',m)};
+const mmss=sec=>{sec=Math.max(0,Math.round(sec));const m=Math.floor(sec/60),x=sec%60;return (m<10?'0':'')+m+':'+(x<10?'0':'')+x};
+let TK=null,tkSaveT=0;
+function tkUI(){tkInit();const L=tkLog(),D=tkDoneMap(),list=tkSorted();
+ $('#tkTplSel').innerHTML=[['pro','tplPro'],['beg','tplBeg'],['none','tplNone']].map(([v,k])=>`<option value="${v}">${t(k)}</option>`).join('');$('#tkTplSel').value=S.task.tpl||'pro';
+ $('#tkNewName').placeholder=t('tkNameP');
+ $('#taskList').innerHTML=list.length?list.map(k=>{const sec=L[k.id]||0,done=D[k.id]||sec>=k.min*60,run=TK&&TK.id===k.id,pc=Math.min(100,sec/(k.min*60)*100);
+  return `<div class="li tk${k.star?' star':''}${done?' done':''}${run?' run':''}" data-id="${k.id}">
+  <button class="tkb tks" data-a="star" aria-label="${t('tkStar')}">${k.star?'★':'☆'}</button>
+  <span class="t"><b class="tkname" data-a="ren" contenteditable="plaintext-only" spellcheck="false">${esc(tkNm(k))}</b>${k.star?`<span class="pill tkfp">${t('tkStar')}</span>`:''}
+   <span class="tkmeta">${Math.floor(sec/60)} / <input class="tkmi" data-a="min" type="number" inputmode="numeric" min="1" max="600" value="${k.min}"> ${t('min')}</span><span class="tkpb"><i style="width:${pc}%"></i></span></span>
+  <button class="tkb tkp" data-a="play" aria-label="play">${IC(run&&TK.run?'stop':'play')}</button>
+  <button class="tkb tkc" data-a="done" aria-label="done">${done?'✓':'○'}</button>
+  <button class="tkb tkx" data-a="del" aria-label="delete">×</button></div>`}).join(''):`<div class="li mut">${t('tkEmpty')}</div>`;
+ tkSum();tkRunUI()}
+function tkSum(){const L=tkLog(),D=tkDoneMap();let plan=0,done=0;S.task.list.forEach(k=>{plan+=k.min*60;done+=D[k.id]?k.min*60:Math.min(L[k.id]||0,k.min*60)});
+ const pc=plan?Math.round(done/plan*100):0;$('#tkSumBar').style.width=pc+'%';$('#tkSumPct').textContent=pc+'%';
+ $('#tkSum').textContent=t('tkTotal').replace('{d}',fmtHM(done)).replace('{p}',fmtHM(plan));$('#tkProNote').hidden=S.task.tpl!=='pro'}
+function tkRunUI(){const box=$('#tkRun');if(!TK){box.hidden=true;return}const k=S.task.list.find(x=>x.id===TK.id);if(!k){TK=null;box.hidden=true;return}
+ const sec=tkLog()[k.id]||0;box.hidden=false;$('#tkName').textContent=tkNm(k);$('#tkTime').textContent=mmss(k.min*60-sec);$('#tkBar').style.width=Math.min(100,sec/(k.min*60)*100)+'%';
+ $('#tkPause').innerHTML=IC(TK.run?'stop':'play')+'<span>'+t(TK.run?'tkPauseL':'tkResume')+'</span>'}
+function tkStart(id){if(TK&&TK.id===id){TK.run=!TK.run;TK.last=Date.now();tkUI();return}TK={id,run:true,last:Date.now()};tkUI();try{$('#tkRun').scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}}
+function tkChime(){try{const a=ctx();if(a.state==='suspended')a.resume();const t0=a.currentTime+.05;[0,.18,.36].forEach((d,i)=>{const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.value=[784,988,1175][i];g.gain.setValueAtTime(.0001,t0+d);g.gain.exponentialRampToValueAtTime(.35,t0+d+.01);g.gain.exponentialRampToValueAtTime(.0001,t0+d+.5);o.connect(g).connect(a.destination);o.start(t0+d);o.stop(t0+d+.55)})}catch(e){}
+ try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
+setInterval(()=>{if(!TK||!TK.run||!S.task)return;const now=Date.now(),dt=Math.min(5,(now-TK.last)/1000);TK.last=now;const L=tkLog();L[TK.id]=(L[TK.id]||0)+dt;
+ if(!(stream||(P&&P.on)||playing||camOn||DM))S.log[today()]=(S.log[today()]||0)+dt;
+ const k=S.task.list.find(x=>x.id===TK.id);if(!k){TK=null;tkUI();return}
+ if(L[k.id]>=k.min*60){tkDoneMap()[k.id]=1;TK=null;save();tkChime();const m=t('tkFin').replace('{n}',tkNm(k));toast(m);if(S.voice)speak(m);tkUI();if(S.role==='student')stuUI();return}
+ if(now-tkSaveT>5000){tkSaveT=now;save()}
+ if($('#v-task').classList.contains('on')){tkRunUI();const row=document.querySelector(`.tk[data-id="${k.id}"]`);if(row){row.querySelector('.tkpb i').style.width=Math.min(100,L[k.id]/(k.min*60)*100)+'%';row.querySelector('.tkmeta').firstChild.nodeValue=Math.floor(L[k.id]/60)+' / '}tkSum()}},1000);
+$('#taskList').onclick=e=>{const b=e.target.closest('[data-a]'),row=e.target.closest('.tk');if(!b||!row)return;tkTouch();const id=row.dataset.id,k=S.task.list.find(x=>x.id===id);if(!k)return;const a=b.dataset.a;
+ if(a==='star'){k.star=k.star?0:1;save();tkUI()}
+ else if(a==='play')tkStart(id);
+ else if(a==='done'){const D=tkDoneMap();D[id]=D[id]?0:1;if(!D[id])delete D[id];if(TK&&TK.id===id&&D[id])TK=null;save();tkUI()}
+ else if(a==='del'){if(!b.dataset.arm){b.dataset.arm=1;b.textContent='?';b.classList.add('arm');setTimeout(()=>{if(b.isConnected){delete b.dataset.arm;b.textContent='×';b.classList.remove('arm')}},2500);return}
+  S.task.list=S.task.list.filter(x=>x.id!==id);if(TK&&TK.id===id)TK=null;save();tkUI()}};
+$('#taskList').addEventListener('change',e=>{if(e.target.dataset.a!=='min')return;const row=e.target.closest('.tk'),k=S.task.list.find(x=>x.id===row.dataset.id);if(!k)return;
+ k.min=Math.max(1,Math.min(600,Math.round(+e.target.value)||k.min));tkTouch();save();tkUI()});
+$('#taskList').addEventListener('focusout',e=>{if(e.target.dataset.a!=='ren')return;const row=e.target.closest('.tk'),k=S.task.list.find(x=>x.id===row.dataset.id);if(!k)return;
+ const v=e.target.textContent.replace(/\s+/g,' ').trim().slice(0,30);if(v&&v!==tkNm(k)){k.name=v;tkTouch();save()}tkUI()});
+$('#taskList').addEventListener('keydown',e=>{if(e.target.dataset.a==='ren'&&e.key==='Enter'){e.preventDefault();e.target.blur()}if(e.target.dataset.a==='min'&&e.key==='Enter')e.target.blur()});
+$('#tkAddBtn').onclick=()=>{tkInit();const n=$('#tkNewName').value.trim().slice(0,30),m=Math.max(1,Math.min(600,Math.round(+$('#tkNewMin').value)||20));if(!n){$('#tkNewName').focus();return}
+ S.task.list.push({id:uid(),name:n,min:m,star:0});tkTouch();$('#tkNewName').value='';save();tkUI()};
+$('#tkNewName').onkeydown=e=>{if(e.key==='Enter')$('#tkAddBtn').click()};
+$('#tkPause').onclick=()=>{if(TK)tkStart(TK.id)};
+$('#tkStop').onclick=()=>{TK=null;save();tkUI()};
+twice('#tkApply',()=>{const v=$('#tkTplSel').value;S.task.tpl=v;S.task.list=mkTpl(v);S.task.auto=0;TK=null;save();tkUI();toast(t('tkApplied'))});
+
+/* ---- interactive walkthrough ---- */
+const WALK=[['home','#badge','w1'],['home','nav button[data-v="tune"]','w2'],['tune','#gauge','w3'],['tune','#modes','w4'],['beat','#bpmv','w5'],['beat','#snd','w6'],['cam','#cGo','w7'],['drill','#score','w8'],['drill','#dDemo','w9'],['drill','#dGo','w10'],['task','#taskList','w11'],['set','#chg','w12']];
+let WK=0,walkOn=false;
+function startWalk(){if(stream)mic();if(camOn)stopCam();walkOn=true;WK=0;$('#coach').hidden=true;$('#help').classList.remove('on');$('#tour').classList.remove('on');$('#walk').hidden=false;drawWalk()}
+function endWalk(){walkOn=false;S.guided.tune=1;S.guided.drill=1;$('#walk').hidden=true;S.toured=1;save();view('home')}
+function drawWalk(){const [v,,k]=WALK[WK],[ti,de]=t(k).split('§');if(!$('#v-'+v).classList.contains('on'))view(v);
+ $('#wStep').textContent=(WK+1)+' / '+WALK.length;$('#wT').textContent=ti;$('#wD').textContent=de;$('#wNext').textContent=t(WK===WALK.length-1?'done':'next');$('#wPrev').hidden=WK===0;$('#wSkip').hidden=WK===WALK.length-1;
+ const el=document.querySelector(WALK[WK][1]);if(el&&el.offsetParent!==null&&!el.closest('nav'))el.scrollIntoView({block:'center',behavior:'instant'});
+ if(S.read)speak(ti+'。'+de);requestAnimationFrame(()=>requestAnimationFrame(placeWalk))}
+function placeWalk(){if(!walkOn)return;const el=document.querySelector(WALK[WK][1]),ring=$('#wRing'),bub=$('#wBub'),W=innerWidth,H=innerHeight,bw=bub.offsetWidth,bh=bub.offsetHeight;
+ let r=el&&el.offsetParent!==null?el.getBoundingClientRect():null;if(r&&(r.width===0||r.bottom<0||r.top>H))r=null;
+ if(!r){ring.style.cssText=`left:${W/2}px;top:${H/2}px;width:0;height:0`;bub.style.left=Math.max(12,(W-bw)/2)+'px';bub.style.top=Math.max(12,(H-bh)/2)+'px';return}
+ const p=6;ring.style.cssText=`left:${r.left-p}px;top:${r.top-p}px;width:${r.width+2*p}px;height:${r.height+2*p}px`;
+ const below=r.top+r.height/2<H/2;let top=below?r.bottom+p+12:r.top-p-12-bh;top=Math.max(12,Math.min(H-bh-12,top));
+ bub.style.top=top+'px';bub.style.left=Math.max(12,Math.min(W-bw-12,r.left+r.width/2-bw/2))+'px'}
+$('#wNext').onclick=()=>{WK<WALK.length-1?(WK++,drawWalk()):endWalk()};$('#wPrev').onclick=()=>{if(WK>0){WK--;drawWalk()}};$('#wSkip').onclick=endWalk;
+addEventListener('resize',()=>{if(walkOn)placeWalk()});$('main').addEventListener('scroll',()=>{if(walkOn)placeWalk()},{passive:true});
+function fill(){[['#bpm',30,500]].forEach(([s,a,b])=>$(s).style.setProperty('--p',((+$(s).value-a)/(b-a)*100)+'%'))}
 (function(){const P=(a,r)=>(140+r*Math.sin(a*Math.PI/180)).toFixed(1)+' '+(130-r*Math.cos(a*Math.PI/180)).toFixed(1);
  const arc=(a,b,r)=>`M${P(a,r)}A${r} ${r} 0 0 1 ${P(b,r)}`;let h=`<path d="${arc(-58,58,100)}" fill="none" stroke="var(--bd)" stroke-width="6" stroke-linecap="round"/><path d="${arc(-9.3,9.3,100)}" fill="none" stroke="var(--ok)" stroke-width="6" stroke-linecap="round"/>`;
  for(let c=-50;c<=50;c+=10){const a=c*1.16,L=c%50===0?126:120;h+=`<path d="M${P(a,110)}L${P(a,L)}" stroke="${c===0?'var(--ok)':'var(--mut2)'}" stroke-width="1.5" stroke-linecap="round"/>`}
