@@ -177,6 +177,9 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .camw .ph{position:absolute;inset:0;display:grid;place-items:center;color:#a1a1a6;text-align:center;padding:1.5rem;z-index:2}
 .cs{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}.cs+.cs{border-top:1px solid var(--ln)}
 .cs b{font-variant-numeric:tabular-nums;text-align:right}.cs .g{color:var(--ok)}.cs .w{color:var(--bad)}
+.cd{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:rgba(0,0,0,.45);color:#fff;text-align:center;padding:1rem}
+.cd b{font-size:6rem;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}.cd span{font-size:1.0625rem;font-weight:600}
+.cd b.pop{animation:pop .9s var(--ease)}@keyframes pop{from{transform:scale(1.5);opacity:.2}to{transform:scale(1);opacity:1}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -296,7 +299,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 
 <section id="v-cam"><div class="narrow wide">
  <div class="pt"><h1 data-i="tCam"></h1><p data-i="subCam"></p><button class="hq" data-help="cam" aria-label="Help">?</button></div>
- <div class="camw"><video id="cvid" playsinline muted></video><canvas id="ccv"></canvas><div class="ph" id="cph" data-i="camIdle"></div></div>
+ <div class="camw"><video id="cvid" playsinline muted></video><canvas id="ccv"></canvas><div class="ph" id="cph" data-i="camIdle"></div><div class="cd" id="ccd" hidden><b id="ccdN"></b><span id="ccdT"></span></div></div>
  <div class="gap" style="height:1rem"></div>
  <div class="row2"><button class="btn alt" id="cCal" disabled><span data-i="calib"></span></button><button class="btn" id="cGo"></button></div>
  <div class="card"><p class="lbl" data-i="rLive"></p>
@@ -306,6 +309,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
  <div class="gap"></div><p class="lbl" data-i="dSet"></p>
  <div class="list">
   <div class="li"><span class="t" data-i="cHand"></span><div class="seg" id="cHandSeg"><button data-v="Right" data-i="hR"></button><button data-v="Left" data-i="hL"></button></div></div>
+  <label class="li"><span class="t" data-i="cVoice"></span><input type="checkbox" id="cVoice"></label>
   <div class="li"><span class="t" data-i="cStrict"></span><div class="seg" id="cStrictSeg"><button data-v="s" data-i="stS"></button><button data-v="m" data-i="stM"></button><button data-v="l" data-i="stL"></button></div></div>
  </div>
  <p class="mut" style="font-size:.8125rem;margin-top:1rem" data-i="camPriv"></p>
@@ -568,6 +572,9 @@ close|關閉|Close
 sDel|刪除帳號與所有資料|Delete account and all data
 sReplay|重新觀看新手導覽|Replay welcome tour
 gHelp|協助|Help
+cVoice|語音提醒|Voice reminders|音声リマインド
+calHold|請擺好標準姿勢|Hold your reference posture|基準の姿勢を保ってください
+calNow|校準中，請保持不動|Calibrating, hold still|測定中、動かないでください
 nCam|姿勢|Posture|姿勢
 tCam|運弓與肩膀|Bow and shoulders|運弓と肩
 subCam|用相機檢查弓是否水平、弓速是否平均、肩膀是否放鬆|The camera checks that your bow is level, speed is even and shoulders are relaxed|カメラで弓の水平・弓速・肩の力みを確認します
@@ -602,7 +609,7 @@ sayBow|弓不夠水平，請調整|Bow is not level, please adjust|弓が水平�
 saySh|肩膀放鬆|Relax your shoulders|肩の力を抜いてください
 camPriv|影像只在這個裝置上即時分析，不會上傳。偵測模型由瀏覽器從網路下載。|Video is analyzed live on this device and never uploaded. The browser downloads the models.|映像はこの端末内で処理され、アップロードされません。
 beta|測試版|Beta|ベータ
-h_cam|檢查運弓是否水平、弓速是否平均，以及肩膀是否聳起。§把手機或電腦鏡頭對著自己，上半身和持弓的手都要入鏡，按「開啟相機」，擺好標準姿勢後按「校準」。§相機無法直接看見弓，是用持弓手的方向推估，所以每個人都要先校準。光線要充足，左手常被琴桿遮住。§弓角度偏差、弓速是否平均、肩膀是否比校準時聳起，並用語音提醒。§校準時弓水平、肩膀放鬆；之後弓傾斜超過容許範圍，會聽到「弓不夠水平，請調整」。|Checks that the bow is level, speed is even and shoulders are not raised.§Point the camera at yourself with your upper body and bow hand in view, press Start camera, hold your reference posture and press Calibrate.§The camera cannot see the bow itself; it is estimated from the bow hand, so everyone must calibrate. Use good light; the left hand is often hidden by the neck.§Bow angle deviation, speed evenness and whether your shoulders are higher than at calibration, with spoken reminders.§Calibrate with a level bow and relaxed shoulders. If the bow tilts beyond the tolerance you hear Bow is not level.
+h_cam|檢查運弓是否水平、弓速是否平均，以及肩膀是否聳起。§把手機或電腦鏡頭對著自己，上半身和持弓的手都要入鏡，按「開啟相機」，擺好標準姿勢後按「校準」。§相機無法直接看見弓，是用持弓手的方向推估，所以每個人都要先校準。光線要充足，左手常被琴桿遮住。§畫面上的白色虛線是你的標準弓線，彩色實線是目前的弓向，對齊時變綠。另顯示弓速是否平均，肩膀聳起時語音提醒（可關閉）。§校準時弓水平、肩膀放鬆；之後把彩色實線對齊白色虛線，變成綠色就是水平。|Checks that the bow is level, speed is even and shoulders are not raised.§Point the camera at yourself with your upper body and bow hand in view, press Start camera, hold your reference posture and press Calibrate.§The camera cannot see the bow itself; it is estimated from the bow hand, so everyone must calibrate. Use good light; the left hand is often hidden by the neck.§Bow angle deviation, speed evenness and whether your shoulders are higher than at calibration, with spoken reminders.§Calibrate with a level bow and relaxed shoulders. If the bow tilts beyond the tolerance you hear Bow is not level.
 gA11y|無障礙設定|Accessibility
 sHC|高對比模式|High contrast
 sRead|語音朗讀|Read screens aloud
@@ -661,7 +668,7 @@ $('#voice').onchange=e=>{S.voice=e.target.checked;save()};
 $('#click').onchange=e=>{S.click=e.target.checked;save()};
 
 $('#reset').onclick=()=>{S=Object.assign({},def);norm();try{localStorage.removeItem('erhu')}catch(e){};apply();$('#ov').classList.add('on')};
-function view(v){if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&P&&P.on)stopDrill();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$('main').scrollTop=0}
+function view(v){if(v==='tune'&&!stream)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&P&&P.on)stopDrill();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$('main').scrollTop=0}
 $$('nav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
 $$('[data-go]').forEach(b=>b.onclick=()=>view(b.dataset.go));
 
@@ -930,7 +937,7 @@ $('#iOk').onclick=()=>{const x=$('#iTx'),v=x.value.trim();if(!v)return;S.fb.push
 const MPV='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14',MPM='https://storage.googleapis.com/mediapipe-models/';
 const TOL={s:[5,.08],m:[8,.12],l:[12,.18]};
 let camOn=false,camBusy=false,hl=null,pl=null,cStream=null,cRaf=0,cTrack=[],cAng=null,cSh=null,cSay=0,cLastVT=-1,cSamples=null;
-function camUI(){const c=S.cam;$$('#cHandSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===c.hand));$$('#cStrictSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===c.strict));
+function camUI(){const c=S.cam;$('#cVoice').checked=c.voice!==false;$$('#cHandSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===c.hand));$$('#cStrictSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===c.strict));
  $('#cGo').innerHTML=IC(camOn?'stop':'mic').replace('i-mic','i-hand')+'<span>'+t(camOn?'camStop':'camStart')+'</span>';$('#cCal').disabled=!camOn;
  if(!camOn){$('#cph').hidden=false;$('#cph').textContent=camBusy?t('camLoad'):t('camIdle')}}
 $$('#cHandSeg button').forEach(b=>b.onclick=()=>{S.cam.hand=b.dataset.v;save();cTrack=[];camUI()});
@@ -939,7 +946,7 @@ const lineAng=(x1,y1,x2,y2)=>{let a=Math.atan2(y2-y1,x2-x1)*180/Math.PI;if(a>90)
 const angDiff=(a,b)=>{const d=(((a-b)%180)+180)%180;return d>90?d-180:d};
 function speedCv(tr){if(tr.length<5)return null;const v=[];for(let i=1;i<tr.length;i++){const dt=(tr[i].t-tr[i-1].t)/1000;if(dt>0)v.push(Math.abs(tr[i].x-tr[i-1].x)/dt)}
  if(v.length<4)return null;const m=v.reduce((a,b)=>a+b)/v.length;if(m<1e-3)return null;return Math.sqrt(v.reduce((a,b)=>a+(b-m)**2,0)/v.length)/m}
-function camSay(k){if(Date.now()-cSay<4000)return;cSay=Date.now();speak(t(k))}
+function camSay(k){if(S.cam.voice===false||!window.speechSynthesis||Date.now()-cSay<4000)return;cSay=Date.now();const u=new SpeechSynthesisUtterance(t(k));u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
 async function loadModels(){
  if(hl&&pl)return;const step=async(n,f)=>{try{return await f()}catch(e){throw new Error(n+': '+((e&&(e.message||e.name))||e))}};
  const mod=await step('1-JS',()=>import(MPV+'/vision_bundle.mjs')),fs=await step('2-WASM',()=>mod.FilesetResolver.forVisionTasks(MPV+'/wasm'));
@@ -970,11 +977,13 @@ function camLoop(){
  const sB=$('#sBow'),sS=$('#sSpd'),sH=$('#sSh');
  if(hand){const a=hand[0],b=hand[9];bow=lineAng((1-a.x)*W,a.y*H,(1-b.x)*W,b.y*H);cAng=cAng==null?bow:.3*bow+.7*cAng;bow=cAng;
   cTrack.push({t:ts,x:a.x});if(cTrack.length>45)cTrack.shift();
-  g.strokeStyle=ac;g.lineWidth=4;g.lineCap='round';g.beginPath();g.moveTo(a.x*W,a.y*H);g.lineTo(b.x*W,b.y*H);g.stroke()}
+  const ok=!cal||Math.abs(angDiff(bow,cal.bow))<=bt,ln=(deg,len)=>{const r=-deg*Math.PI/180,dx=Math.cos(r)*len,dy=Math.sin(r)*len;g.beginPath();g.moveTo(a.x*W-dx,a.y*H-dy);g.lineTo(a.x*W+dx,a.y*H+dy);g.stroke()};
+  g.lineCap='round';g.setLineDash([14,10]);g.strokeStyle='rgba(255,255,255,.9)';g.lineWidth=3;ln(cal?cal.bow:0,W);
+  g.setLineDash([]);g.strokeStyle=ok?'#5cc08a':'#f0a04b';g.lineWidth=5;ln(bow,W*.22)}
  else{cAng=null;cTrack=[]}
  if(!hand){sB.textContent=t('noHand');sB.className='w'}
  else if(!cal){sB.textContent=bow.toFixed(1)+'° · '+t('needCal');sB.className=''}
- else{const d=angDiff(bow,cal.bow),off=Math.abs(d)>bt;sB.textContent=(d>0?'+':'')+d.toFixed(1)+'° · '+(off?t(d>0?'bowLow':'bowHigh'):t('bowOk'));sB.className=off?'w':'g';if(off)camSay('sayBow')}
+ else{const d=angDiff(bow,cal.bow),off=Math.abs(d)>bt;sB.textContent=(d>0?'+':'')+d.toFixed(1)+'° · '+(off?t(d>0?'bowLow':'bowHigh'):t('bowOk'));sB.className=off?'w':'g'}
  const cvv=speedCv(cTrack);sS.textContent=cvv==null?'–':cvv.toFixed(2);
  /* shoulders */
  let sh=null;
@@ -987,8 +996,15 @@ function camLoop(){
  else{const up=(cal.sh-sh)/cal.sh>st;sH.textContent=t(up?'shUp':'shOk');sH.className=up?'w':'g';if(up)camSay('saySh')}
  if(cSamples){if(bow!=null&&sh!=null)cSamples.push([bow,sh]);}}
 $('#cGo').onclick=()=>camOn?stopCam():startCam();
-$('#cCal').onclick=()=>{if(!camOn)return;toast(t('calWait'));setTimeout(()=>{cSamples=[];setTimeout(()=>{const a=cSamples;cSamples=null;
- if(!a||a.length<5){toast(t('calFail'));return}S.cam.calib={bow:a.reduce((x,y)=>x+y[0],0)/a.length,sh:a.reduce((x,y)=>x+y[1],0)/a.length};save();toast(t('calOk'))},1200)},3000)};
+$('#cVoice').onchange=e=>{S.cam.voice=e.target.checked;save();if(!e.target.checked&&window.speechSynthesis)speechSynthesis.cancel()};
+let calBusy=false;
+$('#cCal').onclick=()=>{if(!camOn||calBusy)return;calBusy=true;const box=$('#ccd'),N=$('#ccdN'),T=$('#ccdT');let n=3;box.hidden=false;T.textContent=t('calHold');
+ const done=m=>{N.textContent=m==='calOk'?'✓':'!';T.textContent=t(m);setTimeout(()=>{box.hidden=true;calBusy=false},1400)};
+ const tick=()=>{if(!camOn){box.hidden=true;calBusy=false;return}
+  if(n>0){N.textContent=n;N.classList.remove('pop');void N.offsetWidth;N.classList.add('pop');n--;setTimeout(tick,1000);return}
+  N.textContent='●';T.textContent=t('calNow');cSamples=[];setTimeout(()=>{const a=cSamples;cSamples=null;
+   if(!a||a.length<5){done('calFail');return}S.cam.calib={bow:a.reduce((x,y)=>x+y[0],0)/a.length,sh:a.reduce((x,y)=>x+y[1],0)/a.length};save();done('calOk')},1200)};
+ tick()};
 function fill(){[['#bpm',30,200]].forEach(([s,a,b])=>$(s).style.setProperty('--p',((+$(s).value-a)/(b-a)*100)+'%'))}
 (function(){const P=(a,r)=>(140+r*Math.sin(a*Math.PI/180)).toFixed(1)+' '+(130-r*Math.cos(a*Math.PI/180)).toFixed(1);
  const arc=(a,b,r)=>`M${P(a,r)}A${r} ${r} 0 0 1 ${P(b,r)}`;let h=`<path d="${arc(-58,58,100)}" fill="none" stroke="var(--bd)" stroke-width="6" stroke-linecap="round"/><path d="${arc(-9.3,9.3,100)}" fill="none" stroke="var(--ok)" stroke-width="6" stroke-linecap="round"/>`;
