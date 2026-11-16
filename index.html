@@ -134,13 +134,6 @@ nav{grid-template-columns:repeat(6,1fr)}
 .dy{font:italic 700 13px Georgia,serif;color:var(--mut);fill:var(--mut)}
 .mr{fill:transparent;transition:fill .25s}.mr.cur{fill:var(--acs)}
 .nt{color:var(--fg);transition:color .2s}.nt.ok{color:var(--ok)}.nt.warn{color:var(--bad)}.nt.miss{color:#d0584f}
-.jg{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.jm{position:relative;border-right:2px solid var(--mut2);border-radius:.5rem;padding:1.6rem .5rem .6rem;transition:background .25s}
-.jm.cur{background:var(--acs)}.jm .dy{position:absolute;left:.5rem;top:.25rem}
-.jr{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
-.jn,.jx{display:flex;flex-direction:column;align-items:center;line-height:1}
-.jn i,.jx i{font-style:normal;font-size:.5rem;height:.6rem}
-.jn b,.jx b{font-size:1.5rem;font-weight:500;padding:0 .1rem}.jn b.u{border-bottom:2px solid currentColor}.jx{color:var(--mut)}
 .row2{display:grid;grid-template-columns:1fr 1.4fr;gap:.75rem;margin-bottom:1rem}
 #live{font-size:1.25rem;font-weight:600;letter-spacing:-.02em;min-height:1.9rem;font-variant-numeric:tabular-nums}
 .li .seg{flex:0 1 auto}.li .seg button{padding:.45rem .8rem}
@@ -180,15 +173,30 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .cd{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:rgba(0,0,0,.45);color:#fff;text-align:center;padding:1rem}
 .cd b{font-size:6rem;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}.cd span{font-size:1.0625rem;font-weight:600}
 .cd b.pop{animation:pop .9s var(--ease)}@keyframes pop{from{transform:scale(1.5);opacity:.2}to{transform:scale(1);opacity:1}}
-.jn{position:relative}.jn b.uu{border-bottom:4px double currentColor}
-.jn.tie::before{content:"";position:absolute;right:50%;width:1.9rem;top:.05rem;height:.45rem;border:1.5px solid currentColor;border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0}
 .seg button{white-space:nowrap}
-.jg.one{grid-template-columns:1fr}.jg.one .jr{gap:.45rem}
-.jt{font-style:normal;font-family:inherit;font-weight:700;margin-left:.3rem}
 #dRhy button,#dLv button{padding:.55rem .2rem;font-size:.85rem}
 .nt.now{color:var(--ac)!important}#score svg .nt.now ellipse{stroke-width:3}
-.jn.now{background:var(--acs);border-radius:.45rem;box-shadow:0 0 0 2px var(--ac)}
 .dpos{font-size:.9375rem;font-weight:600;color:var(--ac);min-height:1.4rem;margin-top:.25rem;font-variant-numeric:tabular-nums}
+
+.jh{display:flex;gap:1rem;align-items:baseline;font-weight:700;font-size:1rem;margin:0 0 .6rem}.jh .mut{font-weight:500}
+.jg{display:flex;flex-wrap:wrap;row-gap:.9rem;align-items:stretch}
+.jm{position:relative;display:flex;align-items:stretch;padding:1.15rem .7rem .1rem .55rem;border-radius:.35rem;transition:background .25s}
+.jm::after{content:"";position:absolute;right:0;top:1.45rem;bottom:.55rem;border-right:1.5px solid currentColor}
+.jm.end{padding-right:.9rem}.jm.end::after{border-right:5px double currentColor}
+.jm.cur{background:var(--acs)}
+.jm .dy{position:absolute;left:.4rem;top:0;font-size:.8rem}.jm .jt{position:absolute;right:.4rem;top:0;font-size:.75rem;font-weight:700;color:var(--mut)}
+.jb{display:flex;align-items:flex-start;margin-right:.55rem}.jb:last-child{margin-right:0}
+.jc{display:grid;grid-template-rows:.55rem 1.7rem .5rem .6rem;justify-items:center;position:relative;padding:0 .14rem;line-height:1}
+.jc .hi,.jc .lo{font-size:.55rem;letter-spacing:-.05em;line-height:.6rem}
+.jc .d{font-size:1.5rem;font-weight:500;display:flex;align-items:center;font-variant-numeric:tabular-nums}
+.jc .d small{font-size:.8rem;margin-right:.05rem;align-self:flex-start;margin-top:.15rem}
+.jc .d .dt{font-size:1.1rem;margin-left:.08rem;font-weight:800}
+.jc .ul{position:relative;width:100%;align-self:start}
+.jc.u1 .ul::before,.jc.u2 .ul::after{content:"";position:absolute;left:0;right:0;height:2px;background:currentColor}
+.jc.u1 .ul::before{top:0}.jc.u2 .ul::after{top:.24rem}
+.jc.dash .d{color:var(--mut)}
+.jc.tie::before{content:"";position:absolute;right:50%;width:1.85rem;top:.15rem;height:.42rem;border:1.5px solid currentColor;border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0}
+.jc.now{background:var(--acs);border-radius:.35rem;box-shadow:0 0 0 2px var(--ac)}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -676,7 +684,7 @@ const save=()=>{try{localStorage.setItem('erhu',JSON.stringify(S))}catch(e){}};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const t=k=>{const a=D[k]||[];return a[LG.indexOf(S.lang)]||a[1]||a[0]||k};
 const NN=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
-const JP=['1','1♯','2','2♯','3','4','4♯','5','5♯','6','6♯','7'];
+const JP=['1','♯1','2','♯2','3','4','♯4','5','♯5','6','♯6','7'];
 
 function apply(){
  document.documentElement.lang=S.lang;document.title=t('app');
@@ -817,7 +825,7 @@ function meas(sc){
  if(!sc.M){const B=sc.B||4;sc.M=Array.from({length:sc.bars},(_,b)=>({n:B,d:4,g:Array(B).fill(1),st:b*B,len:B}))}
  const N=sc.notes;N.forEach((n,i)=>{if(n.tie)return;let l=n.d;for(let j=i+1;j<N.length&&N[j].tie;j++)l+=N[j].d;n.len=l});return sc}
 function parseJ(txt){
- const o=O(),ref=60+TON[o.key],mp=MOD[o.mode==='pen'?'maj':o.mode],sig=SIG[o.time]?o.time:'4/4',g=SIG[sig],len=g.reduce((a,c)=>a+c,0),[sn,sd]=sig.split('/').map(Number),notes=[];let t=0;
+ const o=O(),ref=jRef(o),mp=MOD.maj,sig=SIG[o.time]?o.time:'4/4',g=SIG[sig],len=g.reduce((a,c)=>a+c,0),[sn,sd]=sig.split('/').map(Number),notes=[];let t=0;
  txt.split(/\s+/).forEach(k=>{const m=/^([#b]?)([0-7])([',]*)([-._=]*)$/.exec(k);if(!m)return;
   const d=m[4].includes('-')?1+m[4].split('-').length-1:m[4].includes('.')?1.5:(m[4].includes('=')||m[4].includes('__'))?.25:m[4].includes('_')?.5:1;
   if(m[2]!=='0')notes.push({m:ref+mp[m[2]-1]+(m[1]==='#'?1:m[1]==='b'?-1:0)+12*(m[3].split("'").length-m[3].split(',').length),d,t,bar:Math.floor(t/len+1e-9)});t+=d});
@@ -867,15 +875,26 @@ function staff(sc){meas(sc);
   if(n.tie){const q=ps[i-1],o=q.up?8:-8,arc=(x1,x2,yy)=>`<path d="M${x1} ${yy+o*.8}Q${(x1+x2)/2} ${yy+o*1.9} ${x2} ${yy+o*.8}"/>`;
    ties+=q.k===p.k?arc(q.x+3,x-3,y):arc(q.x+3,W-8,q.y)+arc(X0-2,x-3,y)}});
  return h+`<g stroke="currentColor" fill="none" stroke-linecap="butt">${beams}</g><g stroke="currentColor" fill="none" stroke-width="1.4">${ties}</g></svg>`}
+const KN=['C','♭D','D','♭E','E','F','♯F','G','♭A','A','♭B','B'];
+function jRef(sc){return 60+TON[sc.key]+(sc.mode==='min'?3:0)}
 function jian(sc){meas(sc);
- const ref=60+TON[sc.key],F={3:'♭3',8:'♭6',10:'♭7'},sp=`<i>&nbsp;</i>`,one=sc.M.some((_,b)=>sc.notes.filter(n=>n.bar===b).length>5);let h=`<div class="jg${one?' one':''}">`;
- for(let b=0;b<sc.bars;b++){const M=sc.M[b],pm=sc.M[b-1],ts=!pm||pm.n!==M.n||pm.d!==M.d;
-  h+=`<div class="jm" data-m="${b}"><span class="dy">${sc.dyn[b]}${ts?` <em class="jt">${M.n}/${M.d}</em>`:''}</span><div class="jr">`;
-  sc.notes.forEach((n,i)=>{if(n.bar!==b)return;const o=Math.floor((n.m-ref)/12),sm=((n.m-ref)%12+12)%12,g=(sc.mode==='min'&&F[sm])||JP[sm];
-   h+=`<span class="jn nt${n.tie?' tie':''}" data-i="${i}"><i>${o>0?'•'.repeat(o):'&nbsp;'}</i><b class="${n.d===.5?'u':n.d===.25?'uu':''}">${g}</b><i>${o<0?'•'.repeat(-o):'&nbsp;'}</i></span>`;
-   if(n.d>=2)h+=`<span class="jx">${sp}<b>–</b>${sp}</span>`.repeat(Math.round(n.d)-1);
-   if(n.d===1.5)h+=`<span class="jx">${sp}<b>·</b>${sp}</span>`});
-  h+='</div></div>'}
+ const ref=jRef(sc),N=sc.notes,M0=sc.M[0];
+ const cell=(i,n)=>{const o=Math.floor((n.m-ref)/12),sm=((n.m-ref)%12+12)%12,g=JP[sm],acc=g.length>1?g[0]:'',dg=g.slice(-1),
+   u=n.d===.25?'u1 u2':(n.d===.5||n.d===.75)?'u1':'',dot=(n.d===1.5||n.d===.75)?'<span class="dt">·</span>':'';
+  return `<span class="jc nt ${u}${n.tie?' tie':''}" data-i="${i}"><span class="hi">${o>0?'•'.repeat(o):''}</span><span class="d">${acc?`<small>${acc}</small>`:''}${dg}${dot}</span><span class="ul"></span><span class="lo">${o<0?'•'.repeat(-o):''}</span></span>`};
+ const dash='<span class="jc dash"><span class="hi"></span><span class="d">–</span><span class="ul"></span><span class="lo"></span></span>';
+ let h=`<div class="jh"><span>1=${KN[(ref%12+12)%12]}</span><span>${M0.n}/${M0.d}</span>${sc.mode==='min'?`<span class="mut">${sc.key} ${t('mMin')}</span>`:''}</div><div class="jg">`;
+ for(let b=0;b<sc.bars;b++){const M=sc.M[b],pm=sc.M[b-1],ts=b>0&&(pm.n!==M.n||pm.d!==M.d),ids=N.map((_,i)=>i).filter(i=>N[i].bar===b);
+  h+=`<div class="jm${b===sc.bars-1?' end':''}" data-m="${b}"><span class="dy">${sc.dyn[b]}</span>${ts?`<span class="jt">${M.n}/${M.d}</span>`:''}`;
+  let gs=M.st,k=0;
+  M.g.forEach(gl=>{const ge=gs+gl;let grp='';
+   while(k<ids.length&&N[ids[k]].t<ge-1e-9){const i=ids[k],n=N[i];
+    if(n.d<1){grp+=cell(i,n)}
+    else{if(grp){h+=`<span class="jb">${grp}</span>`;grp=''}
+     const extra=n.d>=2?Math.round(n.d)-1:0;h+=`<span class="jb">${cell(i,n)}</span>`+`<span class="jb">${dash}</span>`.repeat(extra)}
+    k++}
+   if(grp)h+=`<span class="jb">${grp}</span>`;gs=ge});
+  h+='</div>'}
  return h+'</div>'}
 function show(){if(SC){SC.clef=O().clef}$('#score').innerHTML=SC?(O().nt==='staff'?staff(SC):jian(SC)):'';$('#clefNote').hidden=!(SC&&O().nt==='staff'&&O().clef!=='treble');$('#clefNote').textContent=t(O().clef==='bass'?'cfBn':'cfAn');paint(LR,!P||!P.on&&!!LR)}
 const headI=i=>{const N=SC.notes;while(i>0&&N[i].tie)i--;return i},prevA=i=>{i=headI(i)-1;return i<0?-1:headI(i)};
