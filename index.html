@@ -203,8 +203,8 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .bpmi{display:block;width:100%;background:transparent;border:0;color:var(--fg);text-align:center;padding:0;border-radius:var(--rm);-moz-appearance:textfield;appearance:textfield;cursor:text}
 .bpmi::-webkit-outer-spin-button,.bpmi::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .bpmi:focus{outline:2px dashed var(--ac);outline-offset:4px}
-#walk{position:fixed;inset:0;z-index:40}
-.wring{position:fixed;border-radius:.9rem;box-shadow:0 0 0 9999px rgba(8,10,12,.62),0 0 0 3px var(--ac);transition:left .35s var(--ease),top .35s var(--ease),width .35s var(--ease),height .35s var(--ease);pointer-events:none}
+#walk{position:fixed;inset:0;z-index:40;pointer-events:none}.wbub{pointer-events:auto}
+.wring{animation:wpulse 1.6s ease-in-out infinite;position:fixed;border-radius:.9rem;box-shadow:0 0 0 9999px rgba(8,10,12,.62),0 0 0 3px var(--ac);transition:left .35s var(--ease),top .35s var(--ease),width .35s var(--ease),height .35s var(--ease);pointer-events:none}
 .wbub{position:fixed;width:min(22rem,calc(100vw - 2rem));background:var(--sf);color:var(--fg);border-radius:var(--r);padding:1.1rem 1.2rem;box-shadow:0 24px 48px -12px rgba(0,0,0,.55);transition:top .35s var(--ease),left .35s var(--ease)}
 .wbub h3{margin:.35rem 0 .35rem;font-size:1.125rem;letter-spacing:-.01em}.wbub p#wD{margin:0 0 1rem;line-height:1.55;color:var(--mut)}.wbub .btn{padding:.6rem 1rem}
 .tiles{grid-template-columns:1fr 1fr}
@@ -305,6 +305,7 @@ body.camlive{overflow:hidden}
 .rotph{width:5rem;height:5rem;color:#7fc4ae;animation:rotp 2.4s var(--ease) infinite}.rotph svg{width:100%;height:100%}
 @keyframes rotp{0%,25%{transform:rotate(0)}55%,85%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
 .camtip ol{margin:0;padding-left:1.2rem;font-size:.875rem;line-height:1.6;color:var(--mut)}.camtip li+li{margin-top:.2rem}
+@keyframes wpulse{50%{outline:6px solid color-mix(in srgb,var(--ac) 45%,transparent)}}.wring{outline:0 solid transparent;outline-offset:2px}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -753,7 +754,7 @@ rotD|橫向拍攝才能完整拍到弓和雙手。把手機橫放在譜架或桌
 rotSkip|先用直式|Use portrait anyway|縦のまま使う
 camTipT|擺放建議|Setup tips|設置のコツ
 camTip1|手機橫放，用前鏡頭對著自己，離約 1～1.5 公尺。|Phone sideways, front camera facing you, about 1–1.5 m away.|スマホを横向きに、前面カメラで1〜1.5m。
-camTip2|上半身、雙手和整支弓都要入鏡，光線要充足。|Keep your upper body, both hands and the whole bow in frame, with good light.|上半身・両手・弓全体を明るく映す。
+camTip2|腰部以上、雙手和整支弓都要入鏡，光線要充足。|Keep your upper body, both hands and the whole bow in frame, with good light.|上半身・両手・弓全体を明るく映す。
 camTip3|擺好標準姿勢按「校準」：弓放平、肩膀放鬆、左手自然彎曲。|Hold your best posture and press Calibrate: level bow, relaxed shoulders, naturally curved left hand.|理想の姿勢で「キャリブレーション」。
 armHigh|左手臂太高了，手肘放低一點|Left arm too high, lower your elbow|左腕が高すぎます
 armLow|左手臂太低了，手肘抬高一點|Left arm too low, raise your elbow|左腕が低すぎます
@@ -841,7 +842,7 @@ w3|調音器§進到這頁就會自動開始聽。拉一個音，指針停在中
 w4|選擇要調的弦§內弦 D、外弦 A，或用自由偵測檢查任何音。|Pick a string§Inner D, outer A, or free detect for any note.
 w5|直接輸入速度§點這個數字就能直接輸入 30 到 500 的速度。|Type the tempo§Tap the number to type any tempo from 30 to 500.
 w6|選擇音色§電子音或木魚，挑一個你聽得最清楚的。|Choose a sound§Beep or woodblock, whichever you hear best.
-w7|姿勢偵測§開啟相機後擺好姿勢按「校準」，畫面上的虛線幫你對齊弓。|Posture§Start the camera, hold your posture and press Calibrate; the dashed line helps you align the bow.
+w7|姿勢偵測§開啟相機後手機橫放、擺好姿勢按「校準」，綠線代表正確，紅線代表要調整。|Posture§Start the camera, hold your posture and press Calibrate; the dashed line helps you align the bow.
 w8|AI 出的譜§每次都能換一份新譜，可選五線譜或簡譜、難度與拍子。|AI score§Get a fresh score anytime, staff or jianpu, any level and meter.
 w9|先聽示範§按這裡，AI 會把譜演奏一次，譜上同步標出位置。|Hear the demo§Press here and the AI plays the score while highlighting each note.
 w10|換你演奏§按「開始演奏」，聽完預備拍後開始拉，AI 會即時告訴你準不準。|Your turn§Press Start, wait for the count-in, then play. The AI tells you how you did in real time.
@@ -907,7 +908,7 @@ sayBow|弓不夠水平，請調整|Bow is not level, please adjust|弓が水平�
 saySh|肩膀放鬆|Relax your shoulders|肩の力を抜いてください
 camPriv|影像只在這個裝置上即時分析，不會上傳。偵測模型由瀏覽器從網路下載。|Video is analyzed live on this device and never uploaded. The browser downloads the models.|映像はこの端末内で処理され、アップロードされません。
 beta|測試版|Beta|ベータ
-h_cam|用相機檢查四件事：弓是否水平、左手臂高度、左手手形是否放鬆、肩膀是否聳起。§手機橫放、用前鏡頭對著自己，按「開啟相機」後會進入全螢幕。擺好標準姿勢按「校準」，倒數後記下你的弓角度、肩膀與手形。§二胡固定是左手按弦、右手拉弓，程式會自動辨認。相機看不到弓本身，是用右手方向推估；左手被琴桿擋住時會暫時偵測不到。§畫面上的線綠色代表正確、紅色代表要調整：弓的虛線是目標方向；左臂的虛線與圓圈是手肘的理想高度；左手骨架變紅代表手指張太開或太僵直；肩膀線變紅代表聳肩。§左手應像握著東西般自然彎曲、手指靠攏、肌肉不緊繃；手指張開僵直會變紅並語音提醒。|Checks four things: level bow, left arm height, relaxed left-hand shape and raised shoulders.§Turn the phone sideways with the front camera facing you and press Start camera to go full screen. Hold your best posture and press Calibrate to save your bow angle, shoulders and hand shape.§Erhu is always left hand on the strings and right hand bowing, detected automatically. The bow is estimated from the right hand; the left hand may be hidden by the neck at times.§Green lines mean good, red means adjust: the dashed bow line is the target; the dashed line and circle on the left arm mark the ideal elbow height; a red hand skeleton means fingers are spread or stiff; a red shoulder line means raised shoulders.§The left hand should curve naturally, fingers together, muscles relaxed; stiff spread fingers turn red with a voice reminder.
+h_cam|用相機檢查四件事：弓是否和琴桿保持 90 度、左手臂高度、左手手形是否放鬆、肩膀是否聳起或歪斜。§按「開啟相機」後畫面會轉成橫向全螢幕，請把手機橫放、前鏡頭對著自己。擺好標準姿勢按「校準」，倒數後記下你的弓、肩膀與手形。§二胡固定是左手按弦、右手拉弓，程式會自動辨認。琴桿位置是用左手和腰部推估，弓是用右手到琴筒上方的連線推估，所以請讓腰部以上都入鏡。§白色線是琴桿，虛線是和琴桿垂直的目標弓線，粗實線是你現在的弓：綠色代表有保持 90 度，紅色代表歪了。左臂的虛線與圓圈是手肘的理想高度；左手骨架變紅代表手指張太開或太僵直；肩膀線變紅代表聳肩或一高一低。§左手應像握著東西般自然彎曲、手指靠攏、肌肉不緊繃。|Checks four things: bow at 90° to the neck, left arm height, relaxed left-hand shape, and raised or uneven shoulders.§Press Start camera; the screen turns to landscape full screen, so stand the phone sideways with the front camera facing you. Hold your best posture and press Calibrate.§Left hand on the strings, right hand bowing, detected automatically. The neck is estimated from your left hand and hip, the bow from your right hand to just above the soundbox, so keep everything above your waist in frame.§The white line is the neck, the dashed line is the target bow line at a right angle, the thick solid line is your bow: green means 90°, red means tilted. The dashed line and circle on the left arm mark the ideal elbow height; a red hand skeleton means spread or stiff fingers; a red shoulder line means raised or uneven shoulders.§The left hand should curve naturally, fingers together, muscles relaxed.
 gA11y|無障礙設定|Accessibility
 sHC|高對比模式|High contrast
 sRead|語音朗讀|Read screens aloud
@@ -1348,10 +1349,10 @@ $('#iOk').onclick=()=>{const x=$('#iTx'),v=x.value.trim();if(!v)return;S.fb.push
 
 /* ---- camera: bow, left arm, left hand, shoulders ---- */
 const MPV='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14',MPM='https://storage.googleapis.com/mediapipe-models/';
-const TOL={s:{bow:5,sh:.08,arm:.15,lh:.48},m:{bow:8,sh:.12,arm:.22,lh:.56},l:{bow:12,sh:.18,arm:.3,lh:.66}};
+const TOL={s:{bow:5,sh:.05,arm:.15,lh:.4,curl:18,tilt:.07},m:{bow:8,sh:.08,arm:.22,lh:.47,curl:12,tilt:.1},l:{bow:12,sh:.12,arm:.3,lh:.56,curl:7,tilt:.14}};
 const ARM_T={el:.55,wr:-.1},HC=[[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[0,17],[17,18],[18,19],[19,20]];
 const OKC='#22c55e',BADC='#ef4444',NEU='rgba(255,255,255,.85)';
-let camOn=false,camBusy=false,hl=null,pl=null,cStream=null,cRaf=0,cAng=null,cSh=null,cSay=0,cLastVT=-1,cSamples=null,cFrame=0,lastPose=null,rotSkip=false,badT={};
+let camOn=false,camBusy=false,hl=null,pl=null,cStream=null,cRaf=0,cAng=null,cSh=null,cSay=0,cLastVT=-1,cSamples=null,cFrame=0,lastPose=null,rotSkip=false,badT={},cDev=null,hA=null,hG=null,cRetry=0;
 function camUI(){const c=S.cam;$('#cVoice').checked=c.voice!==false;$$('#cStrictSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===c.strict));
  $('#cGo').innerHTML=IC(camOn?'stop':'hand')+'<span>'+t(camOn?'camStop':'camStart')+'</span>';$('#cVoiceB').textContent=(c.voice!==false?'🔊 ':'🔇 ')+t('cVoiceS');
  $('#camw').classList.toggle('live',camOn);document.body.classList.toggle('camlive',camOn);$('#cChips').hidden=!camOn;$('#cBar').hidden=!camOn;
@@ -1367,21 +1368,23 @@ async function loadModels(){
  if(hl&&pl)return;const step=async(n,f)=>{try{return await f()}catch(e){throw new Error(n+': '+((e&&(e.message||e.name))||e))}};
  const mod=await step('1-JS',()=>import(MPV+'/vision_bundle.mjs')),fs=await step('2-WASM',()=>mod.FilesetResolver.forVisionTasks(MPV+'/wasm'));
  const mk=async(C,url,extra)=>{for(const d of['GPU','CPU']){try{return await C.createFromOptions(fs,{baseOptions:{modelAssetPath:url,delegate:d},runningMode:'VIDEO',...extra})}catch(e){if(d==='CPU')throw e}}};
- hl=await step('3-HAND',()=>mk(mod.HandLandmarker,MPM+'hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',{numHands:2,minHandDetectionConfidence:.4,minHandPresenceConfidence:.4,minTrackingConfidence:.4}));
+ hl=await step('3-HAND',()=>mk(mod.HandLandmarker,MPM+'hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',{numHands:2,minHandDetectionConfidence:.35,minHandPresenceConfidence:.35,minTrackingConfidence:.3}));
  pl=await step('4-POSE',()=>mk(mod.PoseLandmarker,MPM+'pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',{}));}
+async function openStream(){cStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:360},frameRate:{ideal:30}},audio:false});const v=$('#cvid');v.srcObject=cStream;await v.play()}
+const camExitFs=()=>{try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}};
 async function startCam(){
  if(camOn||camBusy)return;camBusy=true;camUI();
- const fail=(k,e)=>{camBusy=false;camUI();const m=t(k)+'（'+((e&&(e.name&&e.name!=='Error'?e.name:e.message))||e)+'）';$('#cph').textContent=m;toast(m)};
+ const fail=(k,e)=>{camBusy=false;camExitFs();camUI();const m=t(k)+'（'+((e&&(e.name&&e.name!=='Error'?e.name:e.message))||e)+'）';$('#cph').textContent=m;toast(m)};
+ try{const el=document.documentElement;if(el.requestFullscreen&&!document.fullscreenElement)await el.requestFullscreen({navigationUI:'hide'});
+  if(screen.orientation&&screen.orientation.lock){await screen.orientation.lock('landscape');await new Promise(r=>setTimeout(r,450))}}catch(e){}
  try{await loadModels()}catch(e){fail('mdlErr',e);return}
- try{cStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:960},height:{ideal:540},frameRate:{ideal:30}},audio:false});
-  const v=$('#cvid');v.srcObject=cStream;await v.play()}
- catch(e){fail('camErr',e);return}
- camBusy=false;camOn=true;cLastVT=-1;cAng=null;cSh=null;lastPose=null;badT={};$('#cph').hidden=true;
- try{const el=document.documentElement;if(el.requestFullscreen&&!document.fullscreenElement)await el.requestFullscreen({navigationUI:'hide'});if(screen.orientation&&screen.orientation.lock)await screen.orientation.lock('landscape')}catch(e){}
- camUI();camLoop()}
+ try{await openStream()}catch(e){fail('camErr',e);return}
+ camBusy=false;camOn=true;cLastVT=-1;cSh=null;cDev=null;hA=hG=null;lastPose=null;badT={};cRetry=0;$('#cph').hidden=true;
+ camUI();camLoop();
+ setTimeout(async()=>{const v=$('#cvid');if(camOn&&!cRetry&&v.videoHeight>v.videoWidth&&innerWidth>innerHeight){cRetry=1;try{cStream.getTracks().forEach(x=>x.stop());await openStream();cLastVT=-1}catch(e){}}},1300)}
 function stopCam(){camOn=false;cancelAnimationFrame(cRaf);if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;$('#cvid').srcObject=null;
  const c=$('#ccv');c.getContext('2d').clearRect(0,0,c.width,c.height);
- try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}camUI()}
+ camExitFs();camUI()}
 function chip(k,st){const e=document.querySelector(`#cChips [data-k="${k}"]`);if(e)e.className=st||''}
 const P3=(p,W,H)=>[p.x*W,p.y*H,(p.z||0)*W],dist3=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1],a[2]-b[2]);
 function handShape(lm,W,H){const q=lm.map(p=>P3(p,W,H)),pw=dist3(q[5],q[17])||1;
@@ -1403,15 +1406,22 @@ function camLoop(){
   if(hs.length===1){const h=hs[0];if(d(h,16)<d(h,15))bowH=h;else lH=h}
   else{const a=d(hs[0],16)+d(hs[1],15),b=d(hs[1],16)+d(hs[0],15);if(a<=b){bowH=hs[0];lH=hs[1]}else{bowH=hs[1];lH=hs[0]}}}
  else hs.forEach(h=>{if(h.lab==='Right'&&!bowH)bowH=h;else if(!lH)lH=h});
- /* bow */
- let bow=null,bowOk=null;
- if(bowH){const a=bowH.lm[0],b=bowH.lm[9],raw=lineAng((1-a.x)*W,a.y*H,(1-b.x)*W,b.y*H);cAng=cAng==null?raw:.55*raw+.45*cAng;bow=cAng;
-  const tgt=cal.bow!=null?cal.bow:0;bowOk=Math.abs(angDiff(bow,tgt))<=T.bow;const col=bowOk?OKC:BADC;
-  const ln=(deg,len,x,y)=>{const r=-deg*Math.PI/180,dx=Math.cos(r)*len,dy=Math.sin(r)*len;g.beginPath();g.moveTo(x-dx,y-dy);g.lineTo(x+dx,y+dy);g.stroke()};
-  g.globalAlpha=.9;g.setLineDash([LW*2.6,LW*1.6]);g.strokeStyle=col;g.lineWidth=LW*.8;ln(tgt,W,a.x*W,a.y*H);
-  g.setLineDash([]);g.globalAlpha=1;g.strokeStyle=col;g.lineWidth=LW*1.25;ln(bow,W*.24,a.x*W,a.y*H);dot(a.x*W,a.y*H,LW*1.1,col)}
- else cAng=null;
- chip('bow',bowH?(bowOk?'ok':'bad'):'');
+ /* neck + bow: the bow should stay 90° to the neck */
+ let bowOk=null,devRaw=null;const sw0=p?Math.abs(p[11].x-p[12].x)*W:0,vis=i=>p&&(p[i].visibility??1)>.5;
+ let A=null,G=null;
+ if(lH){let x=0,y=0;[0,5,9,13,17].forEach(i=>{x+=lH.lm[i].x;y+=lH.lm[i].y});A=[x/5*W,y/5*H]}else if(vis(15))A=[p[15].x*W,p[15].y*H];
+ if(bowH)G=[(bowH.lm[0].x+bowH.lm[5].x)/2*W,(bowH.lm[0].y+bowH.lm[5].y)/2*H];else if(vis(16))G=[(p[16].x+p[20].x)/2*W,(p[16].y+p[20].y)/2*H];
+ if(A)hA={v:A,t:ts};else if(hA&&ts-hA.t<600)A=hA.v;if(G)hG={v:G,t:ts};else if(hG&&ts-hG.t<600)G=hG.v;
+ if(A&&G&&sw0>25){const B=vis(23)&&p[23].y<1.15?[p[23].x*W,p[23].y*H]:[A[0],A[1]+1.25*sw0],C=[B[0]+(A[0]-B[0])*.2,B[1]+(A[1]-B[1])*.2];
+  const neck=lineAng(A[0],A[1],B[0],B[1]),d=angDiff(lineAng(G[0],G[1],C[0],C[1]),neck+90);cDev=cDev==null?d:.5*d+.5*cDev;devRaw=cDev;
+  const dev=cDev-(cal.perp||0);bowOk=Math.abs(dev)<=T.bow;const col=bowOk?OKC:BADC,nr=neck*Math.PI/180,nx=Math.cos(nr),ny=Math.sin(nr),px=-ny,py=nx,L=Math.hypot(G[0]-C[0],G[1]-C[1]);
+  g.setLineDash([]);g.strokeStyle='rgba(255,255,255,.95)';g.lineWidth=LW;g.beginPath();g.moveTo(A[0],A[1]);g.lineTo(C[0]+(C[0]-A[0])*.12,C[1]+(C[1]-A[1])*.12);g.stroke();
+  g.globalAlpha=.9;g.setLineDash([LW*2.4,LW*1.5]);g.strokeStyle=col;g.lineWidth=LW*.75;g.beginPath();g.moveTo(C[0]-px*L*1.15,C[1]-py*L*1.15);g.lineTo(C[0]+px*L*1.15,C[1]+py*L*1.15);g.stroke();g.setLineDash([]);g.globalAlpha=1;
+  const ux=(C[0]-G[0])/(L||1),uy=(C[1]-G[1])/(L||1);g.strokeStyle=col;g.lineWidth=LW*1.25;g.beginPath();g.moveTo(G[0]-ux*L*.15,G[1]-uy*L*.15);g.lineTo(C[0]+ux*L*.6,C[1]+uy*L*.6);g.stroke();
+  const q=LW*2.6,sg=(G[0]-C[0])*px+(G[1]-C[1])*py>0?1:-1;g.strokeStyle='rgba(255,255,255,.95)';g.lineWidth=LW*.5;g.beginPath();g.moveTo(C[0]-nx*q,C[1]-ny*q);g.lineTo(C[0]-nx*q+px*q*sg,C[1]-ny*q+py*q*sg);g.lineTo(C[0]+px*q*sg,C[1]+py*q*sg);g.stroke();
+  dot(G[0],G[1],LW*1.1,col);dot(C[0],C[1],LW*.9,col)}
+ else cDev=null;
+ chip('bow',bowOk==null?'':bowOk?'ok':'bad');
  /* left arm (pose 11 shoulder,13 elbow,15 wrist) */
  let armOk=null;
  if(p&&(p[11].visibility??1)>.4&&(p[13].visibility??1)>.4){const sw=Math.abs(p[11].x-p[12].x)*W;
@@ -1424,7 +1434,7 @@ function camLoop(){
  chip('arm',armOk==null?'':armOk?'ok':'bad');
  /* left hand shape */
  let lhOk=null,hsS=null;
- if(lH){hsS=handShape(lH.lm,W,H);const lim=cal.spread!=null?Math.min(T.lh*1.25,Math.max(T.lh,cal.spread*1.3+.06)):T.lh;lhOk=hsS.spread<=lim;const col=lhOk?OKC:BADC;
+ if(lH){hsS=handShape(lH.lm,W,H);const lim=cal.spread!=null?Math.max(T.lh*.8,Math.min(T.lh,cal.spread*1.3+.05)):T.lh;lhOk=hsS.spread<=lim&&hsS.curl>=T.curl;const col=lhOk?OKC:BADC;
   g.strokeStyle=col;g.lineWidth=LW*.55;HC.forEach(([i,j])=>{const A=lH.lm[i],B=lH.lm[j];g.beginPath();g.moveTo(A.x*W,A.y*H);g.lineTo(B.x*W,B.y*H);g.stroke()});
   [4,8,12,16,20].forEach(i=>dot(lH.lm[i].x*W,lH.lm[i].y*H,LW*.6,col));badFor('lh',!lhOk,1500,!lhOk?'lhTense':null)}
  chip('lh',lH?(lhOk?'ok':'bad'):'');
@@ -1432,12 +1442,12 @@ function camLoop(){
  let sh=null,shOk=null;
  if(p){const w=Math.abs(p[11].x-p[12].x)*W;
   if(w>25){const r=Math.min((p[11].y-p[7].y)*H/w,(p[12].y-p[8].y)*H/w);cSh=cSh==null?r:.35*r+.65*cSh;sh=cSh;
-   if(cal.sh!=null)shOk=(cal.sh-sh)/cal.sh<=T.sh;const col=shOk==null?NEU:shOk?OKC:BADC;
+   const tilt=Math.abs(p[11].y-p[12].y)*H/w;shOk=tilt<=T.tilt&&(cal.sh==null||(cal.sh-sh)/cal.sh<=T.sh);const col=shOk?OKC:BADC;
    g.strokeStyle=col;g.lineWidth=LW*.8;g.beginPath();g.moveTo(p[11].x*W,p[11].y*H);g.lineTo(p[12].x*W,p[12].y*H);g.stroke();
    badFor('sh',shOk===false,1200,'saySh')}}
  else cSh=null;
  chip('sh',shOk==null?'':shOk?'ok':'bad');
- if(cSamples)cSamples.push({bow,sh,spread:hsS&&hsS.spread});
+ if(cSamples)cSamples.push({perp:devRaw,sh,spread:hsS&&hsS.spread});
  next()}
 $('#cGo').onclick=()=>camOn?stopCam():startCam();
 $('#cClose').onclick=stopCam;
@@ -1452,7 +1462,7 @@ $('#cCal').onclick=()=>{if(!camOn||calBusy)return;calBusy=true;const box=$('#ccd
   if(n>0){N.textContent=n;N.classList.remove('pop');void N.offsetWidth;N.classList.add('pop');n--;setTimeout(tick,1000);return}
   N.textContent='●';T.textContent=t('calNow');cSamples=[];setTimeout(()=>{const a=cSamples||[];cSamples=null;
    const avg=k=>{const v=a.map(x=>x[k]).filter(x=>x!=null);return v.length>=4?v.reduce((x,y)=>x+y,0)/v.length:null};
-   const c={bow:avg('bow'),sh:avg('sh'),spread:avg('spread')};if(c.bow==null&&c.sh==null){done('calFail');return}
+   const c={perp:avg('perp'),sh:avg('sh'),spread:avg('spread')};if(c.perp==null&&c.sh==null){done('calFail');return}if(c.perp!=null)c.perp=Math.max(-25,Math.min(25,c.perp));
    S.cam.calib={...(S.cam.calib||{}),...Object.fromEntries(Object.entries(c).filter(([,v])=>v!=null))};save();done('calOk')},1500)};
  tick()};
 
@@ -1549,7 +1559,7 @@ $('#brkGo').onclick=()=>brkEnd(true);$('#brkSkip').onclick=()=>brkEnd(false);
 twice('#tkApply',()=>{const v=$('#tkTplSel').value;S.task.tpl=v;S.task.list=mkTpl(v);S.task.auto=0;TK=null;save();tkUI();toast(t('tkApplied'))});
 
 /* ---- interactive walkthrough ---- */
-const WALK=[['home','#badge','w1'],['home','nav button[data-v="tune"]','w2'],['tune','#gauge','w3'],['tune','#modes','w4'],['beat','#bpmv','w5'],['beat','#snd','w6'],['cam','#cGo','w7'],['drill','#score','w8'],['drill','#dDemo','w9'],['drill','#dGo','w10'],['task','#taskList','w11'],['set','#chg','w12']];
+const WALK=[['home','#badge','w1'],['home','nav button[data-v="tune"]','w2',1],['tune','#gauge','w3'],['tune','#modes','w4',1],['beat','#bpmv','w5'],['beat','#snd','w6',1],['cam','#cGo','w7'],['drill','#score','w8'],['drill','#dDemo','w9',1],['drill','#dGo','w10'],['task','#taskList','w11'],['set','#chg','w12']];
 let WK=0,walkOn=false;
 function startWalk(){if(stream)mic();if(camOn)stopCam();walkOn=true;WK=0;$('#coach').hidden=true;$('#help').classList.remove('on');$('#tour').classList.remove('on');$('#walk').hidden=false;drawWalk()}
 function endWalk(){walkOn=false;S.guided.tune=1;S.guided.drill=1;$('#walk').hidden=true;S.toured=1;save();view('home')}
@@ -1563,6 +1573,9 @@ function placeWalk(){if(!walkOn)return;const el=document.querySelector(WALK[WK][
  const p=6;ring.style.cssText=`left:${r.left-p}px;top:${r.top-p}px;width:${r.width+2*p}px;height:${r.height+2*p}px`;
  const below=r.top+r.height/2<H/2;let top=below?r.bottom+p+12:r.top-p-12-bh;top=Math.max(12,Math.min(H-bh-12,top));
  bub.style.top=top+'px';bub.style.left=Math.max(12,Math.min(W-bw-12,r.left+r.width/2-bw/2))+'px'}
+const walkHit=e=>{if(!walkOn||e.target.closest('#wBub'))return 0;const el=document.querySelector(WALK[WK][1]);return el&&(el===e.target||el.contains(e.target))?(WALK[WK][3]?2:1):-1};
+document.addEventListener('click',e=>{const h=walkHit(e);if(!h)return;if(h===2){setTimeout(()=>{if(walkOn)$('#wNext').click()},350);return}e.preventDefault();e.stopPropagation();if(h===1)$('#wNext').click()},true);
+document.addEventListener('mousedown',e=>{const h=walkHit(e);if(h===1||h===-1)e.preventDefault()},true);
 $('#wNext').onclick=()=>{WK<WALK.length-1?(WK++,drawWalk()):endWalk()};$('#wPrev').onclick=()=>{if(WK>0){WK--;drawWalk()}};$('#wSkip').onclick=endWalk;
 addEventListener('resize',()=>{if(walkOn)placeWalk()});$('main').addEventListener('scroll',()=>{if(walkOn)placeWalk()},{passive:true});
 function fill(){[['#bpm',30,500]].forEach(([s,a,b])=>$(s).style.setProperty('--p',((+$(s).value-a)/(b-a)*100)+'%'))}
