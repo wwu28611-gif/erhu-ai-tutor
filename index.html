@@ -182,9 +182,13 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .cd b.pop{animation:pop .9s var(--ease)}@keyframes pop{from{transform:scale(1.5);opacity:.2}to{transform:scale(1);opacity:1}}
 .jn{position:relative}.jn b.uu{border-bottom:4px double currentColor}
 .jn.tie::before{content:"";position:absolute;right:50%;width:1.9rem;top:.05rem;height:.45rem;border:1.5px solid currentColor;border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0}
+.seg button{white-space:nowrap}
 .jg.one{grid-template-columns:1fr}.jg.one .jr{gap:.45rem}
 .jt{font-style:normal;font-family:inherit;font-weight:700;margin-left:.3rem}
 #dRhy button,#dLv button{padding:.55rem .2rem;font-size:.85rem}
+.nt.now{color:var(--ac)!important}#score svg .nt.now ellipse{stroke-width:3}
+.jn.now{background:var(--acs);border-radius:.45rem;box-shadow:0 0 0 2px var(--ac)}
+.dpos{font-size:.9375rem;font-weight:600;color:var(--ac);min-height:1.4rem;margin-top:.25rem;font-variant-numeric:tabular-nums}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -324,7 +328,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
  <div class="card"><div id="score" class="sc"></div><p class="mut" id="clefNote" style="font-size:.8125rem;margin:.5rem 0 0" hidden></p></div>
  <div class="gap" style="height:1rem"></div>
  <div class="row2"><button class="btn alt" id="dGen"><svg class="ic"><use href="#i-ai"/></svg><span data-i="gen"></span></button><button class="btn" id="dGo"></button></div>
- <div class="card"><p class="lbl" data-i="rLive"></p><div id="live"></div><p class="mut" data-i="headph" style="margin:.5rem 0 0;font-size:.8125rem"></p></div>
+ <div class="card"><p class="lbl" data-i="rLive"></p><div id="live"></div><div id="dPos" class="dpos"></div><p class="mut" data-i="headph" style="margin:.5rem 0 0;font-size:.8125rem"></p></div>
  <div class="gap" style="height:1rem"></div>
  <div class="card" id="rep" hidden></div>
  <div class="gap"></div><p class="lbl" data-i="dSet"></p>
@@ -339,6 +343,8 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
   <div class="li"><span class="t" data-i="dTon"></span><div class="seg" id="dTon"><button data-v="1" data-i="tonal"></button><button data-v="0" data-i="atonal"></button></div></div>
   <div class="li" style="flex-direction:column;align-items:stretch"><span data-i="dRhy"></span><div class="seg" id="dRhy"><button data-k="h" data-i="rHalf"></button><button data-k="q" data-i="rQ"></button><button data-k="e" data-i="rE"></button><button data-k="dot" data-i="rDot"></button><button data-k="s" data-i="rS"></button></div></div>
   <label class="li"><span class="t" data-i="dTies"></span><input type="checkbox" id="d_ties"></label>
+  <label class="li"><span class="t"><span data-i="gClickL"></span><br><span class="mut" style="font-size:.8125rem" data-i="gClickD"></span></span><input type="checkbox" id="d_gClick"></label>
+  <label class="li"><span class="t"><span data-i="gPosL"></span><br><span class="mut" style="font-size:.8125rem" data-i="gPosD"></span></span><input type="checkbox" id="d_gPos"></label>
   <div class="li" style="flex-wrap:wrap"><span class="t" data-i="dTempo"></span><b id="d_tempoV"></b><input type="range" id="d_tempo" min="40" max="120" step="5"></div>
  </div>
  <div class="gap"></div><p class="lbl" data-i="hist"></p>
@@ -514,7 +520,7 @@ to7|節拍器§穩定的節拍，30 到 200 BPM，可選 2 至 6 拍並有重拍
 to8|調音器§內弦 D、外弦 A 一眼看出偏高或偏低，支援 A=440 或 442。|Tuner§See at a glance whether the inner D and outer A strings are sharp or flat. Supports A=440 or 442.
 h_tune|協助你把內弦 D、外弦 A 調準，並檢查每個音的準確度。§選擇內弦、外弦或自由偵測，按「開始」並允許麥克風，拉一個長音，觀察指針。§請在安靜的地方，手機靠近琴筒約 30 公分。§即時音名、簡譜數字、頻率、偏高或偏低的音分，以及音準曲線。§拉空弦 D 時指針偏右 +12¢，代表偏高，把弦軸稍微放鬆。|Helps you tune the inner D and outer A strings and check every note.§Pick inner, outer or free detect, press Start, allow the microphone, play a long note and watch the needle.§Use a quiet room and keep the phone about 30 cm from the soundbox.§Live note name, jianpu number, frequency, cents sharp or flat, and a pitch curve.§Playing open D with the needle at +12¢ means sharp, so loosen the peg slightly.
 h_beat|讓你跟著穩定的節拍練習。§用滑桿或 ±按鈕設定速度，選擇每小節拍數，按「開始」。§第一拍是重拍。戴耳機時節拍更清楚。§節拍器本身不做分析；視譜視唱會用同樣的速度檢查你的節奏。§50 BPM、4 拍，每拍拉一個長弓。|Practice with a steady beat.§Set the tempo with the slider or ± buttons, choose the beats per bar and press Start.§The first beat is accented. Headphones make it clearer.§The metronome itself does no analysis; Drill uses the same tempo to check your rhythm.§50 BPM in 4 beats, one long bow per beat.
-h_drill|由 AI 隨機出譜，聽你演奏並評分，培養視奏能力。§先選五線譜或簡譜、調式、拍號與節奏，按「開始演奏」，聽完一小節預備拍後開始拉。§請戴耳機避免預備拍被收音。音符變綠是正確，橘是一項不準，紅是漏掉。§目前演奏到第幾小節、提早或落後幾毫秒、音準、節奏、強弱對比，並給練習建議。§4/4、D 大調、四分與八分音符，速度 60，練到音準與節奏都超過 80%。|The AI writes a random score, listens and grades you to build sight-reading skill.§Choose staff or jianpu, mode, meter and rhythms, press Start, hear one bar of count-in, then play.§Use headphones so the count-in is not picked up. Green is correct, amber means one aspect is off, red is missed.§Current bar, how many ms early or late, pitch, rhythm, dynamic contrast and practice suggestions.§4/4 in D major with quarters and eighths at 60 BPM, until pitch and rhythm both pass 80%.
+h_drill|由 AI 隨機出譜，聽你演奏並評分，培養視奏能力。§先選五線譜或簡譜、調式、拍號與節奏，按「開始演奏」，聽完一小節預備拍後開始拉。§可開啟「拍子引導」持續打拍、「位置引導」在譜上標出現在該拉的音。請戴耳機避免拍子聲被收音。音符變綠是正確，橘是一項不準，紅是漏掉。§目前演奏到第幾小節、提早或落後幾毫秒、音準、節奏、強弱對比，並給練習建議。§4/4、D 大調、四分與八分音符，速度 60，練到音準與節奏都超過 80%。|The AI writes a random score, listens and grades you to build sight-reading skill.§Choose staff or jianpu, mode, meter and rhythms, press Start, hear one bar of count-in, then play.§Use headphones so the count-in is not picked up. Green is correct, amber means one aspect is off, red is missed.§Current bar, how many ms early or late, pitch, rhythm, dynamic contrast and practice suggestions.§4/4 in D major with quarters and eighths at 60 BPM, until pitch and rhythm both pass 80%.
 h_set|管理身分、外觀、AI 與隱私。§在各群組中調整，變更會立即套用，並自動儲存在這台裝置。§目前資料只存在本機。清除瀏覽器資料或刪除帳號會一併刪除。§AI 回答的詳細程度、語音與練習建議都可以在這裡設定。§切換成「樂齡學習者」，字體與按鈕會立即放大。|Manage your role, appearance, AI and privacy.§Change any group and it applies instantly, saved on this device.§Data lives on this device only. Clearing browser data or deleting the account removes it.§Answer detail, voice and practice suggestions are all set here.§Switch to Senior learner and text and buttons grow immediately.
 g_tune|歡迎第一次使用 AI 音準分析，我將引導您完成第一次分析。§步驟 1：選擇要調的弦。內弦是 D，外弦是 A，也可以選自由偵測。§步驟 2：按下「開始」，並允許使用麥克風。§步驟 3：拉一個長音。指針偏左是偏低，偏右是偏高，到中間就準了。|Welcome to AI pitch analysis for the first time. I will guide you through your first analysis.§Step 1: Choose a string. Inner is D, outer is A, or use free detect.§Step 2: Press Start and allow the microphone.§Step 3: Play one long note. Needle left means flat, right means sharp, centered means in tune.
 g_drill|歡迎第一次使用 AI 視譜視唱，我將引導您完成第一次練習。§步驟 1：看看 AI 出的譜。可以按「重新出題」換一首，也能在下方改調式與節奏。§步驟 2：按「開始演奏」，先聽一小節預備拍，再依譜演奏。§步驟 3：演奏時 AI 會即時告訴你在第幾小節、準不準。結束後會看到成績與建議。|Welcome to AI sight-reading for the first time. I will guide you through your first practice.§Step 1: Look at the score. Press New score for another, or change mode and rhythm below.§Step 2: Press Start. You hear one bar of count-in, then play the score.§Step 3: While you play, the AI tells you the current bar and how accurate you are. Afterwards you get results and tips.
@@ -580,6 +586,13 @@ close|關閉|Close
 sDel|刪除帳號與所有資料|Delete account and all data
 sReplay|重新觀看新手導覽|Replay welcome tour
 gHelp|協助|Help
+gClickL|拍子引導|Beat guide|拍のガイド
+gClickD|演奏時持續打拍，第一拍較重|Keeps clicking while you play, accented downbeat|演奏中も拍を鳴らします
+gPosL|位置引導|Position guide|位置のガイド
+gPosD|在譜上標出現在該拉的音與小節|Highlights the note and bar you should be playing|今弾く音と小節を表示
+goNow|開始！|Go!|スタート！
+beatN|第 {n} 拍|beat {n}|{n}拍目
+barN|第 {b} / {t} 小節|Bar {b} / {t}|{b}/{t}小節
 begin|開始演奏|Start|開始
 dLevel|難度|Difficulty|難易度
 lvE|簡單|Easy|かんたん
@@ -746,9 +759,9 @@ $('#badge').onclick=()=>$('#ov').classList.add('on');
 /* ---- metronome ---- */
 let playing=false,nextT=0,beat=0,tm;
 function dots(){const d=$('#dots');if(d.children.length!==+S.beats)d.innerHTML='<i></i>'.repeat(S.beats)}
-function click(time,b){if(!S.click)return;const a=ctx(),o=a.createOscillator(),g=a.createGain();
+function click(time,b,force){if(!S.click&&!force)return;const a=ctx(),o=a.createOscillator(),g=a.createGain();
  o.frequency.value=b===0?1600:1000;g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(.6,time+.003);g.gain.exponentialRampToValueAtTime(.0001,time+.06);
- o.connect(g).connect(a.destination);o.start(time);o.stop(time+.08)}
+ o.connect(g).connect(a.destination);o.start(time);o.stop(time+.08);return o}
 function sched(){const a=ctx();while(nextT<a.currentTime+.12){const b=beat,at=nextT;click(at,b);
  setTimeout(()=>{if(!playing)return;const ds=$$('#dots i');ds.forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):'')},Math.max(0,(at-a.currentTime)*1000));
  nextT+=60/S.bpm;beat=(beat+1)%S.beats}}
@@ -764,7 +777,7 @@ $$('#beats button').forEach(b=>b.onclick=()=>{S.beats=+b.dataset.n;beat=0;save()
 
 /* ---- drill ---- */
 const TON={C:0,D:2,E:4,F:5,G:7,A:9},MOD={maj:[0,2,4,5,7,9,11],min:[0,2,3,5,7,8,10],pen:[0,2,4,7,9]},LV=['p','mp','mf','f'];
-const DD={nt:'staff',key:'D',mode:'maj',time:'4/4',tonal:1,bars:4,tempo:60,r:{h:1,q:1,e:0,dot:0,s:0},level:'easy',clef:'treble',ties:0};
+const DD={nt:'staff',key:'D',mode:'maj',time:'4/4',tonal:1,bars:4,tempo:60,r:{h:1,q:1,e:0,dot:0,s:0},level:'easy',clef:'treble',ties:0,gClick:1,gPos:1};
 const O=()=>{if(!S.drill)S.drill=JSON.parse(JSON.stringify(DD));const o=S.drill;for(const k in DD)if(o[k]==null)o[k]=JSON.parse(JSON.stringify(DD[k]));if(o.r.s==null)o.r.s=0;return o};
 const SIG={'2/4':[1,1],'3/4':[1,1,1],'4/4':[1,1,1,1],'5/4':[1,1,1,1,1],'6/8':[1.5,1.5],'5/8':[1,1.5],'7/8':[1,1,1.5]},MIX=['2/4','3/4','4/4','5/8','6/8','7/8'];
 const LVL={
@@ -872,7 +885,7 @@ function judge(R,i){const N=SC.notes;i=headI(i);const r=R[i];if(!r)return null;c
 function paint(R,fin){const run=P&&P.on;
  $$('#score .nt').forEach(g=>{const i=+g.dataset.i;let c='';if(R){const j=judge(R,i);c=j?(j.p&&j.r?'ok':j.p||j.r?'warn':'miss'):(fin||(run&&i<P.idx)?'miss':'')}
   g.classList.remove('ok','warn','miss');c&&g.classList.add(c)});
- const cb=run?SC.notes[Math.max(0,P.last)].bar:-1;$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===cb))}
+ if(run&&O().gPos)return;const cb=run?SC.notes[Math.max(0,P.last)].bar:-1;$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===cb))}
 const live=x=>$('#live').textContent=x,dtT=ms=>Math.abs(ms)<40?t('onbeat'):(ms<0?t('early'):t('late'))+' '+Math.abs(Math.round(ms))+' ms';
 function setBtn(){const on=P&&P.on;$('#dGo').innerHTML=IC(on?'stop':'play')+'<span>'+t(on?'stop':'begin')+'</span>'}
 function regen(){if(P&&P.on)stopDrill();SC=gen();LR=null;P=null;syncD();show();$('#rep').hidden=true;live(t('ready'))}
@@ -880,10 +893,11 @@ async function startDrill(){
  if(P&&P.on){stopDrill();return}
  try{const st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
   const a=ctx();if(a.state==='suspended')await a.resume();const an2=a.createAnalyser();an2.fftSize=2048;a.createMediaStreamSource(st).connect(an2);
-  meas(SC);const spb=60/SC.tempo,t1=a.currentTime+.4,m0=SC.M[0],t0=t1+m0.len*spb;let off=0;m0.g.forEach((g,i)=>{click(t1+off*spb,i);off+=g});
-  P={on:1,st,an:an2,buf:new Float32Array(2048),spb,t0,t1,seg:null,idx:0,last:-1,res:SC.notes.map(()=>null)};LR=null;$('#rep').hidden=true;paint(P.res);setBtn();dLoop()}
+  meas(SC);const spb=60/SC.tempo,t1=a.currentTime+.4,m0=SC.M[0],t0=t1+m0.len*spb,osc=[],o=O();let off=0;m0.g.forEach((g,i)=>{osc.push(click(t1+off*spb,i,1));off+=g});
+  if(o.gClick)SC.M.forEach(M=>{let q=0;M.g.forEach((g,i)=>{osc.push(click(t0+(M.st+q)*spb,i,1));q+=g})});
+  P={on:1,st,an:an2,buf:new Float32Array(2048),spb,t0,t1,osc,cur:-2,seg:null,idx:0,last:-1,res:SC.notes.map(()=>null)};LR=null;$('#rep').hidden=true;paint(P.res);setBtn();try{$('#score').closest('.card').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}dLoop()}
  catch(e){live(t('micErr'))}}
-function stopDrill(){if(!P)return;cancelAnimationFrame(P.raf);P.st.getTracks().forEach(x=>x.stop());P.on=0;setBtn();paint(P.res,false)}
+function stopDrill(){if(!P)return;cancelAnimationFrame(P.raf);(P.osc||[]).forEach(x=>{try{x&&x.stop(0)}catch(e){}});P.osc=[];$$('#score .nt.now').forEach(e=>e.classList.remove('now'));$('#dPos').textContent='';P.st.getTracks().forEach(x=>x.stop());P.on=0;setBtn();paint(P.res,false)}
 function open_(st,ms,rms){P.seg={st,end:st,ms:[...ms],pk:rms,gap:0}}
 function close_(){const g=P.seg;P.seg=null;if(!g||g.end-g.st<.08||g.ms.length<4)return;
  const m=med(g.ms),mr=Math.round(m),rel=(g.st-P.t0)/P.spb,N=SC.notes,pv=N[P.last];
@@ -892,9 +906,16 @@ function close_(){const g=P.seg;P.seg=null;if(!g||g.end-g.st<.08||g.ms.length<4)
  if(bj<0)return;
  const r=P.res[bj]={dt:(rel-N[bj].t)*P.spb*1000,rel,c:(m-N[bj].m)*100,db:g.pk>0?20*Math.log10(g.pk):-99};P.last=bj;P.idx=bj+1;while(N[P.idx]&&N[P.idx].tie)P.idx++;
  live(`${t('bar')} ${N[bj].bar+1}/${SC.bars} · ${dtT(r.dt)} · ${r.c>0?'+':''}${Math.round(r.c)}¢`);paint(P.res)}
+function cursor(now){if(!O().gPos)return;const el=(now-P.t0)/P.spb,N=SC.notes;let k=-1;
+ for(let i=0;i<N.length;i++)if(el>=N[i].t-1e-6&&el<N[i].t+N[i].d){k=i;break}
+ if(k===P.cur)return;P.cur=k;$$('#score .nt.now').forEach(e=>e.classList.remove('now'));if(k<0){$('#dPos').textContent='';return}
+ $$(`#score .nt[data-i="${k}"]`).forEach(e=>e.classList.add('now'));const b=N[k].bar,M=SC.M[b];$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===b));
+ let q=0,n=0;M.g.forEach(g=>{if(el-M.st>=q-1e-6)n++;q+=g});$('#dPos').textContent=t('barN').replace('{b}',b+1).replace('{t}',SC.bars)+' · '+t('beatN').replace('{n}',n);
+ const box=document.querySelector(`#score [data-m="${b}"]`);if(box&&box.scrollIntoView&&O().nt==='jian')box.scrollIntoView({block:'nearest',behavior:'smooth'})}
 function dLoop(){if(!P||!P.on)return;P.raf=requestAnimationFrame(dLoop);
  const now=ac.currentTime,bf=P.buf;P.an.getFloatTimeDomainData(bf);let e=0;for(let i=0;i<2048;i++)e+=bf[i]*bf[i];const rms=Math.sqrt(e/2048);
  if(now<P.t0-.3*P.spb){const el=(now-P.t1)/P.spb;let n=0,o2=0;SC.M[0].g.forEach(x=>{if(el>=o2)n++;o2+=x});if(n>0)live(`${t('countin')} ${n}`);return}
+ if(!P.started){P.started=1;live(t('goNow'))}cursor(now);
  const f=detect(bf,ac.sampleRate),m=f>0?69+12*Math.log2(f/S.ref):null,g=P.seg;
  if(m==null){if(g){g.gap=g.gap||now;if(now-g.gap>.12)close_()}}
  else if(g){g.gap=0;const md=med(g.ms);
@@ -915,7 +936,7 @@ function report(R){const N=SC.notes,A=N.map((_,i)=>i).filter(i=>!N[i].tie),J=A.m
 const LVK={easy:'lvE',hard:'lvH',pro:'lvP',chal:'lvC'};
 function histUI(){const H=getH();$('#hist').innerHTML=H.length?H.map(x=>`<div class="li" data-h="${x.id}" style="cursor:pointer"><span class="t"><b>${x.sc.key} ${t({maj:'mMaj',min:'mMin',pen:'mPen'}[x.sc.mode]||'mMaj')} · ${x.sc.time==='mix'?t('tMix'):x.sc.time}${x.sc.level?' · '+t(LVK[x.sc.level]||'lvE'):''}</b><br><span class="mut" style="font-size:.8125rem">${new Date(x.id).toLocaleDateString(S.lang)} · ${t('rPitch')} ${x.rs.pitch}% · ${t('rRhythm')} ${x.rs.rhythm}%</span></span><button class="x" data-d="${x.id}" aria-label="delete">×</button></div>`).join(''):`<div class="li mut">${t('histEmpty')}</div>`;$('#hClr').hidden=!H.length}
 function syncD(){const o=O();$$('#dNt button').forEach(b=>b.classList.toggle('sel',b.dataset.v===o.nt));$$('#dTon button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===+o.tonal));
- $$('#dLv button').forEach(b=>b.classList.toggle('sel',b.dataset.v===o.level));$('#d_ties').checked=!!o.ties;$('#clefRow').hidden=o.nt!=='staff';
+ $$('#dLv button').forEach(b=>b.classList.toggle('sel',b.dataset.v===o.level));$('#d_ties').checked=!!o.ties;$('#d_gClick').checked=!!o.gClick;$('#d_gPos').checked=!!o.gPos;$('#clefRow').hidden=o.nt!=='staff';
  $$('#dRhy button').forEach(b=>b.classList.toggle('sel',!!o.r[b.dataset.k]));['key','mode','time','bars','tempo','clef'].forEach(k=>$('#d_'+k).value=o[k]);
  $('#d_tempoV').textContent=o.tempo;$('#d_tempo').style.setProperty('--p',(o.tempo-40)/80*100+'%')}
 function drillUI(){const fl=(id,a)=>$(id).innerHTML=a.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');
@@ -929,6 +950,8 @@ $$('#dRhy button').forEach(b=>b.onclick=()=>{const r=O().r;r[b.dataset.k]=r[b.da
 ['key','mode','time','bars'].forEach(k=>$('#d_'+k).onchange=e=>{O()[k]=k==='bars'?+e.target.value:e.target.value;save();regen()});
 $('#d_clef').onchange=e=>{O().clef=e.target.value;save();show()};
 $('#d_ties').onchange=e=>{O().ties=e.target.checked?1:0;save();regen()};
+$('#d_gClick').onchange=e=>{O().gClick=e.target.checked?1:0;save()};
+$('#d_gPos').onchange=e=>{O().gPos=e.target.checked?1:0;save();if(!e.target.checked){$$('#score .nt.now').forEach(x=>x.classList.remove('now'));$('#dPos').textContent=''}};
 $('#d_tempo').oninput=e=>{O().tempo=+e.target.value;if(SC&&!(P&&P.on))SC.tempo=O().tempo;save();syncD()};
 $('#dGen').onclick=regen;$('#dGo').onclick=startDrill;
 $('#hist').onclick=e=>{const d=e.target.closest('[data-d]'),h=e.target.closest('[data-h]'),H=getH();
