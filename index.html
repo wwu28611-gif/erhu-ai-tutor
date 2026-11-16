@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>二胡 AI 老師</title>
+<title>二胡練習小幫手</title>
 <style>
 :root{--bg:#f4f3f0;--sf:#fff;--sf2:#efeeea;--fg:#1c1c1e;--mut:#6b6b70;--mut2:#a0a0a6;--ln:rgba(28,28,30,.07);--bd:#e2e0db;--ac:#2f5d50;--acf:#fff;--acs:rgba(47,93,80,.09);--ok:#2f7d62;--bad:#b86b2a;--hg:linear-gradient(140deg,#2f5d50,#1d3b33);--hf:#f2faf6;
 --sh:0 1px 2px rgba(20,20,20,.04),0 14px 32px -18px rgba(20,20,20,.2);--r:1.25rem;--rm:.875rem;--ease:cubic-bezier(.3,.7,.2,1);
@@ -223,6 +223,34 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .tkx{border:0;background:none;width:1.8rem;font-size:1.3rem}.tkx.arm{color:var(--bad);font-weight:700}
 .tkf{display:flex;gap:.5rem;align-items:center}.tki{flex:1;min-width:0;background:var(--sf2);border:1px solid var(--ln);border-radius:var(--rm);padding:.7rem .8rem;color:var(--fg)}.tki.tkm{flex:none;width:4.5rem;text-align:center}
 .tkadv{background:var(--hg);color:var(--hf);border:0}.tkadv .lbl{color:inherit;opacity:.7}.tkadv .q{font-size:1.0625rem;line-height:1.55;margin:.5rem 0;font-weight:500}.tkadv .q::before{content:"“";opacity:.6;margin-right:.15rem}
+
+body.noscroll main{overflow:hidden}
+.qk{display:flex;gap:.75rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.25rem .1rem 1rem;margin:0 -.1rem;-webkit-overflow-scrolling:touch}
+.qc{flex:none;width:9.5rem;scroll-snap-align:start;background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);box-shadow:var(--sh);padding:1rem .8rem .8rem;display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.qc.star{border-color:#e0a63a}
+.qn{font-weight:600;font-size:.9375rem;text-align:center;line-height:1.3;min-height:2.6em;display:flex;align-items:center;justify-content:center}
+.qm{display:flex;align-items:center;gap:.35rem}.qu{font-size:.75rem;color:var(--mut);margin-top:-.4rem}
+.qv{width:3.4rem;background:transparent;border:0;border-bottom:2px solid var(--bd);text-align:center;font-size:1.6rem;font-weight:600;color:var(--fg);padding:0;font-variant-numeric:tabular-nums;-moz-appearance:textfield;appearance:textfield}
+.qv::-webkit-outer-spin-button,.qv::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.qv:focus{outline:0;border-color:var(--ac)}
+.tkq{flex:none;width:2.2rem;height:2.2rem;border-radius:50%;border:1px solid var(--ln);background:var(--sf2);color:var(--fg);font-size:1.3rem;line-height:1;cursor:pointer;padding:0}.tkq:active{transform:scale(.9);background:var(--bd)}
+.tk .t{cursor:pointer}
+.tkrun{cursor:pointer}
+.tkfull{position:fixed;inset:0;z-index:36;background:var(--bg);display:flex;flex-direction:column;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) 1.25rem calc(1.25rem + env(safe-area-inset-bottom,0px));overflow-y:auto;animation:in .3s var(--ease)}
+.tkfull>*{width:100%;max-width:26rem}
+.tkfh{display:flex;justify-content:space-between;align-items:center}
+.tkfn{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;text-align:center;margin:.75rem 0 .5rem;outline:0;border-radius:.5rem;padding:.1rem .3rem}.tkfn:focus{box-shadow:0 0 0 2px var(--ac)}
+.tkfg{display:flex;align-items:center;justify-content:center;gap:1rem;color:var(--mut);font-weight:600;font-variant-numeric:tabular-nums}
+.sw{position:relative;margin:.75rem auto 1.25rem;max-width:19rem}.swsvg{width:100%;display:block}
+.swk{fill:var(--mut2)}.swf{fill:var(--sf);stroke:var(--mut2);stroke-width:6}.swtr{fill:none;stroke:var(--sf2);stroke-width:14}
+.swp{fill:none;stroke:var(--ac);stroke-width:14;stroke-linecap:round;transition:stroke-dashoffset 1s linear}.swtk{stroke:var(--mut2);stroke-width:3;stroke-linecap:round}
+.tkfull.fin .swp{stroke:var(--ok)}
+.swt{position:absolute;left:0;right:0;top:56.1%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center}
+.swt b{font-size:3.6rem;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}.swt span{color:var(--mut);font-size:.9375rem;margin-top:.35rem}
+.tkfull:not(.run):not(.fin) .swt b{opacity:.55}
+.tkfnote{text-align:center;font-size:.8125rem;margin-top:1rem}
+.brk{z-index:38;justify-content:center;background:var(--bg)}
+.brkbox{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.75rem}.brki{font-size:3.5rem}.brkbox h2{margin:0;font-size:1.6rem}.brkbox p{margin:0;color:var(--mut);line-height:1.6;max-width:22rem}
+.brkc{font-size:4rem;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin:.5rem 0}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -260,6 +288,17 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 <div class="ov" id="help"><div><div class="row sp"><h1 id="hTitle" style="margin:.5rem 0"></h1><button class="hq" id="hClose" style="position:static" aria-label="Close">✕</button></div><div id="hBody"></div><div style="height:1.5rem"></div><button class="btn lg" id="hReplay" data-i="replay"></button></div></div>
 <div class="ov" id="dataOv"><div><h1 data-i="sData"></h1><p class="mut" data-i="dataHint"></p><textarea id="dataTx" rows="12" readonly></textarea><div class="row"><button class="btn" id="dCopy" data-i="copy"></button><button class="btn alt" id="dClose" data-i="close"></button></div></div></div>
 <div class="coach" id="coach" hidden><p class="lbl" id="cStep" style="margin:0"></p><p id="cMsg"></p><div class="row"><button class="quiet" id="cSkip" data-i="skip"></button><button class="btn" id="cNext"></button></div></div>
+<div class="tkfull" id="tkFull" hidden>
+ <div class="tkfh"><button class="quiet" id="tkShrink"><span data-i="tkShrink"></span> ⌄</button><span class="pill" id="tkBrkIn"></span></div>
+ <div class="tkfn" id="tkFName" contenteditable="plaintext-only" spellcheck="false"></div>
+ <div class="tkfg"><button class="tkq" id="tkFM5" aria-label="-5">−</button><span id="tkFGoal"></span><button class="tkq" id="tkFP5" aria-label="+5">+</button></div>
+ <div class="sw"><svg viewBox="0 0 260 296" class="swsvg" aria-hidden="true"><rect x="113" y="6" width="34" height="14" rx="5" class="swk"/><rect x="123" y="18" width="14" height="18" rx="3" class="swk"/><rect x="200" y="44" width="22" height="12" rx="4" class="swk" transform="rotate(42 211 50)"/>
+<circle cx="130" cy="166" r="118" class="swf"/><circle cx="130" cy="166" r="104" class="swtr"/><circle cx="130" cy="166" r="104" class="swp" id="swArc" transform="rotate(-90 130 166)"/><line x1="130" y1="58" x2="130" y2="68" class="swtk" transform="rotate(0 130 166)"/><line x1="130" y1="58" x2="130" y2="63" class="swtk" transform="rotate(30 130 166)"/><line x1="130" y1="58" x2="130" y2="63" class="swtk" transform="rotate(60 130 166)"/><line x1="130" y1="58" x2="130" y2="68" class="swtk" transform="rotate(90 130 166)"/><line x1="130" y1="58" x2="130" y2="63" class="swtk" transform="rotate(120 130 166)"/><line x1="130" y1="58" x2="130" y2="63" class="swtk" transform="rotate(150 130 166)"/><line x1="130" y1="58" x2="130" y2="68" class="swtk" transform="rotate(180 130 166)"/><line x1="130" y1="58" x2="130" y2="63" class="swtk" transform="rotate(210 130 166)"/><line x1="130" y1="58" x2="130" y2="63" class="swtk" transform="rotate(240 130 166)"/><line x1="130" y1="58" x2="130" y2="68" class="swtk" transform="rotate(270 130 166)"/><line x1="130" y1="58" x2="130" y2="63" class="swtk" transform="rotate(300 130 166)"/><line x1="130" y1="58" x2="130" y2="63" class="swtk" transform="rotate(330 130 166)"/></svg><div class="swt"><b id="tkFTime">00:00</b><span id="tkFSub"></span></div></div>
+ <button class="btn lg" id="tkFPlay"></button>
+ <div class="row2 r2e" style="margin-top:.75rem"><button class="btn alt" id="tkFDone"></button><button class="btn alt" id="tkFStop"><span data-i="tkStopL"></span></button></div>
+ <p class="mut tkfnote" data-i="tkAutoP"></p>
+</div>
+<div class="tkfull brk" id="brk" hidden><div class="brkbox"><div class="brki">🧘</div><h2 data-i="brkT"></h2><p data-i="brkD"></p><div class="brkc" id="brkTime">03:00</div><button class="btn lg" id="brkGo" disabled></button><button class="quiet" id="brkSkip" data-i="brkSkip"></button></div></div>
 <div class="toast" id="toast"></div>
 <div id="walk" hidden><div class="wring" id="wRing"></div><div class="wbub" id="wBub"><p class="lbl" id="wStep" style="margin:0"></p><h3 id="wT"></h3><p id="wD"></p><div class="row sp"><button class="quiet" id="wSkip" data-i="skip"></button><div class="row"><button class="btn alt" id="wPrev" data-i="prev"></button><button class="btn" id="wNext"></button></div></div></div></div>
 <div class="ov" id="info"><div><h1 id="iTitle"></h1><div id="iBody" style="line-height:1.7"></div><textarea id="iTx" rows="6" hidden></textarea><div class="row" style="margin-top:1rem"><button class="btn" id="iOk" hidden></button><button class="btn alt" id="iClose" data-i="close"></button></div></div></div>
@@ -404,8 +443,13 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
   <div class="row2 r2e" style="margin:1.25rem 0 0"><button class="btn alt" id="tkPause"></button><button class="btn alt" id="tkStop" data-i="tkStopL"></button></div></div>
  <div class="card"><p class="lbl" data-i="tkToday"></p><div class="m"><span data-i="tkDone"></span><div class="bar"><i id="tkSumBar"></i></div><b id="tkSumPct"></b></div><p class="mut" id="tkSum" style="margin:.25rem 0 0;font-size:.875rem"></p><p class="mut" id="tkProNote" style="margin:.25rem 0 0;font-size:.875rem" data-i="tkPro" hidden></p></div>
  <div class="gap"></div>
- <p class="lbl" data-i="tkList"></p>
+ <p class="lbl" data-i="tkQuick"></p>
+ <div class="qk" id="tkQuick"></div>
+ <div class="gap" style="height:1rem"></div>
+ <p class="lbl"><span data-i="tkList"></span> · <span data-i="tkTap" style="text-transform:none;letter-spacing:0"></span></p>
  <div class="list" id="taskList"></div>
+ <div class="gap" style="height:1rem"></div>
+ <div class="list"><label class="li"><span class="t"><span data-i="brkOn"></span><br><span class="mut" style="font-size:.8125rem" data-i="tkAutoP"></span></span><input type="checkbox" id="tkBrk"></label></div>
  <div class="gap" style="height:1rem"></div>
  <div class="card"><p class="lbl" data-i="tkAdd"></p><div class="tkf"><input class="tki" id="tkNewName" maxlength="30"><input class="tki tkm" id="tkNewMin" type="number" inputmode="numeric" min="1" max="600" value="20"><span class="mut" data-i="min"></span></div><button class="btn" id="tkAddBtn" style="margin-top:.9rem"><span data-i="tkAddL"></span></button></div>
  <div class="gap"></div>
@@ -431,7 +475,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
  <div class="list"><div class="li"><span class="t" data-i="sTheme"></span><div class="seg" id="thSeg"><button data-v="light" data-i="tLight"></button><button data-v="dark" data-i="tDark"></button><button data-v="sys" data-i="tSys"></button></div></div>
   </div><div class="gap"></div>
  <p class="lbl" data-i="gA11y"></p>
- <div class="list"><div class="li" style="flex-direction:column;align-items:stretch"><span data-i="sFont"></span><div class="seg" id="ftSeg"><button data-v="0.875" data-i="fS"></button><button data-v="1" data-i="fM"></button><button data-v="1.25" data-i="fL"></button><button data-v="2" data-i="fX"></button></div></div><label class="li"><span class="t" data-i="sHC"></span><input type="checkbox" id="hc"></label><label class="li"><span class="t" data-i="sRead"></span><input type="checkbox" id="read"></label><label class="li"><span class="t" data-i="sRM"></span><input type="checkbox" id="rm"></label><label class="li"><span class="t" data-i="sBig"></span><input type="checkbox" id="bigBtn"></label><label class="li"><span class="t" data-i="sElder"></span><input type="checkbox" id="elder"></label></div><div class="gap"></div>
+ <div class="list"><div class="li" style="flex-direction:column;align-items:stretch"><span data-i="sFont"></span><div class="seg" id="ftSeg"><button data-v="0.875" data-i="fS"></button><button data-v="1" data-i="fM"></button><button data-v="1.2" data-i="fL"></button><button data-v="2" data-i="fX"></button></div></div><label class="li"><span class="t" data-i="sHC"></span><input type="checkbox" id="hc"></label><label class="li"><span class="t" data-i="sRead"></span><input type="checkbox" id="read"></label><label class="li"><span class="t" data-i="sRM"></span><input type="checkbox" id="rm"></label><label class="li"><span class="t" data-i="sBig"></span><input type="checkbox" id="bigBtn"></label><label class="li"><span class="t" data-i="sElder"></span><input type="checkbox" id="elder"></label></div><div class="gap"></div>
  <p class="lbl" data-i="gAI"></p>
  <div class="list"><label class="li"><span class="t" data-i="sVoice"></span><input type="checkbox" id="voice"></label><div class="li"><span class="t" data-i="sDetail"></span><div class="seg" id="dtSeg"><button data-v="simple" data-i="dSimple"></button><button data-v="detail" data-i="dFull"></button></div></div><label class="li"><span class="t" data-i="sTips"></span><input type="checkbox" id="aTips"></label><label class="li"><span class="t" data-i="sSpeak"></span><input type="checkbox" id="aSpeak"></label></div><div class="gap"></div>
  <p class="lbl" data-i="sBasic"></p>
@@ -454,7 +498,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 </div></section>
 </div></main>
 <script>
-const TXT=`app|二胡 AI 老師|Erhu AI Tutor|二胡AI先生
+const TXT=`app|二胡練習小幫手|Erhu Practice Helper|二胡練習ヘルパー
 pick|請選擇你的身分|Who are you?|あなたは？
 pickSub|之後可在「設定」隨時切換|You can switch anytime in Settings|設定でいつでも切り替えられます
 r_beginner|我是初學者|I’m a beginner|初心者です
@@ -462,7 +506,7 @@ r_student|我是學生|I’m a student|学生です
 r_senior|我是樂齡學習者|I’m a senior learner|シニア学習者です
 d_beginner|從持琴與空弦開始，一步一步來|Start with posture and open strings|姿勢と開放弦から始めます
 d_student|有系統地練習，記錄進步|Structured practice and progress|計画的に練習し上達を記録
-d_senior|字體放大一倍，節奏放慢|Double-size text, gentler pace|文字2倍・ゆっくりペース
+d_senior|開心學習，活到老學到老|Learn happily, it's never too late|楽しく学び、生涯学習
 nHome|首頁|Home|ホーム
 nTune|調音|Tune|調音
 nBeat|節拍|Beat|拍
@@ -643,6 +687,29 @@ close|關閉|Close
 sDel|刪除帳號與所有資料|Delete account and all data
 sReplay|重新觀看新手導覽|Replay welcome tour
 gHelp|協助|Help
+rDyn|強弱|Dynamics|強弱
+tkQuick|快捷設定|Quick setup|クイック設定
+tkTap|點任務開始全螢幕計時|tap a task for full-screen timer|タップで全画面タイマー
+tkRemain|剩餘時間|remaining|残り
+tkPausedS|已暫停|paused|一時停止中
+tkGoal|目標 {m} 分鐘|Goal {m} min|目標 {m} 分
+tkShrink|縮小|Minimize|縮小
+tkFinish|完成這項|Mark done|完了にする
+tkUndo|取消完成|Undo done|完了を取消
+tkFinShort|完成！|Done!|完了！
+tkGo|開始|Start|開始
+tkNext|下一項|Next task|次へ
+tkAllDone|今天的任務都完成了！|All done for today!|今日はすべて完了！
+tkAutoP|離開 App 或切到背景時會自動暫停|The timer pauses when you leave the app|アプリを離れると自動で一時停止
+tkPaused|離開 App 時已自動暫停|Paused while you were away|離れている間は一時停止しました
+brkIn|{t} 後休息|Break in {t}|{t} 後に休憩
+brkOn|每 30 分鐘提醒起來活動 3 分鐘|Remind me to move 3 min every 30 min|30分ごとに3分の運動を通知
+brkT|起來活動一下|Time to move|体を動かしましょう
+brkD|已經連續練了 30 分鐘。請站起來活動至少 3 分鐘：伸展肩膀和手腕，喝口水。|You've practiced 30 minutes straight. Stand up and move for at least 3 minutes: stretch your shoulders and wrists, drink some water.|30分続けて練習しました。3分以上立って肩と手首を伸ばしましょう。
+brkWait|活動中…|Moving…|運動中…
+brkDone|休息結束，繼續練習|Break over, keep practicing|休憩終了、練習再開
+brkSkip|這次先跳過|Skip this time|今回はスキップ
+brkEnd|休息時間到，可以繼續了|Break's over|休憩終了
 nTask|任務|Tasks|課題
 tTask|練琴任務|Practice tasks|練習タスク
 subTask|排好今天要練的項目，按 ▶ 開始計時|Plan today's items and press ▶ to time each one|今日の練習を並べ、▶で計測
@@ -690,7 +757,7 @@ tkAll|查看全部任務|All tasks|すべてのタスク
 tkEmpty|還沒有任務，從下方新增或套用範本|No tasks yet. Add one below or apply a template.|タスクがありません
 hm|{h} 小時 {m} 分|{h} h {m} min|{h}時間{m}分
 mOnly|{m} 分|{m} min|{m}分
-h_task|把每天要練的項目排成清單，逐項計時。§按 ▶ 開始計時，時間到會響鈴並打勾；點名稱可改名，點分鐘可改時間，☆ 標記最想克服的項目會排到最上面，× 按兩次刪除。§計時在這個頁面開著時最準；手機鎖螢幕可能會暫停計時。資料只存在這台裝置。§顯示今天每個項目練了多久、整體完成百分比。§術科學生可套用「專業術科學生」範本，共約 6 小時 20 分。|Plan your daily items and time each one.§Press ▶ to start; a chime plays and the item is checked when time is up. Tap a name to rename, tap the minutes to change them, ☆ pins your focus item to the top, tap × twice to delete.§Timing is most accurate with this page open; a locked phone may pause it. Data stays on this device.§Shows how long you practiced each item today and overall completion.§Music majors can apply the Music-major template, about 6 h 20 min.
+h_task|把每天要練的項目排成清單，逐項計時。§「快捷設定」的字卡按 − / + 每次調 5 分鐘，也可以點數字直接輸入。點任務會放大成全螢幕碼表並開始計時；☆ 標記最想克服的項目會排到最上面，× 按兩次刪除。§離開 App 或切到背景會自動暫停。每連續練 30 分鐘會提醒你站起來活動 3 分鐘（可在下方關閉）。資料只存在這台裝置。§顯示今天每個項目練了多久、整體完成百分比。§術科學生可套用「專業術科學生」範本，共約 6 小時 20 分。|Plan your daily items and time each one.§In Quick setup, tap − / + to change by 5 minutes, or tap the number to type it. Tap a task to open a full-screen stopwatch and start timing; ☆ pins your focus item to the top; tap × twice to delete.§Leaving the app or going to the background pauses the timer. Every 30 minutes of practice you are reminded to stand up and move for 3 minutes (can be turned off below). Data stays on this device.§Shows how long you practiced each item today and overall completion.§Music majors can apply the Music-major template, about 6 h 20 min.
 snd|音色|Sound|音色
 sndC|電子音|Beep|電子音
 sndW|木魚|Woodblock|ウッドブロック
@@ -707,7 +774,7 @@ w7|姿勢偵測§開啟相機後擺好姿勢按「校準」，畫面上的虛線
 w8|AI 出的譜§每次都能換一份新譜，可選五線譜或簡譜、難度與拍子。|AI score§Get a fresh score anytime, staff or jianpu, any level and meter.
 w9|先聽示範§按這裡，AI 會把譜演奏一次，譜上同步標出位置。|Hear the demo§Press here and the AI plays the score while highlighting each note.
 w10|換你演奏§按「開始演奏」，聽完預備拍後開始拉，AI 會即時告訴你準不準。|Your turn§Press Start, wait for the count-in, then play. The AI tells you how you did in real time.
-w11|練琴任務§排好每天要練的項目，按 ▶ 計時，☆ 標記最想克服的項目。|Practice tasks§Plan your daily items, press ▶ to time them, ☆ marks your focus item.
+w11|練琴任務§上方字卡按 − / + 快速調整時間，點任務會變成全螢幕碼表，☆ 標記最想克服的項目。|Practice tasks§Plan your daily items, press ▶ to time them, ☆ marks your focus item.
 w12|設定§身分、字體、語音、無障礙都在這裡。導覽隨時可以在設定裡重看。|Settings§Role, text size, voice and accessibility live here. Replay this tour anytime from Settings.
 rRest|休止符|Rests|休符
 gClickL|拍子引導|Beat guide|拍のガイド
@@ -792,7 +859,7 @@ fbSave|儲存並複製|Save and copy
 fbSaved|已儲存並複製|Saved and copied`;
 const D={},LG=['zh-TW','en','ja'],LN={'zh-TW':'繁體中文',en:'English',ja:'日本語'};
 TXT.split('\n').forEach(l=>{const p=l.split('|');D[p[0]]=p.slice(1)});
-const ROLES={beginner:{scale:1,voice:true,bpm:60,detail:'simple',autoTips:true},student:{scale:1,voice:false,bpm:80,detail:'detail',autoTips:false},senior:{scale:2,voice:true,bpm:50,detail:'simple',autoTips:true}};
+const ROLES={beginner:{scale:1,voice:true,bpm:60,detail:'simple',autoTips:true},student:{scale:1,voice:false,bpm:80,detail:'detail',autoTips:false},senior:{scale:1.2,voice:true,bpm:50,detail:'simple',autoTips:true}};
 const def={lang:/^ja/.test(navigator.language)?'ja':/^zh/.test(navigator.language)?'zh-TW':'en',role:null,scale:1,ref:440,key:2,voice:false,click:true,bpm:60,beats:4};
 let S=Object.assign({},def);
 try{Object.assign(S,JSON.parse(localStorage.getItem('erhu')||'{}'))}catch(e){}
@@ -1136,7 +1203,7 @@ $('#useTxt').onclick=()=>{const sc=parseJ($('#txtIn').value);if(!sc)return;if(P&
 
 /* ---- onboarding, help, profile, settings ---- */
 const DEF2={theme:'sys',detail:'simple',autoTips:true,autoSpeak:false,exam:0,goal:20,toured:0,guided:{},plan:{},log:{},notif:{p:1,a:1,c:1,o:1},priv:{pub:0,trend:0},prof:{name:'',email:'',av:''},hc:0,rm:0,bigBtn:0,read:0,fb:[],cam:{hand:'Right',strict:'m',calib:null}};
-function norm(){for(const k in DEF2)if(S[k]==null)S[k]=JSON.parse(JSON.stringify(DEF2[k]));if(S.elder==null)S.elder=S.role==='senior'?1:0}norm();
+function norm(){if(!S.mig12){S.mig12=1;if(S.scale===2&&(S.role==='senior'||S.elder))S.scale=1.2;if(S.scale===1.25)S.scale=1.2}for(const k in DEF2)if(S[k]==null)S[k]=JSON.parse(JSON.stringify(DEF2[k]));if(S.elder==null)S.elder=S.role==='senior'?1:0}norm();
 const TOUR=[['ai',0],['tune',1],['hand',0],['bow',2],['score',2],['users',0],['clock',1],['beat',1],['tune',1]];
 const HELP={tune:[8,'h_tune','tTune'],beat:[7,'h_beat','tBeat'],drill:[1,'h_drill','tDrill'],set:[null,'h_set','tSet'],cam:[3,'h_cam','tCam'],task:[null,'h_task','tTask']};
 let TL=[],TI=0,GK=null,GI=0,GS=[];
@@ -1198,7 +1265,7 @@ $('#dCopy').onclick=()=>{$('#dataTx').select();try{document.execCommand('copy');
 
 const readSec=()=>{const e=$('section.on');if(e)speak((e.querySelector('h1')||{}).textContent+'。'+((e.querySelector('.pt p')||{}).textContent||''))};
 sw('#hc',v=>S.hc=v?1:0);sw('#rm',v=>S.rm=v?1:0);sw('#bigBtn',v=>S.bigBtn=v?1:0);sw('#read',v=>{S.read=v?1:0;if(v)readSec()});
-$('#elder').onchange=e=>{S.elder=e.target.checked?1:0;if(S.elder){S.scale=2;S.voice=true;S.detail='simple'}else if(S.scale>=2)S.scale=1;save();apply()};
+$('#elder').onchange=e=>{S.elder=e.target.checked?1:0;if(S.elder){S.scale=1.2;S.voice=true;S.detail='simple'}else if(S.scale===1.2)S.scale=1;save();apply()};
 function info(k,ti){const fb=k==='fb';$('#iTitle').textContent=t(ti);$('#iBody').innerHTML=t(fb?'fbHint':k+'_b').split('§').map(p=>`<p>${p}</p>`).join('');$('#iTx').hidden=!fb;$('#iTx').value='';$('#iOk').hidden=!fb;$('#iOk').textContent=t('fbSave');$('#info').classList.add('on')}
 [['aLog','log','sLog'],['aTerms','terms','sTerms'],['aPriv','priv','sPriv'],['aSup','sup','sSup'],['aFb','fb','sFb']].forEach(([id,k,ti])=>$('#'+id).onclick=()=>info(k,ti));
 $('#iClose').onclick=()=>$('#info').classList.remove('on');
@@ -1289,50 +1356,84 @@ const tkLog=()=>{const d=today();return S.task.log[d]||(S.task.log[d]={})},tkDon
 const tkNm=k=>k.name||t(k.k||'')||'',tkSorted=()=>[...S.task.list.filter(k=>k.star),...S.task.list.filter(k=>!k.star)];
 const fmtHM=sec=>{const m=Math.floor(sec/60),h=Math.floor(m/60);return h?t('hm').replace('{h}',h).replace('{m}',m%60):t('mOnly').replace('{m}',m)};
 const mmss=sec=>{sec=Math.max(0,Math.round(sec));const m=Math.floor(sec/60),x=sec%60;return (m<10?'0':'')+m+':'+(x<10?'0':'')+x};
-let TK=null,tkSaveT=0;
-function tkUI(){tkInit();const L=tkLog(),D=tkDoneMap(),list=tkSorted();
+let TK=null,tkSaveT=0,BRK=null;
+const tkFind=id=>S.task.list.find(x=>x.id===id),tkSec=k=>tkLog()[k.id]||0,tkIsDone=k=>!!tkDoneMap()[k.id]||tkSec(k)>=k.min*60;
+function tkUI(){tkInit();if(S.task.brk==null)S.task.brk=1;const L=tkLog(),list=tkSorted();
  $('#tkTplSel').innerHTML=[['pro','tplPro'],['beg','tplBeg'],['none','tplNone']].map(([v,k])=>`<option value="${v}">${t(k)}</option>`).join('');$('#tkTplSel').value=S.task.tpl||'pro';
- $('#tkNewName').placeholder=t('tkNameP');
- $('#taskList').innerHTML=list.length?list.map(k=>{const sec=L[k.id]||0,done=D[k.id]||sec>=k.min*60,run=TK&&TK.id===k.id,pc=Math.min(100,sec/(k.min*60)*100);
+ $('#tkNewName').placeholder=t('tkNameP');$('#tkBrk').checked=!!S.task.brk;
+ $('#tkQuick').innerHTML=list.length?list.map(k=>`<div class="qc${k.star?' star':''}" data-id="${k.id}"><div class="qn">${k.star?'★ ':''}${esc(tkNm(k))}</div><div class="qm"><button class="tkq" data-q="-" aria-label="-5">−</button><input class="qv" data-q="v" type="number" inputmode="numeric" min="1" max="600" value="${k.min}"><button class="tkq" data-q="+" aria-label="+5">+</button></div><div class="qu">${t('min')}</div></div>`).join(''):'';
+ $('#taskList').innerHTML=list.length?list.map(k=>{const sec=L[k.id]||0,done=tkIsDone(k),run=TK&&TK.id===k.id,pc=Math.min(100,sec/(k.min*60)*100);
   return `<div class="li tk${k.star?' star':''}${done?' done':''}${run?' run':''}" data-id="${k.id}">
   <button class="tkb tks" data-a="star" aria-label="${t('tkStar')}">${k.star?'★':'☆'}</button>
-  <span class="t"><b class="tkname" data-a="ren" contenteditable="plaintext-only" spellcheck="false">${esc(tkNm(k))}</b>${k.star?`<span class="pill tkfp">${t('tkStar')}</span>`:''}
-   <span class="tkmeta">${Math.floor(sec/60)} / <input class="tkmi" data-a="min" type="number" inputmode="numeric" min="1" max="600" value="${k.min}"> ${t('min')}</span><span class="tkpb"><i style="width:${pc}%"></i></span></span>
+  <span class="t"><b class="tkname">${esc(tkNm(k))}</b>${k.star?`<span class="pill tkfp">${t('tkStar')}</span>`:''}
+   <span class="tkmeta">${Math.floor(sec/60)} / ${k.min} ${t('min')}</span><span class="tkpb"><i style="width:${pc}%"></i></span></span>
   <button class="tkb tkp" data-a="play" aria-label="play">${IC(run&&TK.run?'stop':'play')}</button>
   <button class="tkb tkc" data-a="done" aria-label="done">${done?'✓':'○'}</button>
   <button class="tkb tkx" data-a="del" aria-label="delete">×</button></div>`}).join(''):`<div class="li mut">${t('tkEmpty')}</div>`;
- tkSum();tkRunUI()}
+ tkSum();tkRunUI();tkFullUI()}
 function tkSum(){const L=tkLog(),D=tkDoneMap();let plan=0,done=0;S.task.list.forEach(k=>{plan+=k.min*60;done+=D[k.id]?k.min*60:Math.min(L[k.id]||0,k.min*60)});
  const pc=plan?Math.round(done/plan*100):0;$('#tkSumBar').style.width=pc+'%';$('#tkSumPct').textContent=pc+'%';
  $('#tkSum').textContent=t('tkTotal').replace('{d}',fmtHM(done)).replace('{p}',fmtHM(plan));$('#tkProNote').hidden=S.task.tpl!=='pro'}
-function tkRunUI(){const box=$('#tkRun');if(!TK){box.hidden=true;return}const k=S.task.list.find(x=>x.id===TK.id);if(!k){TK=null;box.hidden=true;return}
- const sec=tkLog()[k.id]||0;box.hidden=false;$('#tkName').textContent=tkNm(k);$('#tkTime').textContent=mmss(k.min*60-sec);$('#tkBar').style.width=Math.min(100,sec/(k.min*60)*100)+'%';
+function tkRunUI(){const box=$('#tkRun');if(!TK){box.hidden=true;return}const k=tkFind(TK.id);if(!k){TK=null;box.hidden=true;return}
+ const sec=tkSec(k);box.hidden=false;$('#tkName').textContent=tkNm(k);$('#tkTime').textContent=mmss(k.min*60-sec);$('#tkBar').style.width=Math.min(100,sec/(k.min*60)*100)+'%';
  $('#tkPause').innerHTML=IC(TK.run?'stop':'play')+'<span>'+t(TK.run?'tkPauseL':'tkResume')+'</span>'}
-function tkStart(id){if(TK&&TK.id===id){TK.run=!TK.run;TK.last=Date.now();tkUI();return}TK={id,run:true,last:Date.now()};tkUI();try{$('#tkRun').scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}}
+const C_SW=2*Math.PI*104;
+function tkFullUI(){const box=$('#tkFull');if(box.hidden)return;const k=TK&&tkFind(TK.id);if(!k){box.hidden=true;return}
+ const sec=tkSec(k),tot=k.min*60,rem=Math.max(0,tot-sec),done=tkIsDone(k);
+ if(document.activeElement!==$('#tkFName'))$('#tkFName').textContent=tkNm(k);$('#tkFGoal').textContent=t('tkGoal').replace('{m}',k.min);
+ $('#tkFTime').textContent=done?'✓':mmss(rem);$('#tkFSub').textContent=done?t('tkFinShort'):TK.run?t('tkRemain'):t('tkPausedS');
+ const arc=$('#swArc');arc.style.strokeDasharray=C_SW;arc.style.strokeDashoffset=C_SW*(1-rem/tot);box.classList.toggle('run',!!TK.run);box.classList.toggle('fin',done);
+ const nx=tkSorted().find(x=>x.id!==k.id&&!tkIsDone(x));
+ $('#tkFPlay').innerHTML=done?(nx?IC('play')+'<span>'+t('tkNext')+'</span>':'<span>'+t('tkAllDone')+'</span>'):IC(TK.run?'stop':'play')+'<span>'+t(TK.run?'tkPauseL':(sec>0?'tkResume':'tkGo'))+'</span>';
+ $('#tkFPlay').disabled=done&&!nx;$('#tkFDone').innerHTML='<span>'+t(done?'tkUndo':'tkFinish')+'</span>';
+ const bi=$('#tkBrkIn');if(S.task.brk&&!done){bi.hidden=false;bi.textContent=t('brkIn').replace('{t}',mmss(1800-(S.task.sinceBrk||0)))}else bi.hidden=true}
+function tkOpen(id){const k=tkFind(id);if(!k)return;if(!TK||TK.id!==id)TK={id,run:false,last:Date.now()};$('#tkFull').hidden=false;document.body.classList.add('noscroll');
+ if(!tkIsDone(k)&&!TK.run){TK.run=true;TK.last=Date.now()}tkUI()}
+function tkClose(){$('#tkFull').hidden=true;document.body.classList.remove('noscroll');tkUI()}
+function tkStart(id){if(TK&&TK.id===id){TK.run=!TK.run;TK.last=Date.now();tkUI();return}TK={id,run:true,last:Date.now()};tkUI()}
+function tkPauseAll(auto){if(TK&&TK.run){TK.run=false;TK.auto=auto?1:0;save();tkUI()}}
 function tkChime(){try{const a=ctx();if(a.state==='suspended')a.resume();const t0=a.currentTime+.05;[0,.18,.36].forEach((d,i)=>{const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.value=[784,988,1175][i];g.gain.setValueAtTime(.0001,t0+d);g.gain.exponentialRampToValueAtTime(.35,t0+d+.01);g.gain.exponentialRampToValueAtTime(.0001,t0+d+.5);o.connect(g).connect(a.destination);o.start(t0+d);o.stop(t0+d+.55)})}catch(e){}
  try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
-setInterval(()=>{if(!TK||!TK.run||!S.task)return;const now=Date.now(),dt=Math.min(5,(now-TK.last)/1000);TK.last=now;const L=tkLog();L[TK.id]=(L[TK.id]||0)+dt;
+function brkShow(){tkPauseAll();BRK={end:Date.now()+180000};$('#brk').hidden=false;brkUI();tkChime();const m=t('brkT');toast(m);if(S.voice)speak(m+'。'+t('brkD'))}
+function brkUI(){if(!BRK)return;const left=Math.max(0,(BRK.end-Date.now())/1000);$('#brkTime').textContent=mmss(left);const ok=left<=0;$('#brkGo').disabled=!ok;$('#brkGo').textContent=t(ok?'brkDone':'brkWait');
+ if(ok&&!BRK.rang){BRK.rang=1;tkChime();toast(t('brkEnd'))}}
+function brkEnd(resume){BRK=null;$('#brk').hidden=true;S.task.sinceBrk=0;save();if(resume&&TK){TK.run=true;TK.last=Date.now()}tkUI()}
+setInterval(()=>{if(BRK){brkUI();return}if(!TK||!TK.run||!S.task)return;const now=Date.now(),dt=Math.min(5,(now-TK.last)/1000);TK.last=now;const L=tkLog();L[TK.id]=(L[TK.id]||0)+dt;
  if(!(stream||(P&&P.on)||playing||camOn||DM))S.log[today()]=(S.log[today()]||0)+dt;
- const k=S.task.list.find(x=>x.id===TK.id);if(!k){TK=null;tkUI();return}
- if(L[k.id]>=k.min*60){tkDoneMap()[k.id]=1;TK=null;save();tkChime();const m=t('tkFin').replace('{n}',tkNm(k));toast(m);if(S.voice)speak(m);tkUI();if(S.role==='student')stuUI();return}
+ const k=tkFind(TK.id);if(!k){TK=null;tkUI();return}
+ if(S.task.brk)S.task.sinceBrk=(S.task.sinceBrk||0)+dt;
+ if(L[k.id]>=k.min*60){tkDoneMap()[k.id]=1;TK.run=false;save();tkChime();const m=t('tkFin').replace('{n}',tkNm(k));toast(m);if(S.voice)speak(m);tkUI();if(S.role==='student')stuUI();return}
+ if(S.task.brk&&S.task.sinceBrk>=1800){save();brkShow();return}
  if(now-tkSaveT>5000){tkSaveT=now;save()}
- if($('#v-task').classList.contains('on')){tkRunUI();const row=document.querySelector(`.tk[data-id="${k.id}"]`);if(row){row.querySelector('.tkpb i').style.width=Math.min(100,L[k.id]/(k.min*60)*100)+'%';row.querySelector('.tkmeta').firstChild.nodeValue=Math.floor(L[k.id]/60)+' / '}tkSum()}},1000);
-$('#taskList').onclick=e=>{const b=e.target.closest('[data-a]'),row=e.target.closest('.tk');if(!b||!row)return;tkTouch();const id=row.dataset.id,k=S.task.list.find(x=>x.id===id);if(!k)return;const a=b.dataset.a;
+ tkFullUI();if($('#v-task').classList.contains('on')){tkRunUI();const row=document.querySelector(`.tk[data-id="${k.id}"]`);if(row){row.querySelector('.tkpb i').style.width=Math.min(100,L[k.id]/(k.min*60)*100)+'%';row.querySelector('.tkmeta').textContent=Math.floor(L[k.id]/60)+' / '+k.min+' '+t('min')}tkSum()}},1000);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)tkPauseAll(1);else if(TK&&TK.auto){TK.auto=0;toast(t('tkPaused'))}});
+addEventListener('pagehide',()=>tkPauseAll(1));
+$('#taskList').onclick=e=>{const row=e.target.closest('.tk');if(!row)return;const id=row.dataset.id,k=tkFind(id);if(!k)return;const b=e.target.closest('[data-a]');
+ if(!b||b.dataset.a==='play'){tkTouch();tkOpen(id);return}const a=b.dataset.a;tkTouch();
  if(a==='star'){k.star=k.star?0:1;save();tkUI()}
- else if(a==='play')tkStart(id);
- else if(a==='done'){const D=tkDoneMap();D[id]=D[id]?0:1;if(!D[id])delete D[id];if(TK&&TK.id===id&&D[id])TK=null;save();tkUI()}
+ else if(a==='done'){const D=tkDoneMap();D[id]=D[id]?0:1;if(!D[id])delete D[id];if(TK&&TK.id===id&&D[id])TK.run=false;save();tkUI()}
  else if(a==='del'){if(!b.dataset.arm){b.dataset.arm=1;b.textContent='?';b.classList.add('arm');setTimeout(()=>{if(b.isConnected){delete b.dataset.arm;b.textContent='×';b.classList.remove('arm')}},2500);return}
   S.task.list=S.task.list.filter(x=>x.id!==id);if(TK&&TK.id===id)TK=null;save();tkUI()}};
-$('#taskList').addEventListener('change',e=>{if(e.target.dataset.a!=='min')return;const row=e.target.closest('.tk'),k=S.task.list.find(x=>x.id===row.dataset.id);if(!k)return;
- k.min=Math.max(1,Math.min(600,Math.round(+e.target.value)||k.min));tkTouch();save();tkUI()});
-$('#taskList').addEventListener('focusout',e=>{if(e.target.dataset.a!=='ren')return;const row=e.target.closest('.tk'),k=S.task.list.find(x=>x.id===row.dataset.id);if(!k)return;
- const v=e.target.textContent.replace(/\s+/g,' ').trim().slice(0,30);if(v&&v!==tkNm(k)){k.name=v;tkTouch();save()}tkUI()});
-$('#taskList').addEventListener('keydown',e=>{if(e.target.dataset.a==='ren'&&e.key==='Enter'){e.preventDefault();e.target.blur()}if(e.target.dataset.a==='min'&&e.key==='Enter')e.target.blur()});
+const tkSetMin=(k,m)=>{k.min=Math.max(1,Math.min(600,Math.round(m)||k.min));tkTouch();save();tkUI()};
+$('#tkQuick').onclick=e=>{const b=e.target.closest('[data-q]');if(!b||b.dataset.q==='v')return;const k=tkFind(b.closest('.qc').dataset.id);if(!k)return;const sx=$('#tkQuick').scrollLeft;tkSetMin(k,k.min+(b.dataset.q==='+'?5:-5));$('#tkQuick').scrollLeft=sx};
+$('#tkQuick').addEventListener('change',e=>{if(e.target.dataset.q!=='v')return;const k=tkFind(e.target.closest('.qc').dataset.id);if(!k)return;const sx=$('#tkQuick').scrollLeft;tkSetMin(k,+e.target.value);$('#tkQuick').scrollLeft=sx});
+$('#tkQuick').addEventListener('keydown',e=>{if(e.target.dataset.q==='v'&&e.key==='Enter')e.target.blur()});
+$('#tkQuick').addEventListener('focusin',e=>{if(e.target.dataset.q==='v')try{e.target.select()}catch(x){}});
 $('#tkAddBtn').onclick=()=>{tkInit();const n=$('#tkNewName').value.trim().slice(0,30),m=Math.max(1,Math.min(600,Math.round(+$('#tkNewMin').value)||20));if(!n){$('#tkNewName').focus();return}
  S.task.list.push({id:uid(),name:n,min:m,star:0});tkTouch();$('#tkNewName').value='';save();tkUI()};
 $('#tkNewName').onkeydown=e=>{if(e.key==='Enter')$('#tkAddBtn').click()};
 $('#tkPause').onclick=()=>{if(TK)tkStart(TK.id)};
 $('#tkStop').onclick=()=>{TK=null;save();tkUI()};
+$('#tkRun').onclick=e=>{if(!e.target.closest('button')&&TK)tkOpen(TK.id)};
+$('#tkBrk').onchange=e=>{S.task.brk=e.target.checked?1:0;if(!S.task.brk)S.task.sinceBrk=0;save();tkUI()};
+$('#tkShrink').onclick=tkClose;
+$('#tkFPlay').onclick=()=>{const k=TK&&tkFind(TK.id);if(!k)return;if(tkIsDone(k)){const nx=tkSorted().find(x=>x.id!==k.id&&!tkIsDone(x));if(nx)tkOpen(nx.id);return}TK.run=!TK.run;TK.last=Date.now();save();tkUI()};
+$('#tkFM5').onclick=()=>{const k=TK&&tkFind(TK.id);if(k)tkSetMin(k,k.min-5)};$('#tkFP5').onclick=()=>{const k=TK&&tkFind(TK.id);if(k)tkSetMin(k,k.min+5)};
+$('#tkFDone').onclick=()=>{const k=TK&&tkFind(TK.id);if(!k)return;const D=tkDoneMap();if(tkIsDone(k)){delete D[k.id];if(tkSec(k)>=k.min*60)tkLog()[k.id]=k.min*60-1}else{D[k.id]=1;TK.run=false}tkTouch();save();tkUI()};
+$('#tkFStop').onclick=()=>{TK=null;save();tkClose()};
+$('#tkFName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur()}});
+$('#tkFName').addEventListener('blur',e=>{const k=TK&&tkFind(TK.id);if(!k)return;const v=e.target.textContent.replace(/\s+/g,' ').trim().slice(0,30);if(v&&v!==tkNm(k)){k.name=v;tkTouch();save()}tkUI()});
+$('#brkGo').onclick=()=>brkEnd(true);$('#brkSkip').onclick=()=>brkEnd(false);
 twice('#tkApply',()=>{const v=$('#tkTplSel').value;S.task.tpl=v;S.task.list=mkTpl(v);S.task.auto=0;TK=null;save();tkUI();toast(t('tkApplied'))});
 
 /* ---- interactive walkthrough ---- */
