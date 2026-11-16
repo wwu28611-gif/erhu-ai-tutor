@@ -191,12 +191,13 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .jc .d{font-size:1.5rem;font-weight:500;display:flex;align-items:center;font-variant-numeric:tabular-nums}
 .jc .d small{font-size:.8rem;margin-right:.05rem;align-self:flex-start;margin-top:.15rem}
 .jc .d .dt{font-size:1.1rem;margin-left:.08rem;font-weight:800}
-.jc .ul{position:relative;width:100%;align-self:start}
+.jc .ul{position:relative;justify-self:stretch;margin:0 -.14rem;align-self:start}
 .jc.u1 .ul::before,.jc.u2 .ul::after{content:"";position:absolute;left:0;right:0;height:2px;background:currentColor}
 .jc.u1 .ul::before{top:0}.jc.u2 .ul::after{top:.24rem}
 .jc.dash .d{color:var(--mut)}
 .jc.tie::before{content:"";position:absolute;right:50%;width:1.85rem;top:.15rem;height:.42rem;border:1.5px solid currentColor;border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0}
 .jc.now{background:var(--acs);border-radius:.35rem;box-shadow:0 0 0 2px var(--ac)}
+.rs.now{color:var(--ac)}.jc.rs.now{background:var(--acs);border-radius:.35rem;box-shadow:0 0 0 2px var(--ac)}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -349,7 +350,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
   <label class="li"><span class="t" data-i="dTime"></span><select id="d_time"></select></label>
   <label class="li"><span class="t" data-i="dLen"></span><select id="d_bars"></select></label>
   <div class="li"><span class="t" data-i="dTon"></span><div class="seg" id="dTon"><button data-v="1" data-i="tonal"></button><button data-v="0" data-i="atonal"></button></div></div>
-  <div class="li" style="flex-direction:column;align-items:stretch"><span data-i="dRhy"></span><div class="seg" id="dRhy"><button data-k="h" data-i="rHalf"></button><button data-k="q" data-i="rQ"></button><button data-k="e" data-i="rE"></button><button data-k="dot" data-i="rDot"></button><button data-k="s" data-i="rS"></button></div></div>
+  <div class="li" style="flex-direction:column;align-items:stretch"><span data-i="dRhy"></span><div class="seg" id="dRhy"><button data-k="h" data-i="rHalf"></button><button data-k="q" data-i="rQ"></button><button data-k="e" data-i="rE"></button><button data-k="dot" data-i="rDot"></button><button data-k="s" data-i="rS"></button><button data-k="rest" data-i="rRest"></button></div></div>
   <label class="li"><span class="t" data-i="dTies"></span><input type="checkbox" id="d_ties"></label>
   <label class="li"><span class="t"><span data-i="gClickL"></span><br><span class="mut" style="font-size:.8125rem" data-i="gClickD"></span></span><input type="checkbox" id="d_gClick"></label>
   <label class="li"><span class="t"><span data-i="gPosL"></span><br><span class="mut" style="font-size:.8125rem" data-i="gPosD"></span></span><input type="checkbox" id="d_gPos"></label>
@@ -507,7 +508,7 @@ hist|練習紀錄|History|練習履歴
 histEmpty|完成一次練習後會自動保存|Finished sessions are saved here|練習後に自動保存されます
 clear|清除紀錄|Clear history|履歴を消去
 imp|匯入樂譜|Import a score|楽譜を取り込む
-impHint|可匯入照片作對照。PDF 與自動識譜需要原生 App。也可以在下方輸入簡譜：1–7 為音，’ 高八度，, 低八度，# 升，- 延長，. 附點，_ 八分，｜小節線。|Import a photo for reference. PDF and automatic recognition need the native app. Or type jianpu below: 1–7 notes, ’ high, , low, # sharp, - extend, . dotted, _ eighth, ｜bar.|写真は参照表示のみ。PDFと自動認識はアプリ版で対応予定。下に簡譜も入力できます。
+impHint|可匯入照片作對照。PDF 與自動識譜需要原生 App。也可以在下方輸入簡譜：1–7 為音，’ 高八度，, 低八度，# 升，- 延長，. 附點，_ 八分，0 休止符，｜小節線。|Import a photo for reference. PDF and automatic recognition need the native app. Or type jianpu below: 1–7 notes, ’ high, , low, # sharp, - extend, . dotted, _ eighth, ｜bar.|写真は参照表示のみ。PDFと自動認識はアプリ版で対応予定。下に簡譜も入力できます。
 impBtn|選擇照片|Choose photo|写真を選ぶ
 useTxt|用這份譜練習|Practice this score|この譜で練習
 skip|略過|Skip
@@ -594,6 +595,7 @@ close|關閉|Close
 sDel|刪除帳號與所有資料|Delete account and all data
 sReplay|重新觀看新手導覽|Replay welcome tour
 gHelp|協助|Help
+rRest|休止符|Rests|休符
 gClickL|拍子引導|Beat guide|拍のガイド
 gClickD|演奏時持續打拍，第一拍較重|Keeps clicking while you play, accented downbeat|演奏中も拍を鳴らします
 gPosL|位置引導|Position guide|位置のガイド
@@ -789,10 +791,10 @@ const DD={nt:'staff',key:'D',mode:'maj',time:'4/4',tonal:1,bars:4,tempo:60,r:{h:
 const O=()=>{if(!S.drill)S.drill=JSON.parse(JSON.stringify(DD));const o=S.drill;for(const k in DD)if(o[k]==null)o[k]=JSON.parse(JSON.stringify(DD[k]));if(o.r.s==null)o.r.s=0;return o};
 const SIG={'2/4':[1,1],'3/4':[1,1,1],'4/4':[1,1,1,1],'5/4':[1,1,1,1,1],'6/8':[1.5,1.5],'5/8':[1,1.5],'7/8':[1,1,1.5]},MIX=['2/4','3/4','4/4','5/8','6/8','7/8'];
 const LVL={
- easy:{hi:74,step:[-1,-1,1,1,0,2,-2],leap:3,chrom:0,set:{r:{h:1,q:1,e:0,dot:0,s:0},ties:0,tonal:1,time:'4/4',bars:4,tempo:60}},
- hard:{hi:81,step:[-3,-2,-1,-1,0,1,1,2,3],leap:5,chrom:0,set:{r:{h:1,q:1,e:1,dot:1,s:0},ties:0,tonal:1,time:'4/4',bars:8,tempo:72}},
- pro:{hi:86,step:[-4,-3,-2,-1,-1,1,1,2,3,4],leap:7,chrom:1,set:{r:{h:1,q:1,e:1,dot:1,s:1},ties:1,tonal:1,time:'4/4',bars:8,tempo:84}},
- chal:{hi:88,step:[-5,-4,-3,-2,-1,1,2,3,4,5],leap:9,chrom:1,set:{r:{h:1,q:1,e:1,dot:1,s:1},ties:1,tonal:0,time:'mix',bars:8,tempo:96}}};
+ easy:{hi:74,step:[-1,-1,1,1,0,2,-2],leap:3,chrom:0,set:{r:{h:1,q:1,e:0,dot:0,s:0,rest:0},ties:0,tonal:1,time:'4/4',bars:4,tempo:60}},
+ hard:{hi:81,step:[-3,-2,-1,-1,0,1,1,2,3],leap:5,chrom:0,set:{r:{h:1,q:1,e:1,dot:1,s:0,rest:1},ties:0,tonal:1,time:'4/4',bars:8,tempo:72}},
+ pro:{hi:86,step:[-4,-3,-2,-1,-1,1,1,2,3,4],leap:7,chrom:1,set:{r:{h:1,q:1,e:1,dot:1,s:1,rest:1},ties:1,tonal:1,time:'4/4',bars:8,tempo:84}},
+ chal:{hi:88,step:[-5,-4,-3,-2,-1,1,2,3,4,5],leap:9,chrom:1,set:{r:{h:1,q:1,e:1,dot:1,s:1,rest:1},ties:1,tonal:0,time:'mix',bars:8,tempo:96}}};
 const rnd=a=>a[Math.floor(Math.random()*a.length)],IC=n=>`<svg class="ic ${n==='stop'?'f':''}"><use href="#i-${n}"/></svg>`;
 const med=a=>{const x=[...a].sort((p,q)=>p-q);return x[x.length>>1]};
 let SC=null,P=null,LR=null;
@@ -801,7 +803,8 @@ function gen(){
  for(let m=62;m<=L.hi;m++)if(!o.tonal||scl.includes(m%12))pool.push(m);
  let i=o.tonal?pool.findIndex(m=>m%12===TON[o.key]):Math.floor(Math.random()*pool.length),t=0,lv=rnd([2,3]);const notes=[],dyn=[],M=[];
  const add=(d,b)=>{const pv=notes[notes.length-1];let m=pool[i],tie=0;
-  if(o.ties&&pv&&!pv.tie&&Math.random()<.22){m=pv.m;tie=1}
+  if(r.rest&&pv&&!pv.r&&[.25,.5,1,2].includes(d)&&Math.random()<.13){notes.push({m,d,t,bar:b,r:1});t+=d;return}
+  if(o.ties&&pv&&!pv.tie&&!pv.r&&Math.random()<.22){m=pv.m;tie=1}
   else if(o.tonal&&L.chrom&&d<=.5&&Math.random()<.1)m+=m<=62?1:rnd([-1,1]);
   const n={m,d,t,bar:b};if(tie)n.tie=1;notes.push(n);t+=d;if(tie)return;
   if(o.tonal)i=Math.max(0,Math.min(pool.length-1,i+rnd(L.step)));
@@ -817,18 +820,19 @@ function gen(){
     const p=rnd(op);p.forEach(x=>add(x,b));if(p.reduce((a,c)=>a+c,0)===2)k++}
    else{op.push([1.5]);if(r.q||r.e)op.push([1,.5]);if(r.e)op.push([.5,.5,.5],[.5,1]);if(r.s)op.push([.5,.25,.25,.5]);
     rnd(op).forEach(x=>add(x,b))}}}
- if(o.tonal){let k=notes.length-1;while(notes[k].tie)k--;const l=notes[k];l.m=pool.filter(m=>m%12===TON[o.key]).sort((a,b)=>Math.abs(a-l.m)-Math.abs(b-l.m))[0];
-  for(let j=k+1;j<notes.length;j++)notes[j].m=l.m;}
- notes.forEach((n,k)=>{if(n.tie&&notes[k-1].m!==n.m)delete n.tie});
+ if(o.tonal){let k=notes.length-1;while(k>0&&(notes[k].tie||notes[k].r))k--;const l=notes[k];l.m=pool.filter(m=>m%12===TON[o.key]).sort((a,b)=>Math.abs(a-l.m)-Math.abs(b-l.m))[0];
+  for(let j=k+1;j<notes.length&&notes[j].tie;j++)notes[j].m=l.m;}
+ const bd=new Set();M.forEach(x=>{let q=x.st;x.g.forEach(g=>{bd.add(+q.toFixed(4));q+=g})});
+ notes.forEach((n,k)=>{if(n.tie&&(notes[k-1].m!==n.m||notes[k-1].r||!bd.has(+n.t.toFixed(4))))delete n.tie});
  return meas({...o,r:{...o.r},notes,dyn,M,B:M[0].g.length})}
 function meas(sc){
  if(!sc.M){const B=sc.B||4;sc.M=Array.from({length:sc.bars},(_,b)=>({n:B,d:4,g:Array(B).fill(1),st:b*B,len:B}))}
- const N=sc.notes;N.forEach((n,i)=>{if(n.tie)return;let l=n.d;for(let j=i+1;j<N.length&&N[j].tie;j++)l+=N[j].d;n.len=l});return sc}
+ const N=sc.notes;N.forEach((n,i)=>{if(n.tie||n.r)return;let l=n.d;for(let j=i+1;j<N.length&&N[j].tie;j++)l+=N[j].d;n.len=l});return sc}
 function parseJ(txt){
  const o=O(),ref=jRef(o),mp=MOD.maj,sig=SIG[o.time]?o.time:'4/4',g=SIG[sig],len=g.reduce((a,c)=>a+c,0),[sn,sd]=sig.split('/').map(Number),notes=[];let t=0;
  txt.split(/\s+/).forEach(k=>{const m=/^([#b]?)([0-7])([',]*)([-._=]*)$/.exec(k);if(!m)return;
   const d=m[4].includes('-')?1+m[4].split('-').length-1:m[4].includes('.')?1.5:(m[4].includes('=')||m[4].includes('__'))?.25:m[4].includes('_')?.5:1;
-  if(m[2]!=='0')notes.push({m:ref+mp[m[2]-1]+(m[1]==='#'?1:m[1]==='b'?-1:0)+12*(m[3].split("'").length-m[3].split(',').length),d,t,bar:Math.floor(t/len+1e-9)});t+=d});
+  if(m[2]==='0')notes.push({m:notes.length?notes[notes.length-1].m:ref,d,t,bar:Math.floor(t/len+1e-9),r:1});else notes.push({m:ref+mp[m[2]-1]+(m[1]==='#'?1:m[1]==='b'?-1:0)+12*(m[3].split("'").length-m[3].split(',').length),d,t,bar:Math.floor(t/len+1e-9)});t+=d});
  if(!notes.length)return null;const bars=Math.ceil(t/len-1e-9);
  return meas({...o,time:sig,r:{...o.r},notes,bars,dyn:Array(bars).fill('mf'),B:g.length,M:Array.from({length:bars},(_,b)=>({n:sn,d:sd,g,st:b*len,len}))})}
 const LETs=[0,0,1,1,2,3,3,4,4,5,5,6],LETf=[0,1,1,2,2,3,4,4,5,5,6,6],BLK=[1,3,6,8,10],CLEF={treble:{bot:30,sh:0},alto:{bot:24,sh:1},bass:{bot:18,sh:2}};
@@ -839,6 +843,13 @@ function clefSvg(type,x,y0,s){
  if(type==='alto'){const m=y0+2*s,arm=d=>`M${x+10} ${m}L${x+14} ${m+d*5}C${x+15} ${m+d*2} ${x+23} ${m+d*2} ${x+23} ${m+d*8}C${x+23} ${m+d*15} ${x+15} ${m+d*15} ${x+14} ${m+d*10}`;
   return `<g stroke="currentColor" fill="none"><path d="M${x+2.5} ${y0}V${y0+4*s}" stroke-width="4"/><path d="M${x+7.5} ${y0}V${y0+4*s}" stroke-width="1.3"/><path d="${arm(-1)}" stroke-width="2.2" stroke-linecap="round"/><path d="${arm(1)}" stroke-width="2.2" stroke-linecap="round"/></g><text x="${x+9}" y="${y0-5}" font-size="8" fill="currentColor">8</text>`}
  return `<text x="${x}" y="${y0+4*s+5}" font-size="38" fill="currentColor">𝄞</text>`}
+function restSvg(d,x,y0,s){
+ if(d>=4)return `<rect x="${x-5}" y="${y0+s}" width="10" height="3.6" stroke="none"/>`;
+ if(d>=2)return `<rect x="${x-5}" y="${y0+2*s-3.6}" width="10" height="3.6" stroke="none"/>`;
+ if(d>=1)return `<path d="M${x-2} ${y0+3}l4.5 5.5l-4 4.5l4.5 5.5c-4.5-2-6.5 1.5-2.5 5" fill="none" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/>`;
+ const fl=(cy)=>`<circle cx="${x-2.5}" cy="${cy}" r="2.1" stroke="none"/><path d="M${x-2.5} ${cy+1}q3.5 1.6 6-1.8" fill="none" stroke-width="1.4"/>`;
+ if(d>=.5)return fl(y0+1.5*s)+`<path d="M${x+3.4} ${y0+1.5*s-.6}L${x-.6} ${y0+3.4*s}" stroke-width="1.4"/>`;
+ return fl(y0+1.5*s)+fl(y0+2.5*s-1)+`<path d="M${x+3.4} ${y0+1.5*s-.6}L${x-1.6} ${y0+4.2*s}" stroke-width="1.4"/>`}
 function staff(sc){meas(sc);
  const cf=CLEF[sc.clef]||CLEF.treble,flat=useFlat(sc),N=sc.notes,byBar=sc.M.map((_,b)=>N.map((n,i)=>i).filter(i=>N[i].bar===b)),
   per=Math.max(...byBar.map(a=>a.length))>8?1:2,sys=Math.ceil(sc.bars/per),W=360,X0=42,Wm=(W-X0-6)/per,s=7,SHH=122;
@@ -850,7 +861,7 @@ function staff(sc){meas(sc);
    h+=`<rect class="mr" data-m="${b}" x="${mx}" y="${y0-22}" width="${Wm}" height="${4*s+46}" rx="6"/><path class="sl" d="M${mx+Wm} ${y0}V${y0+4*s}"/><text class="dy" x="${mx+4}" y="${y0+4*s+34}">${sc.dyn[b]}</text>`;
    if(ts)h+=`<text x="${mx+6}" y="${y0+2*s}" class="ts">${M.n}</text><text x="${mx+6}" y="${y0+4*s}" class="ts">${M.d}</text>`;
    const ids=byBar[b],wt=ids.map(i=>1+.9*N[i].d),tot=wt.reduce((a,c)=>a+c,0)||1,st={};let cum=0;
-   ids.forEach((i,q)=>{const n=N[i],sp=spell(n.m,flat),dn=sp.dn-7*cf.sh,cur=st[dn]||0;let ac='';
+   ids.forEach((i,q)=>{const n=N[i];if(n.r){ps[i]={x:mx+pad+7+cum/tot*(Wm-pad-12),y:y0+2*s,dn:cf.bot+4,y0,ac:'',up:true,k,rest:1};cum+=wt[q];return}const sp=spell(n.m,flat),dn=sp.dn-7*cf.sh,cur=st[dn]||0;let ac='';
     if(!n.tie&&sp.acc!==cur)ac=sp.acc>0?'♯':sp.acc<0?'♭':'♮';st[dn]=sp.acc;
     ps[i]={x:mx+pad+7+cum/tot*(Wm-pad-12),y:y0+4*s-(dn-cf.bot)*s/2,dn,y0,ac,up:dn<cf.bot+4,k};cum+=wt[q]});
    /* beams: runs of short notes inside one beat group */
@@ -860,8 +871,9 @@ function staff(sc){meas(sc);
      run.forEach((i,q)=>{if(N[i].d!==.25)return;const nx=run[q+1],pv=run[q-1];
       if(nx!=null&&N[nx].d===.25)beams+=`<path d="M${sx(i)} ${ty+d2}H${sx(nx)}" stroke-width="3.2"/>`;
       else if(pv==null||N[pv].d!==.25)beams+=`<path d="M${sx(i)} ${ty+d2}h${nx!=null?7:-7}" stroke-width="3.2"/>`})}run=[]};
-    ids.forEach(i=>{const n=N[i];if(n.t>=gs-1e-9&&n.t<ge-1e-9){if(n.d<1)run.push(i);else flush()}});flush();gs=ge})}}
+    ids.forEach(i=>{const n=N[i];if(n.t>=gs-1e-9&&n.t<ge-1e-9){if(n.d<1&&!n.r)run.push(i);else flush()}});flush();gs=ge})}}
  N.forEach((n,i)=>{const p=ps[i],x=p.x,y=p.y,cf2=cf.bot,Y=d=>p.y0+4*s-(d-cf2)*s/2;
+  if(n.r){h+=`<g class="rs" data-i="${i}" fill="currentColor" stroke="currentColor">${restSvg(n.d,x,p.y0,s)}</g>`;return}
   let g=`<g class="nt" data-i="${i}" fill="currentColor" stroke="currentColor">`;
   for(let l=cf2-2;l>=p.dn;l-=2)g+=`<path d="M${x-8} ${Y(l)}H${x+8}" stroke-width="1"/>`;
   for(let l=cf2+10;l<=p.dn;l+=2)g+=`<path d="M${x-8} ${Y(l)}H${x+8}" stroke-width="1"/>`;
@@ -879,7 +891,7 @@ const KN=['C','♭D','D','♭E','E','F','♯F','G','♭A','A','♭B','B'];
 function jRef(sc){return 60+TON[sc.key]+(sc.mode==='min'?3:0)}
 function jian(sc){meas(sc);
  const ref=jRef(sc),N=sc.notes,M0=sc.M[0];
- const cell=(i,n)=>{const o=Math.floor((n.m-ref)/12),sm=((n.m-ref)%12+12)%12,g=JP[sm],acc=g.length>1?g[0]:'',dg=g.slice(-1),
+ const cell=(i,n)=>{if(n.r)return `<span class="jc rs ${n.d===.25?'u1 u2':n.d===.5?'u1':''}" data-i="${i}"><span class="hi"></span><span class="d">0</span><span class="ul"></span><span class="lo"></span></span>`;const o=Math.floor((n.m-ref)/12),sm=((n.m-ref)%12+12)%12,g=JP[sm],acc=g.length>1?g[0]:'',dg=g.slice(-1),
    u=n.d===.25?'u1 u2':(n.d===.5||n.d===.75)?'u1':'',dot=(n.d===1.5||n.d===.75)?'<span class="dt">·</span>':'';
   return `<span class="jc nt ${u}${n.tie?' tie':''}" data-i="${i}"><span class="hi">${o>0?'•'.repeat(o):''}</span><span class="d">${acc?`<small>${acc}</small>`:''}${dg}${dot}</span><span class="ul"></span><span class="lo">${o<0?'•'.repeat(-o):''}</span></span>`};
  const dash='<span class="jc dash"><span class="hi"></span><span class="d">–</span><span class="ul"></span><span class="lo"></span></span>';
@@ -891,14 +903,14 @@ function jian(sc){meas(sc);
    while(k<ids.length&&N[ids[k]].t<ge-1e-9){const i=ids[k],n=N[i];
     if(n.d<1){grp+=cell(i,n)}
     else{if(grp){h+=`<span class="jb">${grp}</span>`;grp=''}
-     const extra=n.d>=2?Math.round(n.d)-1:0;h+=`<span class="jb">${cell(i,n)}</span>`+`<span class="jb">${dash}</span>`.repeat(extra)}
+     const extra=n.d>=2?Math.round(n.d)-1:0;h+=`<span class="jb">${cell(i,n)}</span>`+`<span class="jb">${n.r?cell(i,n):dash}</span>`.repeat(extra)}
     k++}
    if(grp)h+=`<span class="jb">${grp}</span>`;gs=ge});
   h+='</div>'}
  return h+'</div>'}
 function show(){if(SC){SC.clef=O().clef}$('#score').innerHTML=SC?(O().nt==='staff'?staff(SC):jian(SC)):'';$('#clefNote').hidden=!(SC&&O().nt==='staff'&&O().clef!=='treble');$('#clefNote').textContent=t(O().clef==='bass'?'cfBn':'cfAn');paint(LR,!P||!P.on&&!!LR)}
-const headI=i=>{const N=SC.notes;while(i>0&&N[i].tie)i--;return i},prevA=i=>{i=headI(i)-1;return i<0?-1:headI(i)};
-function judge(R,i){const N=SC.notes;i=headI(i);const r=R[i];if(!r)return null;const pi=prevA(i),q=pi>=0?R[pi]:null,ex=.25;
+const headI=i=>{const N=SC.notes;while(i>0&&N[i].tie)i--;return i},prevA=i=>{const N=SC.notes;i=headI(i)-1;while(i>=0&&(N[i].r||N[i].tie)){if(N[i].tie)i=headI(i);else i--}return i<0?-1:headI(i)};
+function judge(R,i){const N=SC.notes;if(N[i].r)return null;i=headI(i);const r=R[i];if(!r)return null;const pi=prevA(i),q=pi>=0?R[pi]:null,ex=.25;
  const tOk=Math.abs(r.dt)<=ex*60/SC.tempo*1000;
  return {p:Math.abs(r.c)<=30,r:q?Math.abs((r.rel-q.rel)-(N[i].t-N[pi].t))<=ex:tOk}}
 function paint(R,fin){const run=P&&P.on;
@@ -916,19 +928,19 @@ async function startDrill(){
   if(o.gClick)SC.M.forEach(M=>{let q=0;M.g.forEach((g,i)=>{osc.push(click(t0+(M.st+q)*spb,i,1));q+=g})});
   P={on:1,st,an:an2,buf:new Float32Array(2048),spb,t0,t1,osc,cur:-2,seg:null,idx:0,last:-1,res:SC.notes.map(()=>null)};LR=null;$('#rep').hidden=true;paint(P.res);setBtn();try{$('#score').closest('.card').scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}dLoop()}
  catch(e){live(t('micErr'))}}
-function stopDrill(){if(!P)return;cancelAnimationFrame(P.raf);(P.osc||[]).forEach(x=>{try{x&&x.stop(0)}catch(e){}});P.osc=[];$$('#score .nt.now').forEach(e=>e.classList.remove('now'));$('#dPos').textContent='';P.st.getTracks().forEach(x=>x.stop());P.on=0;setBtn();paint(P.res,false)}
+function stopDrill(){if(!P)return;cancelAnimationFrame(P.raf);(P.osc||[]).forEach(x=>{try{x&&x.stop(0)}catch(e){}});P.osc=[];$$('#score .now').forEach(e=>e.classList.remove('now'));$('#dPos').textContent='';P.st.getTracks().forEach(x=>x.stop());P.on=0;setBtn();paint(P.res,false)}
 function open_(st,ms,rms){P.seg={st,end:st,ms:[...ms],pk:rms,gap:0}}
 function close_(){const g=P.seg;P.seg=null;if(!g||g.end-g.st<.08||g.ms.length<4)return;
  const m=med(g.ms),mr=Math.round(m),rel=(g.st-P.t0)/P.spb,N=SC.notes,pv=N[P.last];
  if(pv&&pv.m===mr&&rel<pv.t+(pv.len||pv.d)-.3)return;
- let bj=-1,bc=9;for(let j=P.idx,c=0;j<N.length&&c<3;j++){if(N[j].tie)continue;c++;const co=Math.abs(N[j].m-mr)+Math.abs(N[j].t-rel)*1.5;if(co<bc){bc=co;bj=j}}
+ let bj=-1,bc=9;for(let j=P.idx,c=0;j<N.length&&c<3;j++){if(N[j].tie||N[j].r)continue;c++;const co=Math.abs(N[j].m-mr)+Math.abs(N[j].t-rel)*1.5;if(co<bc){bc=co;bj=j}}
  if(bj<0)return;
- const r=P.res[bj]={dt:(rel-N[bj].t)*P.spb*1000,rel,c:(m-N[bj].m)*100,db:g.pk>0?20*Math.log10(g.pk):-99};P.last=bj;P.idx=bj+1;while(N[P.idx]&&N[P.idx].tie)P.idx++;
+ const r=P.res[bj]={dt:(rel-N[bj].t)*P.spb*1000,rel,c:(m-N[bj].m)*100,db:g.pk>0?20*Math.log10(g.pk):-99};P.last=bj;P.idx=bj+1;while(N[P.idx]&&(N[P.idx].tie||N[P.idx].r))P.idx++;
  live(`${t('bar')} ${N[bj].bar+1}/${SC.bars} · ${dtT(r.dt)} · ${r.c>0?'+':''}${Math.round(r.c)}¢`);paint(P.res)}
 function cursor(now){if(!O().gPos)return;const el=(now-P.t0)/P.spb,N=SC.notes;let k=-1;
  for(let i=0;i<N.length;i++)if(el>=N[i].t-1e-6&&el<N[i].t+N[i].d){k=i;break}
- if(k===P.cur)return;P.cur=k;$$('#score .nt.now').forEach(e=>e.classList.remove('now'));if(k<0){$('#dPos').textContent='';return}
- $$(`#score .nt[data-i="${k}"]`).forEach(e=>e.classList.add('now'));const b=N[k].bar,M=SC.M[b];$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===b));
+ if(k===P.cur)return;P.cur=k;$$('#score .now').forEach(e=>e.classList.remove('now'));if(k<0){$('#dPos').textContent='';return}
+ $$(`#score [data-i="${k}"]`).forEach(e=>e.classList.add('now'));const b=N[k].bar,M=SC.M[b];$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===b));
  let q=0,n=0;M.g.forEach(g=>{if(el-M.st>=q-1e-6)n++;q+=g});$('#dPos').textContent=t('barN').replace('{b}',b+1).replace('{t}',SC.bars)+' · '+t('beatN').replace('{n}',n);
  const box=document.querySelector(`#score [data-m="${b}"]`);if(box&&box.scrollIntoView&&O().nt==='jian')box.scrollIntoView({block:'nearest',behavior:'smooth'})}
 function dLoop(){if(!P||!P.on)return;P.raf=requestAnimationFrame(dLoop);
@@ -945,7 +957,7 @@ function dLoop(){if(!P||!P.on)return;P.raf=requestAnimationFrame(dLoop);
 const pr=(x,y)=>{const n=x.length;if(n<3)return null;const mx=x.reduce((a,b)=>a+b)/n,my=y.reduce((a,b)=>a+b)/n;let a=0,b=0,c=0;x.forEach((v,i)=>{a+=(v-mx)*(y[i]-my);b+=(v-mx)**2;c+=(y[i]-my)**2});return b&&c?a/Math.sqrt(b*c):null};
 function finish(){if(P.seg)close_();stopDrill();LR=P.res;paint(LR,true);report(LR)}
 const getH=()=>{try{return JSON.parse(localStorage.getItem('erhu_hist')||'[]')}catch(e){return[]}},setH=h=>{try{localStorage.setItem('erhu_hist',JSON.stringify(h))}catch(e){}};
-function report(R){const N=SC.notes,A=N.map((_,i)=>i).filter(i=>!N[i].tie),J=A.map(i=>judge(R,i)),got=J.filter(Boolean).length,box=$('#rep');box.hidden=false;
+function report(R){const N=SC.notes,A=N.map((_,i)=>i).filter(i=>!N[i].tie&&!N[i].r),J=A.map(i=>judge(R,i)),got=J.filter(Boolean).length,box=$('#rep');box.hidden=false;
  if(!got){box.innerHTML=`<p class="mut" style="margin:0">${t('noSound')}</p>`;return}
  const pc=f=>Math.round(100*J.filter(j=>j&&f(j)).length/A.length),ds=R.filter(Boolean).map(r=>r.dt),dt=ds.reduce((a,b)=>a+b,0)/ds.length,xs=[],ys=[];
  R.forEach((r,i)=>{if(r&&r.db>-90){xs.push(LV.indexOf(SC.dyn[N[i].bar]));ys.push(r.db)}});const r=pr(xs,ys),rs={pitch:pc(j=>j.p),rhythm:pc(j=>j.r),dt:Math.round(dt),n:A.length,got};
