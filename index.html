@@ -180,6 +180,11 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 .cd{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:rgba(0,0,0,.45);color:#fff;text-align:center;padding:1rem}
 .cd b{font-size:6rem;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}.cd span{font-size:1.0625rem;font-weight:600}
 .cd b.pop{animation:pop .9s var(--ease)}@keyframes pop{from{transform:scale(1.5);opacity:.2}to{transform:scale(1);opacity:1}}
+.jn{position:relative}.jn b.uu{border-bottom:4px double currentColor}
+.jn.tie::before{content:"";position:absolute;right:50%;width:1.9rem;top:.05rem;height:.45rem;border:1.5px solid currentColor;border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0}
+.jg.one{grid-template-columns:1fr}.jg.one .jr{gap:.45rem}
+.jt{font-style:normal;font-family:inherit;font-weight:700;margin-left:.3rem}
+#dRhy button,#dLv button{padding:.55rem .2rem;font-size:.85rem}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -316,7 +321,7 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
 </div></section>
 <section id="v-drill"><div class="narrow wide">
  <div class="pt"><h1 data-i="tDrill"></h1><p data-i="subDrill"></p><button class="hq" data-help="drill" aria-label="Help">?</button></div>
- <div class="card"><div id="score" class="sc"></div></div>
+ <div class="card"><div id="score" class="sc"></div><p class="mut" id="clefNote" style="font-size:.8125rem;margin:.5rem 0 0" hidden></p></div>
  <div class="gap" style="height:1rem"></div>
  <div class="row2"><button class="btn alt" id="dGen"><svg class="ic"><use href="#i-ai"/></svg><span data-i="gen"></span></button><button class="btn" id="dGo"></button></div>
  <div class="card"><p class="lbl" data-i="rLive"></p><div id="live"></div><p class="mut" data-i="headph" style="margin:.5rem 0 0;font-size:.8125rem"></p></div>
@@ -324,13 +329,16 @@ html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb
  <div class="card" id="rep" hidden></div>
  <div class="gap"></div><p class="lbl" data-i="dSet"></p>
  <div class="list">
+  <div class="li" style="flex-direction:column;align-items:stretch"><span data-i="dLevel"></span><div class="seg" id="dLv"><button data-v="easy" data-i="lvE"></button><button data-v="hard" data-i="lvH"></button><button data-v="pro" data-i="lvP"></button><button data-v="chal" data-i="lvC"></button></div></div>
   <div class="li"><span class="t" data-i="dNote"></span><div class="seg" id="dNt"><button data-v="staff" data-i="dStaff"></button><button data-v="jian" data-i="dJian"></button></div></div>
+  <label class="li" id="clefRow"><span class="t" data-i="dClef"></span><select id="d_clef"></select></label>
   <label class="li"><span class="t" data-i="dKey"></span><select id="d_key"></select></label>
   <label class="li"><span class="t" data-i="dMode"></span><select id="d_mode"></select></label>
   <label class="li"><span class="t" data-i="dTime"></span><select id="d_time"></select></label>
   <label class="li"><span class="t" data-i="dLen"></span><select id="d_bars"></select></label>
   <div class="li"><span class="t" data-i="dTon"></span><div class="seg" id="dTon"><button data-v="1" data-i="tonal"></button><button data-v="0" data-i="atonal"></button></div></div>
-  <div class="li" style="flex-direction:column;align-items:stretch"><span data-i="dRhy"></span><div class="seg" id="dRhy"><button data-k="h" data-i="rHalf"></button><button data-k="q" data-i="rQ"></button><button data-k="e" data-i="rE"></button><button data-k="dot" data-i="rDot"></button></div></div>
+  <div class="li" style="flex-direction:column;align-items:stretch"><span data-i="dRhy"></span><div class="seg" id="dRhy"><button data-k="h" data-i="rHalf"></button><button data-k="q" data-i="rQ"></button><button data-k="e" data-i="rE"></button><button data-k="dot" data-i="rDot"></button><button data-k="s" data-i="rS"></button></div></div>
+  <label class="li"><span class="t" data-i="dTies"></span><input type="checkbox" id="d_ties"></label>
   <div class="li" style="flex-wrap:wrap"><span class="t" data-i="dTempo"></span><b id="d_tempoV"></b><input type="range" id="d_tempo" min="40" max="120" step="5"></div>
  </div>
  <div class="gap"></div><p class="lbl" data-i="hist"></p>
@@ -572,6 +580,21 @@ close|關閉|Close
 sDel|刪除帳號與所有資料|Delete account and all data
 sReplay|重新觀看新手導覽|Replay welcome tour
 gHelp|協助|Help
+begin|開始演奏|Start|開始
+dLevel|難度|Difficulty|難易度
+lvE|簡單|Easy|かんたん
+lvH|困難|Hard|難しい
+lvP|專業級|Pro|プロ
+lvC|挑戰|Challenge|チャレンジ
+dClef|譜號|Clef|音部記号
+cfT|高音譜號|Treble|ト音記号
+cfA|中音譜號|Alto|ハ音記号
+cfB|低音譜號|Bass|ヘ音記号
+cfAn|中音譜號：記譜比實際演奏低一個八度（8）。|Alto clef: written one octave below what you play (8).|ハ音記号：実音より1オクターブ低く記譜。
+cfBn|低音譜號：記譜比實際演奏低兩個八度（15）。|Bass clef: written two octaves below what you play (15).|ヘ音記号：実音より2オクターブ低く記譜。
+dTies|連結線|Ties|タイ
+rS|十六分|16th|16分
+tMix|變換拍子|Mixed meter|変拍子
 cVoice|語音提醒|Voice reminders|音声リマインド
 calHold|請擺好標準姿勢|Hold your reference posture|基準の姿勢を保ってください
 calNow|校準中，請保持不動|Calibrating, hold still|測定中、動かないでください
@@ -741,92 +764,137 @@ $$('#beats button').forEach(b=>b.onclick=()=>{S.beats=+b.dataset.n;beat=0;save()
 
 /* ---- drill ---- */
 const TON={C:0,D:2,E:4,F:5,G:7,A:9},MOD={maj:[0,2,4,5,7,9,11],min:[0,2,3,5,7,8,10],pen:[0,2,4,7,9]},LV=['p','mp','mf','f'];
-const DD={nt:'staff',key:'D',mode:'maj',time:'4/4',tonal:1,bars:4,tempo:60,r:{h:1,q:1,e:0,dot:0}};
-const O=()=>S.drill||(S.drill=JSON.parse(JSON.stringify(DD)));
+const DD={nt:'staff',key:'D',mode:'maj',time:'4/4',tonal:1,bars:4,tempo:60,r:{h:1,q:1,e:0,dot:0,s:0},level:'easy',clef:'treble',ties:0};
+const O=()=>{if(!S.drill)S.drill=JSON.parse(JSON.stringify(DD));const o=S.drill;for(const k in DD)if(o[k]==null)o[k]=JSON.parse(JSON.stringify(DD[k]));if(o.r.s==null)o.r.s=0;return o};
+const SIG={'2/4':[1,1],'3/4':[1,1,1],'4/4':[1,1,1,1],'5/4':[1,1,1,1,1],'6/8':[1.5,1.5],'5/8':[1,1.5],'7/8':[1,1,1.5]},MIX=['2/4','3/4','4/4','5/8','6/8','7/8'];
+const LVL={
+ easy:{hi:74,step:[-1,-1,1,1,0,2,-2],leap:3,chrom:0,set:{r:{h:1,q:1,e:0,dot:0,s:0},ties:0,tonal:1,time:'4/4',bars:4,tempo:60}},
+ hard:{hi:81,step:[-3,-2,-1,-1,0,1,1,2,3],leap:5,chrom:0,set:{r:{h:1,q:1,e:1,dot:1,s:0},ties:0,tonal:1,time:'4/4',bars:8,tempo:72}},
+ pro:{hi:86,step:[-4,-3,-2,-1,-1,1,1,2,3,4],leap:7,chrom:1,set:{r:{h:1,q:1,e:1,dot:1,s:1},ties:1,tonal:1,time:'4/4',bars:8,tempo:84}},
+ chal:{hi:88,step:[-5,-4,-3,-2,-1,1,2,3,4,5],leap:9,chrom:1,set:{r:{h:1,q:1,e:1,dot:1,s:1},ties:1,tonal:0,time:'mix',bars:8,tempo:96}}};
 const rnd=a=>a[Math.floor(Math.random()*a.length)],IC=n=>`<svg class="ic ${n==='stop'?'f':''}"><use href="#i-${n}"/></svg>`;
 const med=a=>{const x=[...a].sort((p,q)=>p-q);return x[x.length>>1]};
 let SC=null,P=null,LR=null;
 function gen(){
- const o=O(),B=+o.time[0],sc=MOD[o.mode].map(x=>(x+TON[o.key])%12),pool=[];
- for(let m=62;m<=81;m++)if(!o.tonal||sc.includes(m%12))pool.push(m);
- let i=o.tonal?pool.findIndex(m=>m%12===TON[o.key]):Math.floor(Math.random()*pool.length),t=0,notes=[],dyn=[],lv=rnd([2,3]);const r=o.r;
+ const o=O(),L=LVL[o.level]||LVL.easy,scl=MOD[o.mode].map(x=>(x+TON[o.key])%12),pool=[],r=o.r;
+ for(let m=62;m<=L.hi;m++)if(!o.tonal||scl.includes(m%12))pool.push(m);
+ let i=o.tonal?pool.findIndex(m=>m%12===TON[o.key]):Math.floor(Math.random()*pool.length),t=0,lv=rnd([2,3]);const notes=[],dyn=[],M=[];
+ const add=(d,b)=>{const pv=notes[notes.length-1];let m=pool[i],tie=0;
+  if(o.ties&&pv&&!pv.tie&&Math.random()<.22){m=pv.m;tie=1}
+  else if(o.tonal&&L.chrom&&d<=.5&&Math.random()<.1)m+=m<=62?1:rnd([-1,1]);
+  const n={m,d,t,bar:b};if(tie)n.tie=1;notes.push(n);t+=d;if(tie)return;
+  if(o.tonal)i=Math.max(0,Math.min(pool.length-1,i+rnd(L.step)));
+  else{let j;do{j=Math.floor(Math.random()*pool.length)}while(j===i||Math.abs(j-i)>L.leap);i=j}};
  for(let b=0;b<o.bars;b++){
-  lv=Math.max(1,Math.min(4,lv+rnd([-1,0,0,1])));dyn.push(LV[lv-1]);let rem=B;
-  while(rem>0){const op=[];
-   if(r.h&&rem>=2)op.push([2]);if(r.q&&rem>=1)op.push([1]);if(r.e&&rem>=1)op.push([.5,.5]);if(r.dot&&rem>=2)op.push([1.5,.5]);
-   if(!op.length)op.push(rem>=1?[1]:[.5]);
-   rnd(op).forEach(d=>{notes.push({m:pool[i],d,t,bar:b});t+=d;rem-=d;
-    if(o.tonal)i=Math.max(0,Math.min(pool.length-1,i+rnd([-2,-1,-1,0,1,1,2,3,-3])));
-    else{let j;do{j=Math.floor(Math.random()*pool.length)}while(Math.abs(j-i)<1||Math.abs(j-i)>7);i=j}})}}
- if(o.tonal){const l=notes[notes.length-1];l.m=pool.filter(m=>m%12===TON[o.key]).sort((a,b)=>Math.abs(a-l.m)-Math.abs(b-l.m))[0]}
- return {...o,B,notes,dyn}}
+  const sig=o.time==='mix'?rnd(MIX):(SIG[o.time]?o.time:'4/4'),g=SIG[sig],[n,d]=sig.split('/').map(Number);
+  M.push({n,d,g,st:t,len:g.reduce((a,c)=>a+c,0)});lv=Math.max(1,Math.min(4,lv+rnd([-1,0,0,1])));dyn.push(LV[lv-1]);
+  for(let k=0;k<g.length;k++){const op=[];
+   if(g[k]===1){const two=g[k+1]===1;
+    if(r.q)op.push([1]);if(r.e)op.push([.5,.5]);if(r.s)op.push([.25,.25,.25,.25],[.5,.25,.25],[.25,.25,.5]);
+    if(two&&r.h)op.push([2]);if(two&&r.dot)op.push([1.5,.5]);
+    if(!op.length)op.push([1]);
+    const p=rnd(op);p.forEach(x=>add(x,b));if(p.reduce((a,c)=>a+c,0)===2)k++}
+   else{op.push([1.5]);if(r.q||r.e)op.push([1,.5]);if(r.e)op.push([.5,.5,.5],[.5,1]);if(r.s)op.push([.5,.25,.25,.5]);
+    rnd(op).forEach(x=>add(x,b))}}}
+ if(o.tonal){let k=notes.length-1;while(notes[k].tie)k--;const l=notes[k];l.m=pool.filter(m=>m%12===TON[o.key]).sort((a,b)=>Math.abs(a-l.m)-Math.abs(b-l.m))[0];
+  for(let j=k+1;j<notes.length;j++)notes[j].m=l.m;}
+ notes.forEach((n,k)=>{if(n.tie&&notes[k-1].m!==n.m)delete n.tie});
+ return meas({...o,r:{...o.r},notes,dyn,M,B:M[0].g.length})}
+function meas(sc){
+ if(!sc.M){const B=sc.B||4;sc.M=Array.from({length:sc.bars},(_,b)=>({n:B,d:4,g:Array(B).fill(1),st:b*B,len:B}))}
+ const N=sc.notes;N.forEach((n,i)=>{if(n.tie)return;let l=n.d;for(let j=i+1;j<N.length&&N[j].tie;j++)l+=N[j].d;n.len=l});return sc}
 function parseJ(txt){
- const o=O(),ref=60+TON[o.key],mp=MOD[o.mode==='pen'?'maj':o.mode],B=+o.time[0],notes=[];let t=0;
- txt.split(/\s+/).forEach(k=>{const m=/^([#b]?)([0-7])([',]*)([-._]*)$/.exec(k);if(!m)return;
-  const d=m[4].includes('-')?1+m[4].split('-').length-1:m[4].includes('.')?1.5:m[4].includes('_')?.5:1;
-  if(m[2]!=='0')notes.push({m:ref+mp[m[2]-1]+(m[1]==='#'?1:m[1]==='b'?-1:0)+12*(m[3].split("'").length-m[3].split(',').length),d,t,bar:Math.floor(t/B+1e-9)});t+=d});
- if(!notes.length)return null;const bars=Math.ceil(t/B-1e-9);
- return {...o,B,notes,bars,dyn:Array(bars).fill('mf')}}
-const LET=[0,0,1,1,2,3,3,4,4,5,5,6],SH=[1,3,6,8,10];
-function staff(sc){
- const per=2,sys=Math.ceil(sc.bars/per),W=360,Wm=(W-66)/per,s=7;let h=`<svg viewBox="0 0 ${W} ${sys*112}" class="staff">`;
- for(let k=0;k<sys;k++){const y0=k*112+44;
+ const o=O(),ref=60+TON[o.key],mp=MOD[o.mode==='pen'?'maj':o.mode],sig=SIG[o.time]?o.time:'4/4',g=SIG[sig],len=g.reduce((a,c)=>a+c,0),[sn,sd]=sig.split('/').map(Number),notes=[];let t=0;
+ txt.split(/\s+/).forEach(k=>{const m=/^([#b]?)([0-7])([',]*)([-._=]*)$/.exec(k);if(!m)return;
+  const d=m[4].includes('-')?1+m[4].split('-').length-1:m[4].includes('.')?1.5:(m[4].includes('=')||m[4].includes('__'))?.25:m[4].includes('_')?.5:1;
+  if(m[2]!=='0')notes.push({m:ref+mp[m[2]-1]+(m[1]==='#'?1:m[1]==='b'?-1:0)+12*(m[3].split("'").length-m[3].split(',').length),d,t,bar:Math.floor(t/len+1e-9)});t+=d});
+ if(!notes.length)return null;const bars=Math.ceil(t/len-1e-9);
+ return meas({...o,time:sig,r:{...o.r},notes,bars,dyn:Array(bars).fill('mf'),B:g.length,M:Array.from({length:bars},(_,b)=>({n:sn,d:sd,g,st:b*len,len}))})}
+const LETs=[0,0,1,1,2,3,3,4,4,5,5,6],LETf=[0,1,1,2,2,3,4,4,5,5,6,6],BLK=[1,3,6,8,10],CLEF={treble:{bot:30,sh:0},alto:{bot:24,sh:1},bass:{bot:18,sh:2}};
+const useFlat=sc=>!!sc.tonal&&((sc.mode==='min'&&'DGCF'.includes(sc.key))||(sc.mode!=='min'&&sc.key==='F'));
+const spell=(m,flat)=>{const pc=((m%12)+12)%12,b=BLK.includes(pc);return{dn:(Math.floor(m/12)-1)*7+(flat?LETf:LETs)[pc],acc:b?(flat?-1:1):0}};
+function clefSvg(type,x,y0,s){
+ if(type==='bass')return `<g fill="currentColor" stroke="currentColor"><circle cx="${x+5}" cy="${y0+s}" r="2.7" stroke="none"/><path d="M${x+3} ${y0+s}c0 -8 14 -9 15 1c1 10 -8 17 -16 21" fill="none" stroke-width="2.3" stroke-linecap="round"/><circle cx="${x+24}" cy="${y0+s/2}" r="1.6" stroke="none"/><circle cx="${x+24}" cy="${y0+1.5*s}" r="1.6" stroke="none"/></g><text x="${x+8}" y="${y0-5}" font-size="8" fill="currentColor">15</text>`;
+ if(type==='alto'){const m=y0+2*s,arm=d=>`M${x+10} ${m}L${x+14} ${m+d*5}C${x+15} ${m+d*2} ${x+23} ${m+d*2} ${x+23} ${m+d*8}C${x+23} ${m+d*15} ${x+15} ${m+d*15} ${x+14} ${m+d*10}`;
+  return `<g stroke="currentColor" fill="none"><path d="M${x+2.5} ${y0}V${y0+4*s}" stroke-width="4"/><path d="M${x+7.5} ${y0}V${y0+4*s}" stroke-width="1.3"/><path d="${arm(-1)}" stroke-width="2.2" stroke-linecap="round"/><path d="${arm(1)}" stroke-width="2.2" stroke-linecap="round"/></g><text x="${x+9}" y="${y0-5}" font-size="8" fill="currentColor">8</text>`}
+ return `<text x="${x}" y="${y0+4*s+5}" font-size="38" fill="currentColor">𝄞</text>`}
+function staff(sc){meas(sc);
+ const cf=CLEF[sc.clef]||CLEF.treble,flat=useFlat(sc),N=sc.notes,byBar=sc.M.map((_,b)=>N.map((n,i)=>i).filter(i=>N[i].bar===b)),
+  per=Math.max(...byBar.map(a=>a.length))>8?1:2,sys=Math.ceil(sc.bars/per),W=360,X0=42,Wm=(W-X0-6)/per,s=7,SHH=122;
+ let h=`<svg viewBox="0 0 ${W} ${sys*SHH}" class="staff">`,beams='',ties='';const ps=[];
+ for(let k=0;k<sys;k++){const y0=k*SHH+50;
   for(let i=0;i<5;i++)h+=`<path class="sl" d="M8 ${y0+i*s}H${W-6}"/>`;
-  h+=`<path class="sl" d="M8 ${y0}V${y0+4*s}"/><text x="11" y="${y0+4*s+5}" font-size="38" fill="currentColor">𝄞</text>`;
-  if(!k)h+=`<text x="42" y="${y0+2*s}" class="ts">${sc.B}</text><text x="42" y="${y0+4*s}" class="ts">4</text>`;
-  for(let j=0;j<per;j++){const b=k*per+j;if(b>=sc.bars)break;const mx=62+j*Wm;
-   h+=`<rect class="mr" data-m="${b}" x="${mx}" y="${y0-18}" width="${Wm}" height="${4*s+38}" rx="6"/><path class="sl" d="M${mx+Wm} ${y0}V${y0+4*s}"/><text class="dy" x="${mx+4}" y="${y0+4*s+28}">${sc.dyn[b]}</text>`}}
- sc.notes.forEach((n,i)=>{const k=Math.floor(n.bar/per),j=n.bar%per,y0=k*112+44,x=62+j*Wm+12+(n.t-n.bar*sc.B)/sc.B*(Wm-26),
-  pc=n.m%12,dn=(Math.floor(n.m/12)-1)*7+LET[pc],Y=d=>y0+4*s-(d-30)*s/2,y=Y(dn),up=dn<34;
+  h+=`<path class="sl" d="M8 ${y0}V${y0+4*s}"/>`+clefSvg(sc.clef,11,y0,s);
+  for(let j=0;j<per;j++){const b=k*per+j;if(b>=sc.bars)break;const mx=X0+j*Wm,M=sc.M[b],pm=sc.M[b-1],ts=!pm||pm.n!==M.n||pm.d!==M.d,pad=ts?24:9;
+   h+=`<rect class="mr" data-m="${b}" x="${mx}" y="${y0-22}" width="${Wm}" height="${4*s+46}" rx="6"/><path class="sl" d="M${mx+Wm} ${y0}V${y0+4*s}"/><text class="dy" x="${mx+4}" y="${y0+4*s+34}">${sc.dyn[b]}</text>`;
+   if(ts)h+=`<text x="${mx+6}" y="${y0+2*s}" class="ts">${M.n}</text><text x="${mx+6}" y="${y0+4*s}" class="ts">${M.d}</text>`;
+   const ids=byBar[b],wt=ids.map(i=>1+.9*N[i].d),tot=wt.reduce((a,c)=>a+c,0)||1,st={};let cum=0;
+   ids.forEach((i,q)=>{const n=N[i],sp=spell(n.m,flat),dn=sp.dn-7*cf.sh,cur=st[dn]||0;let ac='';
+    if(!n.tie&&sp.acc!==cur)ac=sp.acc>0?'♯':sp.acc<0?'♭':'♮';st[dn]=sp.acc;
+    ps[i]={x:mx+pad+7+cum/tot*(Wm-pad-12),y:y0+4*s-(dn-cf.bot)*s/2,dn,y0,ac,up:dn<cf.bot+4,k};cum+=wt[q]});
+   /* beams: runs of short notes inside one beat group */
+   let gs=M.st;M.g.forEach(gl=>{const ge=gs+gl;let run=[];const flush=()=>{if(run.length>1){const up=run.reduce((a,i)=>a+ps[i].dn,0)/run.length<cf.bot+4,
+      ty=up?Math.min(...run.map(i=>ps[i].y))-25:Math.max(...run.map(i=>ps[i].y))+25,sx=i=>ps[i].x+(up?4.3:-4.3),d2=up?5.5:-5.5;
+     run.forEach(i=>{ps[i].up=up;ps[i].ty=ty;ps[i].bm=1});beams+=`<path d="M${sx(run[0])} ${ty}H${sx(run[run.length-1])}" stroke-width="3.6"/>`;
+     run.forEach((i,q)=>{if(N[i].d!==.25)return;const nx=run[q+1],pv=run[q-1];
+      if(nx!=null&&N[nx].d===.25)beams+=`<path d="M${sx(i)} ${ty+d2}H${sx(nx)}" stroke-width="3.2"/>`;
+      else if(pv==null||N[pv].d!==.25)beams+=`<path d="M${sx(i)} ${ty+d2}h${nx!=null?7:-7}" stroke-width="3.2"/>`})}run=[]};
+    ids.forEach(i=>{const n=N[i];if(n.t>=gs-1e-9&&n.t<ge-1e-9){if(n.d<1)run.push(i);else flush()}});flush();gs=ge})}}
+ N.forEach((n,i)=>{const p=ps[i],x=p.x,y=p.y,cf2=cf.bot,Y=d=>p.y0+4*s-(d-cf2)*s/2;
   let g=`<g class="nt" data-i="${i}" fill="currentColor" stroke="currentColor">`;
-  for(let l=28;l>=dn;l-=2)g+=`<path d="M${x-8} ${Y(l)}H${x+8}" stroke-width="1"/>`;
-  for(let l=40;l<=dn;l+=2)g+=`<path d="M${x-8} ${Y(l)}H${x+8}" stroke-width="1"/>`;
-  if(SH.includes(pc))g+=`<text x="${x-14}" y="${y+4}" font-size="12" stroke="none">♯</text>`;
+  for(let l=cf2-2;l>=p.dn;l-=2)g+=`<path d="M${x-8} ${Y(l)}H${x+8}" stroke-width="1"/>`;
+  for(let l=cf2+10;l<=p.dn;l+=2)g+=`<path d="M${x-8} ${Y(l)}H${x+8}" stroke-width="1"/>`;
+  if(p.ac)g+=`<text x="${x-14}" y="${y+4}" font-size="12" stroke="none">${p.ac}</text>`;
   g+=`<ellipse cx="${x}" cy="${y}" rx="4.6" ry="3.3" transform="rotate(-20 ${x} ${y})" fill="${n.d>=2?'none':'currentColor'}" stroke-width="1.4"/>`;
-  const sx=up?x+4.3:x-4.3,ey=up?y-25:y+25;g+=`<path d="M${sx} ${y}V${ey}" stroke-width="1.3"/>`;
-  if(n.d===.5)g+=`<path d="M${sx} ${ey}q${up?'7 6 4 15':'7 -6 4 -15'}" fill="none" stroke-width="1.5"/>`;
-  if(n.d%1)g+=`<circle cx="${x+8}" cy="${y-(dn%2?0:s/2)}" r="1.4" stroke="none"/>`;
-  h+=g+'</g>'});
- return h+'</svg>'}
-function jian(sc){
- const ref=60+TON[sc.key],F={3:'♭3',8:'♭6',10:'♭7'},sp=`<i>&nbsp;</i>`;let h='<div class="jg">';
- for(let b=0;b<sc.bars;b++){h+=`<div class="jm" data-m="${b}"><span class="dy">${sc.dyn[b]}</span><div class="jr">`;
+  const up=p.up,sx=up?x+4.3:x-4.3,ey=p.bm?p.ty:(up?y-25:y+25);
+  if(n.d<4)g+=`<path d="M${sx} ${y}V${ey}" stroke-width="1.3"/>`;
+  if(!p.bm&&n.d<1){const fl=o=>`<path d="M${sx} ${ey+o}q${up?'7 6 4 15':'7 -6 4 -15'}" fill="none" stroke-width="1.5"/>`;g+=fl(0);if(n.d===.25)g+=fl(up?5:-5)}
+  if(n.d===1.5||n.d===3||n.d===.75)g+=`<circle cx="${x+8.5}" cy="${y-((p.dn-cf2)%2?0:s/2)}" r="1.5" stroke="none"/>`;
+  h+=g+'</g>';
+  if(n.tie){const q=ps[i-1],o=q.up?8:-8,arc=(x1,x2,yy)=>`<path d="M${x1} ${yy+o*.8}Q${(x1+x2)/2} ${yy+o*1.9} ${x2} ${yy+o*.8}"/>`;
+   ties+=q.k===p.k?arc(q.x+3,x-3,y):arc(q.x+3,W-8,q.y)+arc(X0-2,x-3,y)}});
+ return h+`<g stroke="currentColor" fill="none" stroke-linecap="butt">${beams}</g><g stroke="currentColor" fill="none" stroke-width="1.4">${ties}</g></svg>`}
+function jian(sc){meas(sc);
+ const ref=60+TON[sc.key],F={3:'♭3',8:'♭6',10:'♭7'},sp=`<i>&nbsp;</i>`,one=sc.M.some((_,b)=>sc.notes.filter(n=>n.bar===b).length>5);let h=`<div class="jg${one?' one':''}">`;
+ for(let b=0;b<sc.bars;b++){const M=sc.M[b],pm=sc.M[b-1],ts=!pm||pm.n!==M.n||pm.d!==M.d;
+  h+=`<div class="jm" data-m="${b}"><span class="dy">${sc.dyn[b]}${ts?` <em class="jt">${M.n}/${M.d}</em>`:''}</span><div class="jr">`;
   sc.notes.forEach((n,i)=>{if(n.bar!==b)return;const o=Math.floor((n.m-ref)/12),sm=((n.m-ref)%12+12)%12,g=(sc.mode==='min'&&F[sm])||JP[sm];
-   h+=`<span class="jn nt" data-i="${i}"><i>${o>0?'•'.repeat(o):'&nbsp;'}</i><b class="${n.d===.5?'u':''}">${g}</b><i>${o<0?'•'.repeat(-o):'&nbsp;'}</i></span>`;
+   h+=`<span class="jn nt${n.tie?' tie':''}" data-i="${i}"><i>${o>0?'•'.repeat(o):'&nbsp;'}</i><b class="${n.d===.5?'u':n.d===.25?'uu':''}">${g}</b><i>${o<0?'•'.repeat(-o):'&nbsp;'}</i></span>`;
    if(n.d>=2)h+=`<span class="jx">${sp}<b>–</b>${sp}</span>`.repeat(Math.round(n.d)-1);
    if(n.d===1.5)h+=`<span class="jx">${sp}<b>·</b>${sp}</span>`});
   h+='</div></div>'}
  return h+'</div>'}
-function show(){$('#score').innerHTML=SC?(O().nt==='staff'?staff(SC):jian(SC)):'';paint(LR,!P||!P.on&&!!LR)}
-function judge(R,i){const r=R[i];if(!r)return null;const N=SC.notes,q=R[i-1],ex=.25;
+function show(){if(SC){SC.clef=O().clef}$('#score').innerHTML=SC?(O().nt==='staff'?staff(SC):jian(SC)):'';$('#clefNote').hidden=!(SC&&O().nt==='staff'&&O().clef!=='treble');$('#clefNote').textContent=t(O().clef==='bass'?'cfBn':'cfAn');paint(LR,!P||!P.on&&!!LR)}
+const headI=i=>{const N=SC.notes;while(i>0&&N[i].tie)i--;return i},prevA=i=>{i=headI(i)-1;return i<0?-1:headI(i)};
+function judge(R,i){const N=SC.notes;i=headI(i);const r=R[i];if(!r)return null;const pi=prevA(i),q=pi>=0?R[pi]:null,ex=.25;
  const tOk=Math.abs(r.dt)<=ex*60/SC.tempo*1000;
- return {p:Math.abs(r.c)<=30,r:q?Math.abs((r.rel-q.rel)-(N[i].t-N[i-1].t))<=ex:tOk}}
+ return {p:Math.abs(r.c)<=30,r:q?Math.abs((r.rel-q.rel)-(N[i].t-N[pi].t))<=ex:tOk}}
 function paint(R,fin){const run=P&&P.on;
  $$('#score .nt').forEach(g=>{const i=+g.dataset.i;let c='';if(R){const j=judge(R,i);c=j?(j.p&&j.r?'ok':j.p||j.r?'warn':'miss'):(fin||(run&&i<P.idx)?'miss':'')}
   g.classList.remove('ok','warn','miss');c&&g.classList.add(c)});
- const cb=run?SC.notes[Math.max(0,P.idx-1)].bar:-1;$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===cb))}
+ const cb=run?SC.notes[Math.max(0,P.last)].bar:-1;$$('#score [data-m]').forEach(e=>e.classList.toggle('cur',+e.dataset.m===cb))}
 const live=x=>$('#live').textContent=x,dtT=ms=>Math.abs(ms)<40?t('onbeat'):(ms<0?t('early'):t('late'))+' '+Math.abs(Math.round(ms))+' ms';
-function setBtn(){const on=P&&P.on;$('#dGo').innerHTML=IC(on?'stop':'play')+'<span>'+(on?t('stop'):t('begin')||t('start'))+'</span>'}
+function setBtn(){const on=P&&P.on;$('#dGo').innerHTML=IC(on?'stop':'play')+'<span>'+t(on?'stop':'begin')+'</span>'}
 function regen(){if(P&&P.on)stopDrill();SC=gen();LR=null;P=null;syncD();show();$('#rep').hidden=true;live(t('ready'))}
 async function startDrill(){
  if(P&&P.on){stopDrill();return}
  try{const st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
   const a=ctx();if(a.state==='suspended')await a.resume();const an2=a.createAnalyser();an2.fftSize=2048;a.createMediaStreamSource(st).connect(an2);
-  const spb=60/SC.tempo,t1=a.currentTime+.4,t0=t1+SC.B*spb;for(let i=0;i<SC.B;i++)click(t1+i*spb,i);
-  P={on:1,st,an:an2,buf:new Float32Array(2048),spb,t0,t1,seg:null,idx:0,res:SC.notes.map(()=>null)};LR=null;$('#rep').hidden=true;paint(P.res);setBtn();dLoop()}
+  meas(SC);const spb=60/SC.tempo,t1=a.currentTime+.4,m0=SC.M[0],t0=t1+m0.len*spb;let off=0;m0.g.forEach((g,i)=>{click(t1+off*spb,i);off+=g});
+  P={on:1,st,an:an2,buf:new Float32Array(2048),spb,t0,t1,seg:null,idx:0,last:-1,res:SC.notes.map(()=>null)};LR=null;$('#rep').hidden=true;paint(P.res);setBtn();dLoop()}
  catch(e){live(t('micErr'))}}
 function stopDrill(){if(!P)return;cancelAnimationFrame(P.raf);P.st.getTracks().forEach(x=>x.stop());P.on=0;setBtn();paint(P.res,false)}
 function open_(st,ms,rms){P.seg={st,end:st,ms:[...ms],pk:rms,gap:0}}
 function close_(){const g=P.seg;P.seg=null;if(!g||g.end-g.st<.08||g.ms.length<4)return;
- const m=med(g.ms),mr=Math.round(m),rel=(g.st-P.t0)/P.spb,N=SC.notes,pv=N[P.idx-1];
- if(pv&&pv.m===mr&&rel<pv.t+pv.d-.3)return;
- let bj=-1,bc=9;for(let j=P.idx;j<Math.min(P.idx+3,N.length);j++){const c=Math.abs(N[j].m-mr)+Math.abs(N[j].t-rel)*1.5;if(c<bc){bc=c;bj=j}}
+ const m=med(g.ms),mr=Math.round(m),rel=(g.st-P.t0)/P.spb,N=SC.notes,pv=N[P.last];
+ if(pv&&pv.m===mr&&rel<pv.t+(pv.len||pv.d)-.3)return;
+ let bj=-1,bc=9;for(let j=P.idx,c=0;j<N.length&&c<3;j++){if(N[j].tie)continue;c++;const co=Math.abs(N[j].m-mr)+Math.abs(N[j].t-rel)*1.5;if(co<bc){bc=co;bj=j}}
  if(bj<0)return;
- const r=P.res[bj]={dt:(rel-N[bj].t)*P.spb*1000,rel,c:(m-N[bj].m)*100,db:g.pk>0?20*Math.log10(g.pk):-99};P.idx=bj+1;
+ const r=P.res[bj]={dt:(rel-N[bj].t)*P.spb*1000,rel,c:(m-N[bj].m)*100,db:g.pk>0?20*Math.log10(g.pk):-99};P.last=bj;P.idx=bj+1;while(N[P.idx]&&N[P.idx].tie)P.idx++;
  live(`${t('bar')} ${N[bj].bar+1}/${SC.bars} · ${dtT(r.dt)} · ${r.c>0?'+':''}${Math.round(r.c)}¢`);paint(P.res)}
 function dLoop(){if(!P||!P.on)return;P.raf=requestAnimationFrame(dLoop);
  const now=ac.currentTime,bf=P.buf;P.an.getFloatTimeDomainData(bf);let e=0;for(let i=0;i<2048;i++)e+=bf[i]*bf[i];const rms=Math.sqrt(e/2048);
- if(now<P.t0-.3*P.spb){const n=Math.min(SC.B,Math.floor((now-P.t1)/P.spb)+1);if(n>0)live(`${t('countin')} ${n}`);return}
+ if(now<P.t0-.3*P.spb){const el=(now-P.t1)/P.spb;let n=0,o2=0;SC.M[0].g.forEach(x=>{if(el>=o2)n++;o2+=x});if(n>0)live(`${t('countin')} ${n}`);return}
  const f=detect(bf,ac.sampleRate),m=f>0?69+12*Math.log2(f/S.ref):null,g=P.seg;
  if(m==null){if(g){g.gap=g.gap||now;if(now-g.gap>.12)close_()}}
  else if(g){g.gap=0;const md=med(g.ms);
@@ -837,29 +905,35 @@ function dLoop(){if(!P||!P.on)return;P.raf=requestAnimationFrame(dLoop);
 const pr=(x,y)=>{const n=x.length;if(n<3)return null;const mx=x.reduce((a,b)=>a+b)/n,my=y.reduce((a,b)=>a+b)/n;let a=0,b=0,c=0;x.forEach((v,i)=>{a+=(v-mx)*(y[i]-my);b+=(v-mx)**2;c+=(y[i]-my)**2});return b&&c?a/Math.sqrt(b*c):null};
 function finish(){if(P.seg)close_();stopDrill();LR=P.res;paint(LR,true);report(LR)}
 const getH=()=>{try{return JSON.parse(localStorage.getItem('erhu_hist')||'[]')}catch(e){return[]}},setH=h=>{try{localStorage.setItem('erhu_hist',JSON.stringify(h))}catch(e){}};
-function report(R){const N=SC.notes,J=N.map((_,i)=>judge(R,i)),got=J.filter(Boolean).length,box=$('#rep');box.hidden=false;
+function report(R){const N=SC.notes,A=N.map((_,i)=>i).filter(i=>!N[i].tie),J=A.map(i=>judge(R,i)),got=J.filter(Boolean).length,box=$('#rep');box.hidden=false;
  if(!got){box.innerHTML=`<p class="mut" style="margin:0">${t('noSound')}</p>`;return}
- const pc=f=>Math.round(100*J.filter(j=>j&&f(j)).length/N.length),ds=R.filter(Boolean).map(r=>r.dt),dt=ds.reduce((a,b)=>a+b,0)/ds.length,xs=[],ys=[];
- R.forEach((r,i)=>{if(r&&r.db>-90){xs.push(LV.indexOf(SC.dyn[N[i].bar]));ys.push(r.db)}});const r=pr(xs,ys),rs={pitch:pc(j=>j.p),rhythm:pc(j=>j.r),dt:Math.round(dt),n:N.length,got};
+ const pc=f=>Math.round(100*J.filter(j=>j&&f(j)).length/A.length),ds=R.filter(Boolean).map(r=>r.dt),dt=ds.reduce((a,b)=>a+b,0)/ds.length,xs=[],ys=[];
+ R.forEach((r,i)=>{if(r&&r.db>-90){xs.push(LV.indexOf(SC.dyn[N[i].bar]));ys.push(r.db)}});const r=pr(xs,ys),rs={pitch:pc(j=>j.p),rhythm:pc(j=>j.r),dt:Math.round(dt),n:A.length,got};
  const row=(k,v)=>`<div class="m"><span>${t(k)}</span><div class="bar"><i style="width:${v}%"></i></div><b>${v}%</b></div>`;
- box.innerHTML=`<p class="lbl">${t('rRep')}</p>${row('rPitch',rs.pitch)}${row('rRhythm',rs.rhythm)}<p>${t('rTime')}：${dtT(dt)}</p>`+(r==null?'':`<p>${t('rDyn')}：${r>.3?t('dynOk'):t('dynLow')}</p>`)+`<p class="mut" style="margin-bottom:0;font-size:.8125rem">${t('got')} ${got}/${N.length} · ${t('saved')}</p>`;
+ box.innerHTML=`<p class="lbl">${t('rRep')}</p>${row('rPitch',rs.pitch)}${row('rRhythm',rs.rhythm)}<p>${t('rTime')}：${dtT(dt)}</p>`+(r==null?'':`<p>${t('rDyn')}：${r>.3?t('dynOk'):t('dynLow')}</p>`)+`<p class="mut" style="margin-bottom:0;font-size:.8125rem">${t('got')} ${got}/${A.length} · ${t('saved')}</p>`;
  setH([{id:Date.now(),sc:SC,rs},...getH()].slice(0,30));histUI();afterReport(rs)}
-function histUI(){const H=getH();$('#hist').innerHTML=H.length?H.map(x=>`<div class="li" data-h="${x.id}" style="cursor:pointer"><span class="t"><b>${x.sc.key} ${t({maj:'mMaj',min:'mMin',pen:'mPen'}[x.sc.mode]||'mMaj')} · ${x.sc.time}</b><br><span class="mut" style="font-size:.8125rem">${new Date(x.id).toLocaleDateString(S.lang)} · ${t('rPitch')} ${x.rs.pitch}% · ${t('rRhythm')} ${x.rs.rhythm}%</span></span><button class="x" data-d="${x.id}" aria-label="delete">×</button></div>`).join(''):`<div class="li mut">${t('histEmpty')}</div>`;$('#hClr').hidden=!H.length}
+const LVK={easy:'lvE',hard:'lvH',pro:'lvP',chal:'lvC'};
+function histUI(){const H=getH();$('#hist').innerHTML=H.length?H.map(x=>`<div class="li" data-h="${x.id}" style="cursor:pointer"><span class="t"><b>${x.sc.key} ${t({maj:'mMaj',min:'mMin',pen:'mPen'}[x.sc.mode]||'mMaj')} · ${x.sc.time==='mix'?t('tMix'):x.sc.time}${x.sc.level?' · '+t(LVK[x.sc.level]||'lvE'):''}</b><br><span class="mut" style="font-size:.8125rem">${new Date(x.id).toLocaleDateString(S.lang)} · ${t('rPitch')} ${x.rs.pitch}% · ${t('rRhythm')} ${x.rs.rhythm}%</span></span><button class="x" data-d="${x.id}" aria-label="delete">×</button></div>`).join(''):`<div class="li mut">${t('histEmpty')}</div>`;$('#hClr').hidden=!H.length}
 function syncD(){const o=O();$$('#dNt button').forEach(b=>b.classList.toggle('sel',b.dataset.v===o.nt));$$('#dTon button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===+o.tonal));
- $$('#dRhy button').forEach(b=>b.classList.toggle('sel',!!o.r[b.dataset.k]));['key','mode','time','bars','tempo'].forEach(k=>$('#d_'+k).value=o[k]);
+ $$('#dLv button').forEach(b=>b.classList.toggle('sel',b.dataset.v===o.level));$('#d_ties').checked=!!o.ties;$('#clefRow').hidden=o.nt!=='staff';
+ $$('#dRhy button').forEach(b=>b.classList.toggle('sel',!!o.r[b.dataset.k]));['key','mode','time','bars','tempo','clef'].forEach(k=>$('#d_'+k).value=o[k]);
  $('#d_tempoV').textContent=o.tempo;$('#d_tempo').style.setProperty('--p',(o.tempo-40)/80*100+'%')}
 function drillUI(){const fl=(id,a)=>$(id).innerHTML=a.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');
- fl('#d_key',Object.keys(TON).map(k=>[k,k]));fl('#d_mode',[['maj',t('mMaj')],['min',t('mMin')],['pen',t('mPen')]]);fl('#d_time',['2/4','3/4','4/4'].map(x=>[x,x]));fl('#d_bars',[4,8].map(x=>[x,x]));
+ fl('#d_key',Object.keys(TON).map(k=>[k,k]));fl('#d_mode',[['maj',t('mMaj')],['min',t('mMin')],['pen',t('mPen')]]);fl('#d_time',Object.keys(SIG).map(x=>[x,x]).concat([['mix',t('tMix')]]));fl('#d_bars',[4,8].map(x=>[x,x]));
+ fl('#d_clef',[['treble',t('cfT')],['alto',t('cfA')],['bass',t('cfB')]]);
  syncD();if(!SC){SC=gen();live(t('ready'))}show();histUI();setBtn()}
 $$('#dNt button').forEach(b=>b.onclick=()=>{O().nt=b.dataset.v;save();syncD();show()});
 $$('#dTon button').forEach(b=>b.onclick=()=>{O().tonal=+b.dataset.v;save();regen()});
-$$('#dRhy button').forEach(b=>b.onclick=()=>{const r=O().r;r[b.dataset.k]=r[b.dataset.k]?0:1;if(!r.h&&!r.q&&!r.e&&!r.dot)r.q=1;save();regen()});
+$$('#dLv button').forEach(b=>b.onclick=()=>{const o=O();Object.assign(o,JSON.parse(JSON.stringify(LVL[b.dataset.v].set)));o.level=b.dataset.v;save();regen()});
+$$('#dRhy button').forEach(b=>b.onclick=()=>{const r=O().r;r[b.dataset.k]=r[b.dataset.k]?0:1;if(!r.h&&!r.q&&!r.e&&!r.dot&&!r.s)r.q=1;save();regen()});
 ['key','mode','time','bars'].forEach(k=>$('#d_'+k).onchange=e=>{O()[k]=k==='bars'?+e.target.value:e.target.value;save();regen()});
+$('#d_clef').onchange=e=>{O().clef=e.target.value;save();show()};
+$('#d_ties').onchange=e=>{O().ties=e.target.checked?1:0;save();regen()};
 $('#d_tempo').oninput=e=>{O().tempo=+e.target.value;if(SC&&!(P&&P.on))SC.tempo=O().tempo;save();syncD()};
 $('#dGen').onclick=regen;$('#dGo').onclick=startDrill;
 $('#hist').onclick=e=>{const d=e.target.closest('[data-d]'),h=e.target.closest('[data-h]'),H=getH();
  if(d){setH(H.filter(x=>x.id!==+d.dataset.d));histUI();return}
- if(h){const x=H.find(y=>y.id===+h.dataset.h);if(x){if(P&&P.on)stopDrill();SC=x.sc;LR=null;Object.assign(O(),{key:x.sc.key,mode:x.sc.mode,time:x.sc.time,tonal:x.sc.tonal,bars:x.sc.bars,tempo:x.sc.tempo,r:x.sc.r});save();syncD();show();$('#rep').hidden=true;live(t('ready'));$('main').scrollTop=0}}};
+ if(h){const x=H.find(y=>y.id===+h.dataset.h);if(x){if(P&&P.on)stopDrill();SC=meas(x.sc);LR=null;const o=O();Object.assign(o,{key:x.sc.key,mode:x.sc.mode,time:x.sc.time,tonal:x.sc.tonal,bars:x.sc.bars,tempo:x.sc.tempo,r:{...o.r,...x.sc.r},ties:x.sc.ties||0,level:x.sc.level||o.level});save();syncD();show();$('#rep').hidden=true;live(t('ready'));$('main').scrollTop=0}}};
 $('#hClr').onclick=()=>{setH([]);histUI()};
 $('#imgIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('#refImg').src=r.result;$('#refImg').hidden=false};r.readAsDataURL(f)};
 $('#useTxt').onclick=()=>{const sc=parseJ($('#txtIn').value);if(!sc)return;if(P&&P.on)stopDrill();SC=sc;LR=null;show();$('#rep').hidden=true;live(t('ready'));$('main').scrollTop=0};
