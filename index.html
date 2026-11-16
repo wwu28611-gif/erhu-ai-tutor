@@ -750,7 +750,7 @@ chLh|左手|Left hand|左手
 chSh|肩膀|Shoulders|肩
 cVoiceS|語音|Voice|音声
 rotT|請把手機橫放|Turn your phone sideways|スマホを横向きに
-rotD|橫向拍攝才能完整拍到弓和雙手。把手機橫放在譜架或桌上，離自己約 1～1.5 公尺。|Landscape fits the whole bow and both hands. Stand the phone sideways on a music stand or table, about 1–1.5 m away.|横向きなら弓と両手が収まります。譜面台などに置き1〜1.5m離れてください。
+rotD|橫向拍攝才能完整拍到整支弓。請先開啟手機的「自動旋轉」，再把手機橫放在譜架或桌上，離自己約 1～1.5 公尺。|Landscape fits the whole bow and both hands. Stand the phone sideways on a music stand or table, about 1–1.5 m away.|横向きなら弓と両手が収まります。譜面台などに置き1〜1.5m離れてください。
 rotSkip|先用直式|Use portrait anyway|縦のまま使う
 camTipT|擺放建議|Setup tips|設置のコツ
 camTip1|手機橫放，用前鏡頭對著自己，離約 1～1.5 公尺。|Phone sideways, front camera facing you, about 1–1.5 m away.|スマホを横向きに、前面カメラで1〜1.5m。
@@ -908,7 +908,7 @@ sayBow|弓不夠水平，請調整|Bow is not level, please adjust|弓が水平�
 saySh|肩膀放鬆|Relax your shoulders|肩の力を抜いてください
 camPriv|影像只在這個裝置上即時分析，不會上傳。偵測模型由瀏覽器從網路下載。|Video is analyzed live on this device and never uploaded. The browser downloads the models.|映像はこの端末内で処理され、アップロードされません。
 beta|測試版|Beta|ベータ
-h_cam|用相機檢查四件事：弓是否和琴桿保持 90 度、左手臂高度、左手手形是否放鬆、肩膀是否聳起或歪斜。§按「開啟相機」後畫面會轉成橫向全螢幕，請把手機橫放、前鏡頭對著自己。擺好標準姿勢按「校準」，倒數後記下你的弓、肩膀與手形。§二胡固定是左手按弦、右手拉弓，程式會自動辨認。琴桿位置是用左手和腰部推估，弓是用右手到琴筒上方的連線推估，所以請讓腰部以上都入鏡。§白色線是琴桿，虛線是和琴桿垂直的目標弓線，粗實線是你現在的弓：綠色代表有保持 90 度，紅色代表歪了。左臂的虛線與圓圈是手肘的理想高度；左手骨架變紅代表手指張太開或太僵直；肩膀線變紅代表聳肩或一高一低。§左手應像握著東西般自然彎曲、手指靠攏、肌肉不緊繃。|Checks four things: bow at 90° to the neck, left arm height, relaxed left-hand shape, and raised or uneven shoulders.§Press Start camera; the screen turns to landscape full screen, so stand the phone sideways with the front camera facing you. Hold your best posture and press Calibrate.§Left hand on the strings, right hand bowing, detected automatically. The neck is estimated from your left hand and hip, the bow from your right hand to just above the soundbox, so keep everything above your waist in frame.§The white line is the neck, the dashed line is the target bow line at a right angle, the thick solid line is your bow: green means 90°, red means tilted. The dashed line and circle on the left arm mark the ideal elbow height; a red hand skeleton means spread or stiff fingers; a red shoulder line means raised or uneven shoulders.§The left hand should curve naturally, fingers together, muscles relaxed.
+h_cam|用相機檢查四件事：弓是否和琴桿保持 90 度、左手臂高度、左手手形是否放鬆、肩膀是否聳起或歪斜。§按「開啟相機」後會進入全螢幕。建議開啟手機的自動旋轉並把手機橫放，才能拍到整支弓；直放也可以使用。擺好標準姿勢按「校準」，倒數後記下你的弓、肩膀與手形。§二胡固定是左手按弦、右手拉弓，程式會自動辨認。琴桿位置是用左手和腰部推估，弓是用右手到琴筒上方的連線推估，所以請讓腰部以上都入鏡。§白色線是琴桿，虛線是和琴桿垂直的目標弓線，粗實線是你現在的弓：綠色代表有保持 90 度，紅色代表歪了。左臂的虛線是手肘的高度上限，手肘在線以下都可以（換到二、三把位手臂較低是正常的），抬得比線高才會變紅；左手骨架變紅代表手指張太開或太僵直；肩膀線變紅代表聳肩或一高一低。§左手應像握著東西般自然彎曲、手指靠攏、肌肉不緊繃。|Checks four things: bow at 90° to the neck, left arm height, relaxed left-hand shape, and raised or uneven shoulders.§Press Start camera; the screen turns to landscape full screen, so stand the phone sideways with the front camera facing you. Hold your best posture and press Calibrate.§Left hand on the strings, right hand bowing, detected automatically. The neck is estimated from your left hand and hip, the bow from your right hand to just above the soundbox, so keep everything above your waist in frame.§The white line is the neck, the dashed line is the target bow line at a right angle, the thick solid line is your bow: green means 90°, red means tilted. The dashed line and circle on the left arm mark the ideal elbow height; a red hand skeleton means spread or stiff fingers; a red shoulder line means raised or uneven shoulders.§The left hand should curve naturally, fingers together, muscles relaxed.
 gA11y|無障礙設定|Accessibility
 sHC|高對比模式|High contrast
 sRead|語音朗讀|Read screens aloud
@@ -1376,12 +1376,11 @@ async function startCam(){
  if(camOn||camBusy)return;camBusy=true;camUI();
  const fail=(k,e)=>{camBusy=false;camExitFs();camUI();const m=t(k)+'（'+((e&&(e.name&&e.name!=='Error'?e.name:e.message))||e)+'）';$('#cph').textContent=m;toast(m)};
  try{const el=document.documentElement;if(el.requestFullscreen&&!document.fullscreenElement)await el.requestFullscreen({navigationUI:'hide'});
-  if(screen.orientation&&screen.orientation.lock){await screen.orientation.lock('landscape');await new Promise(r=>setTimeout(r,450))}}catch(e){}
+}catch(e){}
  try{await loadModels()}catch(e){fail('mdlErr',e);return}
  try{await openStream()}catch(e){fail('camErr',e);return}
  camBusy=false;camOn=true;cLastVT=-1;cSh=null;cDev=null;hA=hG=null;lastPose=null;badT={};cRetry=0;$('#cph').hidden=true;
- camUI();camLoop();
- setTimeout(async()=>{const v=$('#cvid');if(camOn&&!cRetry&&v.videoHeight>v.videoWidth&&innerWidth>innerHeight){cRetry=1;try{cStream.getTracks().forEach(x=>x.stop());await openStream();cLastVT=-1}catch(e){}}},1300)}
+ camUI();camLoop();}
 function stopCam(){camOn=false;cancelAnimationFrame(cRaf);if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;$('#cvid').srcObject=null;
  const c=$('#ccv');c.getContext('2d').clearRect(0,0,c.width,c.height);
  camExitFs();camUI()}
@@ -1422,15 +1421,14 @@ function camLoop(){
   dot(G[0],G[1],LW*1.1,col);dot(C[0],C[1],LW*.9,col)}
  else cDev=null;
  chip('bow',bowOk==null?'':bowOk?'ok':'bad');
- /* left arm (pose 11 shoulder,13 elbow,15 wrist) */
+ /* left arm (pose 11 shoulder,13 elbow,15 wrist): 2nd/3rd position lowers the arm, so only a raised elbow is wrong */
  let armOk=null;
- if(p&&(p[11].visibility??1)>.4&&(p[13].visibility??1)>.4){const sw=Math.abs(p[11].x-p[12].x)*W;
-  if(sw>25){const re=(p[13].y-p[11].y)*H/sw,rw=(p[15].y-p[11].y)*H/sw,dEl=re-ARM_T.el,dWr=rw-ARM_T.wr;
-   armOk=Math.abs(dEl)<=T.arm&&Math.abs(dWr)<=T.arm*1.6;const col=armOk?OKC:BADC,ty=p[11].y*H+ARM_T.el*sw,ex=p[13].x*W;
+ if(p&&(p[11].visibility??1)>.5&&(p[13].visibility??1)>.5&&p[13].x>.02&&p[13].x<.98&&p[13].y<1.02){const sw=Math.abs(p[11].x-p[12].x)*W;
+  if(sw>25){const re=(p[13].y-p[11].y)*H/sw,rw=(p[15].y-p[11].y)*H/sw,hi=ARM_T.el-T.arm,tooHigh=re<hi||rw<ARM_T.wr-T.arm*1.8;
+   armOk=!tooHigh&&re<=1.3;const col=armOk?OKC:BADC,ty=p[11].y*H+hi*sw,ex=p[13].x*W;
    g.setLineDash([LW*1.6,LW*1.2]);g.strokeStyle=col;g.lineWidth=LW*.7;g.beginPath();g.moveTo(ex-sw*.32,ty);g.lineTo(ex+sw*.32,ty);g.stroke();g.setLineDash([]);
-   g.strokeStyle=col;g.lineWidth=LW*.75;g.beginPath();g.arc(ex,ty,LW*1.6,0,7);g.stroke();
    g.strokeStyle=col;g.lineWidth=LW*1.1;g.beginPath();g.moveTo(p[11].x*W,p[11].y*H);g.lineTo(p[13].x*W,p[13].y*H);g.lineTo(p[15].x*W,p[15].y*H);g.stroke();dot(p[13].x*W,p[13].y*H,LW*.9,col);
-   badFor('arm',!armOk,1500,!armOk?(dEl<0?'armHigh':'armLow'):null)}}
+   badFor('arm',!armOk,1500,!armOk?(tooHigh?'armHigh':'armLow'):null)}}
  chip('arm',armOk==null?'':armOk?'ok':'bad');
  /* left hand shape */
  let lhOk=null,hsS=null;
