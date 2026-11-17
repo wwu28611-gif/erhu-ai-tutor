@@ -439,6 +439,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 
 .gsb{position:absolute;left:50%;top:5.4rem;transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:.45rem;background:rgba(20,22,24,.85);color:#fff;border-radius:2rem;padding:.4rem .9rem .4rem .6rem;min-width:9rem;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .gsb span{font-size:1.3rem}.gsb b{font-size:.875rem;white-space:nowrap}.gsb i{flex:1;height:.3rem;min-width:3rem;border-radius:1rem;background:rgba(255,255,255,.2);overflow:hidden}.gsb em{display:block;height:100%;width:0;background:#facc15;transition:width .1s}.gsb.fist em{background:#ef4444}
+.mbo{display:flex;justify-content:space-between;align-items:center;margin-top:.6rem;font-size:.78rem;opacity:.9}.mbo .gstep button{padding:.3rem .5rem}
 .gsl{display:grid;grid-template-columns:1fr 1fr;gap:.35rem .6rem}.gsl div{display:flex;align-items:center;gap:.35rem;font-size:.8rem}.gsl span{font-size:1.1rem}.gsl b{font-weight:500}
 .gsn{font-size:.72rem;opacity:.7;margin:.5rem 0 0;line-height:1.45}.gstep{display:flex;gap:.25rem}.gstep button{background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:.5rem;padding:.3rem .55rem;font-size:.8rem;font-weight:700}.gstep button.sel{background:#facc15;color:#111}
 .cdr .sw{position:relative;display:inline-block;width:2.4rem;height:1.4rem}.cdr .sw input{opacity:0;width:0;height:0}.cdr .sw i{position:absolute;inset:0;border-radius:1rem;background:rgba(255,255,255,.25);transition:.2s}.cdr .sw i::after{content:'';position:absolute;left:.15rem;top:.15rem;width:1.1rem;height:1.1rem;border-radius:50%;background:#fff;transition:.2s}.cdr .sw input:checked+i{background:#22c55e}.cdr .sw input:checked+i::after{transform:translateX(1rem)}
@@ -616,7 +617,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 </div>
   <div>
    <div class="card"><p class="lbl" data-i="beats"></p><div class="seg" id="beats"><button data-n="1">1</button><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button><button data-n="6">6</button></div>
-    <div class="gap" style="height:.8rem"></div><p class="lbl" data-i="snd"></p><div class="seg" id="snd"><button data-s="real" data-i="sndR"></button><button data-s="click" data-i="sndC"></button><button data-s="wood" data-i="sndW"></button></div>
+    <div class="gap" style="height:.8rem"></div><p class="lbl" data-i="snd"></p><div class="seg" id="snd"><button data-s="real" data-i="sndR"></button><button data-s="wood" data-i="sndW"></button></div>
     <div class="dots" id="dots"></div></div>
    <div class="gap" style="height:.75rem"></div>
    <button class="btn lg" id="play"></button>
@@ -641,7 +642,9 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
    <div class="cdrh"><b data-i="ctTools"></b><button class="cbtn" id="cDrX" aria-label="close">›</button></div>
    <div class="cdrs"><div class="cdrt"><b>⏱ <span data-i="tBeat"></span></b><button class="cbtn mbgo" id="mbGo"></button></div>
     <div class="mbr"><button class="cbtn" data-mb="-5">−5</button><button class="cbtn" data-mb="-1">−</button><div class="mbv"><b id="mbBpm"></b><span>BPM</span></div><button class="cbtn" data-mb="1">＋</button><button class="cbtn" data-mb="5">+5</button></div>
-    <div class="mbd" id="mbDots"></div></div>
+    <div class="mbd" id="mbDots"></div>
+    <div class="mbo"><span data-i="beats"></span><div class="gstep" id="mbBeats"><button data-n="1">1</button><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button><button data-n="6">6</button></div></div>
+    <div class="mbo"><span data-i="snd"></span><div class="gstep" id="mbSnd"><button data-s="real" data-i="sndR"></button><button data-s="wood" data-i="sndW"></button></div></div></div>
    <div class="cdrs"><div class="cdrt"><b>🎯 <span data-i="tTune"></span></b><button class="cbtn mbgo" id="mtGo"></button></div>
     <div class="mtr"><b id="mtNote">–</b><span id="mtCents"></span></div><div class="mtbar"><i></i><em id="mtNeedle"></em></div><p class="mtst" id="mtSt"></p></div>
    <div class="cdrs"><div class="cdrt"><b>🖐 <span data-i="gsTitle"></span></b><label class="sw"><input type="checkbox" id="gsOn"><i></i></label></div>
@@ -1335,7 +1338,7 @@ mOnly|{m} 分|{m} min|{m}分
 h_task|把每天要練的項目排成清單，逐項計時。§「快捷設定」的字卡按 − / + 每次調 5 分鐘，也可以點數字直接輸入。點任務會放大成全螢幕碼表並開始計時；☆ 標記最想克服的項目會排到最上面，× 按兩次刪除。§離開 App 或切到背景會自動暫停。每連續練 30 分鐘會提醒你站起來活動 3 分鐘（可在下方關閉）。資料只存在這台裝置。§顯示今天每個項目練了多久、整體完成百分比。§術科學生可套用「專業術科學生」範本，共約 6 小時 20 分。|Plan your daily items and time each one.§In Quick setup, tap − / + to change by 5 minutes, or tap the number to type it. Tap a task to open a full-screen stopwatch and start timing; ☆ pins your focus item to the top; tap × twice to delete.§Leaving the app or going to the background pauses the timer. Every 30 minutes of practice you are reminded to stand up and move for 3 minutes (can be turned off below). Data stays on this device.§Shows how long you practiced each item today and overall completion.§Music majors can apply the Music-major template, about 6 h 20 min.|毎日の練習項目をリストにし、項目ごとに計時します。§「クイック設定」のカードは −／+ で5分ずつ調整、数字をタップして直接入力もできます。項目をタップすると全画面のストップウォッチが開いて計時開始。☆で重点項目を一番上に固定、×を2回で削除。§アプリを離れたりバックグラウンドに移ると自動で一時停止します。30分続けて練習するごとに、立って3分体を動かすよう知らせます（下でオフにできます）。データはこの端末にのみ保存されます。§今日の各項目の練習時間と、全体の達成率を表示します。§音楽専攻生は「専攻生」テンプレートを使えます。合計約6時間20分。
 snd|音色|Sound|音色
 sndC|電子音|Beep|電子音
-sndW|木魚|Woodblock|ウッドブロック
+sndW|電子木魚|Woodblock|ウッドブロック
 bpmHint|點數字可直接輸入速度（30–500）。電腦可用鍵盤打數字、Enter 確認、空白鍵開始或停止。|Tap the number to type a tempo (30–500). On a computer, type digits, press Enter, and use Space to start or stop.|数字をタップして入力（30〜500）。PCは数字キー、Enter、スペースで開始/停止。
 demo|示範演奏|Play demo|模範演奏
 prev|上一步|Back|戻る
@@ -1440,7 +1443,7 @@ function apply(){
  $('#key').innerHTML=NN.filter((n,i)=>!n.includes('♯')).map(n=>`<option value="${NN.indexOf(n)}">${n}</option>`).join('');
  $('#key').value=S.key;$('#ref').value=S.ref;$('#voice').checked=S.voice;$('#click').checked=S.click;
 
- $('#bpm').value=S.bpm;if(document.activeElement!==$('#bpmv'))$('#bpmv').value=S.bpm;$$('#snd button').forEach(b=>b.classList.toggle('sel',b.dataset.s===(S.snd||'real')));$$('#beats button').forEach(b=>b.classList.toggle('sel',+b.dataset.n===+S.beats));
+ $('#bpm').value=S.bpm;if(document.activeElement!==$('#bpmv'))$('#bpmv').value=S.bpm;if(S.snd!=='wood')S.snd='real';$$('#snd button').forEach(b=>b.classList.toggle('sel',b.dataset.s===S.snd));$$('#beats button').forEach(b=>b.classList.toggle('sel',+b.dataset.n===+S.beats));
  const rl=S.role?t('r_'+S.role):'';$('#curRole').textContent=rl;
  
  $$('.role').forEach(b=>b.classList.toggle('cur',b.dataset.r===S.role));
@@ -1525,7 +1528,7 @@ function click(time,b,force){if(!S.click&&!force)return;const a=ctx();
   o.connect(fl).connect(g).connect(a.destination);o.start(time);o.stop(time+.09);return o}
  o.frequency.value=b===0?1600:1000;g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(.6,time+.003);g.gain.exponentialRampToValueAtTime(.0001,time+.06);
  o.connect(g).connect(a.destination);o.start(time);o.stop(time+.08);return o}
-function sched(){const a=ctx();if(a.state!=='running'){a.resume().catch(()=>{});}if(nextT<a.currentTime-.05)nextT=a.currentTime+.05;while(nextT<a.currentTime+.3){const b=beat,at=nextT;click(at,S.beats===1?1:b);LH('beat',{});
+function sched(){const a=ctx();if(a.state!=='running'){a.resume().catch(()=>{});}if(nextT<a.currentTime-.05)nextT=a.currentTime+.05;while(nextT<a.currentTime+.3){const b=beat,at=nextT;click(at,S.beats===1?0:b);LH('beat',{});
  setTimeout(()=>{if(!playing)return;const ds=$$('#dots i');ds.forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):'');['#mbDots i','#hudDots i'].forEach(q=>$$(q).forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):''))},Math.max(0,(at-a.currentTime)*1000));
  nextT+=60/S.bpm;beat=(beat+1)%S.beats}}
 async function toggle(){
@@ -2028,6 +2031,7 @@ function ctUI(){if(!$('#cDr'))return;$('#ctTab').hidden=!camOn||$('#cDr').classL
  $('#mbGo').textContent=playing?'■ '+t('stop'):'▶ '+t('ctStart');$('#mbGo').classList.toggle('on',playing);$('#mbBpm').textContent=S.bpm;
  const md=$('#mbDots');if(md.children.length!==+S.beats)md.innerHTML='<i></i>'.repeat(S.beats);
  $('#mtGo').textContent=stream?'■ '+t('stop'):'▶ '+t('ctStart');$('#mtGo').classList.toggle('on',!!stream);if(!stream){$('#mtNote').textContent='–';$('#mtCents').textContent='';$('#mtSt').textContent=t('mtIdle').replace(/「[^」]*」|"[^"]*"/,'「'+t('ctStart')+'」');$('#mtNeedle').style.left='50%'}
+ $$('#mbBeats button').forEach(b=>b.classList.toggle('sel',+b.dataset.n===+S.beats));$$('#mbSnd button').forEach(b=>b.classList.toggle('sel',b.dataset.s===(S.snd==='wood'?'wood':'real')));
  $('#gsOn').checked=gsOn();$$('#gsStep button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===gsStep()));$('#gsLL').textContent=t('gsLL').replace('{n}',gsStep());$('#gsLR').textContent=t('gsLR').replace('{n}',gsStep());
  pillUI()}
 function pillUI(){const p=$('#ctPill');if(!p)return;const any=playing||!!stream;p.hidden=!camOn||!any||!!S.cam.hudHide;
@@ -2040,6 +2044,8 @@ function miniTune(n,c){if(!$('#mtNote'))return;if(n==null){$('#mtNote').textCont
 $('#ctTab').onclick=()=>drOpen(true);$('#cDrX').onclick=()=>drOpen(false);$('#ctPill').onclick=()=>drOpen(true);
 $('#mbGo').onclick=async()=>{await toggle();ctUI()};
 $$('[data-mb]').forEach(b=>b.onclick=()=>{setB(S.bpm+(+b.dataset.mb));ctUI()});
+$$('#mbBeats button').forEach(b=>b.onclick=()=>{S.beats=+b.dataset.n;beat=0;save();dots();apply();ctUI()});
+$$('#mbSnd button').forEach(b=>b.onclick=async()=>{S.snd=b.dataset.s;save();apply();ctUI();const a=ctx();if(a.state!=='running')await a.resume();await loadClk(a);click(a.currentTime+.03,0,1)});
 $('#mtGo').onclick=async()=>{const was=!!stream;await mic();ctMic=stream?1:0;if(!was&&!stream)toast(t('micErr'));ctUI()};
 $('#cGuideAgain').onclick=()=>{drOpen(false);cgStart()};
 /* swipe on the camera: right-to-left opens, left-to-right closes */
