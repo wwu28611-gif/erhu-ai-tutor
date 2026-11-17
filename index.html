@@ -418,6 +418,24 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 .wkv{font-size:.625rem;color:var(--mut);margin-bottom:.15rem}.wkl{position:absolute;bottom:-1.2rem;font-size:.6875rem;color:var(--mut)}.wkb.tdy .wkl{color:var(--fg);font-weight:700}
 .wkg{position:absolute;left:0;right:0;border-top:1.5px dashed var(--mut2);z-index:1;pointer-events:none}.wkg em{position:absolute;right:0;top:-1rem;font-style:normal;font-size:.625rem;color:var(--mut)}
 .wks{font-size:.75rem;margin:.6rem 0 0}.qt em{font-style:normal;font-size:.6875rem;color:var(--mut)}.sbadge{display:block;margin:.8rem auto 0;font-size:.8125rem;color:var(--mut)}
+
+.ctab{position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:6;background:rgba(20,22,24,.78);color:#fff;border:0;border-radius:1rem 0 0 1rem;padding:.8rem .45rem .8rem .55rem;font-size:1.1rem;display:flex;flex-direction:column;align-items:center;gap:.3rem;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.ctab span{writing-mode:vertical-rl;font-size:.75rem;letter-spacing:.15em}
+.ctpill{position:absolute;left:.6rem;bottom:5.2rem;z-index:5;display:flex;gap:.4rem;cursor:pointer}.ctpill span{background:rgba(20,22,24,.8);color:#fff;border-radius:2rem;padding:.35rem .7rem;font-size:.8125rem;font-weight:700;font-variant-numeric:tabular-nums}
+.cdr{position:absolute;top:0;right:0;bottom:0;width:min(19rem,82%);z-index:7;background:rgba(18,20,22,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;transform:translateX(105%);transition:transform .25s ease;padding:max(.8rem,env(safe-area-inset-top)) .9rem 1rem;overflow-y:auto;display:flex;flex-direction:column;gap:.8rem}
+.cdr.on{transform:none}.cdrh{display:flex;justify-content:space-between;align-items:center}.cdrh b{font-size:1rem}
+.cdrs{background:rgba(255,255,255,.07);border-radius:1rem;padding:.75rem}.cdrt{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}.cdrt b{font-size:.9rem}
+.mbgo{font-size:.8rem!important;padding:.4rem .8rem!important}.mbgo.on{background:#ef4444!important;color:#fff!important}
+.mbr{display:flex;align-items:center;gap:.3rem}.mbr .cbtn{padding:.45rem .5rem;font-size:.8rem;min-width:2.2rem}.mbv{flex:1;display:flex;flex-direction:column;align-items:center}.mbv b{font-size:1.7rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}.mbv span{font-size:.625rem;opacity:.7}
+.mbd{display:flex;justify-content:center;gap:.4rem;margin-top:.6rem}.mbd i{width:.6rem;height:.6rem;border-radius:50%;background:rgba(255,255,255,.25)}.mbd i.hit{background:#4ade80}.mbd i.acc{background:#facc15}
+.mtr{display:flex;align-items:baseline;justify-content:center;gap:.5rem}.mtr b{font-size:2rem;font-weight:800}.mtr span{font-size:.9rem;opacity:.85;font-variant-numeric:tabular-nums}
+.mtbar{position:relative;height:.55rem;border-radius:1rem;background:linear-gradient(90deg,#ef4444 0%,#f59e0b 30%,#22c55e 42%,#22c55e 58%,#f59e0b 70%,#ef4444 100%);margin:.5rem 0 .3rem;opacity:.85}
+.mtbar i{position:absolute;left:50%;top:-.2rem;bottom:-.2rem;width:2px;background:#fff;opacity:.7}.mtbar em{position:absolute;top:-.35rem;left:50%;width:.9rem;height:1.25rem;margin-left:-.45rem;border-radius:.4rem;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.5);transition:left .12s}
+.mtst{text-align:center;margin:.35rem 0 0;font-size:.8125rem;opacity:.85}.mtst.ok{color:#4ade80;opacity:1}.mtst.bad{color:#fca5a5;opacity:1}
+.cdrg{color:rgba(255,255,255,.7)!important;font-size:.8125rem;margin-top:auto}
+.cgd{position:fixed;inset:0;z-index:60}.cgring{position:fixed;border:3px solid #facc15;border-radius:1rem;box-shadow:0 0 0 9999px rgba(0,0,0,.55);pointer-events:none;transition:all .2s}
+.cgbub{position:fixed;left:50%;transform:translateX(-50%);width:min(21rem,calc(100% - 2rem));background:var(--sf);color:var(--fg);border-radius:1.1rem;padding:1rem;box-shadow:0 16px 40px -10px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:.35rem}
+.cgbub b{font-size:1.05rem}.cgbub p{margin:0;font-size:.875rem;line-height:1.55;color:var(--mut)}.cgbub .mut{font-size:.75rem}.cgbtn{display:flex;justify-content:space-between;align-items:center;margin-top:.5rem}.cgbtn .btn{padding:.55rem 1.2rem}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -602,6 +620,18 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
   <div class="chips" id="cChips" hidden><span data-k="bow"><i></i><b data-i="chBow"></b></span><span data-k="arm"><i></i><b data-i="chArm"></b></span><span data-k="lh"><i></i><b data-i="chLh"></b></span><span data-k="sh"><i></i><b data-i="chSh"></b></span></div>
   <div class="cbar" id="cBar" hidden><button class="cbtn" id="cCal"><span data-i="calib"></span></button><button class="cbtn" id="cFlip">🔄 <span data-i="camFlip"></span></button><button class="cbtn" id="cVoiceB"></button><button class="cbtn cx" id="cClose" aria-label="close">✕</button></div>
   <div class="chint" id="cHint" hidden></div><div class="gripb" id="gripBox" hidden><img id="gpImg" alt=""><video id="gpVid" muted loop playsinline hidden></video><div class="gpt"><span class="gpn" id="gpN"></span><b id="gpT"></b><p id="gpH"></p><div class="bar"><i id="gpBar"></i></div></div></div><div class="cd" id="ccd" hidden><b id="ccdN"></b><span id="ccdT"></span></div>
+  <div class="ctpill" id="ctPill" hidden></div>
+  <button class="ctab" id="ctTab" hidden aria-label="tools">‹<span data-i="ctTools"></span></button>
+  <div class="cdr" id="cDr" aria-hidden="true">
+   <div class="cdrh"><b data-i="ctTools"></b><button class="cbtn" id="cDrX" aria-label="close">›</button></div>
+   <div class="cdrs"><div class="cdrt"><b>⏱ <span data-i="tBeat"></span></b><button class="cbtn mbgo" id="mbGo"></button></div>
+    <div class="mbr"><button class="cbtn" data-mb="-5">−5</button><button class="cbtn" data-mb="-1">−</button><div class="mbv"><b id="mbBpm"></b><span>BPM</span></div><button class="cbtn" data-mb="1">＋</button><button class="cbtn" data-mb="5">+5</button></div>
+    <div class="mbd" id="mbDots"></div></div>
+   <div class="cdrs"><div class="cdrt"><b>🎯 <span data-i="tTune"></span></b><button class="cbtn mbgo" id="mtGo"></button></div>
+    <div class="mtr"><b id="mtNote">–</b><span id="mtCents"></span></div><div class="mtbar"><i></i><em id="mtNeedle"></em></div><p class="mtst" id="mtSt"></p></div>
+   <button class="quiet cdrg" id="cGuideAgain" data-i="cgAgain"></button>
+  </div>
+  <div class="cgd" id="cGuide" hidden><div class="cgring" id="cgRing"></div><div class="cgbub" id="cgBub"><span class="mut" id="cgN"></span><b id="cgT"></b><p id="cgD"></p><div class="cgbtn"><button class="quiet" id="cgSkip" data-i="skip"></button><button class="btn" id="cgNext"></button></div></div></div>
  </div>
  <div class="gap" style="height:.8rem"></div>
  <button class="btn lg" id="cGo"></button>
@@ -1050,6 +1080,17 @@ wkSum|本週共 {t}・平均每天 {a}・達標 {h} 天|This week {t} · avg {a}
 wkShareH|{n} 本週練琴紀錄|{n} practice log this week|{n} 今週の練習記録
 qtT|快捷工具|Quick tools|クイックツール
 sBadge|已獲得 {n} 個徽章|{n} badges earned|バッジ {n}個
+ctTools|工具|Tools|ツール
+mtIdle|按「開始」後拉一個音|Press Start, then play a note|開始を押して音を弾いて
+mtListen|聆聽中…|Listening…|聴いています…
+cgAgain|重看相機操作說明|Replay camera guide|カメラの説明をもう一度
+cg1|姿勢偵測準備好了！§把手機立在前方約 1 公尺，讓腰部以上和整把琴都入鏡，光線要充足。|Posture check is ready!§Stand the phone about 1 m away with your upper body and the whole erhu in view, in good light.|姿勢チェックの準備完了！§スマホを約1m前に立て、腰から上と二胡全体を映します。明るい場所で。
+cg2|四個指示燈§弓、手臂、左手、肩膀。綠色代表正確，紅色就是要調整的地方。|Four indicators§Bow, arm, left hand and shoulders. Green is correct, red needs adjusting.|4つのランプ§弓・腕・左手・肩。緑は正しく、赤は直すところ。
+cg3|看懂畫面上的線§白線是琴桿，虛線是目標弓線，粗線是你現在的弓。粗線跟虛線重疊就是 90 度。|Reading the lines§The white line is the neck, the dashed line is the target bow line, the thick line is your bow. When they overlap, you are at 90°.|線の見方§白線が棹、点線が目標の弓、太線が今の弓。重なれば90度です。
+cg4|校正§擺好你的標準姿勢再按「校正」，偵測會依照你的身形調整。|Calibrate§Take your best posture and press Calibrate so the check fits your body.|キャリブレーション§正しい姿勢でボタンを押すと、あなたの体に合わせます。
+cg5|語音提醒§拉琴時不方便看螢幕，開著語音會直接告訴你哪裡要調整。|Voice tips§While playing you can't watch the screen; voice tells you what to fix.|音声ガイド§演奏中は画面が見にくいので、音声で知らせます。
+cg6|往左滑叫出工具§在畫面上從右往左滑，或點右邊這個標籤，就能邊練邊用節拍器和調音器；往右滑收起來。|Swipe left for tools§Swipe right-to-left or tap this tab to use the metronome and tuner while you practice; swipe right to hide.|左にスワイプでツール§右から左へスワイプかタブをタップすると、メトロノームとチューナーが使えます。右へスワイプで閉じます。
+cg7|結束練習§按這裡關閉相機。這份說明可以在工具裡重看。|Finish§Tap here to close the camera. You can replay this guide from Tools.|終了§ここでカメラを閉じます。この説明はツールから見直せます。
 nLearn|學習|Learn|学習
 nSongs|曲庫|Songs|曲
 nPrac|練習室|Practice|練習室
@@ -1388,7 +1429,7 @@ function loop(){
  const f0=detect(buf,ac.sampleRate),now=performance.now();
  if(f0>0){if(tLast.length&&Math.abs(1200*Math.log2(f0/tLast[tLast.length-1]))>80)tLast=[];tLast.push(f0);if(tLast.length>5)tLast.shift();tHeard=now}
  if(++frame%2)return;
- if(now-tHeard>450||!tLast.length){LH('tune',{tm:0,ab:99});tLast=[];$('#nn').textContent='–';$('#status').textContent='';$('#needle').style.opacity=.3;$('#cents').textContent='0¢';return}
+ if(now-tHeard>450||!tLast.length){LH('tune',{tm:0,ab:99});tLast=[];$('#nn').textContent='–';$('#status').textContent='';$('#needle').style.opacity=.3;$('#cents').textContent='0¢';miniTune(null);return}
  const f=med(tLast);
  const midi=69+12*Math.log2(f/S.ref);let tm=mode==='D'?62:mode==='A'?69:Math.round(midi);
  const cents=(midi-tm)*100;
@@ -1396,7 +1437,7 @@ function loop(){
  $('#nn').textContent=NN[(tm%12+12)%12]+(Math.floor(tm/12)-1);
  $('#nsub').textContent=`${f.toFixed(1)} Hz · ${JP[sem]}`;
  const cc=Math.max(-50,Math.min(50,cents));$('#needle').style.opacity=1;$('#needle').style.transform='rotate('+cc*1.16+'deg)';
- $('#cents').textContent=(cents>0?'+':'')+Math.round(cents)+'¢';
+ $('#cents').textContent=(cents>0?'+':'')+Math.round(cents)+'¢';{const m2=Math.round(midi);miniTune(NN[(m2%12+12)%12]+(Math.floor(m2/12)-1),(midi-m2)*100)}
  const st=$('#status'),ab=Math.abs(cents);LH('tune',{tm,ab});
  if(ab<=8){st.textContent='✓ '+t('ok');st.style.color='var(--ok)';if(!okSince)okSince=Date.now();if(Date.now()-okSince>1500)say('ok')}
  else{okSince=0;const k=cents<0?'flat':'sharp';st.textContent=(cents<0?'♭ ':'♯ ')+t(k);st.style.color='var(--bad)';if(ab>15&&ab<150)say(k)}
@@ -1429,7 +1470,7 @@ function click(time,b,force){if(!S.click&&!force)return;const a=ctx(),o=a.create
  o.frequency.value=b===0?1600:1000;g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(.6,time+.003);g.gain.exponentialRampToValueAtTime(.0001,time+.06);
  o.connect(g).connect(a.destination);o.start(time);o.stop(time+.08);return o}
 function sched(){const a=ctx();while(nextT<a.currentTime+.12){const b=beat,at=nextT;click(at,S.beats===1?1:b);LH('beat',{});
- setTimeout(()=>{if(!playing)return;const ds=$$('#dots i');ds.forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):'')},Math.max(0,(at-a.currentTime)*1000));
+ setTimeout(()=>{if(!playing)return;const ds=$$('#dots i');ds.forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):'');$$('#mbDots i').forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):'')},Math.max(0,(at-a.currentTime)*1000));
  nextT+=60/S.bpm;beat=(beat+1)%S.beats}}
 async function toggle(){
  if(playing){playing=false;clearInterval(tm);$$('#dots i').forEach(x=>x.className='');apply();return}
@@ -1801,8 +1842,8 @@ async function startCam(){
  try{await loadModels()}catch(e){fail('mdlErr',e);return}
  try{await openStream()}catch(e){fail('camErr',e);return}
  camBusy=false;camOn=true;cLastVT=-1;cSh=null;cDev=null;hA=hG=null;lastPose=null;badT={};cRetry=0;$('#cph').hidden=true;
- camUI();camLoop();}
-function stopCam(){camOn=false;cGen++;cFace='user';cancelAnimationFrame(cRaf);if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;$('#cvid').srcObject=null;
+ camUI();camLoop();ctUI();if(!S.guided.camui&&!GRIP&&!STK)setTimeout(()=>{if(camOn)cgStart()},900)}
+function stopCam(){camOn=false;drOpen(false);cgEnd(1);if(playing)toggle();if(stream&&ctMic){mic();ctMic=0}$('#ctTab').hidden=true;$('#ctPill').hidden=true;cGen++;cFace='user';cancelAnimationFrame(cRaf);if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;$('#cvid').srcObject=null;
  const c=$('#ccv');c.getContext('2d').clearRect(0,0,c.width,c.height);
  camExitFs();camUI()}
 function chip(k,st){const e=document.querySelector(`#cChips [data-k="${k}"]`);if(e)e.className=st||''}
@@ -1907,6 +1948,46 @@ function gripFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=t
  else{if(GRIP.since)$('#gpBar').style.width='0%';GRIP.since=0;$('#gpH').className='bad';$('#gpH').textContent=hk?t(hk):t(GSTG[GRIP.stage].p);
   if(hk&&ts-GRIP.hkT>1500)gripSay(t(hk))}}
 
+
+/* ---- 相機畫面的工具抽屜（左右滑動）：節拍器＋調音器 ---- */
+let ctMic=0;
+function drOpen(o){const d=$('#cDr');if(!d)return;d.classList.toggle('on',!!o);d.setAttribute('aria-hidden',o?'false':'true');$('#ctTab').hidden=!camOn||!!o;if(o)ctUI()}
+function ctUI(){if(!$('#cDr'))return;$('#ctTab').hidden=!camOn||$('#cDr').classList.contains('on');
+ $('#mbGo').textContent=playing?'■ '+t('stop'):'▶ '+t('begin');$('#mbGo').classList.toggle('on',playing);$('#mbBpm').textContent=S.bpm;
+ const md=$('#mbDots');if(md.children.length!==+S.beats)md.innerHTML='<i></i>'.repeat(S.beats);
+ $('#mtGo').textContent=stream?'■ '+t('stop'):'▶ '+t('begin');$('#mtGo').classList.toggle('on',!!stream);if(!stream){$('#mtNote').textContent='–';$('#mtCents').textContent='';$('#mtSt').textContent=t('mtIdle');$('#mtNeedle').style.left='50%'}
+ pillUI()}
+function pillUI(){const p=$('#ctPill');if(!p)return;const parts=[];if(playing)parts.push(`<span>⏱ ${S.bpm}</span>`);if(stream)parts.push(`<span id="pillT">🎯 ${$('#mtNote').textContent}${$('#mtCents').textContent?' '+$('#mtCents').textContent:''}</span>`);
+ p.hidden=!camOn||!parts.length;p.innerHTML=parts.join('')}
+function miniTune(n,c){if(!$('#mtNote'))return;if(n==null){$('#mtNote').textContent='–';$('#mtCents').textContent='';$('#mtSt').textContent=t('mtListen');$('#mtSt').className='mtst';$('#mtNeedle').style.left='50%'}
+ else{const ab=Math.abs(c);$('#mtNote').textContent=n;$('#mtCents').textContent=(c>0?'+':'')+Math.round(c)+'¢';$('#mtNeedle').style.left=(50+Math.max(-50,Math.min(50,c)))+'%';
+  $('#mtSt').textContent=ab<=8?'✓ '+t('ok'):(c<0?'♭ '+t('flat'):'♯ '+t('sharp'));$('#mtSt').className='mtst '+(ab<=8?'ok':'bad')}
+ const pt=$('#pillT');if(pt)pt.textContent='🎯 '+$('#mtNote').textContent+($('#mtCents').textContent?' '+$('#mtCents').textContent:'')}
+$('#ctTab').onclick=()=>drOpen(true);$('#cDrX').onclick=()=>drOpen(false);$('#ctPill').onclick=()=>drOpen(true);
+$('#mbGo').onclick=async()=>{await toggle();ctUI()};
+$$('[data-mb]').forEach(b=>b.onclick=()=>{setB(S.bpm+(+b.dataset.mb));ctUI()});
+$('#mtGo').onclick=async()=>{const was=!!stream;await mic();ctMic=stream?1:0;if(!was&&!stream)toast(t('micErr'));ctUI()};
+$('#cGuideAgain').onclick=()=>{drOpen(false);cgStart()};
+/* swipe on the camera: right-to-left opens, left-to-right closes */
+{let sx=null,sy=0,st=0;const cw=$('#camw');
+ cw.addEventListener('touchstart',e=>{if(!camOn||e.touches.length!==1)return;sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now()},{passive:true});
+ cw.addEventListener('touchend',e=>{if(sx==null)return;const t0=e.changedTouches[0],dx=t0.clientX-sx,dy=t0.clientY-sy;sx=null;if(Date.now()-st>800||Math.abs(dx)<50||Math.abs(dx)<Math.abs(dy)*1.5)return;
+  if(e.target.closest('#cGuide'))return;drOpen(dx<0)},{passive:true});
+ let px=null,py=0;cw.addEventListener('pointerdown',e=>{if(!camOn||e.pointerType==='touch')return;px=e.clientX;py=e.clientY});
+ cw.addEventListener('pointerup',e=>{if(px==null||e.pointerType==='touch')return;const dx=e.clientX-px,dy=e.clientY-py;px=null;if(Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.5||e.target.closest('#cGuide,.cdr'))return;drOpen(dx<0)})}
+/* ---- 相機畫面新手導覽 ---- */
+const CGS=[[null,'cg1'],['#cChips','cg2'],[null,'cg3'],['#cCal','cg4'],['#cVoiceB','cg5'],['#ctTab','cg6'],['#cClose','cg7']];let CG=-1;
+function cgStart(){if(!camOn)return;CG=0;$('#cGuide').hidden=false;cgDraw()}
+function cgEnd(silent){if(CG<0)return;CG=-1;$('#cGuide').hidden=true;S.guided.camui=1;save()}
+function cgDraw(){const [sel,k]=CGS[CG],[ti,de]=t(k).split('§');$('#cgN').textContent=(CG+1)+' / '+CGS.length;$('#cgT').textContent=ti;$('#cgD').textContent=de||'';$('#cgNext').textContent=t(CG===CGS.length-1?'done':'next');
+ if(sel==='#ctTab')$('#ctTab').hidden=false;
+ const ring=$('#cgRing'),bub=$('#cgBub'),el=sel&&$(sel),W=innerWidth,H=innerHeight;
+ if(el&&!el.hidden&&el.offsetParent!==null){const r=el.getBoundingClientRect(),p=6;ring.hidden=false;$('#cGuide').style.background='transparent';Object.assign(ring.style,{left:r.left-p+'px',top:r.top-p+'px',width:r.width+p*2+'px',height:r.height+p*2+'px'});
+  const below=r.bottom+bub.offsetHeight+24<H;bub.style.top=(below?r.bottom+16:Math.max(12,r.top-bub.offsetHeight-16))+'px'}
+ else{ring.hidden=true;$('#cGuide').style.background='rgba(0,0,0,.55)';bub.style.top=Math.max(12,(H-bub.offsetHeight)/2)+'px'}
+ if(S.cam.voice!==false&&window.speechSynthesis){try{const u=new SpeechSynthesisUtterance(ti+'。'+(de||''));u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.85:1.05;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}}
+$('#cgNext').onclick=()=>{if(CG<CGS.length-1){CG++;cgDraw()}else{cgEnd();ctUI();try{speechSynthesis.cancel()}catch(e){}}};
+$('#cgSkip').onclick=()=>{cgEnd();ctUI();try{speechSynthesis.cancel()}catch(e){}};
 /* ---- 運弓暖身：空手推拉，用後鏡頭追蹤右手軌跡 ---- */
 let STK=null;
 function strokeStart(n){const gv=$('#gpVid');gv.src='bow_demo.mp4';gv.hidden=false;gv.play().catch(()=>{});STK={n,cnt:0,tr:[],sm:null,dir:0,ext:null,st0:null,stT:0,hk:null,hkT:0,said:0,done:false,flash:0};const b=$('#gripBox');b.hidden=false;$('#gpImg').hidden=true;
