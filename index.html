@@ -505,10 +505,12 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 <section id="v-me"><div class="narrow">
  <div class="mecard"><span class="av" id="meAv"></span><div class="mei"><b id="meName"></b><span class="pill" id="meRole"></span></div><button class="btn alt" id="meSwitch" data-i="switch"></button></div>
  <div class="gap" style="height:.9rem"></div>
+ <div id="meAch">
  <p class="lbl" data-i="achT"></p>
  <div id="meLv"></div>
  <div class="grow" id="meStats"></div>
  <div class="bgg" id="meBadges"></div>
+ </div>
  <div class="gap" style="height:.9rem"></div>
  <div class="card" id="stuCard" hidden><p class="lbl" data-i="sToday"></p>
   <div class="m"><span data-i="sGoal"></span><div class="bar"><i id="goalBar"></i></div><b id="goalTxt"></b></div>
@@ -2385,7 +2387,7 @@ function stuHomeUI(){if(S.role!=='student')return;tkInit();const box=$('#stuHome
  h+=`<div class="card wk"><div class="sxh"><b>📊 ${t('wkT')}</b><button class="quiet" id="wkShare">${t('wkShare')}</button></div><div class="wkc"><span class="wkg" style="bottom:calc(1.2rem + (100% - 1.2rem) * ${(goal*60/mx).toFixed(3)})"><em>${t('wkGoal')}</em></span>${W.map((x,i)=>`<div class="wkb${x.today?' tdy':''}${x.sec>=goal*60?' hit':''}"><span class="wkv">${x.sec>=60?(x.sec/3600).toFixed(1):''}</span><i style="height:${x.sec/mx*100}%"></i><span class="wkl">${dn[i]}</span></div>`).join('')}</div>
   <p class="mut wks">${t('wkSum').replace('{t}',fmtHM(tot)).replace('{a}',fmtHM(Math.round(tot/past.length))).replace('{h}',hit)}</p></div>`;
  h+=`<p class="lbl" style="margin:1rem .2rem .4rem">${t('qtT')}</p><div class="warm qt"><button data-go="tune"><span>🎯</span><b>${t('tTune')}</b></button><button data-go="beat"><span>⏱</span><b>${t('tBeat')}</b><em>${S.bpm} BPM</em></button><button data-go="cam"><span>📷</span><b>${t('tCam')}</b></button></div>`;
- const nb=Object.keys(S.badges||{}).length;h+=`<button class="quiet sbadge" data-go="me">🏅 ${t('sBadge').replace('{n}',nb)} ›</button>`;
+ 
  box.innerHTML=h}
 function stuShare(){const W=weekData(),dn=t('wkDays').split(','),g=stuGoal();const name=(S.prof&&S.prof.name)||'';
  const txt=`${t('wkShareH').replace('{n}',name)}\n`+W.filter(x=>!x.fut).map((x,i)=>`${dn[i]} ${x.k.slice(5)}：${fmtHM(x.sec)}${x.sec>=g*60?' ✓':''}`).join('\n')+`\n${t('wkSum').replace('{t}',fmtHM(W.reduce((a,x)=>a+x.sec,0))).replace('{a}',fmtHM(Math.round(W.filter(x=>!x.fut).reduce((a,x)=>a+x.sec,0)/W.filter(x=>!x.fut).length))).replace('{h}',W.filter(x=>x.sec>=g*60).length)}`;
@@ -2474,7 +2476,7 @@ function meUI(){crInit();const p=S.prof||{};$('#meAv').style.backgroundImage=p.a
  const learned=Object.keys(S.course.done).filter(id=>LX[id]&&LX[id].track==='basic').length;let best=0;Object.values(S.course.sk).forEach(v=>{best=Math.max(best,v.pitch||0)});
  const tot=Object.values(S.log||{}).reduce((a,b)=>a+b,0);
  $('#meStats').innerHTML=`<div class="gi"><b>📅 ${weekDays()}</b><span>${t('gWeek')}</span></div><div class="gi"><b>📚 ${learned}</b><span>${t('gLearned')}</span></div><div class="gi"><b>${fmtHM(tot)}</b><span>${t('gTotal')}</span></div><div class="gi"><b>${best?best+'%':'–'}</b><span>${t('gBest')}</span></div>`;
- $('#meLv').innerHTML=lvCard();const B=S.badges||{};$('#meBadges').innerHTML=BADGES.map(([id,ic,k])=>`<div class="bg${B[id]?' on':''}" title="${t(k+'D')}"><span>${ic}</span><b>${t(k)}</b></div>`).join('');
+ $('#meAch').hidden=S.role==='student';$('#meLv').innerHTML=lvCard();const B=S.badges||{};$('#meBadges').innerHTML=BADGES.map(([id,ic,k])=>`<div class="bg${B[id]?' on':''}" title="${t(k+'D')}"><span>${ic}</span><b>${t(k)}</b></div>`).join('');
  $('#stuCard').hidden=S.role!=='student';if(S.role==='student')stuUI()}
 $('#meSwitch').onclick=()=>$('#ov').classList.add('on');$('#meTour').onclick=()=>startWalk();
 function fill(){[['#bpm',30,500]].forEach(([s,a,b])=>$(s).style.setProperty('--p',((+$(s).value-a)/(b-a)*100)+'%'))}
