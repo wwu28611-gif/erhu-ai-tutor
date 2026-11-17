@@ -1264,7 +1264,7 @@ $('#voice').onchange=e=>{S.voice=e.target.checked;save()};
 $('#click').onchange=e=>{S.click=e.target.checked;save()};
 
 $('#reset').onclick=()=>{S=Object.assign({},def);norm();try{localStorage.removeItem('erhu')}catch(e){};apply();$('#ov').classList.add('on')};
-function view(v){if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&v!=='play'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&v!=='play'&&P&&P.on)stopDrill();if(v==='play'||v==='drill')placeDrill(v);if(v==='play')plUI();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));const grp=NAVG[v]||v;$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===grp));$('#ptabs').hidden=grp!=='prac'||v==='home';$$('#ptabs button').forEach(b=>b.classList.toggle('sel',b.dataset.go===v));if(v==='me')meUI();if(v==='songs')songsUI();$('main').scrollTop=0}
+function view(v){if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v==='cam')preloadModels();if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&v!=='play'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&v!=='play'&&P&&P.on)stopDrill();if(v==='play'||v==='drill')placeDrill(v);if(v==='play')plUI();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));const grp=NAVG[v]||v;$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===grp));$('#ptabs').hidden=grp!=='prac'||v==='home';$$('#ptabs button').forEach(b=>b.classList.toggle('sel',b.dataset.go===v));if(v==='me')meUI();if(v==='songs')songsUI();$('main').scrollTop=0}
 $$('nav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
 $$('[data-go]').forEach(b=>b.onclick=()=>view(b.dataset.go));
 
@@ -1681,12 +1681,12 @@ const lineAng=(x1,y1,x2,y2)=>{let a=Math.atan2(y2-y1,x2-x1)*180/Math.PI;if(a>90)
 const angDiff=(a,b)=>{const d=(((a-b)%180)+180)%180;return d>90?d-180:d};
 function camSay(k){if(S.cam.voice===false||!window.speechSynthesis||Date.now()-cSay<5000)return;cSay=Date.now();const u=new SpeechSynthesisUtterance(t(k));u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
 function badFor(k,bad,ms,say){if(!bad){delete badT[k];return}if(!badT[k])badT[k]=Date.now();else if(Date.now()-badT[k]>ms&&say)camSay(say)}
-async function loadModels(){
+function preloadModels(){if(!(hl&&pl)&&!window._mdlP)window._mdlP=loadModels().catch(()=>{}).finally(()=>{window._mdlP=null})}
+async function loadModels(){if(window._mdlP&&!(hl&&pl)){await window._mdlP;if(hl&&pl)return}
  if(hl&&pl)return;const step=async(n,f)=>{try{return await f()}catch(e){throw new Error(n+': '+((e&&(e.message||e.name))||e))}};
  const mod=await step('1-JS',()=>import(MPV+'/vision_bundle.mjs')),fs=await step('2-WASM',()=>mod.FilesetResolver.forVisionTasks(MPV+'/wasm'));
  const mk=async(C,url,extra)=>{for(const d of['GPU','CPU']){try{return await C.createFromOptions(fs,{baseOptions:{modelAssetPath:url,delegate:d},runningMode:'VIDEO',...extra})}catch(e){if(d==='CPU')throw e}}};
- hl=await step('3-HAND',()=>mk(mod.HandLandmarker,MPM+'hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',{numHands:2,minHandDetectionConfidence:.35,minHandPresenceConfidence:.35,minTrackingConfidence:.3}));
- pl=await step('4-POSE',()=>mk(mod.PoseLandmarker,MPM+'pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',{}));}
+ const [h_,p_]=await Promise.all([hl||step('3-HAND',()=>mk(mod.HandLandmarker,MPM+'hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',{numHands:2,minHandDetectionConfidence:.3,minHandPresenceConfidence:.3,minTrackingConfidence:.25})),pl||step('4-POSE',()=>mk(mod.PoseLandmarker,MPM+'pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',{}))]);hl=h_;pl=p_;}
 async function openStream(){cStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:cFace,width:{ideal:640},height:{ideal:360},frameRate:{ideal:30}},audio:false});const v=$('#cvid');v.srcObject=cStream;$('#camw').classList.toggle('rear',cFace!=='user');await v.play()}
 let cFace='user',cGen=0;
 async function switchCam(face){face=face||(cFace==='user'?'environment':'user');if(face===cFace&&cStream)return;cFace=face;if(!camOn)return;cGen++;if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;try{await openStream()}catch(e){cFace='user';try{await openStream()}catch(e2){}toast(t('camNoRear'))}if(!camOn){if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;return}cLastVT=-1;camLoop()}
@@ -1715,7 +1715,7 @@ function camLoop(){
  const g0=cGen,next=()=>{if(!camOn||g0!==cGen)return;const go=()=>{if(g0===cGen)camLoop()};if(v.requestVideoFrameCallback)v.requestVideoFrameCallback(go);else cRaf=requestAnimationFrame(go)};
  if(v.readyState<2||v.currentTime===cLastVT){next();return}cLastVT=v.currentTime;
  const W=v.videoWidth,H=v.videoHeight,cv=$('#ccv');if(cv.width!==W){cv.width=W;cv.height=H}const g=cv.getContext('2d');g.clearRect(0,0,W,H);
- const ts=performance.now();let hr;try{hr=hl.detectForVideo(v,ts);if(++cFrame%2===0||!lastPose){const pr=pl.detectForVideo(v,ts+.5);lastPose=pr.landmarks&&pr.landmarks[0]||null}}catch(e){next();return}
+ const ts=performance.now();let hr;try{hr=hl.detectForVideo(v,ts);if(!GRIP&&!STK&&(++cFrame%3===0||!lastPose)){const pr=pl.detectForVideo(v,ts+.5);lastPose=pr.landmarks&&pr.landmarks[0]||null}}catch(e){next();return}
  const T=TOL[S.cam.strict]||TOL.m,cal=S.cam.calib||{},p=lastPose,LW=Math.max(5,W*.011),dot=(x,y,r,c)=>{g.fillStyle=c;g.beginPath();g.arc(x,y,r,0,7);g.fill()};
  g.lineCap='round';g.lineJoin='round';
  /* assign hands: player's right (bow) hand is nearest pose right wrist (16), left hand nearest left wrist (15) */
@@ -1755,7 +1755,7 @@ function camLoop(){
  let lhOk=null,hsS=null;
  if(lH){hsS=handShape(lH.lm,W,H);const lim=cal.spread!=null?Math.max(T.lh*.8,Math.min(T.lh,cal.spread*1.3+.05)):T.lh;lhOk=hsS.spread<=lim&&hsS.curl>=T.curl;const col=lhOk?OKC:BADC;
   g.strokeStyle=col;g.lineWidth=LW*.55;HC.forEach(([i,j])=>{const A=lH.lm[i],B=lH.lm[j];g.beginPath();g.moveTo(A.x*W,A.y*H);g.lineTo(B.x*W,B.y*H);g.stroke()});
-  [4,8,12,16,20].forEach(i=>dot(lH.lm[i].x*W,lH.lm[i].y*H,LW*.6,col));badFor('lh',!lhOk,1500,!lhOk?'lhTense':null)}
+  [4,8,12,16,20].forEach(i=>dot(lH.lm[i].x*W,lH.lm[i].y*H,LW*.6,col));badFor('lh',!lhOk,1000,!lhOk?'lhTense':null)}
  chip('lh',lH?(lhOk?'ok':'bad'):'');
  /* shoulders */
  let sh=null,shOk=null;
@@ -1772,11 +1772,11 @@ function camLoop(){
 
 /* ---- 握弓引導：圖一手形 → 圖二握弓 ---- */
 let GRIP=null;
-const GSTG=[{img:'grip1',t:'gp1T',p:'gp1P'},{img:'grip2',t:'gp2T',p:'gp2P'}],GHOLD=[2,3];
+const GSTG=[{img:'grip1',t:'gp1T',p:'gp1P'},{img:'grip2',t:'gp2T',p:'gp2P'}],GHOLD=[1.5,2];
 function gripStart(){cFace='user';GRIP={stage:0,hist:[],since:0,hk:null,hkT:0,said:0,done:false};gripShow();setTimeout(()=>gripSay(t('gp1T')+'。'+t('gp1P'),1),600)}
 function gripStop(){GRIP=null;const b=$('#gripBox');if(b)b.hidden=true}
 function gripShow(){const G=GSTG[GRIP.stage];$('#gripBox').hidden=false;$('#gpImg').src=IMG[G.img];$('#gpN').textContent=t('gpStep').replace('{a}',GRIP.stage+1).replace('{b}',2);$('#gpT').textContent=t(G.t);$('#gpH').textContent=t(G.p);$('#gpH').className='';$('#gpBar').style.width='0%'}
-function gripSay(x,force){if(S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-GRIP.said<4500)return;GRIP.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function gripSay(x,force){if(S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-GRIP.said<3500)return;GRIP.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
 function fingerBend(q,m){const ang=(a,b,c)=>{const v1=[q[b][0]-q[a][0],q[b][1]-q[a][1],q[b][2]-q[a][2]],v2=[q[c][0]-q[b][0],q[c][1]-q[b][1],q[c][2]-q[b][2]];const d=(v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])/((Math.hypot(...v1)*Math.hypot(...v2))||1);return Math.acos(Math.max(-1,Math.min(1,d)))*180/Math.PI};
  return ang(m,m+1,m+2)+ang(m+1,m+2,m+3)}
 function gripFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=true;if(!GRIP||GRIP.done)return;
@@ -1796,14 +1796,14 @@ function gripFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=t
   const FG=[['t',[0,1,2,3,4]],['i',[0,5,6,7,8]],['m',[9,10,11,12]],['r',[13,14,15,16]],['p',[0,17,18,19,20]]],col=k=>FC[k]==null?'rgba(255,255,255,.85)':FC[k]?OKC:BADC;
   g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=LW*.5;g.beginPath();[5,9,13,17].forEach((i,n,a)=>{if(n<a.length-1){g.moveTo(q[i][0],q[i][1]);g.lineTo(q[a[n+1]][0],q[a[n+1]][1])}});g.stroke();
   FG.forEach(([k,ix])=>{g.strokeStyle=col(k);g.lineWidth=LW*.8;g.beginPath();ix.forEach((i,n)=>{n?g.lineTo(q[i][0],q[i][1]):g.moveTo(q[i][0],q[i][1])});g.stroke();const tp=q[ix[ix.length-1]];g.fillStyle=col(k);g.beginPath();g.arc(tp[0],tp[1],LW*.9,0,7);g.fill()})}
- GRIP.hist.push(ok);if(GRIP.hist.length>12)GRIP.hist.shift();const good=GRIP.hist.filter(Boolean).length/GRIP.hist.length>=.75&&GRIP.hist.length>=6;
+ GRIP.hist.push(ok);if(GRIP.hist.length>5)GRIP.hist.shift();const good=GRIP.hist.filter(Boolean).length>=4;
  if(hk!==GRIP.hk){GRIP.hk=hk;GRIP.hkT=ts}
  const need=GHOLD[GRIP.stage];
  if(good){if(!GRIP.since)GRIP.since=ts;const sec=(ts-GRIP.since)/1000;$('#gpBar').style.width=Math.min(100,sec/need*100)+'%';$('#gpH').textContent=t('gpKeep').replace('{s}',Math.max(0,need-sec).toFixed(1));$('#gpH').className='ok';lbProg(Math.min(need,sec).toFixed(1)+' / '+need+' s');
   if(sec>=need){tkChime();if(GRIP.stage===0){GRIP.stage=1;GRIP.since=0;GRIP.hist=[];gripSay(t('gpNice1')+t('gpRear')+'。'+t('gp2P'),1);GRIP.done=true;$('#gpT').textContent=t('gpNice1');$('#gpH').textContent=t('gpRear');setTimeout(()=>{if(!GRIP)return;switchCam('environment').then(()=>{if(GRIP){GRIP.done=false;gripShow()}})},2600)}
    else{GRIP.done=true;$('#gpT').textContent=t('gpNice2');$('#gpH').textContent='';gripSay(t('gpNice2'),1);if(LS&&LS.tool)lsPass()}}}
  else{if(GRIP.since)$('#gpBar').style.width='0%';GRIP.since=0;$('#gpH').className='bad';$('#gpH').textContent=hk?t(hk):t(GSTG[GRIP.stage].p);
-  if(hk&&ts-GRIP.hkT>2500)gripSay(t(hk))}}
+  if(hk&&ts-GRIP.hkT>1500)gripSay(t(hk))}}
 
 /* ---- 運弓暖身：空手推拉，用後鏡頭追蹤右手軌跡 ---- */
 let STK=null;
@@ -1811,13 +1811,13 @@ function strokeStart(n){const gv=$('#gpVid');gv.src='bow_demo.mp4';gv.hidden=fal
  $('#gpN').textContent=t('skCount').replace('{a}',0).replace('{b}',n);$('#gpT').textContent=t('skT');$('#gpH').textContent=t('skP');$('#gpH').className='';$('#gpBar').style.width='0%';
  setTimeout(()=>{if(STK)skSay(t('skT')+'。'+t('skP'),1)},700)}
 function strokeStop(){if(!STK)return;STK=null;$('#gripBox').hidden=true;$('#gpImg').hidden=false;const gv=$('#gpVid');gv.pause();gv.hidden=true}
-function skSay(x,force){if(!STK||S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-STK.said<4500)return;STK.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
-function skHint(k,ts){const K=STK;if(k!==K.hk){K.hk=k;K.hkT=ts}if(k){$('#gpH').textContent=t(k);$('#gpH').className='bad';if(ts-K.hkT>2500)skSay(t(k))}}
+function skSay(x,force){if(!STK||S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-STK.said<3500)return;STK.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function skHint(k,ts){const K=STK;if(k!==K.hk){K.hk=k;K.hkT=ts}if(k){$('#gpH').textContent=t(k);$('#gpH').className='bad';if(ts-K.hkT>1500)skSay(t(k))}}
 function strokeFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=true;const K=STK;if(!K||K.done)return;
  const h=hs.length?hs.reduce((a,b)=>Math.hypot(b.lm[5].x-b.lm[17].x,b.lm[5].y-b.lm[17].y)>Math.hypot(a.lm[5].x-a.lm[17].x,a.lm[5].y-a.lm[17].y)?b:a):null;
  if(!h){skHint('skNoHand',ts);next0();return}
  const q=h.lm.map(p=>P3(p,W,H)),pw=dist3(q[5],q[17])||1;let cx=0,cy=0;[0,5,9,13,17].forEach(i=>{cx+=q[i][0];cy+=q[i][1]});cx/=5;cy/=5;
- K.sm=K.sm?[K.sm[0]*.5+cx*.5,K.sm[1]*.5+cy*.5]:[cx,cy];K.tr.push([K.sm[0],K.sm[1],ts]);while(K.tr.length&&ts-K.tr[0][2]>2500)K.tr.shift();K.pw=K.pw?K.pw*.9+pw*.1:pw;
+ K.sm=K.sm?[K.sm[0]*.25+cx*.75,K.sm[1]*.25+cy*.75]:[cx,cy];K.tr.push([K.sm[0],K.sm[1],ts]);while(K.tr.length&&ts-K.tr[0][2]>2500)K.tr.shift();K.pw=K.pw?K.pw*.9+pw*.1:pw;
  const gripOk=fingerBend(q,9)>55&&fingerBend(q,13)>55;
  /* principal axis of recent motion */
  let mx=0,my=0;K.tr.forEach(p=>{mx+=p[0];my+=p[1]});mx/=K.tr.length;my/=K.tr.length;let sxx=0,syy=0,sxy=0;K.tr.forEach(p=>{const dx=p[0]-mx,dy=p[1]-my;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy});
@@ -1836,12 +1836,12 @@ function strokeFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden
  g.strokeStyle=gripOk?'rgba(255,255,255,.8)':BADC;g.lineWidth=LW*.45;HC.forEach(([i,j])=>{g.beginPath();g.moveTo(q[i][0],q[i][1]);g.lineTo(q[j][0],q[j][1]);g.stroke()});
  g.fillStyle=K.flash&&ts-K.flash<350?'#4ade80':'#fff';g.beginPath();g.arc(K.sm[0],K.sm[1],LW*1.4,0,7);g.fill();
  /* stroke detection along the axis */
- if(K.tr.length<10)return;const s=pr([K.sm[0],K.sm[1]]);
+ if(K.tr.length<5)return;const s=pr([K.sm[0],K.sm[1]]);
  if(K.ext==null){K.ext=s;K.st0={s,ts,dev:0};return}
  const minLen=K.pw*2.2;K.st0.dev=Math.max(K.st0.dev,Math.abs(pp([K.sm[0],K.sm[1]])));
  if(K.dir===0){if(Math.abs(s-K.ext)>K.pw*.6)K.dir=Math.sign(s-K.ext)}
  else if((s-K.ext)*K.dir>0)K.ext=s;
- else if((K.ext-s)*K.dir>K.pw*.5){/* reversal: evaluate the finished stroke */
+ else if((K.ext-s)*K.dir>K.pw*.35){/* reversal: evaluate the finished stroke */
   const len=Math.abs(K.ext-K.st0.s),dur=(ts-K.st0.ts)/1000,straight=K.st0.dev/Math.max(len,1);let bad=null;
   if(!K.warm){K.warm=1;K.dir=-K.dir;K.st0={s:K.ext,ts,dev:0};K.ext=s;return}
   if(len<minLen)bad='skBigger';else if(straight>.3)bad='skStraight';else if(dur<.35)bad='skSlow';else if(!gripOk)bad='skGrip';
@@ -2182,7 +2182,7 @@ function crUI(){crInit();if(!$('#v-today'))return;const ls=lessons(),n=nextLesso
 /* ---- lesson player ---- */
 let LS=null;
 const curStep=()=>LS&&LX[LS.lid].steps[LS.si];
-function openLesson(id){const l=LX[id];if(!l)return;if(!unlocked(l)){toast(t('lockedMsg'));return}crInit();LS={lid:id,si:S.course.prog[progKey(l)]||0,rate:0};if(LS.si>=l.steps.length)LS.si=0;view('lesson');renderLesson()}
+function openLesson(id){const l=LX[id];if(!l)return;if(l.steps.some(x=>['cam','grip','stroke'].includes(x.t)))preloadModels();if(!unlocked(l)){toast(t('lockedMsg'));return}crInit();LS={lid:id,si:S.course.prog[progKey(l)]||0,rate:0};if(LS.si>=l.steps.length)LS.si=0;view('lesson');renderLesson()}
 function lsSave(){const l=LX[LS.lid];S.course.prog[progKey(l)]=LS.si;save()}
 function renderLesson(){if(!LS)return;const l=LX[LS.lid],steps=l.steps,b=$('#lsBody');$('#lsUnit').textContent=l.unit;$('#lsTitle').textContent=l.title;
  $('#lsDots').innerHTML=steps.map((s,i)=>`<i class="${i<LS.si?'d':i===LS.si?'c':''}">${SICON[s.t]}</i>`).join('');
