@@ -451,7 +451,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 </nav>
 
 <main><div class="wrap">
-<div class="seg ptabs" id="ptabs" hidden><button data-go="home" data-i="pAll"></button><button data-go="tune" data-i="nTune"></button><button data-go="beat" data-i="nBeat"></button><button data-go="cam" data-i="nCam"></button><button data-go="drill" data-i="nDrill"></button></div>
+<div class="seg ptabs" id="ptabs" hidden><button data-go="home" data-i="pAll"></button><button data-go="tune" data-i="nTune"></button><button data-go="beat" data-i="nBeat"></button><button data-go="cam" data-i="nCam"></button><button data-go="drill" data-i="nDrill"></button><button data-go="task" data-i="nTaskS"></button></div>
 <section id="v-today"><div class="narrow">
  <div class="aib"><span class="aiav"><svg class="ic"><use href="#i-logo"/></svg></span><div class="aibub"><span class="mut aiwho"><b data-i="aiName"></b> · <span id="tdRole"></span></span><p id="aiMsg"></p><button class="quiet" id="aiSay">🔊 <span data-i="aiListen"></span></button></div></div>
  <div class="card tl" id="todayLesson"></div>
@@ -481,7 +481,6 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
   <div class="list" id="plan"></div></div>
  <div class="gap" style="height:.9rem"></div>
  <div class="list" id="meList">
-  <button class="li" data-go="task"><span class="t" data-i="tTask"></span><svg class="ic"><use href="#i-chev"/></svg></button>
   <button class="li" data-go="set"><span class="t" data-i="tSet"></span><svg class="ic"><use href="#i-chev"/></svg></button>
   <button class="li" id="meTour"><span class="t" data-i="sReplay"></span><svg class="ic"><use href="#i-chev"/></svg></button>
   <div class="li dev"><span class="t" data-i="meReport"></span><span class="pill devp" data-i="devL"></span></div>
@@ -517,8 +516,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
    <button class="tile" data-go="beat"><span class="ico"><svg class="ic"><use href="#i-beat"/></svg></span><b data-i="tBeat"></b><span class="mut" data-i="dBeat"></span></button>
    <button class="tile" data-go="cam"><span class="ico"><svg class="ic"><use href="#i-hand"/></svg></span><b data-i="tCam"></b><span class="mut" data-i="dCamT"></span></button>
    <button class="tile" data-go="drill"><span class="ico"><svg class="ic"><use href="#i-score"/></svg></span><b data-i="tDrill"></b><span class="mut" data-i="dDrillT"></span></button>
-   <button class="tile dev" disabled><span class="ico"><svg class="ic"><use href="#i-mic"/></svg></span><b data-i="tRec"></b><span class="mut" data-i="dRec"></span><span class="pill devp" data-i="devL"></span></button>
-   <button class="tile dev" disabled><span class="ico"><svg class="ic"><use href="#i-hand"/></svg></span><b data-i="tFinger"></b><span class="mut" data-i="dFinger"></span><span class="pill devp" data-i="devL"></span></button>
+   <button class="tile" data-go="task"><span class="ico"><svg class="ic"><use href="#i-clock"/></svg></span><b data-i="tTask"></b><span class="mut" data-i="dTaskT"></span></button>
  </div>
 </section>
 
@@ -948,6 +946,8 @@ skNext|接下來換成自拍鏡頭，拿起琴和弓，讓弓和琴桿保持 90 
 vidCap|示範影片：沿著白色虛線推拉，黃色是手腕|Demo: push and pull along the dashed line; yellow marks the wrist|模範：白い点線に沿って、黄色は手首
 skOut|往外拉|Pull out|引く
 skIn|往內推|Push in|押す
+dTaskT|排定每日項目並計時|Plan and time daily items|毎日の項目を計時
+nTaskS|任務|Tasks|タスク
 nLearn|學習|Learn|学習
 nSongs|曲庫|Songs|曲
 nPrac|練習室|Practice|練習室
@@ -1239,7 +1239,7 @@ const NN=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
 const JP=['1','♯1','2','♯2','3','4','♯4','5','♯5','6','♯6','7'];
 
 function apply(){
- document.documentElement.lang=S.lang;document.title=t('app');
+ document.documentElement.lang=S.lang;document.title=t('app');{const sb=document.querySelector('nav [data-v=songs]');if(sb)sb.style.display=S.role==='student'?'none':'';const wb=document.querySelector('.warm [data-go=songs]');if(wb)wb.style.display=S.role==='student'?'none':''}
  document.documentElement.style.fontSize=(16*S.scale)+'px';
  $$('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));
  $$('.langsel').forEach(s=>{s.innerHTML=LG.map(l=>`<option value="${l}">${LN[l]}</option>`).join('');s.value=S.lang});
@@ -1962,9 +1962,10 @@ $('#brkGo').onclick=()=>brkEnd(true);$('#brkSkip').onclick=()=>brkEnd(false);
 twice('#tkApply',()=>{const v=$('#tkTplSel').value;S.task.tpl=v;S.task.list=mkTpl(v);S.task.auto=0;TK=null;save();tkUI();toast(t('tkApplied'))});
 
 /* ---- interactive walkthrough ---- */
-const WALK=[['today','#todayLesson','w1'],['today','#grow','w2'],['course','#courseMap','w3'],['songs','#songCards','w4'],['home','.tiles','w5'],['tune','#gauge','w6'],['drill','#dDemo','w7',1],['me','#meList','w8']];
+const WALK0=[['today','#todayLesson','w1'],['today','#grow','w2'],['course','#courseMap','w3'],['songs','#songCards','w4'],['home','.tiles','w5'],['tune','#gauge','w6'],['drill','#dDemo','w7',1],['me','#meList','w8']];
 let WK=0,walkOn=false,walkMode='t';
-function startWalk(){walkMode=S.mode||'t';if(stream)mic();if(camOn)stopCam();walkOn=true;WK=0;$('#coach').hidden=true;$('#help').classList.remove('on');$('#tour').classList.remove('on');$('#walk').hidden=false;drawWalk()}
+let WALK=WALK0;
+function startWalk(){WALK=WALK0.filter(w=>!(S.role==='student'&&w[0]==='songs'));walkMode=S.mode||'t';if(stream)mic();if(camOn)stopCam();walkOn=true;WK=0;$('#coach').hidden=true;$('#help').classList.remove('on');$('#tour').classList.remove('on');$('#walk').hidden=false;drawWalk()}
 function endWalk(){walkOn=false;S.guided.tune=1;S.guided.drill=1;$('#walk').hidden=true;S.toured=1;save();view(startView())}
 function drawWalk(){const [v,,k]=WALK[WK],[ti,de]=t(k).split('§');if(!$('#v-'+v).classList.contains('on'))view(v);
  $('#wStep').textContent=(WK+1)+' / '+WALK.length;$('#wT').textContent=ti;$('#wD').textContent=de;$('#wNext').textContent=t(WK===WALK.length-1?'done':'next');$('#wPrev').hidden=WK===0;$('#wSkip').hidden=WK===WALK.length-1;
@@ -2248,7 +2249,7 @@ $('#wishIn').onkeydown=e=>{if(e.key==='Enter')$('#wishAdd').click()};
 /* ---- mode switch: AI 老師 / 小幫手 ---- */
 const TVIEWS=['today','course','lesson'],HVIEWS=['home','tune','beat','cam','drill','task'];
 const startView=()=>S.role==='free'?'home':'today';
-const NAVG={play:'songs',today:'today',course:'course',lesson:'course',songs:'songs',home:'prac',tune:'prac',beat:'prac',cam:'prac',drill:'prac',me:'me',task:'me',set:'me'};
+const NAVG={task:'prac',play:'songs',today:'today',course:'course',lesson:'course',songs:'songs',home:'prac',tune:'prac',beat:'prac',cam:'prac',drill:'prac',me:'me',set:'me'};
 function setMode(m){S.mode=m;$('#brandT').textContent=t('app')}
 
 
