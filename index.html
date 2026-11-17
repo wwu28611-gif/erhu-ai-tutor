@@ -166,7 +166,7 @@ html.rm *,html.rm *::before,html.rm *::after{animation:none!important;transition
 html.lb .btn{min-height:3.75rem}html.lb .ic{width:1.75rem;height:1.75rem}html.lb nav button{padding:.7rem 0 .6rem}html.lb .li{min-height:4.5rem}html.lb .seg button{padding:.9rem .6rem}html.lb .hq{width:3rem;height:3rem}html.lb input[type=checkbox]{transform:scale(1.2)}
 
 .camw{position:relative;width:100%;aspect-ratio:4/3;background:#0b0c0d;border-radius:var(--r);overflow:hidden;border:1px solid var(--ln)}
-.camw video,.camw canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scaleX(-1)}
+.camw video,.camw canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scaleX(-1)}.camw.rear video,.camw.rear canvas{transform:none}
 .camw .ph{position:absolute;inset:0;display:grid;place-items:center;color:#a1a1a6;text-align:center;padding:1.5rem;z-index:2}
 .cs{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}.cs+.cs{border-top:1px solid var(--ln)}
 .cs b{font-variant-numeric:tabular-nums;text-align:right}.cs .g{color:var(--ok)}.cs .w{color:var(--bad)}
@@ -563,7 +563,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="pt"><h1 data-i="tCam"></h1><p data-i="subCam"></p><button class="hq" data-help="cam" aria-label="Help">?</button></div>
  <div class="camw" id="camw"><video id="cvid" playsinline muted></video><canvas id="ccv"></canvas><div class="ph" id="cph" data-i="camIdle"></div>
   <div class="chips" id="cChips" hidden><span data-k="bow"><i></i><b data-i="chBow"></b></span><span data-k="arm"><i></i><b data-i="chArm"></b></span><span data-k="lh"><i></i><b data-i="chLh"></b></span><span data-k="sh"><i></i><b data-i="chSh"></b></span></div>
-  <div class="cbar" id="cBar" hidden><button class="cbtn" id="cCal"><span data-i="calib"></span></button><button class="cbtn" id="cVoiceB"></button><button class="cbtn cx" id="cClose" aria-label="close">✕</button></div>
+  <div class="cbar" id="cBar" hidden><button class="cbtn" id="cCal"><span data-i="calib"></span></button><button class="cbtn" id="cFlip">🔄 <span data-i="camFlip"></span></button><button class="cbtn" id="cVoiceB"></button><button class="cbtn cx" id="cClose" aria-label="close">✕</button></div>
   <div class="chint" id="cHint" hidden></div><div class="gripb" id="gripBox" hidden><img id="gpImg" alt=""><div class="gpt"><span class="gpn" id="gpN"></span><b id="gpT"></b><p id="gpH"></p><div class="bar"><i id="gpBar"></i></div></div></div><div class="cd" id="ccd" hidden><b id="ccdN"></b><span id="ccdT"></span></div>
  </div>
  <div class="gap" style="height:.8rem"></div>
@@ -913,9 +913,9 @@ gpStep|第 {a} / {b} 步|Step {a} / {b}|ステップ {a} / {b}
 gp1T|做出握弓手形|Make the bow-hold shape|弓を持つ手の形
 gp1P|右手手心朝向鏡頭，中指和無名指往掌心彎，其他手指放鬆伸直|Palm to the camera; curl your middle and ring fingers, keep the others relaxed and straight|手のひらをカメラに向け、中指と薬指を曲げ、他はまっすぐ
 gp2T|拿起弓握好|Pick up the bow|弓を持ちましょう
-gp2P|大拇指壓在弓桿上靠近食指，中指和無名指放進弓毛內側勾住弓毛|Thumb on the stick next to your index finger; middle and ring fingers hook the hair from inside|親指は人差し指の近くで弓竿に、中指と薬指で弓毛を引っかける
+gp2P|後鏡頭對著右手：大拇指壓在弓桿上靠近食指，中指和無名指放進弓毛內側勾住弓毛|Rear camera on your right hand: thumb on the stick next to your index finger, middle and ring fingers hook the hair|背面カメラで右手を：親指は弓竿に、中指と薬指で弓毛を引っかける
 gpNoHand|把右手舉到鏡頭前，手心朝向鏡頭|Raise your right hand to the camera, palm facing it|右手をカメラの前に
-gpNoHand2|握著弓，讓右手整個入鏡|Hold the bow and keep your whole right hand in view|弓を持った右手を映してください
+gpNoHand2|用後鏡頭對著握弓的右手，讓整隻手入鏡|Point the rear camera at your right hand holding the bow|背面カメラで弓を持つ右手を映して
 gpMid|中指再往掌心彎一點|Curl your middle finger a bit more|中指をもう少し曲げて
 gpRing|無名指再往掌心彎一點|Curl your ring finger a bit more|薬指をもう少し曲げて
 gpIdx|食指放鬆伸直|Relax and straighten your index finger|人差し指をまっすぐ
@@ -927,6 +927,9 @@ gpHook|中指和無名指放進弓毛內側，輕輕勾住弓毛|Hook the hair g
 gpKeep|很好，保持住！還有 {s} 秒|Good, hold it! {s}s left|いいですね！あと {s} 秒
 gpNice1|手形正確！|Great hand shape!|手の形バッチリ！
 gpNice2|握弓正確，過關了！|Perfect bow hold, you passed!|合格です！
+camFlip|翻轉|Flip|切替
+camNoRear|這台裝置沒有後鏡頭，改用自拍鏡頭|No rear camera on this device; using the front camera|背面カメラがありません
+gpRear|接下來換成後鏡頭：拿起弓，用左手拿手機，鏡頭對著握弓的右手|Next we switch to the rear camera: pick up the bow, hold the phone in your left hand and point it at your right hand|次は背面カメラ：弓を持ち、左手でスマホを持って右手を映してください
 nLearn|學習|Learn|学習
 nSongs|曲庫|Songs|曲
 nPrac|練習室|Practice|練習室
@@ -1666,7 +1669,9 @@ async function loadModels(){
  const mk=async(C,url,extra)=>{for(const d of['GPU','CPU']){try{return await C.createFromOptions(fs,{baseOptions:{modelAssetPath:url,delegate:d},runningMode:'VIDEO',...extra})}catch(e){if(d==='CPU')throw e}}};
  hl=await step('3-HAND',()=>mk(mod.HandLandmarker,MPM+'hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',{numHands:2,minHandDetectionConfidence:.35,minHandPresenceConfidence:.35,minTrackingConfidence:.3}));
  pl=await step('4-POSE',()=>mk(mod.PoseLandmarker,MPM+'pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',{}));}
-async function openStream(){cStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:360},frameRate:{ideal:30}},audio:false});const v=$('#cvid');v.srcObject=cStream;await v.play()}
+async function openStream(){cStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:cFace,width:{ideal:640},height:{ideal:360},frameRate:{ideal:30}},audio:false});const v=$('#cvid');v.srcObject=cStream;$('#camw').classList.toggle('rear',cFace!=='user');await v.play()}
+let cFace='user',cGen=0;
+async function switchCam(face){face=face||(cFace==='user'?'environment':'user');if(face===cFace&&cStream)return;cFace=face;if(!camOn)return;cGen++;if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;try{await openStream()}catch(e){cFace='user';try{await openStream()}catch(e2){}toast(t('camNoRear'))}cLastVT=-1;camLoop()}
 const camExitFs=()=>{try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}};
 async function startCam(){
  if(camOn||camBusy)return;camBusy=true;camUI();
@@ -1689,7 +1694,7 @@ function handShape(lm,W,H){const q=lm.map(p=>P3(p,W,H)),pw=dist3(q[5],q[17])||1;
  const curl=(bend(5,6,7)+bend(9,10,11)+bend(13,14,15)+bend(17,18,19))/4;return{spread,curl}}
 function camLoop(){
  if(!camOn)return;const v=$('#cvid');
- const next=()=>{if(!camOn)return;if(v.requestVideoFrameCallback)v.requestVideoFrameCallback(camLoop);else cRaf=requestAnimationFrame(camLoop)};
+ const g0=cGen,next=()=>{if(!camOn||g0!==cGen)return;const go=()=>{if(g0===cGen)camLoop()};if(v.requestVideoFrameCallback)v.requestVideoFrameCallback(go);else cRaf=requestAnimationFrame(go)};
  if(v.readyState<2||v.currentTime===cLastVT){next();return}cLastVT=v.currentTime;
  const W=v.videoWidth,H=v.videoHeight,cv=$('#ccv');if(cv.width!==W){cv.width=W;cv.height=H}const g=cv.getContext('2d');g.clearRect(0,0,W,H);
  const ts=performance.now();let hr;try{hr=hl.detectForVideo(v,ts);if(++cFrame%2===0||!lastPose){const pr=pl.detectForVideo(v,ts+.5);lastPose=pr.landmarks&&pr.landmarks[0]||null}}catch(e){next();return}
@@ -1749,8 +1754,8 @@ function camLoop(){
 /* ---- 握弓引導：圖一手形 → 圖二握弓 ---- */
 let GRIP=null;
 const GSTG=[{img:'grip1',t:'gp1T',p:'gp1P'},{img:'grip2',t:'gp2T',p:'gp2P'}],GHOLD=[2,3];
-function gripStart(){GRIP={stage:0,hist:[],since:0,hk:null,hkT:0,said:0,done:false};gripShow();setTimeout(()=>gripSay(t('gp1T')+'。'+t('gp1P'),1),600)}
-function gripStop(){GRIP=null;const b=$('#gripBox');if(b)b.hidden=true}
+function gripStart(){cFace='user';GRIP={stage:0,hist:[],since:0,hk:null,hkT:0,said:0,done:false};gripShow();setTimeout(()=>gripSay(t('gp1T')+'。'+t('gp1P'),1),600)}
+function gripStop(){if(GRIP&&cFace!=='user')switchCam('user');GRIP=null;const b=$('#gripBox');if(b)b.hidden=true}
 function gripShow(){const G=GSTG[GRIP.stage];$('#gripBox').hidden=false;$('#gpImg').src=IMG[G.img];$('#gpN').textContent=t('gpStep').replace('{a}',GRIP.stage+1).replace('{b}',2);$('#gpT').textContent=t(G.t);$('#gpH').textContent=t(G.p);$('#gpH').className='';$('#gpBar').style.width='0%'}
 function gripSay(x,force){if(S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-GRIP.said<4500)return;GRIP.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
 function fingerBend(q,m){const ang=(a,b,c)=>{const v1=[q[b][0]-q[a][0],q[b][1]-q[a][1],q[b][2]-q[a][2]],v2=[q[c][0]-q[b][0],q[c][1]-q[b][1],q[c][2]-q[b][2]];const d=(v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])/((Math.hypot(...v1)*Math.hypot(...v2))||1);return Math.acos(Math.max(-1,Math.min(1,d)))*180/Math.PI};
@@ -1776,12 +1781,13 @@ function gripFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=t
  if(hk!==GRIP.hk){GRIP.hk=hk;GRIP.hkT=ts}
  const need=GHOLD[GRIP.stage];
  if(good){if(!GRIP.since)GRIP.since=ts;const sec=(ts-GRIP.since)/1000;$('#gpBar').style.width=Math.min(100,sec/need*100)+'%';$('#gpH').textContent=t('gpKeep').replace('{s}',Math.max(0,need-sec).toFixed(1));$('#gpH').className='ok';lbProg(Math.min(need,sec).toFixed(1)+' / '+need+' s');
-  if(sec>=need){tkChime();if(GRIP.stage===0){GRIP.stage=1;GRIP.since=0;GRIP.hist=[];gripSay(t('gpNice1')+t('gp2T')+'。'+t('gp2P'),1);GRIP.done=true;setTimeout(()=>{if(GRIP){GRIP.done=false;gripShow()}},1600);$('#gpT').textContent=t('gpNice1');$('#gpH').textContent=''}
+  if(sec>=need){tkChime();if(GRIP.stage===0){GRIP.stage=1;GRIP.since=0;GRIP.hist=[];gripSay(t('gpNice1')+t('gpRear')+'。'+t('gp2P'),1);GRIP.done=true;$('#gpT').textContent=t('gpNice1');$('#gpH').textContent=t('gpRear');setTimeout(()=>{if(!GRIP)return;switchCam('environment').then(()=>{if(GRIP){GRIP.done=false;gripShow()}})},2600)}
    else{GRIP.done=true;$('#gpT').textContent=t('gpNice2');$('#gpH').textContent='';gripSay(t('gpNice2'),1);if(LS&&LS.tool)lsPass()}}}
  else{if(GRIP.since)$('#gpBar').style.width='0%';GRIP.since=0;$('#gpH').className='bad';$('#gpH').textContent=hk?t(hk):t(GSTG[GRIP.stage].p);
   if(hk&&ts-GRIP.hkT>2500)gripSay(t(hk))}}
 $('#cGo').onclick=()=>camOn?stopCam():startCam();
 $('#cClose').onclick=stopCam;
+$('#cFlip').onclick=()=>switchCam();
 $('#cVoice').onchange=e=>{S.cam.voice=e.target.checked;save();if(!e.target.checked&&window.speechSynthesis)speechSynthesis.cancel();camUI()};
 $('#cVoiceB').onclick=()=>{S.cam.voice=S.cam.voice===false;save();if(S.cam.voice===false&&window.speechSynthesis)speechSynthesis.cancel();camUI()};
 
@@ -1936,7 +1942,7 @@ const TRACKS={
     {t:'cam',need:['sh'],hold:5,h:'肩膀放鬆，維持 5 秒',p:'把手機立在前方約 1 公尺，讓上半身入鏡。肩膀線變綠就代表放鬆了。'}]},
    {id:'b3',title:'如何正確持弓',gain:'用正確的手形握住弓',steps:[
     {t:'learn',fig:[['grip1','figGrip1'],['grip2','figGrip2']],cards:[L_('先做握弓手形','右手的中指和無名指往掌心彎，大拇指、食指、小指放鬆伸直（左圖）。','img:grip1'),L_('大拇指和食指夾住弓桿','食指彎起來托住弓桿，大拇指指腹輕輕壓在弓桿上，靠近食指第二節。','img:grip2'),L_('中指、無名指勾住弓毛','兩根手指放在弓桿和弓毛中間，用指尖輕輕把弓毛往外推，拉琴的力量就從這裡來。','✋'),L_('手腕和手指都要放鬆','握弓像拿一枝筆，不用握緊。手會痠就代表太用力了。','😌')]},
-    {t:'grip',h:'跟著鏡頭的引導握好弓',p:'不用拉琴，只要把右手舉到鏡頭前。先做出握弓手形，再拿起弓握好，各維持幾秒就過關。'}]},
+    {t:'grip',h:'跟著鏡頭的引導握好弓',p:'不用拉琴。第 1 步用自拍鏡頭，把右手手心對著鏡頭做出握弓手形；第 2 步會自動換成後鏡頭，用左手拿手機拍握著弓的右手。'}]},
    {id:'b4',title:'拉響內弦',gain:'拉響內弦空弦（Do）',steps:[
     {t:'learn',cards:[L_('空弦就是不按任何手指','拉內弦的空弦，就是簡譜的 1，也就是 Do。','🎵'),L_('慢慢拉、力量平均','弓速慢一點，從頭到尾力量一樣，聲音會比較穩。','🐢')]},
     {t:'tune',s:'D',hold:2,h:'拉內弦空弦，讓指針停在綠色區 2 秒',p:'如果一直偏高或偏低，先轉上方的琴軸把弦調準。'}]},
