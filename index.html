@@ -907,10 +907,10 @@ bgHour|一小時|One hour|1時間
 bgHourD|累積練習 1 小時|Practice 1 hour in total|累計1時間
 figErhu|二胡|Erhu|二胡
 figBow|弓|Bow|弓
-figGrip1|① 握弓手形|① Hand shape|① 手の形
+figGrip1|① 準備動作|① Get ready|① 準備
 figGrip2|② 握住弓|② Holding the bow|② 弓を持つ
 gpStep|第 {a} / {b} 步|Step {a} / {b}|ステップ {a} / {b}
-gp1T|做出握弓手形|Make the bow-hold shape|弓を持つ手の形
+gp1T|做出握弓準備動作|Make the ready shape|準備の手の形
 gp1P|右手手心朝向鏡頭，中指和無名指往掌心彎，其他手指放鬆伸直|Palm to the camera; curl your middle and ring fingers, keep the others relaxed and straight|手のひらをカメラに向け、中指と薬指を曲げ、他はまっすぐ
 gp2T|拿起弓握好|Pick up the bow|弓を持ちましょう
 gp2P|後鏡頭對著右手：大拇指壓在弓桿上靠近食指，中指和無名指放進弓毛內側勾住弓毛|Rear camera on your right hand: thumb on the stick next to your index finger, middle and ring fingers hook the hair|背面カメラで右手を：親指は弓竿に、中指と薬指で弓毛を引っかける
@@ -930,6 +930,19 @@ gpNice2|握弓正確，過關了！|Perfect bow hold, you passed!|合格です�
 camFlip|翻轉|Flip|切替
 camNoRear|這台裝置沒有後鏡頭，改用自拍鏡頭|No rear camera on this device; using the front camera|背面カメラがありません
 gpRear|接下來換成後鏡頭：拿起弓，用左手拿手機，鏡頭對著握弓的右手|Next we switch to the rear camera: pick up the bow, hold the phone in your left hand and point it at your right hand|次は背面カメラ：弓を持ち、左手でスマホを持って右手を映してください
+skT|運弓暖身|Bowing warm-up|運弓ウォームアップ
+skP|右手做握弓準備動作，在空中平直地左右推拉，手腕放鬆|Make the bow-hold shape and push and pull in a straight line, wrist relaxed|弓を持つ形で、まっすぐ左右に動かしましょう
+skCount|推拉 {a} / {b} 次|Strokes {a} / {b}|{a} / {b} 回
+skNoHand|左手拿手機，用後鏡頭從上方對著右手|Hold the phone in your left hand and point the rear camera down at your right hand|左手でスマホを持ち、背面カメラで右手を映して
+skBigger|動作再大一點，用前臂帶著手推拉|Make the stroke longer, move from the forearm|もっと大きく、前腕から動かして
+skStraight|保持一直線，不要畫成弧線|Keep it straight, not an arc|弧を描かず、まっすぐに
+skSlow|慢一點，速度要平均|Slow down and keep an even speed|ゆっくり、一定の速さで
+skGrip|保持握弓的準備動作，中指和無名指彎起來|Keep the bow-hold shape with middle and ring fingers curled|中指と薬指を曲げたまま
+skGood1|很好！換方向|Good! Change direction|いいですね！
+skGood2|很好，繼續|Nice, keep going|その調子
+skHalf|做得很好，已經一半了|Great, halfway there|半分できました
+skDone|暖身完成！|Warm-up done!|ウォームアップ完了！
+skNext|接下來換成自拍鏡頭，拿起琴和弓，讓弓和琴桿保持 90 度|Next we switch to the front camera: pick up the erhu and bow and keep them at 90°|次は自撮りカメラ：二胡と弓を持ち、90度を保ちましょう
 nLearn|學習|Learn|学習
 nSongs|曲庫|Songs|曲
 nPrac|練習室|Practice|練習室
@@ -1671,7 +1684,7 @@ async function loadModels(){
  pl=await step('4-POSE',()=>mk(mod.PoseLandmarker,MPM+'pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task',{}));}
 async function openStream(){cStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:cFace,width:{ideal:640},height:{ideal:360},frameRate:{ideal:30}},audio:false});const v=$('#cvid');v.srcObject=cStream;$('#camw').classList.toggle('rear',cFace!=='user');await v.play()}
 let cFace='user',cGen=0;
-async function switchCam(face){face=face||(cFace==='user'?'environment':'user');if(face===cFace&&cStream)return;cFace=face;if(!camOn)return;cGen++;if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;try{await openStream()}catch(e){cFace='user';try{await openStream()}catch(e2){}toast(t('camNoRear'))}cLastVT=-1;camLoop()}
+async function switchCam(face){face=face||(cFace==='user'?'environment':'user');if(face===cFace&&cStream)return;cFace=face;if(!camOn)return;cGen++;if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;try{await openStream()}catch(e){cFace='user';try{await openStream()}catch(e2){}toast(t('camNoRear'))}if(!camOn){if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;return}cLastVT=-1;camLoop()}
 const camExitFs=()=>{try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}};
 async function startCam(){
  if(camOn||camBusy)return;camBusy=true;camUI();
@@ -1682,7 +1695,7 @@ async function startCam(){
  try{await openStream()}catch(e){fail('camErr',e);return}
  camBusy=false;camOn=true;cLastVT=-1;cSh=null;cDev=null;hA=hG=null;lastPose=null;badT={};cRetry=0;$('#cph').hidden=true;
  camUI();camLoop();}
-function stopCam(){camOn=false;cancelAnimationFrame(cRaf);if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;$('#cvid').srcObject=null;
+function stopCam(){camOn=false;cGen++;cFace='user';cancelAnimationFrame(cRaf);if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;$('#cvid').srcObject=null;
  const c=$('#ccv');c.getContext('2d').clearRect(0,0,c.width,c.height);
  camExitFs();camUI()}
 function chip(k,st){const e=document.querySelector(`#cChips [data-k="${k}"]`);if(e)e.className=st||''}
@@ -1707,6 +1720,7 @@ function camLoop(){
   else{const a=d(hs[0],16)+d(hs[1],15),b=d(hs[1],16)+d(hs[0],15);if(a<=b){bowH=hs[0];lH=hs[1]}else{bowH=hs[1];lH=hs[0]}}}
  else hs.forEach(h=>{if(h.lab==='Right'&&!bowH)bowH=h;else if(!lH)lH=h});
  if(GRIP){gripFrame(hs,g,W,H,LW,ts);next();return}
+ if(STK){strokeFrame(hs,g,W,H,LW,ts);next();return}
  /* neck + bow: the bow should stay 90° to the neck */
  let bowOk=null,devRaw=null;const sw0=p?Math.abs(p[11].x-p[12].x)*W:0,vis=i=>p&&(p[i].visibility??1)>.5;
  let A=null,G=null;
@@ -1755,7 +1769,7 @@ function camLoop(){
 let GRIP=null;
 const GSTG=[{img:'grip1',t:'gp1T',p:'gp1P'},{img:'grip2',t:'gp2T',p:'gp2P'}],GHOLD=[2,3];
 function gripStart(){cFace='user';GRIP={stage:0,hist:[],since:0,hk:null,hkT:0,said:0,done:false};gripShow();setTimeout(()=>gripSay(t('gp1T')+'。'+t('gp1P'),1),600)}
-function gripStop(){if(GRIP&&cFace!=='user')switchCam('user');GRIP=null;const b=$('#gripBox');if(b)b.hidden=true}
+function gripStop(){GRIP=null;const b=$('#gripBox');if(b)b.hidden=true}
 function gripShow(){const G=GSTG[GRIP.stage];$('#gripBox').hidden=false;$('#gpImg').src=IMG[G.img];$('#gpN').textContent=t('gpStep').replace('{a}',GRIP.stage+1).replace('{b}',2);$('#gpT').textContent=t(G.t);$('#gpH').textContent=t(G.p);$('#gpH').className='';$('#gpBar').style.width='0%'}
 function gripSay(x,force){if(S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-GRIP.said<4500)return;GRIP.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
 function fingerBend(q,m){const ang=(a,b,c)=>{const v1=[q[b][0]-q[a][0],q[b][1]-q[a][1],q[b][2]-q[a][2]],v2=[q[c][0]-q[b][0],q[c][1]-q[b][1],q[c][2]-q[b][2]];const d=(v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])/((Math.hypot(...v1)*Math.hypot(...v2))||1);return Math.acos(Math.max(-1,Math.min(1,d)))*180/Math.PI};
@@ -1785,6 +1799,47 @@ function gripFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=t
    else{GRIP.done=true;$('#gpT').textContent=t('gpNice2');$('#gpH').textContent='';gripSay(t('gpNice2'),1);if(LS&&LS.tool)lsPass()}}}
  else{if(GRIP.since)$('#gpBar').style.width='0%';GRIP.since=0;$('#gpH').className='bad';$('#gpH').textContent=hk?t(hk):t(GSTG[GRIP.stage].p);
   if(hk&&ts-GRIP.hkT>2500)gripSay(t(hk))}}
+
+/* ---- 運弓暖身：空手推拉，用後鏡頭追蹤右手軌跡 ---- */
+let STK=null;
+function strokeStart(n){STK={n,cnt:0,tr:[],sm:null,dir:0,ext:null,st0:null,stT:0,hk:null,hkT:0,said:0,done:false,flash:0};const b=$('#gripBox');b.hidden=false;$('#gpImg').hidden=true;
+ $('#gpN').textContent=t('skCount').replace('{a}',0).replace('{b}',n);$('#gpT').textContent=t('skT');$('#gpH').textContent=t('skP');$('#gpH').className='';$('#gpBar').style.width='0%';
+ setTimeout(()=>{if(STK)skSay(t('skT')+'。'+t('skP'),1)},700)}
+function strokeStop(){if(!STK)return;STK=null;$('#gripBox').hidden=true;$('#gpImg').hidden=false}
+function skSay(x,force){if(!STK||S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-STK.said<4500)return;STK.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function skHint(k,ts){const K=STK;if(k!==K.hk){K.hk=k;K.hkT=ts}if(k){$('#gpH').textContent=t(k);$('#gpH').className='bad';if(ts-K.hkT>2500)skSay(t(k))}}
+function strokeFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=true;const K=STK;if(!K||K.done)return;
+ const h=hs.length?hs.reduce((a,b)=>Math.hypot(b.lm[5].x-b.lm[17].x,b.lm[5].y-b.lm[17].y)>Math.hypot(a.lm[5].x-a.lm[17].x,a.lm[5].y-a.lm[17].y)?b:a):null;
+ if(!h){skHint('skNoHand',ts);next0();return}
+ const q=h.lm.map(p=>P3(p,W,H)),pw=dist3(q[5],q[17])||1;let cx=0,cy=0;[0,5,9,13,17].forEach(i=>{cx+=q[i][0];cy+=q[i][1]});cx/=5;cy/=5;
+ K.sm=K.sm?[K.sm[0]*.5+cx*.5,K.sm[1]*.5+cy*.5]:[cx,cy];K.tr.push([K.sm[0],K.sm[1],ts]);while(K.tr.length&&ts-K.tr[0][2]>2500)K.tr.shift();K.pw=K.pw?K.pw*.9+pw*.1:pw;
+ const gripOk=fingerBend(q,9)>55&&fingerBend(q,13)>55;
+ /* principal axis of recent motion */
+ let mx=0,my=0;K.tr.forEach(p=>{mx+=p[0];my+=p[1]});mx/=K.tr.length;my/=K.tr.length;let sxx=0,syy=0,sxy=0;K.tr.forEach(p=>{const dx=p[0]-mx,dy=p[1]-my;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy});
+ const ang=.5*Math.atan2(2*sxy,sxx-syy),ax=[Math.cos(ang),Math.sin(ang)],pr=p=>(p[0]-mx)*ax[0]+(p[1]-my)*ax[1],pp=p=>-(p[0]-mx)*ax[1]+(p[1]-my)*ax[0];
+ /* draw guide line + trail */
+ let lo=1e9,hi=-1e9;K.tr.forEach(p=>{const v=pr(p);lo=Math.min(lo,v);hi=Math.max(hi,v)});const ext=Math.max(K.pw*2,(hi-lo)/2+K.pw*.8);
+ if(K.tr.length>8){g.setLineDash([LW*1.6,LW*1.2]);g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=LW*.6;g.beginPath();g.moveTo(mx-ax[0]*ext,my-ax[1]*ext);g.lineTo(mx+ax[0]*ext,my+ax[1]*ext);g.stroke();g.setLineDash([])}
+ const recent=K.tr.filter(p=>ts-p[2]<1400);g.lineWidth=LW*1.1;for(let i=1;i<recent.length;i++){const a=recent[i-1],b=recent[i],dev=Math.abs(pp(b))/Math.max(K.pw,1);g.strokeStyle=dev<.6?OKC:BADC;g.globalAlpha=.35+.65*i/recent.length;g.beginPath();g.moveTo(a[0],a[1]);g.lineTo(b[0],b[1]);g.stroke()}g.globalAlpha=1;
+ g.strokeStyle=gripOk?'rgba(255,255,255,.8)':BADC;g.lineWidth=LW*.45;HC.forEach(([i,j])=>{g.beginPath();g.moveTo(q[i][0],q[i][1]);g.lineTo(q[j][0],q[j][1]);g.stroke()});
+ g.fillStyle=K.flash&&ts-K.flash<350?'#4ade80':'#fff';g.beginPath();g.arc(K.sm[0],K.sm[1],LW*1.4,0,7);g.fill();
+ /* stroke detection along the axis */
+ if(K.tr.length<10)return;const s=pr([K.sm[0],K.sm[1]]);
+ if(K.ext==null){K.ext=s;K.st0={s,ts,dev:0};return}
+ const minLen=K.pw*2.2;K.st0.dev=Math.max(K.st0.dev,Math.abs(pp([K.sm[0],K.sm[1]])));
+ if(K.dir===0){if(Math.abs(s-K.ext)>K.pw*.6)K.dir=Math.sign(s-K.ext)}
+ else if((s-K.ext)*K.dir>0)K.ext=s;
+ else if((K.ext-s)*K.dir>K.pw*.5){/* reversal: evaluate the finished stroke */
+  const len=Math.abs(K.ext-K.st0.s),dur=(ts-K.st0.ts)/1000,straight=K.st0.dev/Math.max(len,1);let bad=null;
+  if(!K.warm){K.warm=1;K.dir=-K.dir;K.st0={s:K.ext,ts,dev:0};K.ext=s;return}
+  if(len<minLen)bad='skBigger';else if(straight>.3)bad='skStraight';else if(dur<.35)bad='skSlow';else if(!gripOk)bad='skGrip';
+  if(!bad){K.cnt++;K.flash=ts;$('#gpN').textContent=t('skCount').replace('{a}',K.cnt).replace('{b}',K.n);$('#gpBar').style.width=Math.min(100,K.cnt/K.n*100)+'%';$('#gpH').textContent=t(K.cnt%2?'skGood1':'skGood2');$('#gpH').className='ok';K.hk=null;lbProg(K.cnt+' / '+K.n);
+   if(K.cnt===Math.ceil(K.n/2))skSay(t('skHalf'));
+   if(K.cnt>=K.n){K.done=true;tkChime();$('#gpT').textContent=t('skDone');$('#gpH').textContent=t('skNext');skSay(t('skDone')+t('skNext'),1);
+    setTimeout(()=>{if(!LS||!STK)return;lbHide();lsAdvance();const n=curStep();if(n&&n.t==='cam')lsStartTool();else{if(camOn)stopCam();view('lesson')}},3200)}}
+  else skHint(bad,ts);
+  K.dir=-K.dir;K.st0={s:K.ext,ts,dev:0};K.ext=s}
+ function next0(){}}
 $('#cGo').onclick=()=>camOn?stopCam():startCam();
 $('#cClose').onclick=stopCam;
 $('#cFlip').onclick=()=>switchCam();
@@ -1941,8 +1996,12 @@ const TRACKS={
     {t:'learn',cards:[L_('坐椅子的前半部','雙腳平放在地上，背挺直但不要僵硬。','🪑'),L_('琴筒放在左腿上','琴筒穩穩放在左大腿靠近腰的地方，琴桿微微往左前方傾斜。','img:erhu'),L_('肩膀放鬆','肩膀自然往下垂，不要聳起來，手才拉得久。','😌')]},
     {t:'cam',need:['sh'],hold:5,h:'肩膀放鬆，維持 5 秒',p:'把手機立在前方約 1 公尺，讓上半身入鏡。肩膀線變綠就代表放鬆了。'}]},
    {id:'b3',title:'如何正確持弓',gain:'用正確的手形握住弓',steps:[
-    {t:'learn',fig:[['grip1','figGrip1'],['grip2','figGrip2']],cards:[L_('先做握弓手形','右手的中指和無名指往掌心彎，大拇指、食指、小指放鬆伸直（左圖）。','img:grip1'),L_('大拇指和食指夾住弓桿','食指彎起來托住弓桿，大拇指指腹輕輕壓在弓桿上，靠近食指第二節。','img:grip2'),L_('中指、無名指勾住弓毛','兩根手指放在弓桿和弓毛中間，用指尖輕輕把弓毛往外推，拉琴的力量就從這裡來。','✋'),L_('手腕和手指都要放鬆','握弓像拿一枝筆，不用握緊。手會痠就代表太用力了。','😌')]},
+    {t:'learn',fig:[['grip1','figGrip1'],['grip2','figGrip2']],cards:[L_('先做握弓準備動作','右手的中指和無名指往掌心彎，大拇指、食指、小指放鬆伸直（左圖）。','img:grip1'),L_('大拇指和食指夾住弓桿','食指彎起來托住弓桿，大拇指指腹輕輕壓在弓桿上，靠近食指第二節。','img:grip2'),L_('中指、無名指勾住弓毛','兩根手指放在弓桿和弓毛中間，用指尖輕輕把弓毛往外推，拉琴的力量就從這裡來。','✋'),L_('手腕和手指都要放鬆','握弓像拿一枝筆，不用握緊。手會痠就代表太用力了。','😌')]},
     {t:'grip',h:'跟著鏡頭的引導握好弓',p:'不用拉琴。第 1 步用自拍鏡頭，把右手手心對著鏡頭做出握弓手形；第 2 步會自動換成後鏡頭，用左手拿手機拍握著弓的右手。'}]},
+   {id:'b3b',title:'如何正確運弓',gain:'用正確的運弓動作，讓弓和琴桿保持 90 度',steps:[
+    {t:'learn',cards:[L_('先做運弓暖身','先不要拿琴和弓。右手做出握弓的準備動作，手臂放鬆，像拿著弓一樣在空中左右推拉。','✋'),L_('手腕帶著手走','往外拉的時候手腕先走、手掌跟在後面；往內推的時候手腕先往內收，手掌再跟上，手腕要像彈簧一樣放鬆。','〰️'),L_('走一直線','推拉的路線要平直，不要畫成弧線，速度保持平均。','📏'),L_('用左手拿手機','把手機拿在左手，後鏡頭從上方對著右手，就能看到引導線。','📱')]},
+    {t:'stroke',n:8,h:'運弓暖身：在空中推拉 8 次',p:'先不要拿琴。左手拿手機，用後鏡頭從上方拍右手，跟著引導線平直地推拉。'},
+    {t:'cam',need:['bow'],hold:2,h:'拿起琴和弓，弓和琴桿保持 90 度 2 秒',p:'手機會自動換回自拍鏡頭。把手機立在前方約 1 公尺，讓上半身和琴入鏡，畫面上的弓線變綠就對了。'}]},
    {id:'b4',title:'拉響內弦',gain:'拉響內弦空弦（Do）',steps:[
     {t:'learn',cards:[L_('空弦就是不按任何手指','拉內弦的空弦，就是簡譜的 1，也就是 Do。','🎵'),L_('慢慢拉、力量平均','弓速慢一點，從頭到尾力量一樣，聲音會比較穩。','🐢')]},
     {t:'tune',s:'D',hold:2,h:'拉內弦空弦，讓指針停在綠色區 2 秒',p:'如果一直偏高或偏低，先轉上方的琴軸把弦調準。'}]},
@@ -2052,8 +2111,8 @@ const TRACKS={
     {t:'learn',cards:[L_('錄音回聽','每天至少錄一次，聽出自己沒注意到的地方。','🎙'),L_('模擬上台','從頭到尾不停，像在考試一樣。','🎭')]},
     {t:'timer',k:'tk_exam'},{t:'rate'}]}]}]
 };
-const SICON={grip:'✋',learn:'📖',tune:'🎯',beat:'⏱',cam:'📷',song:'🎵',drill:'🎼',timer:'⏲',rate:'⭐',self:'✅'};
-const SMIN={grip:3,learn:2,tune:2,beat:3,cam:3,song:6,drill:5,self:1,rate:1};
+const SICON={stroke:'↔️',grip:'✋',learn:'📖',tune:'🎯',beat:'⏱',cam:'📷',song:'🎵',drill:'🎼',timer:'⏲',rate:'⭐',self:'✅'};
+const SMIN={stroke:3,grip:3,learn:2,tune:2,beat:3,cam:3,song:6,drill:5,self:1,rate:1};
 const trackKey=()=>S.role==='student'?'pro':'basic';
 let LX={};Object.entries(TRACKS).forEach(([tk,us])=>us.forEach((u,ui)=>u.ls.forEach(l=>{l.unit=u.u;l.ui=ui;l.track=tk;LX[l.id]=l})));
 const lessons=()=>TRACKS[trackKey()].flatMap(u=>u.ls);
@@ -2128,14 +2187,15 @@ function lsFinish(){const l=LX[LS.lid],c=crInit();const first=isDaily(l)?!(c.dai
 function markKnown(id){const l=LX[id];if(!l)return;crInit().done[id]=today();S.course.prog[id]=0;save();toast(t('skipped').replace('{n}',l.title));crUI()}
 function lbShow(goal){const b=$('#lbar');b.hidden=false;b.classList.remove('ok');$('#lbGoal').textContent=goal;$('#lbProg').textContent=''}
 const lbProg=x=>{$('#lbProg').textContent=x};
-function lbHide(){$('#lbar').hidden=true;if(LS)LS.tool=false;gripStop()}
+function lbHide(){$('#lbar').hidden=true;if(LS)LS.tool=false;gripStop();strokeStop()}
 function songLoad(k,tempo){const sg=SONGS[k];if(!sg)return;const o=O();Object.assign(o,{key:sg.key,mode:'maj',time:sg.time,tempo:tempo||o.tempo});if(S.role!=='student')o.nt='jian';
  if(P&&P.on)stopDrill();stopDemo();const sc=parseJ(sg.txt);if(!sc)return;sc.title=sg.n;sc.tempo=tempo||o.tempo;SC=sc;LR=null;syncD();show();$('#rep').hidden=true;live(t('ready'))}
 function lsStartTool(){const st=curStep();if(!st)return;LS.tool=true;LS.passed=false;LS.since=0;LS.count=0;
- const goal=st.t==='timer'?$('#lsBody h3').textContent:st.h;LS.toolView={grip:'cam',tune:'tune',beat:'beat',cam:'cam',song:'play',drill:'drill'}[st.t]||null;lbShow(goal);
+ const goal=st.t==='timer'?$('#lsBody h3').textContent:st.h;LS.toolView={stroke:'cam',grip:'cam',tune:'tune',beat:'beat',cam:'cam',song:'play',drill:'drill'}[st.t]||null;lbShow(goal);
  if(st.t==='tune'){view('tune');mode=st.s;tLast=[];hist=[];$$('#modes button').forEach(x=>x.classList.toggle('sel',x.dataset.m===st.s));lbProg(t('lbPlay'))}
  else if(st.t==='beat'){view('beat');setB(st.bpm);S.beats=st.beats||4;beat=0;save();apply();if(!playing)toggle();lbProg('0 / '+st.count)}
- else if(st.t==='cam'){view('cam');startCam();lbProg(t('lbPose'))}
+ else if(st.t==='cam'){view('cam');if(camOn)switchCam('user');else{cFace='user';startCam()}lbProg(t('lbPose'))}
+ else if(st.t==='stroke'){view('cam');strokeStart(st.n);if(camOn)switchCam('environment');else{cFace='environment';startCam()}lbProg('0 / '+st.n)}
  else if(st.t==='grip'){view('cam');gripStart();startCam();lbProg('')}
  else if(st.t==='song'){PL={key:st.song,slow:0,lesson:1};songLoad(st.song,st.tempo);view('play');lbProg(t('lbPass').replace('{p}',st.pass))}
  else if(st.t==='drill'){const o=O();Object.assign(o,JSON.parse(JSON.stringify(LVL[st.lv].set)),{level:st.lv});save();regen();view('drill');lbProg(t('lbPass').replace('{p}',st.pass))}
