@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>二胡練習小幫手</title>
+<title>AI 二胡老師</title>
 <style>
 :root{--bg:#f4f3f0;--sf:#fff;--sf2:#efeeea;--fg:#1c1c1e;--mut:#6b6b70;--mut2:#a0a0a6;--ln:rgba(28,28,30,.07);--bd:#e2e0db;--ac:#2f5d50;--acf:#fff;--acs:rgba(47,93,80,.09);--ok:#2f7d62;--bad:#b86b2a;--hg:linear-gradient(140deg,#2f5d50,#1d3b33);--hf:#f2faf6;
 --sh:0 1px 2px rgba(20,20,20,.04),0 14px 32px -18px rgba(20,20,20,.2);--r:1.25rem;--rm:.875rem;--ease:cubic-bezier(.3,.7,.2,1);
@@ -307,6 +307,49 @@ body.camlive{overflow:hidden}
 .tile .ico{width:2.4rem;height:2.4rem;margin-bottom:.15rem}
 #v-home .pt{padding-bottom:.5rem}#v-home .cols{gap:.6rem}
 .soonrow{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin-top:.9rem}.soonrow .lbl{margin-right:.2rem}
+
+nav{display:flex}nav button{flex:1;min-width:0}
+body[data-mode="t"] nav [data-m="h"],body[data-mode="h"] nav [data-m="t"]{display:none!important}
+.msw{flex:none;padding:.15rem}.msw button{padding:.32rem .7rem;font-size:.78rem;flex:none}
+.aib{display:flex;gap:.7rem;align-items:flex-start;margin:.2rem 0 .9rem}
+.aiav{flex:none;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--hg);color:var(--hf);display:grid;place-items:center;box-shadow:var(--sh)}.aiav .ic{width:1.3rem;height:1.3rem}
+.aibub{flex:1;background:var(--sf);border:1px solid var(--ln);border-radius:.3rem 1rem 1rem 1rem;padding:.7rem .9rem .35rem;box-shadow:var(--sh)}
+.aiwho{font-size:.7rem}.aibub p{margin:.2rem 0 .1rem;line-height:1.55;font-size:.9375rem}.aibub .quiet{padding:.25rem 0;font-size:.8rem}
+.tl .pill{background:var(--acs);color:var(--ac)}.tlt{margin:.5rem 0 .2rem;font-size:1.35rem;letter-spacing:-.02em}.tlg{margin:0;font-size:.875rem}
+.tlm{display:flex;justify-content:space-between;gap:.5rem;margin-top:.7rem;font-size:.8125rem;color:var(--mut)}
+.tlskip{display:block;margin:.5rem auto 0;font-size:.8125rem}
+.tlh{display:flex;justify-content:space-between;align-items:center;margin-bottom:.45rem}
+.tlist{display:flex;flex-direction:column;gap:.3rem}.tli{display:flex;align-items:center;gap:.6rem;border:1px solid var(--ln);background:var(--sf2);border-radius:.7rem;padding:.5rem .7rem;cursor:pointer;text-align:left}
+.tli b{flex:1;font-size:.875rem;font-weight:600}.tli em{font-style:normal;font-size:.75rem;color:var(--mut)}.tli span{color:var(--mut)}.tli.d{opacity:.6}.tli.d span{color:var(--ok)}
+.tlall{text-align:center}.tlall .big,.lsdone .big{font-size:2.6rem}
+.gains{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin-top:.6rem;font-size:.75rem}.gains .pill{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.grow{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
+.gi{background:var(--sf);border:1px solid var(--ln);border-radius:.9rem;padding:.65rem .4rem;text-align:center;box-shadow:var(--sh)}
+.gi b{display:block;font-size:1rem;font-variant-numeric:tabular-nums}.gi span{font-size:.6875rem;color:var(--mut)}.gi em{font-style:normal;font-size:.7rem;margin-left:.15rem}.gi em.up{color:var(--ok)}.gi em.dn{color:var(--bad)}
+.warm{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}.warm button{border:1px solid var(--ln);background:var(--sf);border-radius:.9rem;padding:.7rem .3rem;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.2rem;box-shadow:var(--sh)}
+.warm span{font-size:1.3rem}.warm b{font-size:.8rem;font-weight:600}
+.unit+.unit{margin-top:1rem}
+.crl{cursor:pointer;text-align:left}.crl .t{display:flex;flex-direction:column}.crl .t .mut{font-size:.75rem}
+.crs{flex:none;width:1.9rem;height:1.9rem;border-radius:50%;display:grid;place-items:center;background:var(--sf2);color:var(--mut);font-size:.85rem;font-weight:700}
+.crl.d .crs{background:var(--ok);color:#fff}.crl.now{background:var(--acs)}.crl.now .crs{background:var(--ac);color:var(--acf)}.crl.lock{opacity:.5}
+.wishl{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.lsh{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem}.lsh .quiet{padding-left:0}
+.lst{font-size:1.45rem;margin:.1rem 0 .6rem;letter-spacing:-.02em}
+.lsdots{display:flex;gap:.35rem;margin-bottom:1rem}.lsdots i{flex:1;font-style:normal;text-align:center;font-size:.8rem;padding:.3rem 0;border-radius:.5rem;background:var(--sf2);opacity:.55}
+.lsdots i.d{background:color-mix(in srgb,var(--ok) 20%,transparent);opacity:1}.lsdots i.c{background:var(--acs);opacity:1;box-shadow:inset 0 0 0 1.5px var(--ac)}
+.lcards{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem}
+.lcard{display:flex;gap:.8rem;background:var(--sf);border:1px solid var(--ln);border-radius:1rem;padding:.9rem;box-shadow:var(--sh)}
+.lci{flex:none;font-size:1.6rem;line-height:1}.lcard b{font-size:1rem}.lcard p{margin:.25rem 0 0;color:var(--mut);line-height:1.6;font-size:.9rem}
+.lstep{background:var(--sf);border:1px solid var(--ln);border-radius:1rem;padding:1.3rem 1.1rem;text-align:center;box-shadow:var(--sh);margin-bottom:1rem}
+.lsi{font-size:2.4rem}.lstep h3{margin:.4rem 0 .4rem;font-size:1.15rem;line-height:1.4}.lstep p{margin:0;line-height:1.6;font-size:.875rem}
+.lstry{color:var(--bad)!important;margin-top:.6rem!important}
+.stars{display:flex;justify-content:center;gap:.3rem;margin:.6rem 0}.stars button{border:0;background:none;font-size:2rem;color:var(--bd);cursor:pointer}.stars button.on{color:#e0a63a}
+.lsdone{text-align:center;padding:1rem 0}.lsdone h2{margin:.3rem 0}.lsdone p{line-height:1.6}
+.lbar{position:fixed;left:.75rem;right:.75rem;top:calc(3.3rem + env(safe-area-inset-top,0px));z-index:37;max-width:34rem;margin:0 auto;background:var(--sf);border:1.5px solid var(--ac);border-radius:1rem;box-shadow:0 14px 30px -10px rgba(0,0,0,.45);padding:.6rem .8rem;display:flex;align-items:center;gap:.6rem}
+.lbar.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--sf))}
+.lbt{flex:1;min-width:0;display:flex;flex-direction:column}.lbt b{font-size:.84rem;line-height:1.35}.lbt span{font-size:.78rem;color:var(--ac);font-weight:600;font-variant-numeric:tabular-nums}
+.lbar.ok .lbt span{color:var(--ok)}.lbb{display:flex;align-items:center;gap:.2rem;flex:none}.lbb .btn{padding:.45rem .8rem;font-size:.8rem}.lbb .quiet{font-size:.75rem;padding:.3rem}
+body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px))}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -331,8 +374,9 @@ body.camlive{overflow:hidden}
 <div class="brand"><span class="logo"><svg class="ic"><use href="#i-logo"/></svg></span><span data-i="app"></span></div>
 <h1 data-i="pick"></h1><p class="mut" data-i="pickSub" style="margin:0 0 1rem"></p>
 <button class="role" data-r="beginner"><span class="ico"><svg class="ic"><use href="#i-leaf"/></svg></span><span class="tx"><b data-i="r_beginner"></b><span class="mut" data-i="d_beginner"></span></span></button>
-<button class="role" data-r="student"><span class="ico"><svg class="ic"><use href="#i-cap"/></svg></span><span class="tx"><b data-i="r_student"></b><span class="mut" data-i="d_student"></span></span></button>
 <button class="role" data-r="senior"><span class="ico"><svg class="ic"><use href="#i-sun"/></svg></span><span class="tx"><b data-i="r_senior"></b><span class="mut" data-i="d_senior"></span></span></button>
+<button class="role" data-r="student"><span class="ico"><svg class="ic"><use href="#i-cap"/></svg></span><span class="tx"><b data-i="r_student"></b><span class="mut" data-i="d_student"></span></span></button>
+<button class="role" data-r="free"><span class="ico"><svg class="ic"><use href="#i-tune"/></svg></span><span class="tx"><b data-i="r_free"></b><span class="mut" data-i="d_free"></span></span></button>
 <div class="lang"><select class="langsel"></select></div>
 </div></div>
 
@@ -356,22 +400,51 @@ body.camlive{overflow:hidden}
 </div>
 <div class="tkfull brk" id="brk" hidden><div class="brkbox"><div class="brki">🧘</div><h2 data-i="brkT"></h2><p data-i="brkD"></p><div class="brkc" id="brkTime">03:00</div><button class="btn lg" id="brkGo" disabled></button><button class="quiet" id="brkSkip" data-i="brkSkip"></button></div></div>
 <div class="toast" id="toast"></div>
+<div class="lbar" id="lbar" hidden><div class="lbt"><b id="lbGoal"></b><span id="lbProg"></span></div><div class="lbb"><button class="quiet" id="lbSkip" data-i="lbSkipL"></button><button class="btn" id="lbBack" data-i="lbBackL"></button></div></div>
 <div id="walk" hidden><div class="wring" id="wRing"></div><div class="wbub" id="wBub"><p class="lbl" id="wStep" style="margin:0"></p><h3 id="wT"></h3><p id="wD"></p><div class="row sp"><button class="quiet" id="wSkip" data-i="skip"></button><div class="row"><button class="btn alt" id="wPrev" data-i="prev"></button><button class="btn" id="wNext"></button></div></div></div></div>
 <div class="ov" id="info"><div><h1 id="iTitle"></h1><div id="iBody" style="line-height:1.7"></div><textarea id="iTx" rows="6" hidden></textarea><div class="row" style="margin-top:1rem"><button class="btn" id="iOk" hidden></button><button class="btn alt" id="iClose" data-i="close"></button></div></div></div>
-<header><div class="brand hb"><span class="logo"><svg class="ic"><use href="#i-logo"/></svg></span><span data-i="app"></span></div><button class="chip" id="badge"></button></header>
+<header><div class="brand hb"><span class="logo"><svg class="ic"><use href="#i-logo"/></svg></span><span id="brandT"></span></div><div class="seg msw" id="modeSw"><button data-md="t" data-i="mT"></button><button data-md="h" data-i="mH"></button></div></header>
 
 <nav>
 <div class="brand sb"><span class="logo"><svg class="ic"><use href="#i-logo"/></svg></span><span data-i="app"></span></div>
-<button data-v="home" class="on"><svg class="ic"><use href="#i-home"/></svg><span data-i="nHome"></span></button>
-<button data-v="tune"><svg class="ic"><use href="#i-tune"/></svg><span data-i="nTune"></span></button>
-<button data-v="beat"><svg class="ic"><use href="#i-beat"/></svg><span data-i="nBeat"></span></button>
-<button data-v="cam"><svg class="ic"><use href="#i-hand"/></svg><span data-i="nCam"></span></button>
-<button data-v="drill"><svg class="ic"><use href="#i-score"/></svg><span data-i="nDrill"></span></button>
-<button data-v="task"><svg class="ic"><use href="#i-clock"/></svg><span data-i="nTask"></span></button>
+<button data-v="today" data-m="t"><svg class="ic"><use href="#i-home"/></svg><span data-i="nToday"></span></button>
+<button data-v="course" data-m="t"><svg class="ic"><use href="#i-cap"/></svg><span data-i="nCourse"></span></button>
+<button data-v="home" data-m="h" class="on"><svg class="ic"><use href="#i-home"/></svg><span data-i="nHome"></span></button>
+<button data-v="tune" data-m="h"><svg class="ic"><use href="#i-tune"/></svg><span data-i="nTune"></span></button>
+<button data-v="beat" data-m="h"><svg class="ic"><use href="#i-beat"/></svg><span data-i="nBeat"></span></button>
+<button data-v="cam" data-m="h"><svg class="ic"><use href="#i-hand"/></svg><span data-i="nCam"></span></button>
+<button data-v="drill" data-m="h"><svg class="ic"><use href="#i-score"/></svg><span data-i="nDrill"></span></button>
+<button data-v="task" data-m="h"><svg class="ic"><use href="#i-clock"/></svg><span data-i="nTask"></span></button>
 <button data-v="set"><svg class="ic"><use href="#i-set"/></svg><span data-i="nSet"></span></button>
 </nav>
 
 <main><div class="wrap">
+<section id="v-today"><div class="narrow">
+ <div class="aib"><span class="aiav"><svg class="ic"><use href="#i-logo"/></svg></span><div class="aibub"><span class="mut aiwho"><b data-i="aiName"></b> · <span id="tdRole"></span></span><p id="aiMsg"></p><button class="quiet" id="aiSay">🔊 <span data-i="aiListen"></span></button></div></div>
+ <div class="card tl" id="todayLesson"></div>
+ <div class="gains" id="gains"></div>
+ <div class="gap" style="height:.9rem"></div>
+ <p class="lbl" data-i="growT"></p>
+ <div class="grow" id="grow"></div>
+ <div class="gap" style="height:.9rem"></div>
+ <p class="lbl" data-i="warmT"></p>
+ <div class="warm"><button data-go="tune"><span>🎯</span><b data-i="wTune"></b></button><button data-go="beat"><span>⏱</span><b data-i="wBeat"></b></button><button data-go="course"><span>🎵</span><b data-i="wSong"></b></button></div>
+</div></section>
+<section id="v-course"><div class="narrow">
+ <div class="pt"><h1 data-i="tCourse"></h1><p id="crSub"></p></div>
+ <div id="courseMap"></div>
+ <div class="gap"></div>
+ <p class="lbl" data-i="songLib"></p>
+ <div class="list" id="songList"></div>
+ <div class="gap" style="height:.9rem"></div>
+ <div class="card"><p class="lbl" data-i="wishT"></p><p class="mut" data-i="wishD" style="margin:0 0 .6rem;font-size:.8125rem"></p><div class="tkf"><input class="tki" id="wishIn" maxlength="40"><button class="btn" id="wishAdd"><span data-i="tkAddL"></span></button></div><div class="wishl" id="wishList"></div></div>
+</div></section>
+<section id="v-lesson"><div class="narrow">
+ <div class="lsh"><button class="quiet" id="lsBack">‹ <span data-i="nCourse"></span></button><span class="pill" id="lsUnit"></span></div>
+ <h1 class="lst" id="lsTitle"></h1>
+ <div class="lsdots" id="lsDots"></div>
+ <div id="lsBody"></div>
+</div></section>
 <section id="v-home" class="on">
  <div class="pt"><h1 data-i="hello"></h1><button class="hq" data-help="home" aria-label="Help">?</button></div>
  <div class="cols">
@@ -390,10 +463,6 @@ body.camlive{overflow:hidden}
   <div class="m"><span data-i="sGoal"></span><div class="bar"><i id="goalBar"></i></div><b id="goalTxt"></b></div>
   <label class="row sp" style="margin:.5rem 0"><span class="mut" data-i="sGoalSet"></span><select id="goalSel" style="color:var(--fg)"><option>10</option><option>15</option><option>20</option><option>30</option><option>45</option><option>60</option></select></label>
   <div class="list" id="plan"></div></div>
- <div id="begCard" hidden><p class="lbl" data-i="bRec"></p><div class="list">
-  <button class="li" data-go="tune"><span class="t" data-i="b1"></span><svg class="ic"><use href="#i-chev"/></svg></button>
-  <button class="li" data-go="beat"><span class="t" data-i="b2"></span><svg class="ic"><use href="#i-chev"/></svg></button>
-  <button class="li" data-go="drill"><span class="t" data-i="b3"></span><svg class="ic"><use href="#i-chev"/></svg></button></div></div>
  <div class="gap"></div>
 </section>
 
@@ -456,7 +525,7 @@ body.camlive{overflow:hidden}
 </div></section>
 <section id="v-drill"><div class="narrow wide">
  <div class="pt"><h1 data-i="tDrill"></h1><p data-i="subDrill"></p><button class="hq" data-help="drill" aria-label="Help">?</button></div>
- <div class="card"><div id="score" class="sc"></div><p class="mut" id="clefNote" style="font-size:.8125rem;margin:.5rem 0 0" hidden></p></div>
+ <div class="card"><p class="lbl" id="dSong" hidden></p><div id="score" class="sc"></div><p class="mut" id="clefNote" style="font-size:.8125rem;margin:.5rem 0 0" hidden></p></div>
  <div class="gap" style="height:1rem"></div>
  <div class="row2 r2e"><button class="btn alt" id="dGen"><svg class="ic"><use href="#i-ai"/></svg><span data-i="gen"></span></button><button class="btn alt" id="dDemo"></button></div>
  <button class="btn lg" id="dGo" style="margin-bottom:1rem"></button>
@@ -550,14 +619,14 @@ body.camlive{overflow:hidden}
 </div></section>
 </div></main>
 <script>
-const TXT=`app|二胡練習小幫手|Erhu Practice Helper|二胡練習ヘルパー
+const TXT=`app|AI 二胡老師|AI Erhu Teacher|AI二胡先生
 pick|請選擇你的身分|Who are you?|あなたは？
 pickSub|之後可在「設定」隨時切換|You can switch anytime in Settings|設定でいつでも切り替えられます
 r_beginner|我是初學者|I’m a beginner|初心者です
-r_student|我是學生|I’m a student|学生です
+r_student|我是術科學生|I'm a music-major student|音楽専攻生です
 r_senior|我是樂齡學習者|I’m a senior learner|シニア学習者です
 d_beginner|從持琴與空弦開始，一步一步來|Start with posture and open strings|姿勢と開放弦から始めます
-d_student|有系統地練習，記錄進步|Structured practice and progress|計画的に練習し上達を記録
+d_student|依專業術科練習安排每日課程|Daily lessons built from professional practice|専攻生の練習でレッスン
 d_senior|開心學習，活到老學到老|Learn happily, it's never too late|楽しく学び、生涯学習
 nHome|首頁|Home|ホーム
 nTune|調音|Tune|調音
@@ -739,6 +808,85 @@ close|關閉|Close
 sDel|刪除帳號與所有資料|Delete account and all data
 sReplay|重新觀看新手導覽|Replay welcome tour
 gHelp|協助|Help
+appH|二胡小幫手|Erhu Helper|二胡ヘルパー
+mT|AI 老師|AI Teacher|AI先生
+mH|小幫手|Helper|ヘルパー
+nToday|今日|Today|今日
+nCourse|課程|Course|コース
+r_free|直接打開二胡小幫手|Just open the Erhu Helper|ヘルパーだけ使う
+d_free|只使用調音、節拍、姿勢偵測等練習工具|Use the tuner, metronome and posture tools only|練習ツールだけ使う
+tip_free|需要上課時，點上方的「AI 老師」就能切換。|Tap AI Teacher at the top whenever you want lessons.|上の「AI先生」でレッスンへ
+aiName|AI 老師|AI Teacher|AI先生
+aiListen|聽老師說|Listen|聞く
+ai_first|歡迎！我是你的 AI 二胡老師。不需要任何音樂基礎，我們從拉響第一個聲音開始，每天一點點就好。|Welcome! I'm your AI erhu teacher. No music background needed; we start with your very first sound, a little each day.|ようこそ！最初の一音から始めましょう。
+ai_next|今天我們來學「{n}」，大約 {m} 分鐘就能完成。|Today we'll learn "{n}", about {m} minutes.|今日は「{n}」、約{m}分です。
+ai_senior|慢慢來沒關係，今天只要學一點點：「{n}」，大約 {m} 分鐘。|No rush. Just a little today: "{n}", about {m} minutes.|ゆっくりで大丈夫。今日は「{n}」。
+ai_streak|連續練習第 {s} 天了，手感正在慢慢建立！今天來學「{n}」。|Day {s} in a row, your feel is building! Today: "{n}".|{s}日連続です！今日は「{n}」。
+ai_up|你的音準比之前進步了 {d}%！趁手感好，繼續學「{n}」。|Your intonation improved by {d}%! Keep going with "{n}".|音程が{d}%上達！続けて「{n}」。
+ai_today|今天你已經學會「{g}」，比昨天更會拉二胡了！想多練可以繼續「{n}」。|Today you learned "{g}" — better than yesterday! Want more? Try "{n}".|今日は「{g}」を習得！
+ai_all|所有課程都完成了，太厲害了！到課程頁的歌曲庫挑一首喜歡的歌吧。|You finished every lesson! Pick a favourite from the song library.|全レッスン完了！
+ai_pro|今天的術科課表還有 {n} 項，約 {h}。從你最想克服的項目開始。|{n} items left today, about {h}. Start with what you most want to overcome.|残り{n}項目、約{h}。
+ai_proDone|今天的術科課表全部完成！基本功每天累積，就是專業演奏的底子。|All done today! Daily fundamentals build professional playing.|今日の課題完了！
+proToday|今日術科課表|Today's practice plan|今日の練習
+proTot|全部約 {h}・每一項都有 AI 輔助|About {h} in total, each with AI help|合計約{h}
+allDoneT|全部課程完成！|All lessons done!|全レッスン完了！
+allDoneD|現在你可以挑喜歡的歌來練了。|Now pick songs you love.|好きな曲を選びましょう。
+goSongs|看歌曲庫|Song library|曲ライブラリ
+youWill|完成後你會：|After this you'll be able to: |完了後：
+aboutMin|約 {m} 分鐘|about {m} min|約{m}分
+lsStart|開始上課|Start lesson|レッスン開始
+lsCont|繼續上課|Continue|続ける
+iKnow|我已經會了，跳過這課|I already know this, skip|もうできる、スキップ
+skipped|已跳過「{n}」|Skipped "{n}"|「{n}」をスキップ
+growT|我的成長|My progress|成長
+gStreak|連續天數|day streak|連続日数
+gToday|今天已練|practiced today|今日の練習
+gLearned|已學會|lessons learned|習得
+recentGain|最近學會|Recently learned|最近の習得
+warmT|暖身與自由練習|Warm-up and free practice|ウォームアップ
+wTune|調音|Tune|調弦
+wBeat|長弓|Long bows|ロングボウ
+wSong|拉喜歡的歌|Play a song|好きな曲
+tCourse|課程|Course|コース
+crSub|跟著順序一課一課來，也可以跳過已經會的。|Go lesson by lesson, or skip what you already know.|順番に、できるものはスキップ可。
+crSubPro|依你的術科練習安排，每天都會重新開始。|Built from your practice plan; resets every day.|毎日リセット。
+songLib|歌曲庫|Song library|曲ライブラリ
+practice|練習|Practice|練習
+wishT|我想學的歌|Songs I want to learn|弾きたい曲
+wishD|寫下你想拉的歌，之後會優先加進歌曲庫。|Write songs you want to play; they'll be added first.|追加してほしい曲を書いてください。
+wishOk|已記下，謝謝！|Saved, thanks!|保存しました
+lockedMsg|先完成前面的課，或在目前這課按「我已經會了」跳過。|Finish earlier lessons first, or skip the current one with "I already know this".|前のレッスンを先に。
+lsGot|我懂了|Got it|わかった
+lsDid|我做到了|I did it|できた
+lsGo|開始練習|Start practice|練習開始
+lsSkipStep|略過這一步|Skip this step|このステップをスキップ
+lsTryHint|已經很努力了！可以放慢速度再試，或先略過這一步，明天再回來挑戰。|Great effort! Try slower, or skip and come back tomorrow.|スキップして明日でもOK。
+rateT|今天這項練得怎麼樣？|How did this go today?|今日の出来は？
+rateD|自我評分會記錄下來，方便看出進步。|Your rating is saved to track progress.|記録されます。
+timerGoal|練習「{n}」{m} 分鐘|Practice "{n}" for {m} min|「{n}」を{m}分
+lsDoneT|完成！|Done!|完了！
+lsDoneG|你學會了：|You learned: |習得：
+lsDoneD|你已經比昨天更會拉二胡了。|You play the erhu better than yesterday.|昨日より上手になりました。
+lsNextL|下一課|Next lesson|次のレッスン
+lsHomeL|回到今日|Back to Today|今日に戻る
+lbBackL|回到課程|Back to lesson|レッスンへ
+lbSkipL|略過|Skip|スキップ
+lbPlay|拉一個長音…|Play a long note…|長い音を…
+lbPose|擺好姿勢…|Hold your posture…|姿勢を保って…
+lbPass|音準與節奏達 {p}% 就過關|Reach {p}% pitch and rhythm|{p}%で合格
+lbKeep|再穩一點，繼續保持|Steady, keep holding|そのまま
+lbTry|音準 {a}%・節奏 {b}%，目標 {p}%，再試一次！|Pitch {a}%, rhythm {b}%, target {p}%. Try again!|もう一度！
+lbGreat|做得好！|Well done!|よくできました！
+w1|AI 老師與小幫手|AI Teacher and Helper§「AI 老師」帶你一課一課學；「小幫手」是調音、節拍、姿勢偵測等練習工具。隨時點這裡切換。|AI Teacher and Helper§AI Teacher guides you lesson by lesson; Helper holds the tuner, metronome and posture tools. Switch here anytime.
+w2|今天的課|Today's lesson§每天打開就從這裡開始，做完一課就比昨天更會拉。|Today's lesson§Start here every day; each lesson makes you better than yesterday.
+w3|我的成長|Your progress§連續天數、學會的課和音準、節奏的進步都在這裡。|Your progress§Streak, lessons learned and pitch and rhythm gains live here.
+w4|課程地圖|Course map§依序解鎖，已經會的可以直接跳過。|Course map§Lessons unlock in order; skip what you already know.
+w5|歌曲庫|Song library§挑喜歡的歌直接練，也可以許願想學的歌。|Song library§Practice any song, or request ones you want.
+w6|二胡小幫手|Erhu Helper§所有練習工具都在這裡，課程中也會自動帶你過來使用。|Erhu Helper§All practice tools are here; lessons bring you here automatically.
+w7|調音器|Tuner§拉一個音，指針在中間綠色區就是準。|Tuner§Play a note; the needle in the green zone means in tune.
+w8|示範演奏|Hear the demo§每首譜都可以先聽 AI 拉一次。|Hear the demo§Let the AI play any score first.
+w9|練琴任務|Practice tasks§排好每天的練習，按 ▶ 全螢幕計時。|Practice tasks§Plan daily practice and time it full screen.
+w10|設定|Settings§身分、字體、語音都在這裡，導覽也能在這裡重看。|Settings§Role, text size and voice live here; replay this tour here too.
 dCamT|檢查弓、手臂與手形|Bow, arm and hand check|弓・腕・手をチェック
 dSetT|身分、字體與語音|Role, text size, voice|ロール・文字・音声
 chBow|弓|Bow|弓
@@ -830,18 +978,6 @@ sndW|木魚|Woodblock|ウッドブロック
 bpmHint|點數字可直接輸入速度（30–500）。電腦可用鍵盤打數字、Enter 確認、空白鍵開始或停止。|Tap the number to type a tempo (30–500). On a computer, type digits, press Enter, and use Space to start or stop.|数字をタップして入力（30〜500）。PCは数字キー、Enter、スペースで開始/停止。
 demo|示範演奏|Play demo|模範演奏
 prev|上一步|Back|戻る
-w1|你的身分§這裡顯示你目前的身分。點它可以隨時切換初學者、學生或樂齡學習者。|Your role§This shows your current role. Tap it anytime to switch.
-w2|下方導覽列§從這裡切換各功能：調音、節拍、姿勢、視譜、任務與設定。|Navigation§Switch features here: tuner, metronome, posture, sight-reading, tasks and settings.
-w3|調音器§進到這頁就會自動開始聽。拉一個音，指針停在中間的綠色區就代表準。|Tuner§It starts listening as soon as you open this page. Play a note; the needle in the green zone means in tune.
-w4|選擇要調的弦§內弦 D、外弦 A，或用自由偵測檢查任何音。|Pick a string§Inner D, outer A, or free detect for any note.
-w5|直接輸入速度§點這個數字就能直接輸入 30 到 500 的速度。|Type the tempo§Tap the number to type any tempo from 30 to 500.
-w6|選擇音色§電子音或木魚，挑一個你聽得最清楚的。|Choose a sound§Beep or woodblock, whichever you hear best.
-w7|姿勢偵測§開啟相機後擺好姿勢按「校準」，綠線代表正確，紅線代表要調整。|Posture§Start the camera, hold your posture and press Calibrate; the dashed line helps you align the bow.
-w8|AI 出的譜§每次都能換一份新譜，可選五線譜或簡譜、難度與拍子。|AI score§Get a fresh score anytime, staff or jianpu, any level and meter.
-w9|先聽示範§按這裡，AI 會把譜演奏一次，譜上同步標出位置。|Hear the demo§Press here and the AI plays the score while highlighting each note.
-w10|換你演奏§按「開始演奏」，聽完預備拍後開始拉，AI 會即時告訴你準不準。|Your turn§Press Start, wait for the count-in, then play. The AI tells you how you did in real time.
-w11|練琴任務§上方字卡按 − / + 快速調整時間，點任務會變成全螢幕碼表，☆ 標記最想克服的項目。|Practice tasks§Plan your daily items, press ▶ to time them, ☆ marks your focus item.
-w12|設定§身分、字體、語音、無障礙都在這裡。導覽隨時可以在設定裡重看。|Settings§Role, text size, voice and accessibility live here. Replay this tour anytime from Settings.
 rRest|休止符|Rests|休符
 gClickL|拍子引導|Beat guide|拍のガイド
 gClickD|演奏時持續打拍，第一拍較重|Keeps clicking while you play, accented downbeat|演奏中も拍を鳴らします
@@ -925,7 +1061,7 @@ fbSave|儲存並複製|Save and copy
 fbSaved|已儲存並複製|Saved and copied`;
 const D={},LG=['zh-TW','en','ja'],LN={'zh-TW':'繁體中文',en:'English',ja:'日本語'};
 TXT.split('\n').forEach(l=>{const p=l.split('|');D[p[0]]=p.slice(1)});
-const ROLES={beginner:{scale:1,voice:true,bpm:60,detail:'simple',autoTips:true},student:{scale:1,voice:false,bpm:80,detail:'detail',autoTips:false},senior:{scale:1.2,voice:true,bpm:50,detail:'simple',autoTips:true}};
+const ROLES={free:{scale:1,voice:false,bpm:60,detail:'detail',autoTips:false},beginner:{scale:1,voice:true,bpm:60,detail:'simple',autoTips:true},student:{scale:1,voice:false,bpm:80,detail:'detail',autoTips:false},senior:{scale:1.2,voice:true,bpm:50,detail:'simple',autoTips:true}};
 const def={lang:/^ja/.test(navigator.language)?'ja':/^zh/.test(navigator.language)?'zh-TW':'en',role:null,scale:1,ref:440,key:2,voice:false,click:true,bpm:60,beats:4};
 let S=Object.assign({},def);
 try{Object.assign(S,JSON.parse(localStorage.getItem('erhu')||'{}'))}catch(e){}
@@ -944,14 +1080,14 @@ function apply(){
  $('#key').value=S.key;$('#ref').value=S.ref;$('#voice').checked=S.voice;$('#click').checked=S.click;
 
  $('#bpm').value=S.bpm;if(document.activeElement!==$('#bpmv'))$('#bpmv').value=S.bpm;$$('#snd button').forEach(b=>b.classList.toggle('sel',b.dataset.s===(S.snd||'click')));$$('#beats button').forEach(b=>b.classList.toggle('sel',+b.dataset.n===+S.beats));
- const rl=S.role?t('r_'+S.role):'';$('#badge').textContent=rl;$('#curRole').textContent=rl;$('#heroRole').textContent=rl;
+ const rl=S.role?t('r_'+S.role):'';$('#curRole').textContent=rl;$('#heroRole').textContent=rl;
  $('#tip').textContent=S.role?t('tip_'+S.role):'';
  $$('.role').forEach(b=>b.classList.toggle('cur',b.dataset.r===S.role));
  const ic=n=>`<svg class="ic ${n==='stop'?'f':''}"><use href="#i-${n}"/></svg>`;$('#mic').innerHTML=ic(stream?'stop':'mic')+'<span>'+(stream?t('stop'):t('start'))+'</span>';$('#play').innerHTML=ic(playing?'stop':'play')+'<span>'+(playing?t('stop'):t('start'))+'</span>';document.documentElement.classList.toggle('big',S.scale>=1.5);fill();
  $('#nsub').textContent=stream?'':t('listen');
- dots();drillUI();syncSet();camUI();tkUI();
+ dots();drillUI();syncSet();camUI();tkUI();crUI();if(S.mode)setMode(S.mode);
 }
-function setRole(r){const c=ROLES[r];if(S.task&&S.task.auto)delete S.task;Object.assign(S,{role:r,scale:c.scale,voice:c.voice,bpm:c.bpm,detail:c.detail,autoTips:c.autoTips,elder:r==='senior'?1:0});save();$('#ov').classList.remove('on');apply();if(!S.toured)setTimeout(()=>startWalk(),300)}
+function setRole(r){const c=ROLES[r];if(S.task&&S.task.auto)delete S.task;Object.assign(S,{role:r,scale:c.scale,voice:c.voice,bpm:c.bpm,detail:c.detail,autoTips:c.autoTips,elder:r==='senior'?1:0});S.mode=r==='free'?'h':'t';save();$('#ov').classList.remove('on');apply();view(r==='free'?'home':'today');if(!S.toured)setTimeout(()=>startWalk(),300)}
 $$('.role').forEach(b=>b.onclick=()=>setRole(b.dataset.r));
 $('#chg').onclick=()=>$('#ov').classList.add('on');
 $$('.langsel').forEach(s=>s.onchange=()=>{S.lang=s.value;save();apply()});
@@ -961,7 +1097,7 @@ $('#voice').onchange=e=>{S.voice=e.target.checked;save()};
 $('#click').onchange=e=>{S.click=e.target.checked;save()};
 
 $('#reset').onclick=()=>{S=Object.assign({},def);norm();try{localStorage.removeItem('erhu')}catch(e){};apply();$('#ov').classList.add('on')};
-function view(v){if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&P&&P.on)stopDrill();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$('main').scrollTop=0}
+function view(v){if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&P&&P.on)stopDrill();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===(v==='lesson'?'course':v)));$('main').scrollTop=0}
 $$('nav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
 $$('[data-go]').forEach(b=>b.onclick=()=>view(b.dataset.go));
 
@@ -983,7 +1119,7 @@ function loop(){
  const f0=detect(buf,ac.sampleRate),now=performance.now();
  if(f0>0){if(tLast.length&&Math.abs(1200*Math.log2(f0/tLast[tLast.length-1]))>80)tLast=[];tLast.push(f0);if(tLast.length>5)tLast.shift();tHeard=now}
  if(++frame%2)return;
- if(now-tHeard>450||!tLast.length){tLast=[];$('#nn').textContent='–';$('#status').textContent='';$('#needle').style.opacity=.3;$('#cents').textContent='0¢';return}
+ if(now-tHeard>450||!tLast.length){LH('tune',{tm:0,ab:99});tLast=[];$('#nn').textContent='–';$('#status').textContent='';$('#needle').style.opacity=.3;$('#cents').textContent='0¢';return}
  const f=med(tLast);
  const midi=69+12*Math.log2(f/S.ref);let tm=mode==='D'?62:mode==='A'?69:Math.round(midi);
  const cents=(midi-tm)*100;
@@ -992,7 +1128,7 @@ function loop(){
  $('#nsub').textContent=`${f.toFixed(1)} Hz · ${JP[sem]}`;
  const cc=Math.max(-50,Math.min(50,cents));$('#needle').style.opacity=1;$('#needle').style.transform='rotate('+cc*1.16+'deg)';
  $('#cents').textContent=(cents>0?'+':'')+Math.round(cents)+'¢';
- const st=$('#status'),ab=Math.abs(cents);
+ const st=$('#status'),ab=Math.abs(cents);LH('tune',{tm,ab});
  if(ab<=8){st.textContent='✓ '+t('ok');st.style.color='var(--ok)';if(!okSince)okSince=Date.now();if(Date.now()-okSince>1500)say('ok')}
  else{okSince=0;const k=cents<0?'flat':'sharp';st.textContent=(cents<0?'♭ ':'♯ ')+t(k);st.style.color='var(--bad)';if(ab>15&&ab<150)say(k)}
  hist.push(Math.max(-100,Math.min(100,cents)));if(hist.length>200)hist.shift();draw()}
@@ -1012,7 +1148,7 @@ async function mic(){
 $('#mic').onclick=mic;
 $$('#modes button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;hist=[];$$('#modes button').forEach(x=>x.classList.toggle('sel',x===b))});
 $('#modes button').classList.add('sel');
-$('#badge').onclick=()=>$('#ov').classList.add('on');
+
 
 /* ---- metronome ---- */
 let playing=false,nextT=0,beat=0,tm;
@@ -1023,7 +1159,7 @@ function click(time,b,force){if(!S.click&&!force)return;const a=ctx(),o=a.create
   o.connect(fl).connect(g).connect(a.destination);o.start(time);o.stop(time+.09);return o}
  o.frequency.value=b===0?1600:1000;g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(.6,time+.003);g.gain.exponentialRampToValueAtTime(.0001,time+.06);
  o.connect(g).connect(a.destination);o.start(time);o.stop(time+.08);return o}
-function sched(){const a=ctx();while(nextT<a.currentTime+.12){const b=beat,at=nextT;click(at,S.beats===1?1:b);
+function sched(){const a=ctx();while(nextT<a.currentTime+.12){const b=beat,at=nextT;click(at,S.beats===1?1:b);LH('beat',{});
  setTimeout(()=>{if(!playing)return;const ds=$$('#dots i');ds.forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):'')},Math.max(0,(at-a.currentTime)*1000));
  nextT+=60/S.bpm;beat=(beat+1)%S.beats}}
 async function toggle(){
@@ -1168,7 +1304,7 @@ function jian(sc){meas(sc);
    if(grp)h+=`<span class="jb">${grp}</span>`;gs=ge});
   h+='</div>'}
  return h+'</div>'}
-function show(){if(SC){SC.clef=O().clef}$('#score').innerHTML=SC?(O().nt==='staff'?staff(SC):jian(SC)):'';$('#clefNote').hidden=!(SC&&O().nt==='staff'&&O().clef!=='treble');$('#clefNote').textContent=t(O().clef==='bass'?'cfBn':'cfAn');paint(LR,!P||!P.on&&!!LR)}
+function show(){if(SC){SC.clef=O().clef}$('#dSong').hidden=!(SC&&SC.title);$('#dSong').textContent=SC&&SC.title?'🎵 '+SC.title:'';$('#score').innerHTML=SC?(O().nt==='staff'?staff(SC):jian(SC)):'';$('#clefNote').hidden=!(SC&&O().nt==='staff'&&O().clef!=='treble');$('#clefNote').textContent=t(O().clef==='bass'?'cfBn':'cfAn');paint(LR,!P||!P.on&&!!LR)}
 const headI=i=>{const N=SC.notes;while(i>0&&N[i].tie)i--;return i},prevA=i=>{const N=SC.notes;i=headI(i)-1;while(i>=0&&(N[i].r||N[i].tie)){if(N[i].tie)i=headI(i);else i--}return i<0?-1:headI(i)};
 function judge(R,i){const N=SC.notes;if(N[i].r)return null;i=headI(i);const r=R[i];if(!r)return null;const pi=prevA(i),q=pi>=0?R[pi]:null,ex=.25;
  const tOk=Math.abs(r.dt)<=ex*60/SC.tempo*1000;
@@ -1242,7 +1378,7 @@ function report(R){const N=SC.notes,A=N.map((_,i)=>i).filter(i=>!N[i].tie&&!N[i]
  R.forEach((r,i)=>{if(r&&r.db>-90){xs.push(LV.indexOf(SC.dyn[N[i].bar]));ys.push(r.db)}});const r=pr(xs,ys),rs={pitch:pc(j=>j.p),rhythm:pc(j=>j.r),dt:Math.round(dt),n:A.length,got};
  const row=(k,v)=>`<div class="m"><span>${t(k)}</span><div class="bar"><i style="width:${v}%"></i></div><b>${v}%</b></div>`;
  box.innerHTML=`<p class="lbl">${t('rRep')}</p>${row('rPitch',rs.pitch)}${row('rRhythm',rs.rhythm)}<p>${t('rTime')}：${dtT(dt)}</p>`+(r==null?'':`<p>${t('rDyn')}：${r>.3?t('dynOk'):t('dynLow')}</p>`)+`<p class="mut" style="margin-bottom:0;font-size:.8125rem">${t('got')} ${got}/${A.length} · ${t('saved')}</p>`;
- setH([{id:Date.now(),sc:SC,rs},...getH()].slice(0,30));histUI();afterReport(rs)}
+ setH([{id:Date.now(),sc:SC,rs},...getH()].slice(0,30));histUI();afterReport(rs);LH('drill',rs)}
 const LVK={easy:'lvE',hard:'lvH',pro:'lvP',chal:'lvC'};
 function histUI(){const H=getH();$('#hist').innerHTML=H.length?H.map(x=>`<div class="li" data-h="${x.id}" style="cursor:pointer"><span class="t"><b>${x.sc.key} ${t({maj:'mMaj',min:'mMin',pen:'mPen'}[x.sc.mode]||'mMaj')} · ${x.sc.time==='mix'?t('tMix'):x.sc.time}${x.sc.level?' · '+t(LVK[x.sc.level]||'lvE'):''}</b><br><span class="mut" style="font-size:.8125rem">${new Date(x.id).toLocaleDateString(S.lang)} · ${t('rPitch')} ${x.rs.pitch}% · ${t('rRhythm')} ${x.rs.rhythm}%</span></span><button class="x" data-d="${x.id}" aria-label="delete">×</button></div>`).join(''):`<div class="li mut">${t('histEmpty')}</div>`;$('#hClr').hidden=!H.length}
 function syncD(){const o=O();$$('#dNt button').forEach(b=>b.classList.toggle('sel',b.dataset.v===o.nt));$$('#dTon button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===+o.tonal));
@@ -1317,7 +1453,7 @@ function syncSet(){const r=document.documentElement,p=S.prof;const dk=S.theme===
  ['p','a','c','o'].forEach(k=>$('#n_'+k).checked=!!S.notif[k]);$('#v_pub').checked=!!S.priv.pub;$('#v_trend').checked=!!S.priv.trend;
  $('#examRow').hidden=S.role!=='student';$('#pName').value=p.name;$('#pMail').value=p.email;$('#pName').placeholder=t('nick');$('#pMail').placeholder='name@example.com';
  $('#avImg').style.backgroundImage=p.av?`url(${p.av})`:'';$('#avImg').textContent=p.av?'':(p.name||'🎻').slice(0,1).toUpperCase();
- $('#stuCard').hidden=S.role!=='student';$('#begCard').hidden=S.role!=='beginner';if(S.role==='student')stuUI()}
+ $('#stuCard').hidden=S.role!=='student';if(S.role==='student')stuUI()}
 const sw=(id,fn)=>$(id).onchange=e=>{fn(e.target.checked);save();syncSet()};
 sw('#aTips',v=>S.autoTips=v);sw('#aSpeak',v=>S.autoSpeak=v);sw('#exam',v=>S.exam=v?1:0);sw('#v_pub',v=>S.priv.pub=v?1:0);sw('#v_trend',v=>S.priv.trend=v?1:0);
 ['p','a','c','o'].forEach(k=>sw('#n_'+k,v=>S.notif[k]=v?1:0));
@@ -1437,7 +1573,7 @@ function camLoop(){
    badFor('sh',shOk===false,1200,'saySh')}}
  else cSh=null;
  chip('sh',shOk==null?'':shOk?'ok':'bad');
- if(cSamples)cSamples.push({perp:devRaw,sh,spread:hsS&&hsS.spread});
+ LH('cam',{bow:bowOk,sh:shOk,arm:armOk,lh:lhOk});if(cSamples)cSamples.push({perp:devRaw,sh,spread:hsS&&hsS.spread});
  next()}
 $('#cGo').onclick=()=>camOn?stopCam():startCam();
 $('#cClose').onclick=stopCam;
@@ -1513,7 +1649,7 @@ setInterval(()=>{if(BRK){brkUI();return}if(!TK||!TK.run||!S.task)return;const no
  if(!(stream||(P&&P.on)||playing||camOn||DM))S.log[today()]=(S.log[today()]||0)+dt;
  const k=tkFind(TK.id);if(!k){TK=null;tkUI();return}
  if(S.task.brk)S.task.sinceBrk=(S.task.sinceBrk||0)+dt;
- if(L[k.id]>=k.min*60){tkDoneMap()[k.id]=1;TK.run=false;save();tkChime();const m=t('tkFin').replace('{n}',tkNm(k));toast(m);if(S.voice)speak(m);tkUI();if(S.role==='student')stuUI();return}
+ if(L[k.id]>=k.min*60){tkDoneMap()[k.id]=1;TK.run=false;save();tkChime();LH('task',{k:k.k});const m=t('tkFin').replace('{n}',tkNm(k));toast(m);if(S.voice)speak(m);tkUI();if(S.role==='student')stuUI();return}
  if(S.task.brk&&S.task.sinceBrk>=1800){save();brkShow();return}
  if(now-tkSaveT>5000){tkSaveT=now;save()}
  tkFullUI();if($('#v-task').classList.contains('on')){tkRunUI();const row=document.querySelector(`.tk[data-id="${k.id}"]`);if(row){row.querySelector('.tkpb i').style.width=Math.min(100,L[k.id]/(k.min*60)*100)+'%';row.querySelector('.tkmeta').textContent=Math.floor(L[k.id]/60)+' / '+k.min+' '+t('min')}tkSum()}},1000);
@@ -1540,7 +1676,7 @@ $('#tkBrk').onchange=e=>{S.task.brk=e.target.checked?1:0;if(!S.task.brk)S.task.s
 $('#tkShrink').onclick=tkClose;
 $('#tkFPlay').onclick=()=>{const k=TK&&tkFind(TK.id);if(!k)return;if(tkIsDone(k)){const nx=tkSorted().find(x=>x.id!==k.id&&!tkIsDone(x));if(nx)tkOpen(nx.id);return}TK.run=!TK.run;TK.last=Date.now();save();tkUI()};
 $('#tkFM5').onclick=()=>{const k=TK&&tkFind(TK.id);if(k)tkSetMin(k,k.min-5)};$('#tkFP5').onclick=()=>{const k=TK&&tkFind(TK.id);if(k)tkSetMin(k,k.min+5)};
-$('#tkFDone').onclick=()=>{const k=TK&&tkFind(TK.id);if(!k)return;const D=tkDoneMap();if(tkIsDone(k)){delete D[k.id];if(tkSec(k)>=k.min*60)tkLog()[k.id]=k.min*60-1}else{D[k.id]=1;TK.run=false}tkTouch();save();tkUI()};
+$('#tkFDone').onclick=()=>{const k=TK&&tkFind(TK.id);if(!k)return;const D=tkDoneMap();if(tkIsDone(k)){delete D[k.id];if(tkSec(k)>=k.min*60)tkLog()[k.id]=k.min*60-1}else{D[k.id]=1;TK.run=false;LH('task',{k:k.k})}tkTouch();save();tkUI()};
 $('#tkFStop').onclick=()=>{TK=null;save();tkClose()};
 $('#tkFName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur()}});
 $('#tkFName').addEventListener('blur',e=>{const k=TK&&tkFind(TK.id);if(!k)return;const v=e.target.textContent.replace(/\s+/g,' ').trim().slice(0,30);if(v&&v!==tkNm(k)){k.name=v;tkTouch();save()}tkUI()});
@@ -1548,10 +1684,10 @@ $('#brkGo').onclick=()=>brkEnd(true);$('#brkSkip').onclick=()=>brkEnd(false);
 twice('#tkApply',()=>{const v=$('#tkTplSel').value;S.task.tpl=v;S.task.list=mkTpl(v);S.task.auto=0;TK=null;save();tkUI();toast(t('tkApplied'))});
 
 /* ---- interactive walkthrough ---- */
-const WALK=[['home','#badge','w1'],['home','nav button[data-v="tune"]','w2',1],['tune','#gauge','w3'],['tune','#modes','w4',1],['beat','#bpmv','w5'],['beat','#snd','w6',1],['cam','#cGo','w7'],['drill','#score','w8'],['drill','#dDemo','w9',1],['drill','#dGo','w10'],['task','#taskList','w11'],['set','#chg','w12']];
-let WK=0,walkOn=false;
-function startWalk(){if(stream)mic();if(camOn)stopCam();walkOn=true;WK=0;$('#coach').hidden=true;$('#help').classList.remove('on');$('#tour').classList.remove('on');$('#walk').hidden=false;drawWalk()}
-function endWalk(){walkOn=false;S.guided.tune=1;S.guided.drill=1;$('#walk').hidden=true;S.toured=1;save();view('home')}
+const WALK=[['today','#modeSw','w1'],['today','#todayLesson','w2'],['today','#grow','w3'],['course','#courseMap','w4'],['course','#songList','w5'],['home','.tiles','w6'],['tune','#gauge','w7'],['drill','#dDemo','w8',1],['task','#taskList','w9'],['set','#chg','w10']];
+let WK=0,walkOn=false,walkMode='t';
+function startWalk(){walkMode=S.mode||'t';if(stream)mic();if(camOn)stopCam();walkOn=true;WK=0;$('#coach').hidden=true;$('#help').classList.remove('on');$('#tour').classList.remove('on');$('#walk').hidden=false;drawWalk()}
+function endWalk(){walkOn=false;S.guided.tune=1;S.guided.drill=1;$('#walk').hidden=true;S.toured=1;save();view(walkMode==='h'?'home':'today')}
 function drawWalk(){const [v,,k]=WALK[WK],[ti,de]=t(k).split('§');if(!$('#v-'+v).classList.contains('on'))view(v);
  $('#wStep').textContent=(WK+1)+' / '+WALK.length;$('#wT').textContent=ti;$('#wD').textContent=de;$('#wNext').textContent=t(WK===WALK.length-1?'done':'next');$('#wPrev').hidden=WK===0;$('#wSkip').hidden=WK===WALK.length-1;
  const el=document.querySelector(WALK[WK][1]);if(el&&el.offsetParent!==null&&!el.closest('nav'))el.scrollIntoView({block:'center',behavior:'instant'});
@@ -1567,12 +1703,235 @@ document.addEventListener('click',e=>{const h=walkHit(e);if(!h)return;if(h===2){
 document.addEventListener('mousedown',e=>{const h=walkHit(e);if(h===1||h===-1)e.preventDefault()},true);
 $('#wNext').onclick=()=>{WK<WALK.length-1?(WK++,drawWalk()):endWalk()};$('#wPrev').onclick=()=>{if(WK>0){WK--;drawWalk()}};$('#wSkip').onclick=endWalk;
 addEventListener('resize',()=>{if(walkOn)placeWalk()});$('main').addEventListener('scroll',()=>{if(walkOn)placeWalk()},{passive:true});
+
+/* ================= AI 老師：課程 ================= */
+const SONGS={
+ abc:{n:'1 2 3',key:'D',time:'4/4',txt:"1 2 3- 3 2 1-"},
+ bee4:{n:'小蜜蜂（前段）',key:'D',time:'4/4',txt:"5 3 3- 4 2 2- 1 2 3 4 5 5 5-"},
+ bee:{n:'小蜜蜂',key:'D',time:'4/4',lv:1,txt:"5 3 3- 4 2 2- 1 2 3 4 5 5 5- 5 3 3- 4 2 2- 1 3 5 5 3--- 2 2 2 2 2 3 4- 3 3 3 3 3 4 5- 5 3 3- 4 2 2- 1 3 5 5 1---"},
+ twinkle:{n:'小星星',key:'D',time:'4/4',lv:1,txt:"1 1 5 5 6 6 5- 4 4 3 3 2 2 1- 5 5 4 4 3 3 2- 5 5 4 4 3 3 2- 1 1 5 5 6 6 5- 4 4 3 3 2 2 1-"},
+ mary:{n:'瑪莉有隻小綿羊',key:'D',time:'4/4',lv:1,txt:"3 2 1 2 3 3 3- 2 2 2- 3 5 5- 3 2 1 2 3 3 3 3 2 2 3 2 1---"},
+ ode:{n:'歡樂頌',key:'D',time:'4/4',lv:2,txt:"3 3 4 5 5 4 3 2 1 1 2 3 3. 2_ 2- 3 3 4 5 5 4 3 2 1 1 2 3 2. 1_ 1-"},
+ songbie:{n:'送別',key:'G',time:'4/4',lv:2,txt:"5 3_ 5_ 1'- 6 1' 5- 5 1_ 2_ 3 2_ 1_ 2--- 5 3_ 5_ 1'. 7_ 6 1' 5- 5 2_ 3_ 4. 7,_ 1---"},
+ jasmine:{n:'茉莉花',key:'D',time:'2/4',lv:3,txt:"3 3_ 5_ 6_ 1'_ 1'_ 6_ 5 5_ 6_ 5- 3 3_ 5_ 6_ 1'_ 1'_ 6_ 5 5_ 6_ 5- 5 5 5 3_ 5_ 6 6 5- 3 2_ 3_ 5 3_ 2_ 1 1_ 2_ 1-"}
+};
+const L_=(h,p,i)=>({i,h,p});
+const TRACKS={
+ basic:[
+  {u:'第一單元・認識二胡',ls:[
+   {id:'b1',title:'認識你的二胡',gain:'認識二胡的內弦與外弦',steps:[
+    {t:'learn',cards:[L_('二胡只有兩條弦','靠近你的是內弦，聲音比較低沉；外面那條是外弦，聲音比較明亮。','🪕'),L_('弓毛夾在兩弦中間','拉內弦時弓毛貼著內弦，拉外弦時貼著外弦，弓不用拿出來。','🏹'),L_('琴筒放在左腿上','琴筒穩穩放在左大腿靠近腰的地方，琴桿微微往左前方傾斜。','🪑')]},
+    {t:'self',h:'把二胡拿出來，找到內弦和外弦',p:'用手指輕輕撥一下兩條弦，聽聽哪條比較低、哪條比較高。'}]},
+   {id:'b2',title:'坐好、拿好琴',gain:'放鬆地坐好、拿好琴',steps:[
+    {t:'learn',cards:[L_('坐椅子的前半部','雙腳平放在地上，背挺直但不要僵硬。','🪑'),L_('肩膀放鬆','肩膀自然往下垂，不要聳起來，手才拉得久。','😌')]},
+    {t:'cam',need:['sh'],hold:5,h:'肩膀放鬆，維持 5 秒',p:'把手機立在前方約 1 公尺，讓上半身入鏡。肩膀線變綠就代表放鬆了。'}]},
+   {id:'b3',title:'握弓與弓的方向',gain:'握弓，並讓弓和琴桿保持 90 度',steps:[
+    {t:'learn',cards:[L_('輕輕握住弓桿','大拇指和食指捏住弓桿，中指和無名指輕輕勾住弓毛，就像拿著一枝筆。','✋'),L_('弓和琴桿成 90 度','從正面看，弓要和琴桿垂直，拉出來的聲音才會乾淨。','📐')]},
+    {t:'cam',need:['bow'],hold:5,h:'弓和琴桿保持 90 度 5 秒',p:'把弓放在兩弦中間、靠近琴筒的地方，畫面上的弓線變綠就對了。'}]}]},
+  {u:'第二單元・拉出第一個聲音',ls:[
+   {id:'b4',title:'拉響內弦',gain:'拉響內弦空弦（Do）',steps:[
+    {t:'learn',cards:[L_('空弦就是不按任何手指','拉內弦的空弦，就是簡譜的 1，也就是 Do。','🎵'),L_('慢慢拉、力量平均','弓速慢一點，從頭到尾力量一樣，聲音會比較穩。','🐢')]},
+    {t:'tune',s:'D',hold:2,h:'拉內弦空弦，讓指針停在綠色區 2 秒',p:'如果一直偏高或偏低，先轉上方的弦軸把弦調準。'}]},
+   {id:'b5',title:'拉響外弦',gain:'拉響外弦空弦（Sol）',steps:[
+    {t:'learn',cards:[L_('外弦空弦是 5','外弦不按手指，就是簡譜的 5，也就是 Sol。','🎵'),L_('換弦只要轉一點點','手腕輕輕往外推，弓毛就會貼到外弦。','↔️')]},
+    {t:'tune',s:'A',hold:2,h:'拉外弦空弦，讓指針停在綠色區 2 秒',p:'聲音穩了再看指針，不用急。'}]},
+   {id:'b6',title:'長弓：數到四',gain:'一弓拉滿 4 拍的長弓',steps:[
+    {t:'learn',cards:[L_('一弓拉 4 拍','跟著節拍器心裡數 1、2、3、4，一個方向拉完再換方向。','⏱'),L_('聲音要一樣大','開頭、中間、結尾的聲音都一樣大，就是好的長弓。','📏')]},
+    {t:'beat',bpm:60,beats:4,count:16,h:'跟著節拍拉 4 個來回（16 拍）',p:'推弓 4 拍、拉弓 4 拍，重複兩次。'},
+    {t:'self',h:'聲音有沒有一直很平穩？',p:'如果有斷掉或忽大忽小，可以再練一次，或者先往下走。'}]}]},
+  {u:'第三單元・會唱就會拉',ls:[
+   {id:'b7',title:'認識簡譜',gain:'看懂簡譜 1 2 3',steps:[
+    {t:'learn',cards:[L_('數字就是音','1 2 3 4 5 6 7 就是 Do Re Mi Fa Sol La Si，不用學五線譜也能拉。','🔢'),L_('一個手指一個音','內弦：空弦是 1、食指是 2、中指是 3、無名指是 4。','👆'),L_('橫線讓音變長','「1 –」拉兩拍，「1 – – –」拉四拍。','➖')]},
+    {t:'song',song:'abc',tempo:60,pass:50,h:'先聽示範，再拉「1 2 3 – 3 2 1 –」',p:'按「示範演奏」聽一次，再按「開始演奏」跟著拉。'}]},
+   {id:'b8',title:'第一段旋律',gain:'拉出小蜜蜂的第一段',steps:[
+    {t:'learn',cards:[L_('先聽再拉','每一首新的旋律，都先按「示範演奏」聽一次。','👂'),L_('跟著亮起來的音','演奏時，現在該拉的音會亮起來，跟著它走就好。','✨')]},
+    {t:'song',song:'bee4',tempo:60,pass:55,h:'拉出小蜜蜂的前四小節',p:'音準和節奏都達到 55% 就過關。'}]},
+   {id:'b9',title:'小蜜蜂',gain:'完整拉完一首小蜜蜂',steps:[
+    {t:'song',song:'bee',tempo:66,pass:60,h:'完整拉完小蜜蜂',p:'這是你的第一首完整的歌！'}]}]},
+  {u:'第四單元・我的第一首歌',ls:[
+   {id:'b10',title:'小星星',gain:'拉完小星星',steps:[
+    {t:'learn',cards:[L_('6 要用無名指','這首歌會用到外弦的 6，外弦空弦是 5，食指按下去就是 6。','🌟')]},
+    {t:'song',song:'twinkle',tempo:72,pass:65,h:'拉完小星星',p:'音準和節奏都達到 65% 就過關。'}]},
+   {id:'b11',title:'瑪莉有隻小綿羊',gain:'拉完瑪莉有隻小綿羊',steps:[{t:'song',song:'mary',tempo:72,pass:65,h:'拉完瑪莉有隻小綿羊',p:'注意第二行有連續四個 3。'}]},
+   {id:'b12',title:'歡樂頌',gain:'拉完歡樂頌，學會附點節奏',steps:[
+    {t:'learn',cards:[L_('附點讓音變長一半','「3.」比「3」長一半，後面的「2」就短一點，像「噠－嗒」。','•')]},
+    {t:'song',song:'ode',tempo:72,pass:70,h:'拉完歡樂頌',p:'先聽示範，特別注意附點的長短。'}]}]},
+  {u:'第五單元・更好聽的秘密',ls:[
+   {id:'b13',title:'揉弦入門',gain:'學會揉弦的基本動作',steps:[
+    {t:'learn',cards:[L_('揉弦讓聲音有感情','按弦的手指上下輕輕滾動，讓音高微微起伏。','🌊'),L_('先慢後快','先一拍揉兩下，熟了再慢慢加快。','🐌')]},
+    {t:'beat',bpm:60,beats:4,count:16,h:'跟著節拍，一拍揉兩下（16 拍）',p:'用中指按住 3，手腕放鬆跟著節拍揉。'},
+    {t:'self',h:'手腕和肩膀有沒有放鬆？',p:'揉弦時肩膀也要放鬆喔。'}]},
+   {id:'b14',title:'送別',gain:'拉完送別，用上揉弦',steps:[{t:'song',song:'songbie',tempo:66,pass:70,h:'拉完送別',p:'長音的地方試試加上揉弦。'}]},
+   {id:'b15',title:'茉莉花',gain:'拉完茉莉花',steps:[{t:'song',song:'jasmine',tempo:60,pass:70,h:'拉完茉莉花',p:'這首會用到高音 1，慢慢來。'}]}]}],
+ pro:[
+  {u:'基本功',ls:[
+   {id:'s_long',k:'tk_long',title:'長弓練習',gain:'長弓',steps:[
+    {t:'learn',cards:[L_('弓與琴桿 90 度','全弓運行時弓桿保持水平，和琴桿垂直。','📐'),L_('勻速、勻力','開頭、中段、弓尖的音量一致，換弓不斷音。','📏'),L_('肩膀放鬆','由大臂帶動，肩膀不聳起。','😌')]},
+    {t:'beat',bpm:40,beats:4,count:16,h:'40 BPM，4 拍一弓（16 拍）',p:'推、拉各 4 拍，專注在換弓的銜接。'},
+    {t:'cam',need:['bow','sh'],hold:8,h:'弓 90 度、肩膀放鬆，維持 8 秒',p:'邊拉長弓邊看畫面，兩條線都保持綠色。'},
+    {t:'timer',k:'tk_long'},{t:'rate'}]},
+   {id:'s_cross',k:'tk_cross',title:'過弦練習',gain:'過弦',steps:[
+    {t:'learn',cards:[L_('手腕帶動換弦','換弦靠手腕與前臂的小角度，弓毛始終貼弦。','↔️'),L_('先分弓、再連弓','慢速分弓換弦穩定後，再練連弓過弦。','🔁')]},
+    {t:'beat',bpm:60,beats:2,count:32,h:'60 BPM 內外弦交替（32 拍）',p:'一拍換一次弦，音色保持一致。'},
+    {t:'timer',k:'tk_cross'},{t:'rate'}]},
+   {id:'s_into',k:'tk_into',title:'音準練習',gain:'音準',steps:[
+    {t:'learn',cards:[L_('先對空弦','每次練習先用調音器確認內外弦。','🎯'),L_('一個音一個音確認','慢速音階，每個音停住聽準再走。','👂')]},
+    {t:'tune',s:'D',hold:3,h:'內弦 D 穩定 3 秒',p:'弓速放慢，讓指針穩在綠色區。'},
+    {t:'tune',s:'A',hold:3,h:'外弦 A 穩定 3 秒',p:''},
+    {t:'drill',lv:'hard',pass:75,h:'視奏一份 AI 譜，音準與節奏達 75%',p:'可以先按「示範演奏」聽一次。'},
+    {t:'timer',k:'tk_into'},{t:'rate'}]},
+   {id:'s_finger',k:'tk_finger',title:'指序練習',gain:'指序',steps:[
+    {t:'learn',cards:[L_('手指自然彎曲','手指像握著東西般彎曲、靠攏，指尖按弦。','✋'),L_('保留手指','上行時下方手指保持按住，減少多餘動作。','👆')]},
+    {t:'cam',need:['lh'],hold:8,h:'左手手形保持放鬆 8 秒',p:'邊練指序邊看左手骨架，保持綠色。'},
+    {t:'timer',k:'tk_finger'},{t:'rate'}]},
+   {id:'s_shift',k:'tk_shift',title:'換把練習',gain:'換把',steps:[
+    {t:'learn',cards:[L_('先聽再換','換把前先在心裡唱出目標音。','👂'),L_('大臂帶小臂','用整隻手臂移動，肩膀不聳。','💪')]},
+    {t:'cam',need:['sh','arm'],hold:6,h:'換把時肩膀與手肘保持正確 6 秒',p:'手肘不要抬太高。'},
+    {t:'timer',k:'tk_shift'},{t:'rate'}]}]},
+  {u:'音階與技巧',ls:[
+   {id:'s_scale',k:'tk_scale',title:'各調音階與琶音',gain:'音階與琶音',steps:[
+    {t:'learn',cards:[L_('每天輪替 2～3 個調','五聲、七聲音階與琶音依序練，一週走完所有調。','🔄'),L_('慢速到原速','先 60%，連續三次無誤再提速。','🐢')]},
+    {t:'beat',bpm:72,beats:4,count:32,h:'72 BPM 跟拍練一輪（32 拍）',p:''},
+    {t:'timer',k:'tk_scale'},{t:'rate'}]},
+   {id:'s_seq',k:'tk_seq',title:'模進音型',gain:'模進',steps:[
+    {t:'learn',cards:[L_('找出模式','先看懂音型怎麼重複，再一組一組往上移。','🧩')]},
+    {t:'drill',lv:'pro',pass:70,h:'視奏專業級 AI 譜，達 70%',p:''},
+    {t:'timer',k:'tk_seq'},{t:'rate'}]}]},
+  {u:'樂曲',ls:[
+   {id:'s_hard',k:'tk_hard',title:'練習曲困難片段',gain:'困難片段',steps:[
+    {t:'learn',cards:[L_('只挑 2 小節','找出最難的 2 小節，其他先放著。','🔍'),L_('慢練 60% 速度','連續三次無誤再加 5 BPM。','🐢')]},
+    {t:'beat',bpm:50,beats:4,count:32,h:'50 BPM 慢練（32 拍）',p:''},
+    {t:'timer',k:'tk_hard'},{t:'rate'}]},
+   {id:'s_etude',k:'tk_etude',title:'練習曲全曲',gain:'練習曲全曲',steps:[
+    {t:'learn',cards:[L_('不中斷演奏','錯了也不停，練習完整的演奏感。','▶️')]},
+    {t:'timer',k:'tk_etude'},{t:'rate'}]},
+   {id:'s_exam',k:'tk_exam',title:'考試或目標曲',gain:'目標曲',steps:[
+    {t:'learn',cards:[L_('錄音回聽','每天至少錄一次，聽出自己沒注意到的地方。','🎙'),L_('模擬上台','從頭到尾不停，像在考試一樣。','🎭')]},
+    {t:'timer',k:'tk_exam'},{t:'rate'}]}]}]
+};
+const SICON={learn:'📖',tune:'🎯',beat:'⏱',cam:'📷',song:'🎵',drill:'🎼',timer:'⏲',rate:'⭐',self:'✅'};
+const SMIN={learn:2,tune:2,beat:3,cam:3,song:6,drill:5,self:1,rate:1};
+const trackKey=()=>S.role==='student'?'pro':'basic';
+let LX={};Object.entries(TRACKS).forEach(([tk,us])=>us.forEach((u,ui)=>u.ls.forEach(l=>{l.unit=u.u;l.ui=ui;l.track=tk;LX[l.id]=l})));
+const lessons=()=>TRACKS[trackKey()].flatMap(u=>u.ls);
+function crInit(){const c=S.course||(S.course={});['done','daily','rate','sk','prog','days','tries'].forEach(k=>{if(!c[k])c[k]={}});if(!c.wish)c.wish=[];return c}
+const isDaily=l=>l.track==='pro';
+const lDone=l=>{const c=crInit();return isDaily(l)?!!(c.daily[today()]||{})[l.id]:!!c.done[l.id]};
+const progKey=l=>isDaily(l)?today()+':'+l.id:l.id;
+const nextLesson=()=>lessons().find(l=>!lDone(l));
+const unlocked=l=>{if(isDaily(l))return true;const ls=lessons(),n=nextLesson();return !n||ls.indexOf(l)<=ls.indexOf(n)};
+const estMin=l=>l.steps.reduce((a,s)=>a+(s.t==='timer'?(tkTaskFor(s.k)||{}).min||20:SMIN[s.t]||2),0);
+function tkTaskFor(k){tkInit();return S.task.list.find(x=>x.k===k)}
+function streak(){const c=crInit(),has=d=>c.days[d]||(S.log[d]||0)>=300,fmt=x=>x.toLocaleDateString('sv');let d=new Date(),n=0;if(!has(fmt(d)))d.setDate(d.getDate()-1);while(has(fmt(d))){n++;d.setDate(d.getDate()-1)}return n}
+function skDelta(k){const c=crInit(),td=(c.sk[today()]||{})[k];if(td==null)return null;let prev=null;Object.entries(c.sk).forEach(([d,v])=>{if(d<today()&&v[k]!=null)prev=Math.max(prev||0,v[k])});return{v:td,d:prev==null?null:td-prev}}
+function aiMsg(){const c=crInit(),n=nextLesson(),st=streak(),doneToday=Object.values(c.done).filter(d=>d===today()).length,p=skDelta('pitch');
+ if(S.role==='student'){const ls=lessons(),k=ls.filter(lDone).length;return k>=ls.length?t('ai_proDone'):t('ai_pro').replace('{n}',ls.length-k).replace('{h}',fmtHM(ls.filter(l=>!lDone(l)).reduce((a,l)=>a+estMin(l),0)*60))}
+ if(!Object.keys(c.done).length)return t('ai_first');
+ if(!n)return t('ai_all');
+ if(doneToday)return t('ai_today').replace('{g}',LX[Object.keys(c.done).filter(id=>c.done[id]===today()).pop()].gain).replace('{n}',n.title);
+ if(p&&p.d>0)return t('ai_up').replace('{d}',p.d).replace('{n}',n.title);
+ if(st>=2)return t('ai_streak').replace('{s}',st).replace('{n}',n.title);
+ return t(S.role==='senior'?'ai_senior':'ai_next').replace('{n}',n.title).replace('{m}',estMin(n))}
+function crUI(){crInit();if(!$('#v-today'))return;const ls=lessons(),n=nextLesson(),c=S.course;
+ $('#aiMsg').textContent=aiMsg();$('#tdRole').textContent=S.role?t('r_'+S.role):'';
+ const tl=$('#todayLesson');
+ if(S.role==='student'){const k=ls.filter(lDone).length,tot=ls.reduce((a,l)=>a+estMin(l),0);
+  tl.innerHTML=`<div class="tlh"><span class="lbl" style="margin:0">${t('proToday')}</span><b>${k} / ${ls.length}</b></div><div class="bar"><i style="width:${k/ls.length*100}%"></i></div><p class="mut" style="margin:.5rem 0 .4rem;font-size:.8125rem">${t('proTot').replace('{h}',fmtHM(tot*60))}</p>`+
+   `<div class="tlist">${ls.map(l=>`<button class="tli${lDone(l)?' d':''}" data-ls="${l.id}"><span>${lDone(l)?'✓':'○'}</span><b>${esc(l.title)}</b><em>${estMin(l)} ${t('min')}</em></button>`).join('')}</div>`}
+ else if(!n){tl.innerHTML=`<div class="tlall"><div class="big">🎉</div><b>${t('allDoneT')}</b><p class="mut">${t('allDoneD')}</p><button class="btn" data-go="course">${t('goSongs')}</button></div>`}
+ else{const si=c.prog[progKey(n)]||0;
+  tl.innerHTML=`<span class="pill">${esc(n.unit)}</span><h2 class="tlt">${esc(n.title)}</h2><p class="mut tlg">${t('youWill')}${esc(n.gain)}</p>
+   <div class="tlm"><span>⏱ ${t('aboutMin').replace('{m}',estMin(n))}</span><span>${n.steps.map(s=>SICON[s.t]).join(' ')}</span></div>
+   ${si?`<div class="bar" style="margin:.6rem 0 0"><i style="width:${si/n.steps.length*100}%"></i></div>`:''}
+   <button class="btn lg" data-ls="${n.id}" style="margin-top:.85rem">${t(si?'lsCont':'lsStart')}</button><button class="quiet tlskip" id="tlKnow">${t('iKnow')}</button>`}
+ const st=streak(),pd=skDelta('pitch'),rd=skDelta('rhythm'),learned=Object.keys(c.done).filter(id=>LX[id]&&LX[id].track==='basic').length;
+ const dl=x=>x&&x.d!=null&&x.d!==0?`<em class="${x.d>0?'up':'dn'}">${x.d>0?'↑':'↓'}${Math.abs(x.d)}</em>`:'';
+ $('#grow').innerHTML=`<div class="gi"><b>🔥 ${st}</b><span>${t('gStreak')}</span></div>`+
+  (S.role==='student'?`<div class="gi"><b>${fmtHM(S.log[today()]||0)}</b><span>${t('gToday')}</span></div>`:`<div class="gi"><b>📚 ${learned}</b><span>${t('gLearned')}</span></div>`)+
+  `<div class="gi"><b>${pd?pd.v+'%':'–'}${dl(pd)}</b><span>${t('rPitch')}</span></div><div class="gi"><b>${rd?rd.v+'%':'–'}${dl(rd)}</b><span>${t('rRhythm')}</span></div>`;
+ const gains=Object.keys(c.done).filter(id=>LX[id]&&LX[id].track==='basic').slice(-3).reverse().map(id=>LX[id].gain);
+ $('#gains').innerHTML=gains.length?`<span class="mut">${t('recentGain')}</span>`+gains.map(g=>`<span class="pill">✓ ${esc(g)}</span>`).join(''):'';
+ /* course map */
+ $('#crSub').textContent=t(S.role==='student'?'crSubPro':'crSub');
+ let cur=n&&n.id;$('#courseMap').innerHTML=TRACKS[trackKey()].map((u,ui)=>`<div class="unit"><p class="lbl">${esc(u.u)}</p><div class="list">${u.ls.map(l=>{const d=lDone(l),ok=unlocked(l),now=l.id===cur;
+  return `<button class="li crl${d?' d':''}${now&&!isDaily(l)?' now':''}${ok?'':' lock'}" data-ls="${l.id}"><span class="crs">${d?'✓':ok?(now&&!isDaily(l)?'▶':'○'):'🔒'}</span><span class="t"><b>${esc(l.title)}</b><span class="mut">${esc(l.gain)} · ${estMin(l)} ${t('min')}</span></span></button>`}).join('')}</div></div>`).join('');
+ $('#songList').innerHTML=Object.entries(SONGS).filter(([,v])=>v.lv).map(([k,v])=>`<div class="li"><span class="t"><b>${esc(v.n)}</b><span class="mut"> ${'●'.repeat(v.lv)}${'○'.repeat(3-v.lv)}</span></span><button class="btn alt" data-song="${k}" style="padding:.4rem .9rem">${t('practice')}</button></div>`).join('');
+ $('#wishList').innerHTML=c.wish.map((w,i)=>`<span class="pill">${esc(w)} <button class="x" data-wish="${i}" style="font-size:1rem;padding:0 .1rem">×</button></span>`).join('')}
+/* ---- lesson player ---- */
+let LS=null;
+const curStep=()=>LS&&LX[LS.lid].steps[LS.si];
+function openLesson(id){const l=LX[id];if(!l)return;if(!unlocked(l)){toast(t('lockedMsg'));return}crInit();LS={lid:id,si:S.course.prog[progKey(l)]||0,rate:0};if(LS.si>=l.steps.length)LS.si=0;view('lesson');renderLesson()}
+function lsSave(){const l=LX[LS.lid];S.course.prog[progKey(l)]=LS.si;save()}
+function renderLesson(){if(!LS)return;const l=LX[LS.lid],steps=l.steps,b=$('#lsBody');$('#lsUnit').textContent=l.unit;$('#lsTitle').textContent=l.title;
+ $('#lsDots').innerHTML=steps.map((s,i)=>`<i class="${i<LS.si?'d':i===LS.si?'c':''}">${SICON[s.t]}</i>`).join('');
+ if(LS.si>=steps.length){const n=nextLesson();
+  b.innerHTML=`<div class="lsdone"><div class="big">🎉</div><h2>${t('lsDoneT')}</h2><p>${t('lsDoneG')}<b>${esc(l.gain)}</b></p><p class="mut">${t('lsDoneD')}</p>
+   ${n&&!isDaily(l)?`<button class="btn lg" data-ls="${n.id}">${t('lsNextL')}：${esc(n.title)}</button>`:''}<button class="btn alt lg" id="lsHome" style="margin-top:.6rem">${t('lsHomeL')}</button></div>`;return}
+ const st=steps[LS.si];let h='';
+ if(st.t==='learn')h=`<div class="lcards">${st.cards.map(c=>`<div class="lcard"><span class="lci">${c.i}</span><div><b>${esc(c.h)}</b><p>${esc(c.p)}</p></div></div>`).join('')}</div>
+  <div class="row2 r2e"><button class="btn alt" id="lsSay">🔊 ${t('aiListen')}</button><button class="btn" id="lsNext">${t('lsGot')}</button></div>`;
+ else if(st.t==='self')h=`<div class="lstep"><span class="lsi">${SICON.self}</span><h3>${esc(st.h)}</h3><p class="mut">${esc(st.p)}</p></div><button class="btn lg" id="lsNext">${t('lsDid')}</button>`;
+ else if(st.t==='rate')h=`<div class="lstep"><span class="lsi">⭐</span><h3>${t('rateT')}</h3><div class="stars">${[1,2,3,4,5].map(i=>`<button data-rate="${i}" class="${i<=LS.rate?'on':''}">★</button>`).join('')}</div><p class="mut">${t('rateD')}</p></div><button class="btn lg" id="lsNext" ${LS.rate?'':'disabled'}>${t('done')}</button>`;
+ else{const tk=st.t==='timer'?tkTaskFor(st.k):null,goal=st.t==='timer'?t('timerGoal').replace('{n}',tk?tkNm(tk):t(st.k)).replace('{m}',tk?tk.min:20):st.h;
+  h=`<div class="lstep"><span class="lsi">${SICON[st.t]}</span><h3>${esc(goal)}</h3>${st.p?`<p class="mut">${esc(st.p)}</p>`:''}${LS.tries>=2?`<p class="lstry">${t('lsTryHint')}</p>`:''}</div>
+   <button class="btn lg" id="lsGo">${t('lsGo')}</button><button class="quiet tlskip" id="lsSkip">${t('lsSkipStep')}</button>`}
+ if(LS.si===0&&!isDaily(l)&&!lDone(l))h+=`<button class="quiet tlskip" id="lsKnow">${t('iKnow')}</button>`;
+ b.innerHTML=h}
+function lsAdvance(){LS.si++;LS.tries=0;LS.rate=0;const l=LX[LS.lid];if(LS.si>=l.steps.length)lsFinish();else lsSave();renderLesson();$('main').scrollTop=0}
+function lsFinish(){const l=LX[LS.lid],c=crInit();if(isDaily(l))(c.daily[today()]||(c.daily[today()]={}))[l.id]=1;else c.done[l.id]=today();c.days[today()]=1;S.course.prog[progKey(l)]=0;save();tkChime();
+ const m=t('lsDoneG')+l.gain;if(S.voice)speak(t('lsDoneT')+m);crUI()}
+function markKnown(id){const l=LX[id];if(!l)return;crInit().done[id]=today();S.course.prog[id]=0;save();toast(t('skipped').replace('{n}',l.title));crUI()}
+function lbShow(goal){const b=$('#lbar');b.hidden=false;b.classList.remove('ok');$('#lbGoal').textContent=goal;$('#lbProg').textContent=''}
+const lbProg=x=>{$('#lbProg').textContent=x};
+function lbHide(){$('#lbar').hidden=true;if(LS)LS.tool=false}
+function songLoad(k,tempo){const sg=SONGS[k];if(!sg)return;const o=O();Object.assign(o,{key:sg.key,mode:'maj',time:sg.time,tempo:tempo||o.tempo});if(S.role!=='student')o.nt='jian';
+ if(P&&P.on)stopDrill();stopDemo();const sc=parseJ(sg.txt);if(!sc)return;sc.title=sg.n;sc.tempo=tempo||o.tempo;SC=sc;LR=null;syncD();show();$('#rep').hidden=true;live(t('ready'))}
+function lsStartTool(){const st=curStep();if(!st)return;LS.tool=true;LS.passed=false;LS.since=0;LS.count=0;
+ const goal=st.t==='timer'?$('#lsBody h3').textContent:st.h;LS.toolView={tune:'tune',beat:'beat',cam:'cam',song:'drill',drill:'drill'}[st.t]||null;lbShow(goal);
+ if(st.t==='tune'){view('tune');mode=st.s;tLast=[];hist=[];$$('#modes button').forEach(x=>x.classList.toggle('sel',x.dataset.m===st.s));lbProg(t('lbPlay'))}
+ else if(st.t==='beat'){view('beat');setB(st.bpm);S.beats=st.beats||4;beat=0;save();apply();if(!playing)toggle();lbProg('0 / '+st.count)}
+ else if(st.t==='cam'){view('cam');startCam();lbProg(t('lbPose'))}
+ else if(st.t==='song'){songLoad(st.song,st.tempo);view('drill');lbProg(t('lbPass').replace('{p}',st.pass))}
+ else if(st.t==='drill'){const o=O();Object.assign(o,JSON.parse(JSON.stringify(LVL[st.lv].set)),{level:st.lv});save();regen();view('drill');lbProg(t('lbPass').replace('{p}',st.pass))}
+ else if(st.t==='timer'){let tk=tkTaskFor(st.k);if(!tk){tk={id:uid(),k:st.k,min:20,star:0};S.task.list.push(tk);save()}tkOpen(tk.id)}}
+function lsPass(){if(!LS||LS.passed)return;LS.passed=true;$('#lbar').classList.add('ok');$('#lbProg').textContent='✓ '+t('lbGreat');tkChime();if(S.voice)speak(t('lbGreat'));
+ setTimeout(()=>{if(!LS)return;if(playing)toggle();if(!$('#tkFull').hidden)tkClose();lbHide();LS.passed=false;view('lesson');lsAdvance()},1300)}
+function LH(type,d){const c=crInit();
+ if(type==='drill'){const sk=c.sk[today()]||(c.sk[today()]={});sk.pitch=Math.max(sk.pitch||0,d.pitch);sk.rhythm=Math.max(sk.rhythm||0,d.rhythm);save();crUI()}
+ if(!LS||!LS.tool||LS.passed)return;const st=curStep();if(!st)return;const now=performance.now();
+ const hold=(ok,need)=>{if(ok){if(!LS.since)LS.since=now;const sec=(now-LS.since)/1000;lbProg(Math.min(need,sec).toFixed(1)+' / '+need+' s');if(sec>=need)lsPass()}else{if(LS.since)lbProg(t('lbKeep'));LS.since=0}};
+ if(type==='tune'&&st.t==='tune')hold(d.tm===(st.s==='A'?69:62)&&d.ab<=8,st.hold);
+ else if(type==='cam'&&st.t==='cam')hold(st.need.every(k=>d[k]===true),st.hold);
+ else if(type==='beat'&&st.t==='beat'){LS.count++;lbProg(Math.min(LS.count,st.count)+' / '+st.count);if(LS.count>=st.count)lsPass()}
+ else if(type==='drill'&&(st.t==='song'||st.t==='drill')){if(Math.min(d.pitch,d.rhythm)>=st.pass)lsPass();else{LS.tries=(LS.tries||0)+1;lbProg(t('lbTry').replace('{a}',d.pitch).replace('{b}',d.rhythm).replace('{p}',st.pass))}}
+ else if(type==='task'&&st.t==='timer'&&d.k===st.k)lsPass()}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-ls]');if(a){openLesson(a.dataset.ls);return}
+ const sg=e.target.closest('[data-song]');if(sg){if(LS)lbHide();songLoad(sg.dataset.song,66);view('drill');return}
+ const w=e.target.closest('[data-wish]');if(w){crInit().wish.splice(+w.dataset.wish,1);save();crUI();return}
+ const r=e.target.closest('[data-rate]');if(r&&LS){LS.rate=+r.dataset.rate;const l=LX[LS.lid];(S.course.rate[today()]||(S.course.rate[today()]={}))[l.id]=LS.rate;save();renderLesson();return}
+ const id=e.target.id;
+ if(id==='lsNext')lsAdvance();else if(id==='lsGo')lsStartTool();else if(id==='lsSkip')lsAdvance();
+ else if(id==='lsSay'){const st=curStep();if(st&&st.cards){const v=S.voice;S.voice=true;speak(st.cards.map(c=>c.h+'。'+c.p).join(' '));S.voice=v}}
+ else if(id==='lsHome'){LS=null;view('today')}
+ else if(id==='lsKnow'&&LS){const n=LS.lid;LS=null;markKnown(n);view('today')}
+ else if(id==='tlKnow'){const n=nextLesson();if(n)markKnown(n.id)}
+ else if(id==='lsBack'){if(LS)lbHide();view('course')}});
+$('#lbBack').onclick=()=>{if(playing)toggle();if(!$('#tkFull').hidden)tkClose();lbHide();view('lesson');renderLesson()};
+$('#lbSkip').onclick=()=>{if(!LS)return;if(playing)toggle();if(!$('#tkFull').hidden)tkClose();lbHide();view('lesson');lsAdvance()};
+$('#aiSay').onclick=()=>{const v=S.voice;S.voice=true;speak($('#aiMsg').textContent);S.voice=v};
+$('#wishAdd').onclick=()=>{const v=$('#wishIn').value.trim().slice(0,40);if(!v)return;crInit().wish.push(v);$('#wishIn').value='';save();crUI();toast(t('wishOk'))};
+$('#wishIn').onkeydown=e=>{if(e.key==='Enter')$('#wishAdd').click()};
+/* ---- mode switch: AI 老師 / 小幫手 ---- */
+const TVIEWS=['today','course','lesson'],HVIEWS=['home','tune','beat','cam','drill','task'];
+function setMode(m){S.mode=m;document.body.dataset.mode=m;$$('#modeSw button').forEach(b=>b.classList.toggle('sel',b.dataset.md===m));$('#brandT').textContent=t(m==='t'?'app':'appH')}
+$$('#modeSw button').forEach(b=>b.onclick=()=>{const m=b.dataset.md;if(m===S.mode&&!$('#v-set').classList.contains('on'))return;if(LS&&LS.tool)lbHide();view(m==='t'?(S.lastT||'today'):(S.lastH||'home'))});
+
 function fill(){[['#bpm',30,500]].forEach(([s,a,b])=>$(s).style.setProperty('--p',((+$(s).value-a)/(b-a)*100)+'%'))}
 (function(){const P=(a,r)=>(140+r*Math.sin(a*Math.PI/180)).toFixed(1)+' '+(130-r*Math.cos(a*Math.PI/180)).toFixed(1);
  const arc=(a,b,r)=>`M${P(a,r)}A${r} ${r} 0 0 1 ${P(b,r)}`;let h=`<path d="${arc(-58,58,100)}" fill="none" stroke="var(--bd)" stroke-width="6" stroke-linecap="round"/><path d="${arc(-9.3,9.3,100)}" fill="none" stroke="var(--ok)" stroke-width="6" stroke-linecap="round"/>`;
  for(let c=-50;c<=50;c+=10){const a=c*1.16,L=c%50===0?126:120;h+=`<path d="M${P(a,110)}L${P(a,L)}" stroke="${c===0?'var(--ok)':'var(--mut2)'}" stroke-width="1.5" stroke-linecap="round"/>`}
  h+=`<g id="needle"><path d="M140 130V40" stroke="var(--fg)" stroke-width="2.5" stroke-linecap="round"/></g><circle cx="140" cy="130" r="7" fill="var(--sf)" stroke="var(--fg)" stroke-width="2.5"/>`;$('#gauge').innerHTML=h})();
-apply();if(!S.role)$('#ov').classList.add('on');
+if(!S.mode)S.mode=S.role==='free'?'h':'t';apply();setMode(S.mode);if(!S.role)$('#ov').classList.add('on');else view(S.mode==='h'?'home':'today');
 </script></body></html>
 
 <!-- v1.1.0 2026-11-07 posture beta -->
