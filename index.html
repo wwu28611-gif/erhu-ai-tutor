@@ -616,7 +616,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 </div>
   <div>
    <div class="card"><p class="lbl" data-i="beats"></p><div class="seg" id="beats"><button data-n="1">1</button><button data-n="2">2</button><button data-n="3">3</button><button data-n="4">4</button><button data-n="6">6</button></div>
-    <div class="gap" style="height:.8rem"></div><p class="lbl" data-i="snd"></p><div class="seg" id="snd"><button data-s="click" data-i="sndC"></button><button data-s="wood" data-i="sndW"></button></div>
+    <div class="gap" style="height:.8rem"></div><p class="lbl" data-i="snd"></p><div class="seg" id="snd"><button data-s="real" data-i="sndR"></button><button data-s="click" data-i="sndC"></button><button data-s="wood" data-i="sndW"></button></div>
     <div class="dots" id="dots"></div></div>
    <div class="gap" style="height:.75rem"></div>
    <button class="btn lg" id="play"></button>
@@ -630,7 +630,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="pt"><h1 data-i="tCam"></h1><p data-i="subCam"></p><button class="hq" data-help="cam" aria-label="Help">?</button></div>
  <div class="camw" id="camw"><video id="cvid" playsinline muted></video><canvas id="ccv"></canvas><div class="ph" id="cph" data-i="camIdle"></div>
   <div class="chips" id="cChips" hidden><span data-k="bow"><i></i><b data-i="chBow"></b></span><span data-k="arm"><i></i><b data-i="chArm"></b></span><span data-k="lh"><i></i><b data-i="chLh"></b></span><span data-k="sh"><i></i><b data-i="chSh"></b></span></div>
-  <div class="cbar" id="cBar" hidden><button class="cbtn" id="cCal"><span data-i="calib"></span></button><button class="cbtn" id="cFlip">🔄 <span data-i="camFlip"></span></button><button class="cbtn" id="cVoiceB"></button><button class="cbtn cx" id="cClose" aria-label="close">✕</button></div>
+  <div class="cbar" id="cBar" hidden><button class="cbtn" id="cCal"><span data-i="calib"></span></button><button class="cbtn" id="cFlip">🔄 <span data-i="camFlip"></span></button><button class="cbtn cx" id="cClose" aria-label="close">✕</button></div>
   <div class="chint" id="cHint" hidden></div><div class="gripb" id="gripBox" hidden><img id="gpImg" alt=""><video id="gpVid" muted loop playsinline hidden></video><div class="gpt"><span class="gpn" id="gpN"></span><b id="gpT"></b><p id="gpH"></p><div class="bar"><i id="gpBar"></i></div></div></div><div class="cd" id="ccd" hidden><b id="ccdN"></b><span id="ccdT"></span></div>
   <div class="hud" id="ctPill" hidden>
    <div class="hudc" id="hudB" hidden><span class="hudi">⏱</span><div class="hudm"><b id="hudBpm"></b><small>BPM</small></div><div class="hudd" id="hudDots"></div></div>
@@ -658,7 +658,6 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="card camtip"><p class="lbl" data-i="camTipT"></p><ol><li data-i="camTip1"></li><li data-i="camTip2"></li><li data-i="camTip3"></li></ol></div>
  <div class="gap"></div><p class="lbl" data-i="tSet"></p>
  <div class="list">
-  <label class="li"><span class="t" data-i="cVoice"></span><input type="checkbox" id="cVoice"></label>
   <div class="li"><span class="t" data-i="cStrict"></span><div class="seg" id="cStrictSeg"><button data-v="s" data-i="stS"></button><button data-v="m" data-i="stM"></button><button data-v="l" data-i="stL"></button></div></div>
  </div>
  <p class="mut" style="font-size:.8125rem;margin-top:1rem" data-i="camPriv"></p>
@@ -738,7 +737,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <p class="lbl" data-i="gA11y"></p>
  <div class="list"><div class="li" style="flex-direction:column;align-items:stretch"><span data-i="sFont"></span><div class="seg" id="ftSeg"><button data-v="0.875" data-i="fS"></button><button data-v="1" data-i="fM"></button><button data-v="1.2" data-i="fL"></button><button data-v="2" data-i="fX"></button></div></div><label class="li"><span class="t" data-i="sHC"></span><input type="checkbox" id="hc"></label><label class="li"><span class="t" data-i="sRead"></span><input type="checkbox" id="read"></label><label class="li"><span class="t" data-i="sRM"></span><input type="checkbox" id="rm"></label><label class="li"><span class="t" data-i="sBig"></span><input type="checkbox" id="bigBtn"></label><label class="li"><span class="t" data-i="sElder"></span><input type="checkbox" id="elder"></label></div><div class="gap"></div>
  <p class="lbl" data-i="gAI"></p>
- <div class="list"><label class="li"><span class="t" data-i="sVoice"></span><input type="checkbox" id="voice"></label><div class="li"><span class="t" data-i="sDetail"></span><div class="seg" id="dtSeg"><button data-v="simple" data-i="dSimple"></button><button data-v="detail" data-i="dFull"></button></div></div><label class="li"><span class="t" data-i="sTips"></span><input type="checkbox" id="aTips"></label><label class="li"><span class="t" data-i="sSpeak"></span><input type="checkbox" id="aSpeak"></label></div><div class="gap"></div>
+ <div class="list"><label class="li"><span class="t" data-i="sVoice"></span><input type="checkbox" id="voice"></label><button class="li" id="ttsTest"><span class="t" data-i="ttsTest"></span><svg class="ic"><use href="#i-spk"/></svg></button><div class="li"><span class="t" data-i="sDetail"></span><div class="seg" id="dtSeg"><button data-v="simple" data-i="dSimple"></button><button data-v="detail" data-i="dFull"></button></div></div><label class="li"><span class="t" data-i="sTips"></span><input type="checkbox" id="aTips"></label><label class="li"><span class="t" data-i="sSpeak"></span><input type="checkbox" id="aSpeak"></label></div><div class="gap"></div>
  <p class="lbl" data-i="sBasic"></p>
  <div class="list">
   <label class="li"><span class="t" data-i="sLang"></span><select class="langsel"></select></label>
@@ -1116,7 +1115,7 @@ gsL2|節拍器|Metronome|メトロノーム
 gsLL|速度 −{n}|Tempo −{n}|テンポ −{n}
 gsLR|速度 +{n}|Tempo +{n}|テンポ +{n}
 gsLF|握拳 3 秒關閉|Fist 3 s to close|グー3秒で終了
-gsUp|手要舉到肩膀以上才會辨識，拉琴時不會誤觸。|Raise your hand above shoulder height; normal playing won't trigger it.|手を肩より上に上げると認識。演奏中は反応しません。
+gsUp|只辨識握弓的右手，而且要舉到肩膀以上，拉琴時不會誤觸。|Only your bow (right) hand is read, and only above shoulder height, so playing won't trigger it.|弓を持つ右手だけを、肩より上で認識します。演奏中は反応しません。
 gsStepL|左右指一次加減|Step per point|1回の増減
 gsFistC|握拳 {s} 秒後關閉|Closing in {s} s|あと{s}秒で終了
 gsTuneOn|調音器已開啟|Tuner on|チューナー オン
@@ -1131,13 +1130,18 @@ cg11|握拳 3 秒結束§練完了，舉起手握拳 ✊ 維持 3 秒，就會�
 ctStart|開始|Start|開始
 gsZone|手勢區：手舉到這條線以上|Gesture zone: raise your hand above this line|ジェスチャー：この線より上へ
 gsReady|比出手勢|Show a gesture|ジェスチャーをどうぞ
-cg7b|先把手舉到肩膀以上§畫面上有一條和肩膀一樣高的虛線，手舉到線的上面才會開始辨識手勢，虛線會變黃色；拉琴時手在下面，不會誤觸。|First raise your hand above your shoulder§A dashed line sits at shoulder height. Gestures are only recognized above it, and the line turns yellow; while playing your hands stay below, so nothing triggers by accident.|まず手を肩より上に§肩の高さに点線があります。線より上でだけジェスチャーを認識し、線が黄色になります。演奏中は手が下にあるので誤作動しません。
+cg7b|先把右手舉到肩膀以上§只會辨識握弓的右手。畫面上有一條和肩膀一樣高的虛線，右手舉到線的上面才會開始辨識，虛線會變黃色；拉琴時手在下面，不會誤觸。|First raise your hand above your shoulder§A dashed line sits at shoulder height. Gestures are only recognized above it, and the line turns yellow; while playing your hands stay below, so nothing triggers by accident.|まず手を肩より上に§肩の高さに点線があります。線より上でだけジェスチャーを認識し、線が黄色になります。演奏中は手が下にあるので誤作動しません。
 gsL3|隱藏/顯示指示|Hide/show display|表示の切替
 gsL4|關閉調音器與節拍器|Turn both off|両方オフ
 gsHudOff|已隱藏調音器與節拍器的指示，再比 3 就會顯示|Tuner and metronome display hidden; show 3 again to bring it back|表示を隠しました。もう一度3で表示
 gsHudOn|已顯示調音器與節拍器的指示|Tuner and metronome display shown|表示しました
 gsAllOff|已關閉調音器與節拍器|Tuner and metronome off|チューナーとメトロノームをオフ
 cg8b|比 3、比 4§比 3 根手指維持 2 秒，可以隱藏或再顯示畫面左下角的調音器、節拍器指示；比 4 根手指（大拇指收起來）維持 2 秒，會同時關閉調音器和節拍器。|Three and four§Hold 3 fingers for 2 s to hide or show the tuner and metronome display at bottom left. Hold 4 fingers (thumb tucked) for 2 s to turn both off.|3と4§指3本を2秒で左下の表示を隠す・戻す。指4本（親指は曲げる）を2秒でチューナーとメトロノームを両方オフ。
+ttsNone|這個瀏覽器沒有語音朗讀功能，請改用 Chrome 或 Safari 開啟|This browser has no speech; please open in Chrome or Safari|この ブラウザは読み上げ非対応です。Chrome か Safari で開いてください
+ttsInApp|LINE、Messenger 等 App 內建的瀏覽器不支援語音，請點右上角選單「用瀏覽器開啟」|In-app browsers (LINE, Messenger…) don't support speech. Use the menu to open in your browser|アプリ内ブラウザは読み上げ非対応です。メニューから「ブラウザで開く」を選んでください
+ttsTest|測試語音|Test voice|音声テスト
+ttsHello|你好，我是你的二胡練習夥伴。聽得到我的聲音，語音功能就正常。|Hello, I'm your erhu practice partner. If you can hear me, voice works.|こんにちは。この声が聞こえれば音声は正常です。
+sndR|實體節拍器|Real metronome|実機風
 nLearn|學習|Learn|学習
 nSongs|曲庫|Songs|曲
 nPrac|練習室|Practice|練習室
@@ -1436,7 +1440,7 @@ function apply(){
  $('#key').innerHTML=NN.filter((n,i)=>!n.includes('♯')).map(n=>`<option value="${NN.indexOf(n)}">${n}</option>`).join('');
  $('#key').value=S.key;$('#ref').value=S.ref;$('#voice').checked=S.voice;$('#click').checked=S.click;
 
- $('#bpm').value=S.bpm;if(document.activeElement!==$('#bpmv'))$('#bpmv').value=S.bpm;$$('#snd button').forEach(b=>b.classList.toggle('sel',b.dataset.s===(S.snd||'click')));$$('#beats button').forEach(b=>b.classList.toggle('sel',+b.dataset.n===+S.beats));
+ $('#bpm').value=S.bpm;if(document.activeElement!==$('#bpmv'))$('#bpmv').value=S.bpm;$$('#snd button').forEach(b=>b.classList.toggle('sel',b.dataset.s===(S.snd||'real')));$$('#beats button').forEach(b=>b.classList.toggle('sel',+b.dataset.n===+S.beats));
  const rl=S.role?t('r_'+S.role):'';$('#curRole').textContent=rl;
  
  $$('.role').forEach(b=>b.classList.toggle('cur',b.dataset.r===S.role));
@@ -1461,8 +1465,7 @@ $$('[data-go]').forEach(b=>b.onclick=()=>view(b.dataset.go));
 /* ---- audio ---- */
 let ac,an,stream,raf,buf,mode='D',hist=[],lastSay=0,okSince=0,frame=0;
 const ctx=()=>ac||(ac=new (window.AudioContext||window.webkitAudioContext)());
-function say(k){if(!S.voice||!window.speechSynthesis)return;const n=Date.now();if(n-lastSay<4000)return;lastSay=n;
- const u=new SpeechSynthesisUtterance(t(k));u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function say(k){if(!S.voice)return;const n=Date.now();if(n-lastSay<4000)return;lastSay=n;tts(t(k))}
 function detect(b,sr){const W=1024;let e=0;for(let i=0;i<W;i++)e+=b[i]*b[i];if(Math.sqrt(e/W)<.003)return -1;
  const tMin=Math.max(2,Math.floor(sr/2000)),tMax=Math.min(b.length-W-1,Math.ceil(sr/110)),d=new Float32Array(tMax+2);
  for(let tau=1;tau<=tMax+1;tau++){let s=0;for(let i=0;i<W;i++){const x=b[i]-b[i+tau];s+=x*x}d[tau]=s}
@@ -1472,7 +1475,7 @@ function detect(b,sr){const W=1024;let e=0;for(let i=0;i<W;i++)e+=b[i]*b[i];if(M
  const x0=d[tau-1],x1=d[tau],x2=d[tau+1],a=x0+x2-2*x1,sh=a>0?(x0-x2)/(2*a):0;return sr/(tau+Math.max(-1,Math.min(1,sh)))}
 let tHeard=0,tLast=[];
 function loop(){
- raf=requestAnimationFrame(loop);an.getFloatTimeDomainData(buf);
+ raf=requestAnimationFrame(loop);if(camOn&&(++frame%3))return;an.getFloatTimeDomainData(buf);
  const f0=detect(buf,ac.sampleRate),now=performance.now();
  if(f0>0){if(tLast.length&&Math.abs(1200*Math.log2(f0/tLast[tLast.length-1]))>80)tLast=[];tLast.push(f0);if(tLast.length>5)tLast.shift();tHeard=now}
  if(++frame%2)return;
@@ -1500,7 +1503,7 @@ async function mic(){
  if(stream){cancelAnimationFrame(raf);stream.getTracks().forEach(x=>x.stop());stream=null;apply();return}
  try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:true}});
   const a=ctx();if(a.state==='suspended')await a.resume();an=a.createAnalyser();an.fftSize=2048;const hp=a.createBiquadFilter();hp.type='highpass';hp.frequency.value=90;a.createMediaStreamSource(stream).connect(hp).connect(an);tLast=[];
-  buf=new Float32Array(2048);hist=[];loop();apply()}
+  buf=new Float32Array(2048);hist=[];loop();apply();a.onstatechange=()=>{if(a.state!=='running'&&(playing||DM))a.resume().catch(()=>{})};setTimeout(()=>{if(a.state!=='running')a.resume().catch(()=>{})},300)}
  catch(e){stream=null;$('#status').textContent=t('micErr');$('#status').style.color='var(--bad)'}}
 $('#mic').onclick=mic;
 $$('#modes button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;hist=[];$$('#modes button').forEach(x=>x.classList.toggle('sel',x===b))});
@@ -1508,26 +1511,32 @@ $('#modes button').classList.add('sel');
 
 
 /* ---- metronome ---- */
+const MCLK={a:'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',b:'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'};
+let MBUF=null,mbufP=null;
+function loadClk(a){if(MBUF||mbufP)return mbufP;const dec=b64=>{const bin=atob(b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new Promise(r=>{try{a.decodeAudioData(u.buffer,r,()=>r(null))}catch(e){r(null)}})};
+ mbufP=Promise.all([dec(MCLK.a),dec(MCLK.b)]).then(([x,y])=>{if(x&&y)MBUF={a:x,b:y};return MBUF});return mbufP}
 let playing=false,nextT=0,beat=0,tm;
 function dots(){const d=$('#dots');if(d.children.length!==+S.beats)d.innerHTML='<i></i>'.repeat(S.beats)}
-function click(time,b,force){if(!S.click&&!force)return;const a=ctx(),o=a.createOscillator(),g=a.createGain();
+function click(time,b,force){if(!S.click&&!force)return;const a=ctx();
+ if((S.snd||'real')==='real'){if(!MBUF)loadClk(a);if(MBUF){const src=a.createBufferSource(),g=a.createGain();src.buffer=b===0?MBUF.a:MBUF.b;g.gain.value=1.4;src.connect(g).connect(a.destination);src.start(Math.max(time,a.currentTime));return src}}
+ const o=a.createOscillator(),g=a.createGain();
  if(S.snd==='wood'){const fl=a.createBiquadFilter(),hi=b===0;o.type='square';o.frequency.setValueAtTime(hi?1250:860,time);o.frequency.exponentialRampToValueAtTime(hi?920:600,time+.05);
   fl.type='bandpass';fl.frequency.value=hi?1250:860;fl.Q.value=5;g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(1.2,time+.002);g.gain.exponentialRampToValueAtTime(.0001,time+.075);
   o.connect(fl).connect(g).connect(a.destination);o.start(time);o.stop(time+.09);return o}
  o.frequency.value=b===0?1600:1000;g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(.6,time+.003);g.gain.exponentialRampToValueAtTime(.0001,time+.06);
  o.connect(g).connect(a.destination);o.start(time);o.stop(time+.08);return o}
-function sched(){const a=ctx();while(nextT<a.currentTime+.12){const b=beat,at=nextT;click(at,S.beats===1?1:b);LH('beat',{});
+function sched(){const a=ctx();if(a.state!=='running'){a.resume().catch(()=>{});}if(nextT<a.currentTime-.05)nextT=a.currentTime+.05;while(nextT<a.currentTime+.3){const b=beat,at=nextT;click(at,S.beats===1?1:b);LH('beat',{});
  setTimeout(()=>{if(!playing)return;const ds=$$('#dots i');ds.forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):'');['#mbDots i','#hudDots i'].forEach(q=>$$(q).forEach((x,i)=>x.className=i===b?'hit'+(b===0?' acc':''):''))},Math.max(0,(at-a.currentTime)*1000));
  nextT+=60/S.bpm;beat=(beat+1)%S.beats}}
 async function toggle(){
  if(playing){playing=false;clearInterval(tm);$$('#dots i').forEach(x=>x.className='');apply();return}
- const a=ctx();if(a.state==='suspended')await a.resume();playing=true;beat=0;nextT=a.currentTime+.05;sched();tm=setInterval(sched,25);apply()}
+ const a=ctx();if(a.state!=='running')await a.resume();await loadClk(a);playing=true;beat=0;nextT=a.currentTime+.08;sched();tm=setInterval(sched,25);apply()}
 $('#play').onclick=toggle;
 const setB=v=>{if(!isFinite(v))v=S.bpm;S.bpm=Math.round(Math.max(30,Math.min(500,v)));$('#bpm').value=S.bpm;$('#bpmv').value=S.bpm;fill();save()};
 $('#bpm').oninput=e=>setB(+e.target.value);
 [['m5',-5],['m1',-1],['p1',1],['p5',5]].forEach(([i,d])=>$('#'+i).onclick=()=>setB(S.bpm+d));
 $$('#beats button').forEach(b=>b.onclick=()=>{S.beats=+b.dataset.n;beat=0;save();dots();apply()});
-$$('#snd button').forEach(b=>b.onclick=()=>{S.snd=b.dataset.s;save();apply();const a=ctx();if(a.state==='suspended')a.resume();click(a.currentTime+.03,0,1)});
+$$('#snd button').forEach(b=>b.onclick=async()=>{S.snd=b.dataset.s;save();apply();const a=ctx();if(a.state!=='running')await a.resume();await loadClk(a);click(a.currentTime+.03,0,1)});
 $('#bpmv').onchange=e=>setB(+e.target.value);
 $('#bpmv').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur()}};
 $('#bpmv').onfocus=e=>{try{e.target.select()}catch(x){}};
@@ -1792,7 +1801,22 @@ function norm(){if(!S.mig12){S.mig12=1;if(S.scale===2&&(S.role==='senior'||S.eld
 const TOUR=[['ai',0],['tune',1],['hand',0],['bow',2],['score',2],['users',0],['clock',1],['beat',1],['tune',1]];
 const HELP={tune:[8,'h_tune','tTune'],beat:[7,'h_beat','tBeat'],drill:[1,'h_drill','tDrill'],set:[null,'h_set','tSet'],cam:[3,'h_cam','tCam'],task:[null,'h_task','tTask']};
 let TL=[],TI=0,GK=null,GI=0,GS=[];
-function speak(x){if(!(S.voice||S.read)||!window.speechSynthesis)return;const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
+
+/* 統一的語音朗讀：選對語言的聲音、避開 Chrome cancel 後立刻 speak 被吃掉的問題、偵測不支援的瀏覽器（如 LINE、Messenger 內建瀏覽器） */
+let ttsWarned=0,ttsOK=0;
+const ttsLang=()=>({'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang]||'zh-TW');
+function ttsVoice(){const vs=(window.speechSynthesis&&speechSynthesis.getVoices())||[],L=ttsLang(),p=L.split('-')[0];
+ return vs.find(v=>v.lang.replace('_','-')===L)||(p==='zh'&&vs.find(v=>/zh[-_](HK|Hant)/i.test(v.lang)))||vs.find(v=>v.lang.toLowerCase().startsWith(p))||null}
+function ttsNo(){if(ttsWarned)return;ttsWarned=1;toast(t(/FBAN|FBAV|FB_IAB|Messenger|Line\/|Instagram|wv\)/i.test(navigator.userAgent)?'ttsInApp':'ttsNone'))}
+function tts(x,force){if(!x)return false;if(!force&&!(S.voice||S.read))return false;if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined'){if(force)ttsNo();return false}
+ const u=new SpeechSynthesisUtterance(String(x).slice(0,600)),v=ttsVoice();u.lang=v?v.lang:ttsLang();if(v)u.voice=v;u.rate=S.elder?.85:1;u.onstart=()=>{ttsOK=1};
+ const go=()=>{try{speechSynthesis.resume();speechSynthesis.speak(u)}catch(e){}};
+ if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setTimeout(go,80)}else go();
+ if(force&&!ttsOK)setTimeout(()=>{if(!ttsOK&&!speechSynthesis.speaking)ttsNo()},1800);return true}
+if('speechSynthesis' in window){try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}catch(e){}}
+/* iOS/Android 需要在使用者第一次點擊時「解鎖」語音 */
+document.addEventListener('pointerdown',function unl(){document.removeEventListener('pointerdown',unl,true);try{if('speechSynthesis' in window){const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}}catch(e){}},true);
+function speak(x,force){return tts(x,force)}
 function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove('on'),2800)}
 function openTour(list){TL=list||TOUR.map((_,i)=>i);TI=0;$('#tour').classList.add('on');drawTour()}
 function drawTour(){const i=TL[TI],[ic,ok]=TOUR[i],[ti,de]=t('to'+i).split('§'),last=TI===TL.length-1;
@@ -1862,14 +1886,14 @@ const TOL={s:{bow:5,sh:.05,arm:.15,lh:.4,curl:18,tilt:.07},m:{bow:8,sh:.08,arm:.
 const ARM_T={el:.55,wr:-.1},HC=[[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[0,17],[17,18],[18,19],[19,20]];
 const OKC='#22c55e',BADC='#ef4444',NEU='rgba(255,255,255,.85)';
 let camOn=false,camBusy=false,hl=null,pl=null,cStream=null,cRaf=0,cAng=null,cSh=null,cSay=0,cLastVT=-1,cSamples=null,cFrame=0,lastPose=null,badT={},cDev=null,hA=null,hG=null,cRetry=0,cHintK=null,cHintT=0;
-function camUI(){const c=S.cam;$('#cVoice').checked=c.voice!==false;$$('#cStrictSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===c.strict));
- $('#cGo').innerHTML=IC(camOn?'stop':'hand')+'<span>'+t(camOn?'camStop':'camStart')+'</span>';$('#cVoiceB').textContent=(c.voice!==false?'🔊 ':'🔇 ')+t('cVoiceS');
+function camUI(){const c=S.cam;$$('#cStrictSeg button').forEach(b=>b.classList.toggle('sel',b.dataset.v===c.strict));
+ $('#cGo').innerHTML=IC(camOn?'stop':'hand')+'<span>'+t(camOn?'camStop':'camStart')+'</span>';
  $('#camw').classList.toggle('live',camOn);document.body.classList.toggle('camlive',camOn);$('#cChips').hidden=!camOn;$('#cBar').hidden=!camOn;
  if(!camOn){$('#cph').hidden=false;$('#cph').textContent=camBusy?t('camLoad'):t('camIdle')}}
 $$('#cStrictSeg button').forEach(b=>b.onclick=()=>{S.cam.strict=b.dataset.v;save();camUI()});
 const lineAng=(x1,y1,x2,y2)=>{let a=Math.atan2(y2-y1,x2-x1)*180/Math.PI;if(a>90)a-=180;else if(a<=-90)a+=180;return a};
 const angDiff=(a,b)=>{const d=(((a-b)%180)+180)%180;return d>90?d-180:d};
-function camSay(k){if(S.cam.voice===false||!window.speechSynthesis||Date.now()-cSay<5000)return;cSay=Date.now();const u=new SpeechSynthesisUtterance(t(k));u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function camSay(k){}
 function badFor(k,bad,ms,say){if(!bad){delete badT[k];return}if(!badT[k])badT[k]=Date.now();else if(Date.now()-badT[k]>ms&&say)camSay(say)}
 function preloadModels(){if(!(hl&&pl)&&!window._mdlP)window._mdlP=loadModels().catch(()=>{}).finally(()=>{window._mdlP=null})}
 async function loadModels(){if(window._mdlP&&!(hl&&pl)){await window._mdlP;if(hl&&pl)return}
@@ -1889,7 +1913,7 @@ async function startCam(){
  try{await loadModels()}catch(e){fail('mdlErr',e);return}
  try{await openStream()}catch(e){fail('camErr',e);return}
  camBusy=false;camOn=true;cLastVT=-1;cSh=null;cDev=null;hA=hG=null;lastPose=null;badT={};cRetry=0;$('#cph').hidden=true;
- camUI();camLoop();ctUI();if(!GRIP&&!STK&&(!S.guided.camui||!S.guided.camgs3))setTimeout(()=>{if(camOn)cgStart(!!S.guided.camui)},900)}
+ camUI();camLoop();ctUI();if(!GRIP&&!STK&&(!S.guided.camui||!S.guided.camgs4))setTimeout(()=>{if(camOn)cgStart(!!S.guided.camui)},900)}
 function stopCam(){camOn=false;drOpen(false);cgEnd(1);if(playing)toggle();if(stream&&ctMic){mic();ctMic=0}$('#ctTab').hidden=true;$('#ctPill').hidden=true;cGen++;cFace='user';cancelAnimationFrame(cRaf);if(cStream)cStream.getTracks().forEach(x=>x.stop());cStream=null;$('#cvid').srcObject=null;
  const c=$('#ccv');c.getContext('2d').clearRect(0,0,c.width,c.height);
  camExitFs();camUI()}
@@ -1957,7 +1981,7 @@ function camLoop(){
  else cSh=null;
  chip('sh',shOk==null?'':shOk?'ok':'bad');
  {const hk=!p?'hintBody':!hs.length?'hintHands':!lH?'hintLeft':!bowH?'hintRight':null,now=ts;if(hk!==cHintK){cHintK=hk;cHintT=now}const hEl=$('#cHint'),show=hk&&now-cHintT>1500;hEl.hidden=!show;if(show)hEl.textContent=t(hk)}
- gestFrame(hs,p,W,H,ts,g,LW);
+ gestFrame(bowH?[bowH]:[],p,W,H,ts,g,LW);
  LH('cam',{bow:bowOk,sh:shOk,arm:armOk,lh:lhOk});if(cSamples)cSamples.push({perp:devRaw,sh,spread:hsS&&hsS.spread});
  next()}
 
@@ -1967,7 +1991,7 @@ const GSTG=[{img:'grip1',t:'gp1T',p:'gp1P'},{img:'grip2',t:'gp2T',p:'gp2P'}],GHO
 function gripStart(){cFace='user';GRIP={stage:0,hist:[],since:0,hk:null,hkT:0,said:0,done:false};gripShow();setTimeout(()=>gripSay(t('gp1T')+'。'+t('gp1P'),1),600)}
 function gripStop(){GRIP=null;const b=$('#gripBox');if(b)b.hidden=true}
 function gripShow(){const G=GSTG[GRIP.stage];$('#gripBox').hidden=false;$('#gpImg').src=IMG[G.img];$('#gpN').textContent=t('gpStep').replace('{a}',GRIP.stage+1).replace('{b}',2);$('#gpT').textContent=t(G.t);$('#gpH').textContent=t(G.p);$('#gpH').className='';$('#gpBar').style.width='0%'}
-function gripSay(x,force){if(S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-GRIP.said<3500)return;GRIP.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function gripSay(x,force){if(!GRIP||!S.voice)return;if(!force&&Date.now()-GRIP.said<3500)return;GRIP.said=Date.now();tts(x)}
 function fingerBend(q,m){const ang=(a,b,c)=>{const v1=[q[b][0]-q[a][0],q[b][1]-q[a][1],q[b][2]-q[a][2]],v2=[q[c][0]-q[b][0],q[c][1]-q[b][1],q[c][2]-q[b][2]];const d=(v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])/((Math.hypot(...v1)*Math.hypot(...v2))||1);return Math.acos(Math.max(-1,Math.min(1,d)))*180/Math.PI};
  return ang(m,m+1,m+2)+ang(m+1,m+2,m+3)}
 function gripFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=true;if(!GRIP||GRIP.done)return;
@@ -2045,7 +2069,7 @@ function gsFire(k){if(k==='one'){mic().then(()=>{ctMic=stream?1:0;ctUI();gsSay(s
  else if(k==='three'){S.cam.hudHide=!S.cam.hudHide;save();pillUI();gsSay(S.cam.hudHide?'gsHudOff':'gsHudOn')}
  else if(k==='four'){if(playing)toggle();if(stream){mic();ctMic=0}setTimeout(()=>{ctUI()},50);gsSay('gsAllOff')}
  else if(k==='fist'){gsSay('gsBye');setTimeout(()=>{stopCam();camExitFs();view('today')},350)}}
-function gsSay(k){toast(t(k));if(S.cam.voice===false||!window.speechSynthesis)return;try{const u=new SpeechSynthesisUtterance(t(k));u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function gsSay(k){toast(t(k));return;try{const u=new SpeechSynthesisUtterance(t(k));u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
 function gestFrame(hs,p,W,H,ts,g,LW){const B=$('#gsB');if(!gsOn()||CG>=0){if(ts-GZ.last>250){GZ.k=null;B.hidden=true}return}
  const shY=p&&(p[11].visibility??1)>.4&&(p[12].visibility??1)>.4?Math.min(p[11].y,p[12].y):.38,raised=hs.filter(h=>h.lm[0].y<=shY+.02);
  /* gesture zone line at shoulder height: faint normally, yellow when a hand is raised above it */
@@ -2064,16 +2088,16 @@ function gestFrame(hs,p,W,H,ts,g,LW){const B=$('#gsB');if(!gsOn()||CG>=0){if(ts-
 $('#gsOn').onchange=e=>{S.cam.gest=e.target.checked;save();ctUI()};
 $$('#gsStep button').forEach(b=>b.onclick=()=>{S.cam.gstep=+b.dataset.v;save();ctUI()});
 /* ---- 相機畫面新手導覽 ---- */
-const CGS0=[[null,'cg1'],['#cChips','cg2'],[null,'cg3'],['#cCal','cg4'],['#cVoiceB','cg5'],['#ctTab','cg6'],['#cClose','cg7'],[null,'cg7b'],[null,'cg8'],[null,'cg8b'],[null,'cg9'],['#gsStep','cg10'],[null,'cg11']];let CGS=CGS0,CG=-1;
-function cgStart(only){if(!camOn)return;CGS=only?CGS0.slice(7):CGS0;CG=0;$('#cGuide').hidden=false;cgDraw()}
-function cgEnd(silent){if(CG<0)return;CG=-1;$('#cGuide').hidden=true;drOpen(false);S.guided.camui=1;S.guided.camgs3=1;save()}
+const CGS0=[[null,'cg1'],['#cChips','cg2'],[null,'cg3'],['#cCal','cg4'],['#ctTab','cg6'],['#cClose','cg7'],[null,'cg7b'],[null,'cg8'],[null,'cg8b'],[null,'cg9'],['#gsStep','cg10'],[null,'cg11']];let CGS=CGS0,CG=-1;
+function cgStart(only){if(!camOn)return;CGS=only?CGS0.slice(6):CGS0;CG=0;$('#cGuide').hidden=false;cgDraw()}
+function cgEnd(silent){if(CG<0)return;CG=-1;$('#cGuide').hidden=true;drOpen(false);S.guided.camui=1;S.guided.camgs4=1;save()}
 function cgDraw(){const [sel,k]=CGS[CG],[ti,de]=t(k).split('§');$('#cgN').textContent=(CG+1)+' / '+CGS.length;$('#cgT').textContent=ti;$('#cgD').textContent=de||'';$('#cgNext').textContent=t(CG===CGS.length-1?'done':'next');
  if(sel==='#ctTab')$('#ctTab').hidden=false;if(sel==='#gsStep'){if(!$('#cDr').classList.contains('on')){drOpen(true);ctUI();$('#cDr').scrollTop=9999;$('#cgRing').hidden=true;setTimeout(()=>{if(CG>=0)cgDraw()},330);return}}else if($('#cDr').classList.contains('on'))drOpen(false);
  const ring=$('#cgRing'),bub=$('#cgBub'),el=sel&&$(sel),W=innerWidth,H=innerHeight;
  if(el&&!el.hidden&&el.offsetParent!==null){const r=el.getBoundingClientRect(),p=6;ring.hidden=false;$('#cGuide').style.background='transparent';Object.assign(ring.style,{left:r.left-p+'px',top:r.top-p+'px',width:r.width+p*2+'px',height:r.height+p*2+'px'});
   const below=r.bottom+bub.offsetHeight+24<H;bub.style.top=(below?r.bottom+16:Math.max(12,r.top-bub.offsetHeight-16))+'px'}
  else{ring.hidden=true;$('#cGuide').style.background='rgba(0,0,0,.55)';bub.style.top=Math.max(12,(H-bub.offsetHeight)/2)+'px'}
- if(S.cam.voice!==false&&window.speechSynthesis){try{const u=new SpeechSynthesisUtterance(ti+'。'+(de||''));u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.85:1.05;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}}
+}
 $('#cgNext').onclick=()=>{if(CG<CGS.length-1){CG++;cgDraw()}else{cgEnd();ctUI();try{speechSynthesis.cancel()}catch(e){}}};
 $('#cgSkip').onclick=()=>{cgEnd();ctUI();try{speechSynthesis.cancel()}catch(e){}};
 /* ---- 運弓暖身：空手推拉，用後鏡頭追蹤右手軌跡 ---- */
@@ -2082,7 +2106,7 @@ function strokeStart(n){const gv=$('#gpVid');gv.src='bow_demo.mp4';gv.hidden=fal
  $('#gpN').textContent=t('skCount').replace('{a}',0).replace('{b}',n);$('#gpT').textContent=t('skT');$('#gpH').textContent=t('skP');$('#gpH').className='';$('#gpBar').style.width='0%';
  setTimeout(()=>{if(STK)skSay(t('skT')+'。'+t('skP'),1)},700)}
 function strokeStop(){if(!STK)return;STK=null;$('#gripBox').hidden=true;$('#gpImg').hidden=false;const gv=$('#gpVid');gv.pause();gv.hidden=true}
-function skSay(x,force){if(!STK||S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-STK.said<3500)return;STK.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function skSay(x,force){if(!STK||!S.voice)return;if(!force&&Date.now()-STK.said<3500)return;STK.said=Date.now();tts(x)}
 function skHint(k,ts){const K=STK;if(k!==K.hk){K.hk=k;K.hkT=ts}if(k){$('#gpH').textContent=t(k);$('#gpH').className='bad';if(ts-K.hkT>1500)skSay(t(k))}}
 function strokeFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=true;const K=STK;if(!K||K.done)return;
  const h=hs.length?hs.reduce((a,b)=>Math.hypot(b.lm[5].x-b.lm[17].x,b.lm[5].y-b.lm[17].y)>Math.hypot(a.lm[5].x-a.lm[17].x,a.lm[5].y-a.lm[17].y)?b:a):null;
@@ -2126,8 +2150,6 @@ function strokeFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden
 $('#cGo').onclick=()=>camOn?stopCam():startCam();
 $('#cClose').onclick=stopCam;
 $('#cFlip').onclick=()=>switchCam();
-$('#cVoice').onchange=e=>{S.cam.voice=e.target.checked;save();if(!e.target.checked&&window.speechSynthesis)speechSynthesis.cancel();camUI()};
-$('#cVoiceB').onclick=()=>{S.cam.voice=S.cam.voice===false;save();if(S.cam.voice===false&&window.speechSynthesis)speechSynthesis.cancel();camUI()};
 
 let calBusy=false;
 $('#cCal').onclick=()=>{if(!camOn||calBusy)return;calBusy=true;const box=$('#ccd'),N=$('#ccdN'),T=$('#ccdT');let n=3;box.hidden=false;T.textContent=t('calHold');
@@ -2510,14 +2532,15 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-ls]');if(a
  const r=e.target.closest('[data-rate]');if(r&&LS){LS.rate=+r.dataset.rate;const l=LX[LS.lid];(S.course.rate[today()]||(S.course.rate[today()]={}))[l.id]=LS.rate;save();renderLesson();return}
  const id=e.target.id;
  if(id==='lsNext')lsAdvance();else if(id==='lsGo')lsStartTool();else if(id==='lsSkip')lsAdvance();
- else if(id==='lsSay'){const st=curStep();if(st&&st.cards){const v=S.voice;S.voice=true;speak(st.cards.map(c=>c.h+'。'+c.p).join(' '));S.voice=v}}
+ else if(id==='lsSay'){const st=curStep();if(st&&st.cards)tts(st.cards.map(c=>c.h+'。'+c.p).join(' '),1)}
  else if(id==='lsHome'){LS=null;view('course')}
  else if(id==='lsKnow'&&LS){const n=LS.lid;LS=null;markKnown(n);view('today')}
  else if(id==='tlKnow'){const n=nextLesson();if(n)markKnown(n.id)}
  else if(id==='lsBack'){if(LS)lbHide();view('course')}});
 $('#lbBack').onclick=()=>{if(playing)toggle();if(!$('#tkFull').hidden)tkClose();lbHide();view('lesson');renderLesson()};
 $('#lbSkip').onclick=()=>{if(!LS)return;if(playing)toggle();if(!$('#tkFull').hidden)tkClose();lbHide();view('lesson');lsAdvance()};
-$('#aiSay').onclick=()=>{const v=S.voice;S.voice=true;speak($('#aiMsg').textContent);S.voice=v};
+$('#aiSay').onclick=()=>tts($('#aiMsg').textContent,1);
+$('#ttsTest').onclick=()=>{ttsWarned=0;tts(t('ttsHello'),1)};
 $('#wishAdd').onclick=()=>{const v=$('#wishIn').value.trim().slice(0,40);if(!v)return;crInit().wish.push(v);$('#wishIn').value='';save();songsUI();toast(t('wishOk'))};
 $('#wishIn').onkeydown=e=>{if(e.key==='Enter')$('#wishAdd').click()};
 /* ---- mode switch: AI 老師 / 小幫手 ---- */
