@@ -385,6 +385,8 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 .gripb img{width:4.6rem;height:4.6rem;object-fit:cover;border-radius:.7rem;flex:none}.gpt{flex:1;display:flex;flex-direction:column;gap:.15rem;min-width:0}
 .gpn{font-size:.6875rem;opacity:.7}.gpt b{font-size:.95rem}.gpt p{margin:0;font-size:.8125rem;line-height:1.45;opacity:.9}.gpt p.ok{color:#4ade80}.gpt p.bad{color:#fca5a5}
 .gpt .bar{margin-top:.25rem;background:rgba(255,255,255,.2)}.gpt .bar i{background:#4ade80}
+.lvidw{margin-bottom:.8rem;background:#000;border-radius:1rem;overflow:hidden}.lvid{width:100%;max-height:26rem;display:block;background:#000}.lvidw p{margin:0;padding:.45rem .8rem;font-size:.75rem;color:#bbb;background:#111}
+.camw #gpVid{position:static;inset:auto;transform:none;width:4.6rem;height:6rem;object-fit:cover;border-radius:.7rem;flex:none;background:#000}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -564,7 +566,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="camw" id="camw"><video id="cvid" playsinline muted></video><canvas id="ccv"></canvas><div class="ph" id="cph" data-i="camIdle"></div>
   <div class="chips" id="cChips" hidden><span data-k="bow"><i></i><b data-i="chBow"></b></span><span data-k="arm"><i></i><b data-i="chArm"></b></span><span data-k="lh"><i></i><b data-i="chLh"></b></span><span data-k="sh"><i></i><b data-i="chSh"></b></span></div>
   <div class="cbar" id="cBar" hidden><button class="cbtn" id="cCal"><span data-i="calib"></span></button><button class="cbtn" id="cFlip">🔄 <span data-i="camFlip"></span></button><button class="cbtn" id="cVoiceB"></button><button class="cbtn cx" id="cClose" aria-label="close">✕</button></div>
-  <div class="chint" id="cHint" hidden></div><div class="gripb" id="gripBox" hidden><img id="gpImg" alt=""><div class="gpt"><span class="gpn" id="gpN"></span><b id="gpT"></b><p id="gpH"></p><div class="bar"><i id="gpBar"></i></div></div></div><div class="cd" id="ccd" hidden><b id="ccdN"></b><span id="ccdT"></span></div>
+  <div class="chint" id="cHint" hidden></div><div class="gripb" id="gripBox" hidden><img id="gpImg" alt=""><video id="gpVid" muted loop playsinline hidden></video><div class="gpt"><span class="gpn" id="gpN"></span><b id="gpT"></b><p id="gpH"></p><div class="bar"><i id="gpBar"></i></div></div></div><div class="cd" id="ccd" hidden><b id="ccdN"></b><span id="ccdT"></span></div>
  </div>
  <div class="gap" style="height:.8rem"></div>
  <button class="btn lg" id="cGo"></button>
@@ -931,7 +933,7 @@ camFlip|翻轉|Flip|切替
 camNoRear|這台裝置沒有後鏡頭，改用自拍鏡頭|No rear camera on this device; using the front camera|背面カメラがありません
 gpRear|接下來換成後鏡頭：拿起弓，用左手拿手機，鏡頭對著握弓的右手|Next we switch to the rear camera: pick up the bow, hold the phone in your left hand and point it at your right hand|次は背面カメラ：弓を持ち、左手でスマホを持って右手を映してください
 skT|運弓暖身|Bowing warm-up|運弓ウォームアップ
-skP|右手做握弓準備動作，在空中平直地左右推拉，手腕放鬆|Make the bow-hold shape and push and pull in a straight line, wrist relaxed|弓を持つ形で、まっすぐ左右に動かしましょう
+skP|跟著黃色圓圈和箭頭推拉：手做握弓準備動作，沿著虛線平直移動，手腕放鬆|Follow the yellow circle and arrow: keep the bow-hold shape and move straight along the dashed line|黄色の円と矢印に合わせて、まっすぐ動かしましょう
 skCount|推拉 {a} / {b} 次|Strokes {a} / {b}|{a} / {b} 回
 skNoHand|左手拿手機，用後鏡頭從上方對著右手|Hold the phone in your left hand and point the rear camera down at your right hand|左手でスマホを持ち、背面カメラで右手を映して
 skBigger|動作再大一點，用前臂帶著手推拉|Make the stroke longer, move from the forearm|もっと大きく、前腕から動かして
@@ -943,6 +945,9 @@ skGood2|很好，繼續|Nice, keep going|その調子
 skHalf|做得很好，已經一半了|Great, halfway there|半分できました
 skDone|暖身完成！|Warm-up done!|ウォームアップ完了！
 skNext|接下來換成自拍鏡頭，拿起琴和弓，讓弓和琴桿保持 90 度|Next we switch to the front camera: pick up the erhu and bow and keep them at 90°|次は自撮りカメラ：二胡と弓を持ち、90度を保ちましょう
+vidCap|示範影片：沿著白色虛線推拉，黃色是手腕|Demo: push and pull along the dashed line; yellow marks the wrist|模範：白い点線に沿って、黄色は手首
+skOut|往外拉|Pull out|引く
+skIn|往內推|Push in|押す
 nLearn|學習|Learn|学習
 nSongs|曲庫|Songs|曲
 nPrac|練習室|Practice|練習室
@@ -1802,10 +1807,10 @@ function gripFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=t
 
 /* ---- 運弓暖身：空手推拉，用後鏡頭追蹤右手軌跡 ---- */
 let STK=null;
-function strokeStart(n){STK={n,cnt:0,tr:[],sm:null,dir:0,ext:null,st0:null,stT:0,hk:null,hkT:0,said:0,done:false,flash:0};const b=$('#gripBox');b.hidden=false;$('#gpImg').hidden=true;
+function strokeStart(n){const gv=$('#gpVid');gv.src='bow_demo.mp4';gv.hidden=false;gv.play().catch(()=>{});STK={n,cnt:0,tr:[],sm:null,dir:0,ext:null,st0:null,stT:0,hk:null,hkT:0,said:0,done:false,flash:0};const b=$('#gripBox');b.hidden=false;$('#gpImg').hidden=true;
  $('#gpN').textContent=t('skCount').replace('{a}',0).replace('{b}',n);$('#gpT').textContent=t('skT');$('#gpH').textContent=t('skP');$('#gpH').className='';$('#gpBar').style.width='0%';
  setTimeout(()=>{if(STK)skSay(t('skT')+'。'+t('skP'),1)},700)}
-function strokeStop(){if(!STK)return;STK=null;$('#gripBox').hidden=true;$('#gpImg').hidden=false}
+function strokeStop(){if(!STK)return;STK=null;$('#gripBox').hidden=true;$('#gpImg').hidden=false;const gv=$('#gpVid');gv.pause();gv.hidden=true}
 function skSay(x,force){if(!STK||S.cam.voice===false||!window.speechSynthesis)return;if(!force&&Date.now()-STK.said<4500)return;STK.said=Date.now();const u=new SpeechSynthesisUtterance(x);u.lang={'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang];u.rate=S.elder?.8:1;speechSynthesis.cancel();speechSynthesis.speak(u)}
 function skHint(k,ts){const K=STK;if(k!==K.hk){K.hk=k;K.hkT=ts}if(k){$('#gpH').textContent=t(k);$('#gpH').className='bad';if(ts-K.hkT>2500)skSay(t(k))}}
 function strokeFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden=true;const K=STK;if(!K||K.done)return;
@@ -1820,6 +1825,13 @@ function strokeFrame(hs,g,W,H,LW,ts){$('#cChips').hidden=true;$('#cHint').hidden
  /* draw guide line + trail */
  let lo=1e9,hi=-1e9;K.tr.forEach(p=>{const v=pr(p);lo=Math.min(lo,v);hi=Math.max(hi,v)});const ext=Math.max(K.pw*2,(hi-lo)/2+K.pw*.8);
  if(K.tr.length>8){g.setLineDash([LW*1.6,LW*1.2]);g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=LW*.6;g.beginPath();g.moveTo(mx-ax[0]*ext,my-ax[1]*ext);g.lineTo(mx+ax[0]*ext,my+ax[1]*ext);g.stroke();g.setLineDash([])}
+ {const hor=(hi-lo)<K.pw*1.5,gx=hor?[1,0]:(ax[0]<0?[-ax[0],-ax[1]]:ax),cx0=hor?K.sm[0]:mx,cy0=hor?K.sm[1]:my,amp=Math.max(K.pw*1.6,(hi-lo)/2),ph=Math.sin(ts/1000*Math.PI*2/2.6),dv=Math.cos(ts/1000*Math.PI*2/2.6)>=0?1:-1;
+  const gx0=cx0+gx[0]*amp*ph,gy0=cy0+gx[1]*amp*ph,gy=cy0-K.pw*1.9;
+  if(hor){g.setLineDash([LW*1.6,LW*1.2]);g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=LW*.6;g.beginPath();g.moveTo(cx0-amp*1.3,cy0);g.lineTo(cx0+amp*1.3,cy0);g.stroke();g.setLineDash([])}
+  g.globalAlpha=.85;g.strokeStyle='#facc15';g.lineWidth=LW*.5;g.beginPath();g.arc(gx0,gy0,LW*2.4,0,7);g.stroke();g.globalAlpha=1;
+  const col=dv>0?'#3b82f6':'#f472b6',ex=gx0+gx[0]*dv*K.pw*.9,ey=gy0-K.pw*1.1+gx[1]*dv*K.pw*.9;g.strokeStyle=col;g.fillStyle=col;g.lineWidth=LW*.9;g.beginPath();g.moveTo(gx0-gx[0]*dv*K.pw*.4,gy0-K.pw*1.1-gx[1]*dv*K.pw*.4);g.lineTo(ex,ey);g.stroke();
+  g.beginPath();g.moveTo(ex+gx[0]*dv*LW*1.6,ey+gx[1]*dv*LW*1.6);g.lineTo(ex-gx[1]*LW*1.4,ey+gx[0]*LW*1.4);g.lineTo(ex+gx[1]*LW*1.4,ey-gx[0]*LW*1.4);g.fill();
+  g.font=`700 ${Math.round(LW*2.6)}px sans-serif`;g.textAlign='center';g.lineWidth=LW*.6;g.strokeStyle='rgba(0,0,0,.8)';const lb=t(dv>0?'skOut':'skIn');g.strokeText(lb,gx0,gy0-K.pw*1.1-LW*2.2);g.fillText(lb,gx0,gy0-K.pw*1.1-LW*2.2);g.textAlign='start'}
  const recent=K.tr.filter(p=>ts-p[2]<1400);g.lineWidth=LW*1.1;for(let i=1;i<recent.length;i++){const a=recent[i-1],b=recent[i],dev=Math.abs(pp(b))/Math.max(K.pw,1);g.strokeStyle=dev<.6?OKC:BADC;g.globalAlpha=.35+.65*i/recent.length;g.beginPath();g.moveTo(a[0],a[1]);g.lineTo(b[0],b[1]);g.stroke()}g.globalAlpha=1;
  g.strokeStyle=gripOk?'rgba(255,255,255,.8)':BADC;g.lineWidth=LW*.45;HC.forEach(([i,j])=>{g.beginPath();g.moveTo(q[i][0],q[i][1]);g.lineTo(q[j][0],q[j][1]);g.stroke()});
  g.fillStyle=K.flash&&ts-K.flash<350?'#4ade80':'#fff';g.beginPath();g.arc(K.sm[0],K.sm[1],LW*1.4,0,7);g.fill();
@@ -1999,7 +2011,7 @@ const TRACKS={
     {t:'learn',fig:[['grip1','figGrip1'],['grip2','figGrip2']],cards:[L_('先做握弓準備動作','右手的中指和無名指往掌心彎，大拇指、食指、小指放鬆伸直（左圖）。','img:grip1'),L_('大拇指和食指夾住弓桿','食指彎起來托住弓桿，大拇指指腹輕輕壓在弓桿上，靠近食指第二節。','img:grip2'),L_('中指、無名指勾住弓毛','兩根手指放在弓桿和弓毛中間，用指尖輕輕把弓毛往外推，拉琴的力量就從這裡來。','✋'),L_('手腕和手指都要放鬆','握弓像拿一枝筆，不用握緊。手會痠就代表太用力了。','😌')]},
     {t:'grip',h:'跟著鏡頭的引導握好弓',p:'不用拉琴。第 1 步用自拍鏡頭，把右手手心對著鏡頭做出握弓手形；第 2 步會自動換成後鏡頭，用左手拿手機拍握著弓的右手。'}]},
    {id:'b3b',title:'如何正確運弓',gain:'用正確的運弓動作，讓弓和琴桿保持 90 度',steps:[
-    {t:'learn',cards:[L_('先做運弓暖身','先不要拿琴和弓。右手做出握弓的準備動作，手臂放鬆，像拿著弓一樣在空中左右推拉。','✋'),L_('手腕帶著手走','往外拉的時候手腕先走、手掌跟在後面；往內推的時候手腕先往內收，手掌再跟上，手腕要像彈簧一樣放鬆。','〰️'),L_('走一直線','推拉的路線要平直，不要畫成弧線，速度保持平均。','📏'),L_('用左手拿手機','把手機拿在左手，後鏡頭從上方對著右手，就能看到引導線。','📱')]},
+    {t:'learn',vid:'bow_demo.mp4',cards:[L_('先做運弓暖身','先不要拿琴和弓。右手做出握弓的準備動作，手臂放鬆，像拿著弓一樣在空中左右推拉。','✋'),L_('手腕帶著手走','往外拉的時候手腕先走、手掌跟在後面；往內推的時候手腕先往內收，手掌再跟上，手腕要像彈簧一樣放鬆。','〰️'),L_('走一直線','推拉的路線要平直，不要畫成弧線，速度保持平均。','📏'),L_('用左手拿手機','把手機拿在左手，後鏡頭從上方對著右手，就能看到引導線。','📱')]},
     {t:'stroke',n:8,h:'運弓暖身：在空中推拉 8 次',p:'先不要拿琴。左手拿手機，用後鏡頭從上方拍右手，跟著引導線平直地推拉。'},
     {t:'cam',need:['bow'],hold:2,h:'拿起琴和弓，弓和琴桿保持 90 度 2 秒',p:'手機會自動換回自拍鏡頭。把手機立在前方約 1 公尺，讓上半身和琴入鏡，畫面上的弓線變綠就對了。'}]},
    {id:'b4',title:'拉響內弦',gain:'拉響內弦空弦（Do）',steps:[
@@ -2172,7 +2184,7 @@ function renderLesson(){if(!LS)return;const l=LX[LS.lid],steps=l.steps,b=$('#lsB
   b.innerHTML=`<div class="lsdone"><div class="big">🎉</div><h2>${t('lsDoneT')}</h2><p>${t('lsDoneG')}<b>${esc(l.gain)}</b></p>${LS.xp?`<div class="xpwin">🏆 +${LS.xp} EXP</div>`:''}
    ${n&&!isDaily(l)?`<button class="btn lg" data-ls="${n.id}">${t('lsNextL')}：${esc(n.title)}</button>`:''}<button class="btn alt lg" id="lsHome" style="margin-top:.6rem">${t('lsHomeL')}</button></div>`;return}
  const st=steps[LS.si];let h='';
- if(st.t==='learn')h=`${st.fig?`<div class="lfig">${st.fig.map(([k,n])=>`<figure><img src="${IMG[k]}" alt=""><figcaption>${t(n)}</figcaption></figure>`).join('')}</div>`:''}<div class="lcards">${st.cards.map(c=>`<div class="lcard">${c.i.startsWith('img:')?`<img class="lcimg" src="${IMG[c.i.slice(4)]}" alt="">`:`<span class="lci">${c.i}</span>`}<div><b>${esc(c.h)}</b><p>${esc(c.p)}</p></div></div>`).join('')}</div>
+ if(st.t==='learn')h=`${st.vid?`<div class="lvidw"><video class="lvid" src="${st.vid}" autoplay muted loop playsinline controls></video><p class="mut">${t('vidCap')}</p></div>`:''}${st.fig?`<div class="lfig">${st.fig.map(([k,n])=>`<figure><img src="${IMG[k]}" alt=""><figcaption>${t(n)}</figcaption></figure>`).join('')}</div>`:''}<div class="lcards">${st.cards.map(c=>`<div class="lcard">${c.i.startsWith('img:')?`<img class="lcimg" src="${IMG[c.i.slice(4)]}" alt="">`:`<span class="lci">${c.i}</span>`}<div><b>${esc(c.h)}</b><p>${esc(c.p)}</p></div></div>`).join('')}</div>
   <div class="row2 r2e"><button class="btn alt" id="lsSay">🔊 ${t('aiListen')}</button><button class="btn" id="lsNext">${t('lsGot')}</button></div>`;
  else if(st.t==='self')h=`<div class="lstep"><span class="lsi">${SICON.self}</span><h3>${esc(st.h)}</h3><p class="mut">${esc(st.p)}</p></div><button class="btn lg" id="lsNext">${t('lsDid')}</button>`;
  else if(st.t==='rate')h=`<div class="lstep"><span class="lsi">⭐</span><h3>${t('rateT')}</h3><div class="stars">${[1,2,3,4,5].map(i=>`<button data-rate="${i}" class="${i<=LS.rate?'on':''}">★</button>`).join('')}</div><p class="mut">${t('rateD')}</p></div><button class="btn lg" id="lsNext" ${LS.rate?'':'disabled'}>${t('done')}</button>`;
