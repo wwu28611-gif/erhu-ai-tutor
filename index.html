@@ -470,6 +470,14 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 #simVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.simw.cambg{background:#000}.simw #simCv{position:relative;z-index:1}
 .simar{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.6rem}.simar .btn{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem .5rem;font-size:.875rem}.simar .btn.on{background:var(--ac);color:#fff}
 .simarp{font-size:.72rem;margin:.4rem .2rem 0;line-height:1.45}
+
+.airintro{margin-top:.7rem}.airintro b{font-size:1rem}.airintro ol{margin:.5rem 0 .9rem 1.1rem;padding:0;font-size:.875rem;line-height:1.7;color:var(--mut)}
+.airw{position:relative;margin-top:.7rem;border-radius:1.1rem;overflow:hidden;background:#000;height:min(72vh,40rem)}.airw video{position:absolute;width:1px;height:1px;opacity:0}#airCv{width:100%;height:100%;object-fit:contain;display:block}
+.airtop{position:absolute;top:.6rem;left:.6rem;right:.6rem;display:flex}.airtop .seg{background:rgba(20,22,24,.7)}.airtop .seg button{color:#fff;font-size:.8rem}.airtop .seg button.sel{background:#fff;color:#111}
+.airmsg{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);background:rgba(20,22,24,.82);color:#fff;border-radius:1rem;padding:.7rem 1rem;font-size:.875rem;text-align:center;max-width:80%}
+.airrect{position:absolute;top:3.4rem;left:.8rem;color:#ef4444;font-weight:800;font-size:.9rem;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.airbar{position:absolute;left:0;right:0;bottom:.7rem;display:flex;justify-content:center;gap:.6rem}.airbar .cbtn{background:rgba(20,22,24,.8);color:#fff;border:0;border-radius:2rem;padding:.6rem 1.1rem;font-weight:700}#airRec.on{background:#ef4444}
+#airOut{margin-top:.7rem;display:flex;flex-direction:column;gap:.6rem}#airPrev{width:100%;max-height:60vh;border-radius:.8rem;background:#000}.airob{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -595,10 +603,18 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 <section id="v-sim"><div class="narrow">
  <button class="quiet plback" data-go="today">‹ <span data-i="nToday"></span></button>
  <div class="pt" style="margin-top:.2rem"><h1 data-i="simT"></h1><p data-i="simSub"></p></div>
- <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="play" data-i="simPlayL"></button></div>
+ <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="play" data-i="simPlayL"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div class="simar"><button class="btn" id="simAR"><span>📱</span><span data-i="arBtn"></span></button><button class="btn alt" id="simCamBg"><span>📷</span><span data-i="arCam"></span></button></div>
  <p class="mut simarp" data-i="arHint"></p>
+ <div id="simAir" hidden>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air3"></li><li data-i="air4"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button></div>
+  <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
+   <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div></div>
+   <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
+   <div class="airbar"><button class="cbtn" id="airRec">● <span data-i="recStart"></span></button><button class="cbtn" id="airX" aria-label="close">✕</button></div></div>
+  <div class="card" id="airOut" hidden><b data-i="recDone"></b><video id="airPrev" controls playsinline></video><div class="airob"><button class="btn" id="airShare" data-i="recShare"></button><button class="btn alt" id="airSave" data-i="recSave"></button></div><button class="quiet" id="airAgain" data-i="recAgain"></button></div>
+ </div>
  <div id="simLearn"><div class="card simi" id="simInfo"></div><div class="simparts" id="simParts"></div></div>
  <div id="simPlay" hidden>
   <div class="seg" id="simStr"><button id="simStrIn" data-i="simIn"></button><button id="simStrOut" data-i="simOut"></button></div>
@@ -1222,6 +1238,23 @@ arHint|AR 會用手機的相機把二胡放在地上或桌上，可以走過去�
 arPhone|AR 需要用手機開啟（iPhone 用 Safari、Android 用 Chrome）|AR needs a phone (Safari on iPhone, Chrome on Android)|AR はスマホで開いてください（iPhone は Safari、Android は Chrome）
 arInApp|LINE、Messenger 等內建瀏覽器無法使用 AR，請點右上角選單「用瀏覽器開啟」|In-app browsers can't open AR. Use the menu to open in your browser|アプリ内ブラウザでは AR が使えません。メニューから「ブラウザで開く」を選んでください
 arCamOn|相機已開啟，拖曳轉動二胡、兩指縮放大小|Camera on: drag to turn, pinch to resize|カメラ オン：ドラッグで回転、ピンチで拡大縮小
+airL|空氣二胡|Air erhu|エア二胡
+airT|把虛擬二胡拿在手上拉|Play a virtual erhu with your body|体で弾くバーチャル二胡
+air1|手機立在前方約 1.5 公尺，用自拍鏡頭，坐著讓上半身和大腿入鏡|Stand the phone about 1.5 m away (front camera), sit so your upper body and thighs are in view|スマホを約1.5m前に立て、座って上半身と太ももを映します
+air2|二胡會出現在左大腿上；右手左右移動就是拉弓，越快越大聲|The erhu appears on your left thigh; move your right hand side to side to bow, faster is louder|二胡が左ももに現れます。右手を左右に動かすと弓、速いほど大きな音
+air3|左手沿著琴桿上下移動換音，越往下音越高；上方按鈕切換內弦、外弦|Move your left hand up and down the neck to change notes (lower is higher); switch strings with the buttons on top|左手を棹に沿って上下すると音が変わります（下ほど高い）。上のボタンで弦を切替
+air4|按「錄影」可以錄下你的演奏，分享到 IG、TikTok|Tap Record to capture your performance and share it|「録画」で演奏を録画して共有できます
+airGo|開始空氣二胡|Start air erhu|エア二胡を始める
+airLoading|正在開啟相機與偵測模型…|Opening camera and models…|カメラとモデルを準備中…
+airFrame|坐好，讓上半身和大腿入鏡|Sit so your upper body and thighs are in view|上半身と太ももを映してください
+airBody|看不到身體，請退後一點，讓肩膀和腰都入鏡|Can't see your body; step back so shoulders and hips are in view|体が見えません。肩と腰が映るように下がってください
+recStart|錄影|Record|録画
+recStop|停止|Stop|停止
+recDone|錄好了！|Recorded!|録画できました！
+recShare|分享|Share|共有
+recSave|儲存影片|Save video|保存
+recAgain|再玩一次|Play again|もう一度
+recNo|這個瀏覽器不支援錄影|This browser can't record video|このブラウザは録画非対応です
 nLearn|學習|Learn|学習
 nSongs|曲庫|Songs|曲
 nPrac|練習室|Practice|練習室
@@ -2679,7 +2712,7 @@ const PTX=NX+2.55;/* x where strings leave the pegs' small ends */
 const SX=(k,y)=>{if(y<=BRY)return BRX;if(y<=NUTY){const t=(y-BRY)/(NUTY-BRY);return BRX+(NUTX-BRX)*t}const t=Math.min(1,(y-NUTY)/(PEGY[1]-NUTY));return NUTX+(PTX-NUTX)*t};
 const SZ=(k,y)=>(k==='in'?-1:1)*(y<=BRY?.22:y<=NUTY?.22+.18*(y-BRY)/(NUTY-BRY):.4);
 /* bow: rests diagonally (tip up toward the back, frog down toward the front), hair through the strings just above the bridge */
-const BD=nrm([.866,-.5,0]),BP0=[BRX,BRY+3.0,0],BAT=s2=>add(BP0,mul(BD,s2));
+const S1B=31,BD=nrm([.866,-.5,0]),BP0=[BRX,BRY+3.0,0],BAT=s2=>add(BP0,mul(BD,s2));
 function build(){const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);parts.push({id,mat,g,...o})};
  const bot=TY-TR*Math.cos(Math.PI/6);
  P(9,'dark',g=>{box(g,[-.3,bot-.75,0],[11.5,1.5,7.6])});
@@ -2710,7 +2743,7 @@ function build(){const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);par
    [NUTY+.3,30,18,BRY].forEach(y=>pts.push(P3(y)));pts.push([TX1+.3,bot+.6,SZ(k,0)*.6]);
    for(let s2=0;s2<pts.length-1;s2++)sweep(g,line(pts[s2],pts[s2+1],1),r,6,false)},{str:k})});
  /* bow ~81 cm (same as the erhu): hair through the strings, stick on the near side */
- const S0=-49,S1=31,SZo=-1.7,at=(s2,dz=0,dy=0)=>{const p=BAT(s2);return [p[0],p[1]+dy,p[2]+dz]};
+ const S0=-49,S1=S1B,SZo=-1.7,at=(s2,dz=0,dy=0)=>{const p=BAT(s2);return [p[0],p[1]+dy,p[2]+dz]};
  P(10,'stick',g=>{const pts=[];for(let k=0;k<=18;k++){const t=k/18,s2=S0-1+t*(S1-S0+2);pts.push(at(s2,SZo-Math.sin(t*Math.PI)*.35,0))}sweep(g,pts,t=>.33+.12*t,10);
   sweep(g,[at(S0-1,SZo),at(S0-1.8,SZo*.6),at(S0-2,SZo*.2),at(S0-1.4,0)],.22,8)},{bow:1});
  P(10,'black',g=>{sweep(g,[at(S0-1.7,SZo*.4),at(S0-2.1,SZo*.15)],.28,8);sweep(g,[at(S1+1,SZo),at(S1+2.8,SZo)],.42,10)},{bow:1});
@@ -2756,7 +2789,8 @@ function init(canvas){cv=canvas;gl=cv.getContext('webgl',{antialias:true,preserv
 function resize(){const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));if(w!==W||h!==H){W=cv.width=w;H=cv.height=h;pickFB=null}}
 function eye(){const cp=Math.cos(cam.pitch);return [cam.tx+cam.dist*cp*Math.sin(cam.yaw),cam.ty+cam.dist*Math.sin(cam.pitch),cam.tz+cam.dist*cp*Math.cos(cam.yaw)]}
 let bowZ=0,vib={in:0,out:0},glowT=0;
-function draw(pick){const e=eye(),VP=mm(persp(.62,W/H,5,600),look(e,[cam.tx,cam.ty,cam.tz],[0,1,0]));gl.viewport(0,0,W,H);
+let OVR=null;
+function draw(pick){const e=OVR?OVR.eye:eye(),VP=OVR?OVR.VP:mm(persp(.62,W/H,5,600),look(e,[cam.tx,cam.ty,cam.tz],[0,1,0]));gl.viewport(0,0,W,H);
  gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);const u=prog.u,a=prog.a;gl.uniformMatrix4fv(u.VP,false,VP);gl.uniform3fv(u.Eye,e);gl.uniform1f(u.IsPick,pick?1:0);
  const now=performance.now()/1000;
  meshes.forEach(m=>{let M=m.bow?trans(BD[0]*bowZ,BD[1]*bowZ,0):trans(0,0,0);if(m.str&&vib[m.str]>.02)M=trans(Math.sin(now*90)*.05*vib[m.str],0,Math.cos(now*71)*.06*vib[m.str]);
@@ -2815,20 +2849,95 @@ function bowPad(){const pad=$('#simBow');let id=null,decay=0;
   PL.pos=Math.max(0,Math.min(1,PL.pos+dx/w*.9));bowZ=(PL.pos-.5)*36;$('#simBowK').style.left=`calc(${PL.pos} * (100% - 2.6rem) + 1.3rem)`;$('#simBowD').textContent=PL.vol>.05?t(PL.dir>0?'simPull':'simPush'):'';
   clearTimeout(decay);decay=setTimeout(()=>{PL.vol*=.3;plVol(PL.vol)},90)});
  const up=e=>{if(e.pointerId!==id)return;id=null;plVol(0);$('#simBowD').textContent=''};pad.addEventListener('pointerup',up);pad.addEventListener('pointercancel',up)}
+/* ---------- 空氣二胡：自拍鏡頭偵測身體，虛擬二胡掛在左大腿，右手拉弓、左手按音 ---------- */
+const AIR={on:false,v:null,stream:null,cv:null,cx:null,mk:null,mx:null,frame:0,pose:null,sm:null,bow:0,bowPrev:null,tPrev:0,vol:0,fing:0,rec:null,chunks:[],recT0:0,blob:null};
+const ema=(o,k,v,a)=>{o[k]=o[k]==null?v:o[k]+(v-o[k])*a;return o[k]};
+function airVP(ax,ay,s,th,yaw,P0,w,h){/* model -> clip: yaw around P0, then 2D similarity (screen y down) */
+ const c=Math.cos(th),sn=Math.sin(th),cy=Math.cos(yaw),sy=Math.sin(yaw),k=1/400;
+ const map=p=>{const x=p[0]-P0[0],y=p[1]-P0[1],z=p[2]-P0[2],X=x*cy+z*sy,Y=y,Z=-x*sy+z*cy,px=ax+s*(c*X-sn*Y),py=ay-s*(sn*X+c*Y);return [px/(w/2)-1,1-py/(h/2),-Z*k]};
+ const o=map([0,0,0]),ex=sub(map([1,0,0]),o),ey=sub(map([0,1,0]),o),ez=sub(map([0,0,1]),o);
+ return {VP:[ex[0],ex[1],ex[2],0, ey[0],ey[1],ey[2],0, ez[0],ez[1],ez[2],0, o[0],o[1],o[2],1],eye:add(P0,mul([-sy,0,cy],1000)),
+  inv:(px,py)=>{const dx=(px-ax)/s,dy=(ay-py)/s,X=c*dx+sn*dy,Y=-sn*dx+c*dy;return [P0[0]+X/cy,P0[1]+Y]},fwd:p=>{const q=map(p);return [(q[0]+1)*w/2,(1-q[1])*h/2]}}}
+function airMsg(k){$('#airMsg').textContent=k?t(k):'';$('#airMsg').hidden=!k}
+async function airStart(){const v=$('#airVid');AIR.cv=$('#airCv');AIR.cx=AIR.cv.getContext('2d');AIR.mk=document.createElement('canvas');AIR.mx=AIR.mk.getContext('2d');
+ $('#airIntro').hidden=true;$('#airOut').hidden=true;$('#airW').hidden=false;airMsg('airLoading');
+ try{AIR.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:720},height:{ideal:1280}},audio:false});v.srcObject=AIR.stream;await v.play()}
+ catch(e){airMsg('');$('#airW').hidden=true;$('#airIntro').hidden=false;toast(t('camErr'));return}
+ try{await loadModels()}catch(e){airStop();toast(t('mdlErr'));return}
+ await plEnsure();AIR.on=true;AIR.v=v;AIR.sm={};AIR.bowPrev=null;AIR.frame=0;airMsg('airFrame');PL.str=PL.str||'in';airStrUI();airLoop()}
+function airStop(){AIR.on=false;if(AIR.rec&&AIR.rec.state==='recording')AIR.rec.stop();if(AIR.stream)AIR.stream.getTracks().forEach(x=>x.stop());AIR.stream=null;plStop();$('#airW').hidden=true;if(!AIR.blob)$('#airIntro').hidden=false}
+function airStrUI(){$$('#airStr button').forEach(b=>b.classList.toggle('sel',b.dataset.s===PL.str))}
+function handPath(g,lm,W,H){const P=i=>[(1-lm[i].x)*W,lm[i].y*H],pw=Math.hypot(P(5)[0]-P(17)[0],P(5)[1]-P(17)[1]);g.lineJoin=g.lineCap='round';g.lineWidth=pw*.42;
+ g.beginPath();[0,1,2,5,9,13,17].forEach((i,k)=>{const p=P(i);k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.closePath();g.fill();g.stroke();
+ [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16],[17,18,19,20]].forEach(ch=>{g.beginPath();ch.forEach((i,k)=>{const p=P(i);k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.stroke()})}
+function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v.requestVideoFrameCallback?v.requestVideoFrameCallback(airLoop):requestAnimationFrame(airLoop)};
+ const VW=v.videoWidth,VH=v.videoHeight;if(!VW){next();return}
+ if(AIR.cv.width!==VW||AIR.cv.height!==VH){AIR.cv.width=AIR.mk.width=VW;AIR.cv.height=AIR.mk.height=VH}
+ const ts=performance.now();let hr;try{hr=hl.detectForVideo(v,ts);if(++AIR.frame%2===0||!AIR.pose){const pr=pl.detectForVideo(v,ts);AIR.pose=(pr.landmarks||[])[0]||null}}catch(e){next();return}
+ const g=AIR.cx,p=AIR.pose,S=AIR.sm;g.save();g.translate(VW,0);g.scale(-1,1);g.drawImage(v,0,0,VW,VH);g.restore();
+ const vis=i=>p&&(p[i].visibility??1)>.45,SP=i=>[(1-p[i].x)*VW,p[i].y*VH];
+ if(!p||!vis(11)||!vis(12)||!vis(23)){airMsg('airBody');airDecay();airHUD();next();return}
+ airMsg(null);
+ const ls=SP(11),rs=SP(12),lh=SP(23),rh=SP(24),shW=Math.hypot(ls[0]-rs[0],ls[1]-rs[1]),torso=Math.hypot((ls[0]+rs[0]-lh[0]-rh[0])/2,(ls[1]+rs[1]-lh[1]-rh[1])/2);
+ let ank;if(vis(25)){const kn=SP(25);ank=[lh[0]+(kn[0]-lh[0])*.38,lh[1]+(kn[1]-lh[1])*.38]}else ank=[lh[0]+(lh[0]-rh[0])*.05,lh[1]+torso*.2];
+ const tA=Math.atan2((ls[0]+rs[0])/2-(lh[0]+rh[0])/2,-((ls[1]+rs[1])/2-(lh[1]+rh[1])/2));
+ const ax=ema(S,'ax',ank[0],.35),ay=ema(S,'ay',ank[1],.35),sc=ema(S,'s',shW/36,.25),th=ema(S,'th',-tA*.6,.25);
+ const P0=[0,TY,0],M=airVP(ax,ay,sc,th,.32,P0,VW,VH);
+ /* hands: player's left = pose 15 side, right = pose 16 side */
+ const hs=(hr.landmarks||[]).map(lm=>lm);let LHd=null,RHd=null;
+ if(hs.length){const d=(lm,j)=>Math.hypot(lm[0].x-p[j].x,lm[0].y-p[j].y);if(hs.length===1){if(d(hs[0],16)<d(hs[0],15))RHd=hs[0];else LHd=hs[0]}else{const a=d(hs[0],16)+d(hs[1],15),b=d(hs[1],16)+d(hs[0],15);if(a<=b){RHd=hs[0];LHd=hs[1]}else{RHd=hs[1];LHd=hs[0]}}}
+ /* right hand drives the bow (frog follows the hand along the bow axis) */
+ const rw=RHd?[(1-RHd[9].x)*VW,RHd[9].y*VH]:vis(16)?SP(16):null;
+ if(rw){const hm=M.inv(rw[0],rw[1]),F=BAT(S1B-1),z=Math.max(-42,Math.min(14,(hm[0]-F[0])*BD[0]+(hm[1]-F[1])*BD[1]));AIR.bow=ema(S,'bow',z,.6);
+  const now=ts/1000;if(AIR.bowPrev!=null){const sp=Math.abs(AIR.bow-AIR.bowPrev)/Math.max(.016,now-AIR.tPrev);const vv=Math.min(1,sp/40);AIR.vol=AIR.vol*.55+vv*.45;if(AIR.bow!==AIR.bowPrev)AIR.dir=Math.sign(AIR.bow-AIR.bowPrev)}AIR.bowPrev=AIR.bow;AIR.tPrev=now}
+ else airDecay();
+ /* left hand height along the neck chooses the finger */
+ if(LHd){const hp=M.inv((1-LHd[9].x)*VW,LHd[9].y*VH),near=Math.abs(hp[0]-NX)<14;const y=hp[1];let f=0;if(near&&y<NUTY-2)f=y>38?1:y>33?2:y>28?3:4;if(f!==AIR.fing){AIR.fing=f;PL.fing=f;if(PL.src)plNote()}}
+ PL.fing=AIR.fing;if(AIR.vol>.04){if(!PL.src||PL.note!==NOTES[PL.str][PL.fing])plNote()}plVol(AIR.vol);PL.vol=AIR.vol;
+ /* render erhu */
+ bowZ=AIR.bow;OVR={VP:M.VP,eye:M.eye};gl.canvas.width=VW;gl.canvas.height=VH;W=VW;H=VH;draw(false);OVR=null;g.drawImage(gl.canvas,0,0);
+ /* finger marker on the string */
+ if(AIR.fing){const yy=[0,40,35,30.5,26][AIR.fing],sp=M.fwd([SX(PL.str,yy),yy,SZ(PL.str,yy)]);g.fillStyle='rgba(250,204,21,.9)';g.beginPath();g.arc(sp[0],sp[1],sc*1.1,0,7);g.fill()}
+ /* hands drawn back on top of the erhu so the fingers wrap the neck / hold the bow */
+ const mx=AIR.mx;[LHd,RHd].forEach(h=>{if(!h)return;mx.globalCompositeOperation='source-over';mx.clearRect(0,0,VW,VH);mx.fillStyle='#000';mx.strokeStyle='#000';handPath(mx,h,VW,VH);
+  mx.globalCompositeOperation='source-in';mx.save();mx.translate(VW,0);mx.scale(-1,1);mx.drawImage(v,0,0,VW,VH);mx.restore();g.drawImage(AIR.mk,0,0)});
+ airHUD(sc);next()}
+function airDecay(){AIR.vol*=.6;plVol(AIR.vol);PL.vol=AIR.vol}
+function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=JP[PL.str][AIR.fing],f=Math.round(VW/22);
+ g.font=`800 ${f*2}px sans-serif`;g.textAlign='right';g.fillStyle='rgba(255,255,255,.95)';g.strokeStyle='rgba(0,0,0,.55)';g.lineWidth=f*.25;const tx=VW-f,ty=f*2.6;g.strokeText(nm,tx,ty);g.fillText(nm,tx,ty);
+ g.font=`700 ${f*.7}px sans-serif`;const s2=(PL.str==='in'?t('simIn'):t('simOut'))+(AIR.vol>.05?' · '+t(AIR.dir>0?'simPull':'simPush'):'');g.strokeText(s2,tx,ty+f*1.1);g.fillText(s2,tx,ty+f*1.1);
+ g.textAlign='left';g.font=`700 ${f*.6}px sans-serif`;g.fillStyle='rgba(255,255,255,.75)';g.fillText(t('app'),f*.8,VH-f*.8)}
+/* recording: canvas + erhu audio -> video file to share */
+function airRecToggle(){if(AIR.rec&&AIR.rec.state==='recording'){AIR.rec.stop();return}
+ const a=ctx(),dst=a.createMediaStreamDestination();if(PL.g)PL.g.connect(dst);const st=AIR.cv.captureStream(30);dst.stream.getAudioTracks().forEach(tr=>st.addTrack(tr));
+ const types=['video/mp4;codecs=avc1,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'],mt=types.find(x=>window.MediaRecorder&&MediaRecorder.isTypeSupported(x));
+ if(!window.MediaRecorder){toast(t('recNo'));return}
+ AIR.chunks=[];AIR.rec=new MediaRecorder(st,mt?{mimeType:mt,videoBitsPerSecond:4e6}:undefined);AIR.rec.ondataavailable=e=>{if(e.data.size)AIR.chunks.push(e.data)};
+ AIR.rec.onstop=()=>{try{PL.g&&PL.g.disconnect(dst);PL.g&&PL.g.connect(a.destination)}catch(e){}const type=(AIR.rec.mimeType||mt||'video/webm').split(';')[0];AIR.blob=new Blob(AIR.chunks,{type});clearInterval(AIR.ti);$('#airRecT').hidden=true;$('#airRec').classList.remove('on');$('#airRec').textContent='● '+t('recStart');airStop();airShow()};
+ AIR.rec.start(500);AIR.recT0=Date.now();$('#airRec').classList.add('on');$('#airRec').textContent='■ '+t('recStop');$('#airRecT').hidden=false;
+ AIR.ti=setInterval(()=>{const s=Math.floor((Date.now()-AIR.recT0)/1000);$('#airRecT').textContent='● '+String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');if(s>=60)AIR.rec.stop()},250)}
+function airShow(){const u=URL.createObjectURL(AIR.blob);$('#airPrev').src=u;$('#airOut').hidden=false;$('#airIntro').hidden=true}
+function airFile(){const ext=AIR.blob.type.includes('mp4')?'mp4':'webm';return new File([AIR.blob],'erhu-air.'+ext,{type:AIR.blob.type})}
+async function airShare(){const f=airFile();if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:t('simT')})}catch(e){}}else airSave()}
+function airSave(){const f=airFile(),a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),500)}
+
 /* ---------- view wiring ---------- */
 let ready=false;
-function setMode(m){mode=m;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
+function setMode(m){if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('.simar').hidden=m==='air';$('.simarp').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
  $('.simw').classList.toggle('play',m==='play');if(m==='play'){sel=0;cam.auto=false;tween({tx:3,ty:20,tz:0,dist:96});cam.yaw=1.05;cam.pitch=.18;plUI()}else{plStop();choose(0);tween({tx:0,ty:40,tz:0,dist:158})}}
 function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#simNoGL').hidden=false;return}controls();bowPad();ready=true;
   $('#simParts').innerHTML=PARTS.map(p=>`<button data-p="${p[0]}">${t(p[1]).split('§')[0]}</button>`).join('');
   $$('#simParts button').forEach(b=>b.onclick=()=>{cam.auto=false;choose(+b.dataset.p)});
   $$('#simMode button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
   $('#simStrIn').onclick=()=>{PL.str='in';PL.note=null;plUI();if(PL.src)plNote()};$('#simStrOut').onclick=()=>{PL.str='out';PL.note=null;plUI();if(PL.src)plNote()};
-  $$('#simFing button').forEach((b,i)=>b.onpointerdown=async()=>{PL.fing=i;await plEnsure();plNote();plUI()})}
+  $$('#simFing button').forEach((b,i)=>b.onpointerdown=async()=>{PL.fing=i;await plEnsure();plNote();plUI()});
+  $('#airGo').onclick=airStart;$('#airX').onclick=()=>{airStop()};$('#airRec').onclick=airRecToggle;$('#airShare').onclick=airShare;$('#airSave').onclick=airSave;$('#airAgain').onclick=()=>{AIR.blob=null;airStart()};
+  $$('#airStr button').forEach(b=>b.onclick=()=>{PL.str=b.dataset.s;PL.note=null;airStrUI();if(PL.src)plNote()})}
+ if(mode==='air'){setMode('air');return}
  on=true;lastT=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);setMode(mode)}
-function close(){on=false;cancelAnimationFrame(raf);plStop()}
+function close(){on=false;cancelAnimationFrame(raf);plStop();if(AIR.on)airStop()}
 function relabel(){if(!ready)return;$$('#simParts button').forEach(b=>{const p=PARTS.find(x=>x[0]===+b.dataset.p);b.textContent=t(p[1]).split('§')[0]});choose(sel);plUI()}
-return {open,close,relabel,_build:build,_skin:skinCanvas,_C:C,_cam:cam,_pick:(x,y)=>pickAt(x,y),_choose:choose,get mode(){return mode}}})();
+return {open,close,relabel,_air:AIR,_pl:PL,_build:build,_skin:skinCanvas,_C:C,_cam:cam,_pick:(x,y)=>pickAt(x,y),_choose:choose,get mode(){return mode}}})();
 
 /* ---- AR：iPhone 用 Quick Look（USDZ），Android 用 Scene Viewer（GLB）；其他裝置可用相機背景 ---- */
 const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),isAndroid=()=>/Android/i.test(navigator.userAgent),inApp=()=>/FBAN|FBAV|FB_IAB|Messenger|Line\/|Instagram|wv\)/i.test(navigator.userAgent);
