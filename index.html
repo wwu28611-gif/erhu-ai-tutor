@@ -2674,8 +2674,8 @@ function build(){const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);par
  P(6,'skin',g=>{hexCap(g,TY,TX1+.03,hexP.map(([y,z])=>[y*.97,z*.97]),1,TR*2)},{tex:1});
  /* neck: thin round lower part, thicker peg section with a step, crook head */
  P(4,'ebony',g=>{sweep(g,line([NX,bot+.2,0],[NX,56,0],6),t=>1.2-.15*t,16);sweep(g,line([NX,55.6,0],[NX,57.2,0],1),t=>1.05+.4*t,16,false);sweep(g,line([NX,57.2,0],[NX,72,0],4),1.45,16)});
- const HR=5.2,HA=2.45,hp=a=>[NX-HR+HR*Math.cos(a),72+HR*Math.sin(a),0];
- P(1,'ebony',g=>{const pts=[[NX,72,0]];for(let k=1;k<=16;k++)pts.push(hp(k/16*HA));sweep(g,pts,t=>1.4-.45*t,16)});
+ const HR=7.5,HA=1.2,H0=75,hp=a=>[NX-HR+HR*Math.cos(a),H0+HR*Math.sin(a),0];
+ P(1,'ebony',g=>{const pts=[[NX,72,0],[NX,73.5,0],[NX,H0,0]];for(let k=1;k<=16;k++)pts.push(hp(k/16*HA));sweep(g,pts,t=>1.4-.4*t,16)});
  P(1,'black',g=>{const e=hp(HA),d=nrm([-Math.sin(HA),Math.cos(HA),0]);sweep(g,[e,add(e,mul(d,.35))],.98,14)});
  P(1,'ivory',g=>{const e=hp(HA),d=nrm([-Math.sin(HA),Math.cos(HA),0]);sweep(g,[add(e,mul(d,.35)),add(e,mul(d,1.5))],t=>.98-.1*t,14)});
  /* pegs: teardrop paddles toward the back, small ends with ivory and a red ring toward the front */
@@ -2769,7 +2769,7 @@ function controls(){const pts=new Map();let st=null,moved=0,pinch0=0,dist0=0;
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(35,Math.min(260,cam.dist*(1+Math.sign(e.deltaY)*.08)))},{passive:false})}
 /* ---------- parts ---------- */
-const PARTS=[[1,'pHead',[-4,76,0],50],[2,'pPeg',[-6,63,0],55],[3,'pNut',[1,46,0],40],[4,'pNeck',[-1,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[9,9,2],120]];
+const PARTS=[[1,'pHead',[-4,78,0],50],[2,'pPeg',[-6,63,0],55],[3,'pNut',[1,46,0],40],[4,'pNeck',[-1,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[9,9,2],120]];
 function choose(id){sel=id;const p=PARTS.find(x=>x[0]===id);const box=$('#simInfo');if(!p){box.innerHTML=`<p class="mut">${t('simTap')}</p>`;$$('#simParts button').forEach(b=>b.classList.remove('sel'));return}
  const [ti,de]=t(p[1]).split('§');box.innerHTML=`<b>${ti}</b><p>${de||''}</p>`;$$('#simParts button').forEach(b=>b.classList.toggle('sel',+b.dataset.p===id));
  const tgt=p[2];tween({tx:tgt[0]*.5,ty:tgt[1],tz:tgt[2]*.5,dist:p[3]});tts(ti+'。'+(de||''))}
