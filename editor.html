@@ -168,26 +168,26 @@ void main(){if(uIsPick>.5){gl_FragColor=vec4(uPick,1.);return;}
 function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(o));return o}
 
 /* ===================== erhu model v2: every detail has its own number ===================== */
-const NX=-1.2,TY=6.2;
+let NX=2.7;const TY=6.2;
 const C={wood:[.30,.15,.11],ebony:[.085,.07,.065],dark:[.16,.08,.06],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.10,.12,.22],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12],inner:[.10,.06,.045],lattice:[.55,.30,.16]};
 /* [key, part, label, default, min, max, step, unit] */
 const PDEF=[
- ['headRise',1,'直段長度',2.5,0,8,.1,'cm'],['headBend',1,'彎曲半徑',4.6,2,9,.1,'cm'],['headAng',1,'彎曲角度',125,60,190,1,'°'],['headR',1,'琴頭粗細（半徑）',.95,.6,1.4,.01,'cm'],
- ['tipLen',1,'鴨嘴長度',3.4,1,7,.1,'cm'],['tipW',1,'鴨嘴寬度',2.8,1,4.5,.05,'cm'],['tipT',1,'鴨嘴厚度',1.05,.5,2.5,.05,'cm'],['tipCut',1,'端面斜切',28,0,60,1,'°'],
- ['capLen',1,'象牙端蓋長度',1.3,.3,3,.05,'cm'],['blackLen',1,'黑色飾帶寬',.45,0,1.5,.05,'cm'],['ivoryLen',1,'白色飾帶寬',.4,0,1.5,.05,'cm'],
+ ['headRise',1,'直段長度',2.5,0,8,.1,'cm'],['headBend',1,'彎曲半徑',4.8,2,9,.1,'cm'],['headAng',1,'彎曲角度',82,40,190,1,'°'],['headR',1,'琴頭粗細（半徑）',.95,.6,1.4,.01,'cm'],
+ ['tipLen',1,'角尖段長度',3.7,1,7,.1,'cm'],['tipR',1,'角尖末端半徑',1.33,.6,2.2,.01,'cm'],['tipOval',1,'末端橢圓度',1.08,.7,1.5,.01,'×'],['tipCurve',1,'變粗的曲線',1.6,.5,3,.05,''],['tipCut',1,'端面斜切',54,0,70,1,'°'],
+ ['capLen',1,'象牙端蓋長度',1.35,.3,3,.05,'cm'],['blackLen',1,'黑色飾帶寬',.45,0,1.5,.05,'cm'],['ivoryLen',1,'白色飾帶寬',.4,0,1.5,.05,'cm'],
  ['boxY0',11,'軸箱下緣高度',57.2,52,62,.1,'cm'],['boxY1',11,'軸箱上緣高度',71.2,66,76,.1,'cm'],['boxW',11,'軸箱寬（左右）',1.45,1,2.2,.01,'cm'],['boxD',11,'軸箱厚（前後）',1.35,1,2.2,.01,'cm'],['boxCh',11,'四角倒角',.45,0,1,.01,'cm'],['boxFlare',11,'下方過渡長度',.7,0,2.5,.05,'cm'],['boxShoulder',11,'上方過渡長度',.9,0,3,.05,'cm'],
- ['peg1Y',2,'上弦軸高度',66.5,61,75,.1,'cm'],['peg2Y',2,'下弦軸高度',60.5,56,70,.1,'cm'],['pegLen',2,'弦軸長度',15,9,20,.1,'cm'],['pegW',2,'把手最粗（半徑）',1.3,.6,2.2,.01,'cm'],['pegShaft',2,'軸桿粗細（半徑）',.42,.25,.8,.01,'cm'],['pegFlat',2,'把手扁平度',1,.4,1.3,.01,'×'],['pegTip',2,'前端象牙長度',.5,0,1.5,.05,'cm'],
- ['nutY',3,'千斤高度',44,36,52,.1,'cm'],['nutGap',3,'弦與琴桿距離',1.0,.3,3,.05,'cm'],['nutW',3,'纏繞寬度',1.1,.3,2.5,.05,'cm'],['nutTurns',3,'纏繞圈數',9,3,16,1,'圈'],['nutStrands',3,'拉線股數',7,2,12,1,'股'],
+ ['peg1Y',2,'上弦軸高度',66.5,61,75,.1,'cm'],['peg2Y',2,'下弦軸高度',60.5,56,70,.1,'cm'],['pegFront',2,'前端突出（離琴桿中心）',3.9,1.5,6,.05,'cm'],['pegLen',2,'弦軸總長',16.5,9,22,.1,'cm'],['pegW',2,'把手最粗（半徑）',1.3,.6,2.2,.01,'cm'],['pegShaft',2,'軸桿粗細（半徑）',.42,.25,.8,.01,'cm'],['pegFlat',2,'把手扁平度',1,.4,1.3,.01,'×'],['pegTip',2,'前端象牙長度',.5,0,1.5,.05,'cm'],
+ ['nutY',3,'千斤高度',43.3,36,52,.1,'cm'],['nutGap',3,'弦與琴桿距離',.3,0,3,.05,'cm'],['nutLoop',3,'繞琴桿的繩股數',2,1,5,1,'股'],['nutTurns',3,'纏弦圈數',8,2,16,1,'圈'],['nutW',3,'纏弦寬度',1.05,.3,2.5,.05,'cm'],['nutCord',3,'繩子粗細',.06,.03,.12,.005,'cm'],
  ['fineOn',13,'顯示微調器',1,0,1,1,''],['fineY',13,'微調器高度',49.5,46,55,.1,'cm'],
- ['neckR',4,'下端半徑',1.2,.8,1.8,.01,'cm'],['neckTop',4,'上端半徑',1.05,.7,1.6,.01,'cm'],
- ['strTopX',8,'上端（琴頭）前後',2.55,0,4,.05,'cm'],['strTopDY',8,'上端（琴頭）上下',0,-3,3,.05,'cm'],['strBotX',8,'下端（琴筒）前後',6.8,0,10,.05,'cm'],['strBotY',8,'下端（琴筒）高度',2.8,0,8,.05,'cm'],['strGap',8,'兩弦間距',.44,.2,1,.01,'cm'],['strR',8,'弦粗細',.07,.03,.15,.005,'cm'],
+ ['neckX',4,'琴桿前後位置',2.7,-4,5,.05,'cm'],['neckR',4,'下端半徑',1.2,.8,1.8,.01,'cm'],['neckTop',4,'上端半徑',1.05,.7,1.6,.01,'cm'],
+ ['strTopX',8,'琴頭端前後（離琴桿中心）',3.2,0,6,.05,'cm'],['strTopDY',8,'琴頭端上下',.3,-3,3,.05,'cm'],['strBotX',8,'琴筒端前後（離蛇皮）',.35,-3,4,.05,'cm'],['strBotY',8,'琴筒端高度（離筒底）',.5,0,9,.05,'cm'],['strGap',8,'兩弦間距',.44,.2,1,.01,'cm'],['strR',8,'弦粗細',.07,.03,.15,.005,'cm'],
  ['brY',7,'琴碼高度位置',1.1,-3,3,.05,'cm'],['brH',7,'琴碼高',1.0,.4,2,.05,'cm'],['brW',7,'琴碼寬',1.0,.4,2,.05,'cm'],
  ['drumR',5,'琴筒半徑',4.6,3.5,6,.05,'cm'],['drumL',5,'琴筒長度',13,10,16,.1,'cm'],['drumWall',5,'筒壁厚度',.45,.15,1,.01,'cm'],['ringL',5,'前端白圈寬',.5,0,1.5,.05,'cm'],['backRings',5,'後端線條數',3,0,6,1,'條'],
  ['winOn',12,'顯示音窗',1,0,1,1,''],['winInset',12,'音窗深度',.35,0,3,.05,'cm'],['winCell',12,'花格大小',1.35,.7,3,.05,'cm'],['winBar',12,'花格線粗',.12,.05,.3,.01,'cm'],['winWave',12,'花格彎曲',.32,0,.7,.01,''],['winRot',12,'花格角度',45,0,90,1,'°'],
  ['baseW',9,'琴托長',11.5,6,16,.1,'cm'],['baseH',9,'琴托高',1.5,.5,4,.05,'cm'],['baseD',9,'琴托寬',7.6,4,11,.1,'cm'],
  ['bowLen',10,'弓長',80,60,95,.5,'cm'],['bowAng',10,'弓的角度',30,10,50,.5,'°'],['bowHair',10,'弓毛寬（半）',.38,.15,.8,.01,'cm'],['bowStick',10,'弓桿粗細',.33,.2,.6,.01,'cm']];
 let P={};
-function setP(over){P={};PDEF.forEach(d=>P[d[0]]=over&&over[d[0]]!=null?over[d[0]]:d[3])}
+function setP(over){P={};PDEF.forEach(d=>P[d[0]]=over&&over[d[0]]!=null?over[d[0]]:d[3]);NX=P.neckX}
 const smooth=t=>t*t*(3-2*t);
 /* profile helpers: 24 points by angle, so different shapes morph into each other */
 const PN=24,ANG=[...Array(PN)].map((_,i)=>i/PN*Math.PI*2);
@@ -198,7 +198,7 @@ const lerpP=(A,B,t)=>A.map((p,i)=>[p[0]+(B[i][0]-p[0])*t,p[1]+(B[i][1]-p[1])*t])
 function sweepP(g,pts,prof,caps=true,cut=null){const N=pts.length,rings=[];
  for(let k=0;k<N;k++){const T=nrm(sub(pts[Math.min(k+1,N-1)],pts[Math.max(k-1,0)])),Nn=[T[1],-T[0],0],Bz=[0,0,1],pr=prof(k,N);
   const ring=pr.map((q,i)=>{const pp=pr[(i+1)%PN],pm=pr[(i+PN-1)%PN],da=pp[0]-pm[0],db=pp[1]-pm[1],l=Math.hypot(da,db)||1,na=db/l,nb=-da/l;
-   let p=add(pts[k],add(mul(Nn,q[0]),mul(Bz,q[1])));if(cut&&k===N-1)p=add(p,mul(T,q[0]*Math.tan(cut)));
+   let p=add(pts[k],add(mul(Nn,q[0]),mul(Bz,q[1])));if(cut&&k===N-1){const rm=Math.max(...pr.map(v=>v[0]));p=add(p,mul(T,(q[0]+rm)*Math.tan(cut)))}
    return [p,nrm(add(mul(Nn,na),mul(Bz,nb)))]});ring.T=T;rings.push(ring)}
  const o=g.p.length/3;rings.forEach((r,k)=>{r.forEach(([p,n],i)=>{g.p.push(...p);g.n.push(...n);g.u.push(i/PN,k/(N-1))});const [p,n]=r[0];g.p.push(...p);g.n.push(...n);g.u.push(1,k/(N-1))});
  for(let k=0;k<N-1;k++)for(let s=0;s<PN;s++){const a=o+k*(PN+1)+s,b=a+PN+1;g.i.push(a,b,a+1,a+1,b,b+1)}
@@ -213,8 +213,8 @@ const inHex=(y,z,R)=>{const a=Math.abs(y),b=Math.abs(z);return b<=R*Math.sqrt(3)
 function hexFace(g,x,R,dir){const H=hexPts(R),c=g.p.length/3;g.p.push(x,TY,0);g.n.push(dir,0,0);g.u.push(.5,.5);H.forEach(([y,z])=>{g.p.push(x,TY+y,z);g.n.push(dir,0,0);g.u.push(.5+z/R/2,.5-y/R/2)});for(let s=0;s<6;s++){const a=c+1+s,b=c+1+(s+1)%6;dir>0?g.i.push(c,a,b):g.i.push(c,b,a)}}
 /* derived positions used by build, handles and the ruler */
 function geo(){const TX1=P.drumL/2,TX0=-TX1,bot=TY-P.drumR*Math.cos(Math.PI/6),neckRAt=y=>{const y0=bot,y1=P.boxY0-P.boxFlare,t=Math.max(0,Math.min(1,(y-y0)/(y1-y0)));return P.neckR+(P.neckTop-P.neckR)*t};
- const nutX=NX+neckRAt(P.nutY)+P.nutGap,brX=TX1+P.brH,brYa=TY+P.brY;
- return {TX0,TX1,bot,neckRAt,nutX,brX,brYa,top:i=>[NX+P.strTopX,(i?P.peg2Y:P.peg1Y)+P.strTopDY],topMid:[NX+P.strTopX,(P.peg1Y+P.peg2Y)/2+P.strTopDY],bottom:[P.strBotX,P.strBotY]}}
+ const coilR=.16,nutX=NX+neckRAt(P.nutY)+P.nutGap+coilR,brX=TX1+P.brH,brYa=TY+P.brY;
+ return {TX0,TX1,bot,neckRAt,nutX,coilR,brX,brYa,top:i=>[NX+P.strTopX,(i?P.peg2Y:P.peg1Y)+P.strTopDY],topMid:[NX+P.strTopX,(P.peg1Y+P.peg2Y)/2+P.strTopDY],bottom:[TX1+P.strBotX,bot+P.strBotY]}}
 function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.length)parts.push({id,mat,g,...o})},Gm=geo(),{TX0,TX1,bot}=Gm;
  /* base */
  Q(9,'dark',g=>box(g,[-.3,bot-P.baseH/2,0],[P.baseW,P.baseH,P.baseD]));
@@ -242,29 +242,33 @@ function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.l
   for(let k=0;k<=6;k++)path.push([NX,y0+(y1-y0)*k/6,0]);const na=Math.max(8,Math.round(A/.08));for(let k=1;k<=na;k++){const a=A*k/na;path.push([NX-B+B*Math.cos(a),y1+B*Math.sin(a),0])}
   const end=path[path.length-1],T=[-Math.sin(A),Math.cos(A),0];for(let k=1;k<=14;k++)path.push(add(end,mul(T,P.tipLen*k/14)));
   const S=[0];for(let k=1;k<path.length;k++)S.push(S[k-1]+len(sub(path[k],path[k-1])));const L=S[S.length-1],tip0=L-P.tipLen;
-  const prof=s=>{if(s<=tip0)return profEll(P.headR,P.headR);const t=Math.pow((s-tip0)/P.tipLen,1.3);return profEll(P.headR+(P.tipT/2-P.headR)*t,P.headR+(P.tipW/2-P.headR)*t)};
+  const prof=s=>{if(s<=tip0)return profEll(P.headR,P.headR);const t=Math.pow((s-tip0)/P.tipLen,P.tipCurve),r=P.headR+(P.tipR-P.headR)*t;return profEll(r,r*(1+(P.tipOval-1)*t))};
   /* resample with exact band boundaries */
   const b3=L-P.capLen,b2=b3-P.blackLen,b1=b2-P.ivoryLen,cuts=[0,b1,b2,b3,L].map(v=>Math.max(0,Math.min(L,v))),at=s=>{let k=1;while(k<S.length-1&&S[k]<s)k++;const t=(s-S[k-1])/((S[k]-S[k-1])||1);return add(path[k-1],mul(sub(path[k],path[k-1]),t))};
   const mats=['ebony','ivory','black','ivory'];for(let q=0;q<4;q++){const s0=cuts[q],s1=cuts[q+1];if(s1-s0<1e-4)continue;const n=Math.max(2,Math.ceil((s1-s0)/.25)),ss=[...Array(n+1)].map((_,k)=>s0+(s1-s0)*k/n);
    Q(1,mats[q],g=>sweepP(g,ss.map(at),k=>prof(ss[k]),q===3||(q===0&&false),q===3?P.tipCut*Math.PI/180:null))}}
  /* pegs */
- [P.peg1Y,P.peg2Y].forEach(y=>{const x0=NX+2.4;
+ [P.peg1Y,P.peg2Y].forEach(y=>{const x0=NX+P.pegFront-.5;
   Q(2,'ebony',g=>{const pts=[];for(let k=0;k<=16;k++)pts.push([x0-k*P.pegLen/16,y,0]);sweepP(g,pts,(k,N)=>{const t=k/(N-1),r=t<.25?P.pegShaft:P.pegShaft+Math.pow((t-.25)/.75,1.4)*(P.pegW-P.pegShaft);return profEll(r,r*(t<.25?1:1+(P.pegFlat-1)*((t-.25)/.75)))},false)});
   Q(2,'ivory',g=>{const xe=x0-P.pegLen,r=P.pegW;sweepP(g,line([xe,y,0],[xe-.6,y,0],2),(k,N)=>profEll(r*(1-.15*k/(N-1)),r*P.pegFlat*(1-.15*k/(N-1))),true);if(P.pegTip>0)sweepP(g,line([x0+.05,y,0],[x0+.05+P.pegTip,y,0],2),()=>profEll(P.pegShaft,P.pegShaft),true)});
   Q(2,'red',g=>sweepP(g,line([x0-.45,y,0],[x0+.05,y,0],1),()=>profEll(P.pegShaft+.05,P.pegShaft+.05),true))});
  /* strings: peg -> qianjin -> bridge -> tail at the drum */
  const sp=(k,s)=>(k==='in'?-1:1)*s;
- const strPts=k=>{const i=k==='in'?0:1,t=Gm.top(i);return [[t[0],t[1],sp(k,.42)],[Gm.nutX,P.nutY,sp(k,.12)],[Gm.brX,Gm.brYa,sp(k,P.strGap/2)],[Gm.bottom[0],Gm.bottom[1],sp(k,P.strGap*.3)]]};
+ const strPts=k=>{const i=k==='in'?0:1,t=Gm.top(i);return [[t[0],t[1],0],[Gm.nutX,P.nutY,sp(k,.1)],[Gm.brX,Gm.brYa,sp(k,P.strGap/2)],[Gm.bottom[0],Gm.bottom[1],sp(k,P.strGap*.3)]]};
  ['in','out'].forEach(k=>Q(8,'str',g=>{const p=strPts(k);for(let s=0;s<p.length-1;s++)sweep(g,line(p[s],p[s+1],1),k==='in'?P.strR:P.strR*.85,6,false)},{str:k}));
  /* bridge + felt */
  Q(7,'ivory',g=>box(g,[TX1+P.brH/2,Gm.brYa-P.brW*.35,0],[P.brH,P.brW*1.1,P.brW]));
  Q(7,'felt',g=>box(g,[TX1+.2,TY-P.drumR*.5,0],[.4,1.4,1.6]));
  /* qianjin: cord wound round the neck, strands pulled out to a small wrap round both strings */
- Q(3,'cord',g=>{const r=Gm.neckRAt(P.nutY)+.06,n=P.nutTurns;for(let k=0;k<n;k++){const y=P.nutY-P.nutW/2+P.nutW*(k+.5)/n,ring=[];for(let q=0;q<=20;q++){const a=q/20*Math.PI*2;ring.push([NX+Math.cos(a)*r,y,Math.sin(a)*r])}sweep(g,ring,.07,5,false)}
-  const m=P.nutStrands;for(let k=0;k<m;k++){const t=m>1?k/(m-1):.5,zs=-.25+.5*t,ya=P.nutY-P.nutW*.45+P.nutW*.9*t;sweep(g,[[NX+r*.95,ya,zs*r*1.4],[Gm.nutX-.05,P.nutY+.05*(t-.5),zs*.5]],.055,5,false)}
-  for(let k=0;k<4;k++){const ring=[],yy=P.nutY-.12+k*.08;for(let q=0;q<=16;q++){const a=q/16*Math.PI*2;ring.push([Gm.nutX+Math.cos(a)*.13,yy,Math.sin(a)*.32])}sweep(g,ring,.045,5,false)}});
+ Q(3,'cord',g=>{const r=Gm.neckRAt(P.nutY)+P.nutCord,cr=P.nutCord,cx=Gm.nutX,m=P.nutLoop,cR=Gm.coilR;
+  /* one loop round the back of the neck, its ends running forward to the strings */
+  for(let k=0;k<m;k++){const y=P.nutY+(m>1?(k/(m-1)-.5)*cr*2.6*(m-1)*.5:0),pts=[];
+   for(let q=0;q<=22;q++){const a=-Math.PI*.42+q/22*(Math.PI*2-Math.PI*.84);pts.push([NX+Math.cos(a)*r,y,Math.sin(a)*r])}
+   const zA=Math.sin(-Math.PI*.42)*r,zB=-zA;sweep(g,[[cx-cR,y,zB*.35],[NX+Math.cos(Math.PI*.42)*r,y,zB]].concat(pts.slice().reverse()).concat([[NX+Math.cos(-Math.PI*.42)*r,y,zA],[cx-cR,y,zA*.35]]),cr,5,false)}
+  /* coil wound round both strings */
+  const n=P.nutTurns;for(let k=0;k<n;k++){const y=P.nutY-P.nutW/2+P.nutW*(k+.5)/n,ring=[];for(let q=0;q<=18;q++){const a=q/18*Math.PI*2;ring.push([cx+Math.cos(a)*cR,y+(q/18-.5)*P.nutW/n*.9,Math.sin(a)*(cR+.14)])}sweep(g,ring,cr*.9,5,false)}});
  /* fine tuners */
- if(P.fineOn>.5)['in','out'].forEach(k=>Q(13,'brass',g=>{const p=strPts(k),t=(p[1][1]-P.fineY)/(p[1][1]-p[2][1]);if(t<0||t>1)return;const x=p[1][0]+(p[2][0]-p[1][0])*t,z=p[1][2]+(p[2][2]-p[1][2])*t,y=P.fineY;
+ if(P.fineOn>.5)['in','out'].forEach(k=>Q(13,'brass',g=>{const p=strPts(k);let s0=-1;for(let q=0;q<p.length-1;q++)if((p[q][1]-P.fineY)*(p[q+1][1]-P.fineY)<=0){s0=q;break}if(s0<0)return;const A=p[s0],Bp=p[s0+1],t=(A[1]-P.fineY)/((A[1]-Bp[1])||1),x=A[0]+(Bp[0]-A[0])*t,z=A[2]+(Bp[2]-A[2])*t,y=P.fineY;
   box(g,[x,y,z],[.5,2.2,.35]);sweep(g,line([x,y+.6,z],[x+1.2,y+.6,z],1),.22,8);box(g,[x,y-.7,z],[.7,.45,.45])}));
  /* bow */
  const S1=31,a=P.bowAng*Math.PI/180,BD=[Math.cos(a),-Math.sin(a),0],BP0=[Gm.brX,Gm.brYa+3.0,0],BAT=s=>add(BP0,mul(BD,s)),S0=S1-P.bowLen,SZo=-1.7,at=(s2,dz=0)=>{const p=BAT(s2);return [p[0],p[1],p[2]+dz]};
@@ -280,7 +284,7 @@ const C0=JSON.parse(JSON.stringify(C));
 const MATN={wood:'琴筒木',ebony:'琴桿黑檀',dark:'深色木',ivory:'象牙白',str:'琴弦',hair:'弓毛',stick:'弓桿',black:'黑色飾帶',cord:'千斤繩',brass:'黃銅',felt:'琴碼墊',frog:'弓根',red:'紅色飾圈',inner:'琴筒內壁',lattice:'音窗花格'};
 /* [id, name] ; pivots are computed from the current numbers */
 const PART=[[1,'琴頭'],[11,'軸箱'],[2,'弦軸'],[3,'千斤'],[13,'微調器'],[4,'琴桿'],[5,'琴筒'],[12,'音窗'],[6,'蛇皮'],[7,'琴碼'],[8,'琴弦'],[9,'琴托'],[10,'弓']];
-function pivotOf(id){const g=geo();return ({1:[NX-3,P.boxY1+P.headRise+3,0],11:[NX,(P.boxY0+P.boxY1)/2,0],2:[NX-6,(P.peg1Y+P.peg2Y)/2,0],3:[g.nutX-.5,P.nutY,0],13:[NX+2,P.fineY,0],4:[NX,30,0],5:[0,TY,0],12:[g.TX0,TY,0],6:[g.TX1,TY,0],7:[g.brX,g.brYa,0],8:[3,30,0],9:[0,1,0],10:[0,18,0]})[id]||[0,0,0]}
+function pivotOf(id){const g=geo();return ({1:[NX-3,P.boxY1+P.headRise+3,0],11:[NX,(P.boxY0+P.boxY1)/2,0],2:[NX-6,(P.peg1Y+P.peg2Y)/2,0],3:[g.nutX-.4,P.nutY,0],13:[NX+2,P.fineY,0],4:[NX,30,0],5:[0,TY,0],12:[g.TX0,TY,0],6:[g.TX1,TY,0],7:[g.brX,g.brYa,0],8:[3,30,0],9:[0,1,0],10:[0,18,0]})[id]||[0,0,0]}
 const XF=[['dx','左右移動',-15,15,.1,'cm'],['dy','上下移動',-15,15,.1,'cm'],['dz','前後移動',-15,15,.1,'cm'],['rz','旋轉',-45,45,.5,'°'],['s','縮放',.5,1.6,.01,'×']];
 /* E is the whole editable document: shape numbers, material colours, per-part moves, hidden parts */
 let E={mdl:{},mat:{},xf:{},hide:{}};
@@ -351,7 +355,7 @@ function onPlane(px,py){const I=inv4(VPc),x=px/W*2-1,y=1-py/H*2,un=(z)=>{const v
  const a=un(-1),b=un(1),dz=b[2]-a[2];if(Math.abs(dz)<1e-6)return null;const t=-a[2]/dz;if(Math.abs(dz)<.02*len(sub(b,a)))return null;return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]}
 function setPar(k,v){const d=PDEF.find(q=>q[0]===k);v=Math.max(d[4],Math.min(d[5],Math.round(v/d[6])*d[6]));if(Math.abs(v-d[3])<1e-9)delete E.mdl[k];else E.mdl[k]=+v.toFixed(4)}
 function dragHandle(h,w){if(!w)return;const g=geo();if(h==='top'){setPar('strTopX',w[0]-NX);setPar('strTopDY',w[1]-(P.peg1Y+P.peg2Y)/2)}
- else if(h==='nut'){setPar('nutY',w[1]);setPar('nutGap',w[0]-NX-g.neckRAt(w[1]))}else{setPar('strBotX',w[0]);setPar('strBotY',w[1])}
+ else if(h==='nut'){setPar('nutY',w[1]);setPar('nutGap',w[0]-NX-g.neckRAt(w[1])-g.coilR)}else{setPar('strBotX',w[0]-g.TX1);setPar('strBotY',w[1]-g.bot)}
  cancelAnimationFrame(rbT);rbT=requestAnimationFrame(()=>{rebuild();if(sel===8||sel===3)peditUI()})}
 /* reference photo behind (or over) the model */
 const REF={img:null,op:.55,sc:1,x:0,y:0,front:false};
@@ -377,11 +381,11 @@ function controls(){const pts=new Map();let st=null,moved=0,p0=0,d0=0,pan=null;
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(20,Math.min(320,cam.dist*(1+Math.sign(e.deltaY)*.08)))},{passive:false})}
 /* ---------- history ---------- */
 let HIST=[],FUT=[];const snap=()=>JSON.stringify(E);
-function commit(){const s=snap();if(HIST[HIST.length-1]!==s){HIST.push(s);if(HIST.length>120)HIST.shift();FUT=[]}LS.set('erhuEd2.cur',E);histUI()}
+function commit(){const s=snap();if(HIST[HIST.length-1]!==s){HIST.push(s);if(HIST.length>120)HIST.shift();FUT=[]}LS.set('erhuEd3.cur',E);histUI()}
 function histUI(){$('#undo').disabled=HIST.length<2;$('#redo').disabled=!FUT.length}
 function restore(s){E=JSON.parse(s);rebuild();ui()}
-function undo(){if(HIST.length<2)return;FUT.push(HIST.pop());restore(HIST[HIST.length-1]);LS.set('erhuEd2.cur',E);histUI();toast('已復原')}
-function redo(){if(!FUT.length)return;const s=FUT.pop();HIST.push(s);restore(s);LS.set('erhuEd2.cur',E);histUI();toast('已重做')}
+function undo(){if(HIST.length<2)return;FUT.push(HIST.pop());restore(HIST[HIST.length-1]);LS.set('erhuEd3.cur',E);histUI();toast('已復原')}
+function redo(){if(!FUT.length)return;const s=FUT.pop();HIST.push(s);restore(s);LS.set('erhuEd3.cur',E);histUI();toast('已重做')}
 /* ---------- panels ---------- */
 const fmt=(v,st)=>(+v).toFixed(st<.1?2:st<1?1:0);
 function row(id,label,unit,v,mn,mx,st,def){const ch=Math.abs(v-def)>1e-6;return `<div class="row${ch?' chg':''}" data-id="${id}"><label for="r_${id}">${label}</label><input type="range" id="r_${id}" min="${mn}" max="${mx}" step="${st}" value="${v}"><input type="number" aria-label="${label}（${unit}）" min="${mn}" max="${mx}" step="${st}" value="${fmt(v,st)}"></div>`}
@@ -407,9 +411,9 @@ function ui(){plistUI();peditUI();matsUI();vUI()}
 function choose(id,fromModel){sel=id||0;$('#selb').hidden=!sel;if(sel)$('#selb').textContent='已選：'+PART.find(p=>p[0]===sel)[1];plistUI();peditUI();if(sel&&fromModel)tab('part')}
 function tab(n){$$('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===n));['part','color','ref','file'].forEach(k=>$('#p-'+k).hidden=k!==n)}
 /* ---------- versions & export ---------- */
-function vUI(){const V=LS.get('erhuEd2.vers',[]);$('#vers').innerHTML=V.length?V.map((v,i)=>`<div class="ver"><b>${v.name.replace(/</g,'&lt;')}</b><small>${new Date(v.t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</small><button data-ld="${i}">載入</button><button data-del="${i}" aria-label="刪除">刪除</button></div>`).join(''):'<p class="empty">還沒有存過版本。調到一個滿意的樣子就存一份，之後可以隨時切回來。</p>';
- $$('#vers [data-ld]').forEach(b=>b.onclick=()=>{const v=LS.get('erhuEd2.vers',[])[+b.dataset.ld];E=JSON.parse(JSON.stringify(v.data));rebuild();commit();ui();toast('已載入「'+v.name+'」')});
- $$('#vers [data-del]').forEach(b=>b.onclick=()=>{if(b.dataset.ok){const V=LS.get('erhuEd2.vers',[]);V.splice(+b.dataset.del,1);LS.set('erhuEd2.vers',V);vUI();toast('已刪除')}else{b.dataset.ok=1;b.textContent='再按一次確認';setTimeout(()=>{if(b.isConnected){delete b.dataset.ok;b.textContent='刪除'}},2500)}})}
+function vUI(){const V=LS.get('erhuEd3.vers',[]);$('#vers').innerHTML=V.length?V.map((v,i)=>`<div class="ver"><b>${v.name.replace(/</g,'&lt;')}</b><small>${new Date(v.t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</small><button data-ld="${i}">載入</button><button data-del="${i}" aria-label="刪除">刪除</button></div>`).join(''):'<p class="empty">還沒有存過版本。調到一個滿意的樣子就存一份，之後可以隨時切回來。</p>';
+ $$('#vers [data-ld]').forEach(b=>b.onclick=()=>{const v=LS.get('erhuEd3.vers',[])[+b.dataset.ld];E=JSON.parse(JSON.stringify(v.data));rebuild();commit();ui();toast('已載入「'+v.name+'」')});
+ $$('#vers [data-del]').forEach(b=>b.onclick=()=>{if(b.dataset.ok){const V=LS.get('erhuEd3.vers',[]);V.splice(+b.dataset.del,1);LS.set('erhuEd3.vers',V);vUI();toast('已刪除')}else{b.dataset.ok=1;b.textContent='再按一次確認';setTimeout(()=>{if(b.isConnected){delete b.dataset.ok;b.textContent='刪除'}},2500)}})}
 function docOut(){const o={v:1};if(Object.keys(E.mdl).length)o.mdl=E.mdl;if(Object.keys(E.mat).length)o.mat=Object.fromEntries(Object.entries(E.mat).map(([k,c])=>[k,hex(c)]));if(Object.keys(E.xf).length)o.xf=E.xf;if(Object.keys(E.hide).length)o.hide=Object.keys(E.hide).map(Number);return o}
 function docIn(o){const e={mdl:o.mdl||{},mat:{},xf:o.xf||{},hide:{}};Object.entries(o.mat||{}).forEach(([k,h])=>e.mat[k]=typeof h==='string'?unhex(h):h);(o.hide||[]).forEach(i=>e.hide[i]=true);return e}
 /* minimal GLB writer: one node per part, cm -> m, part moves baked in */
@@ -425,7 +429,7 @@ function glb(){const mats=[],mi={},nodes=[],meshesJ=[],acc=[],views=[],bufs=[];l
  const total=12+8+jb.length+8+off,out=new Uint8Array(total),dv=new DataView(out.buffer);dv.setUint32(0,0x46546C67,true);dv.setUint32(4,2,true);dv.setUint32(8,total,true);dv.setUint32(12,jb.length,true);dv.setUint32(16,0x4E4F534A,true);out.set(jb,20);
  let o=20+jb.length;dv.setUint32(o,off,true);dv.setUint32(o+4,0x004E4942,true);o+=8;bufs.forEach(b=>{out.set(b,o);o+=b.length});return out}
 /* ---------- wire up ---------- */
-function start(){if(!init())return;E=Object.assign({mdl:{},mat:{},xf:{},hide:{}},LS.get('erhuEd2.cur',{}));rebuild();HIST=[snap()];histUI();controls();ui();choose(0);requestAnimationFrame(frame);
+function start(){if(!init())return;E=Object.assign({mdl:{},mat:{},xf:{},hide:{}},LS.get('erhuEd3.cur',{}));rebuild();HIST=[snap()];histUI();controls();ui();choose(0);requestAnimationFrame(frame);
  $$('#views button').forEach(b=>b.onclick=()=>{$$('#views button').forEach(x=>x.classList.toggle('on',x===b));spin=false;$('#spin').classList.remove('on');tween(VIEWS[b.dataset.v])});
  $$('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
  $('#undo').onclick=undo;$('#redo').onclick=redo;document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();e.shiftKey?redo():undo()}});
@@ -436,7 +440,7 @@ function start(){if(!init())return;E=Object.assign({mdl:{},mat:{},xf:{},hide:{}}
  [['rOp','op','%',v=>Math.round(v*100)],['rSc','sc','×',v=>(+v).toFixed(2)],['rX','x','',v=>(+v).toFixed(2)],['rY','y','',v=>(+v).toFixed(2)]].forEach(([id,k,u,f])=>{const i=$('#'+id),o=$('#'+id+'V');const s=()=>{REF[k]=+i.value;o.textContent=f(i.value)+u};i.oninput=s;s()});
  $('#rFront').onclick=()=>{REF.front=!REF.front;$('#rFront').classList.toggle('on',REF.front);$('#rFront').textContent=REF.front?'照片放回模型後面':'照片蓋在模型上'};
  $('#rClear').onclick=()=>{REF.img=null;$('#refCtl').hidden=true;$('#drop').textContent='點這裡選照片，或把照片拖進來';$('#refFile').value=''};
- $('#vSave').onclick=()=>{const V=LS.get('erhuEd2.vers',[]),name=$('#vName').value.trim()||('版本 '+(V.length+1));V.unshift({name,t:Date.now(),data:JSON.parse(snap())});LS.set('erhuEd2.vers',V);$('#vName').value='';vUI();toast('已存成「'+name+'」')};
+ $('#vSave').onclick=()=>{const V=LS.get('erhuEd3.vers',[]),name=$('#vName').value.trim()||('版本 '+(V.length+1));V.unshift({name,t:Date.now(),data:JSON.parse(snap())});LS.set('erhuEd3.vers',V);$('#vName').value='';vUI();toast('已存成「'+name+'」')};
  $('#copy').onclick=()=>{const txt='二胡模型設定 '+JSON.stringify(docOut());const o=$('#out');o.value=txt;o.hidden=false;
   const done=()=>toast('已複製，貼到對話給 Claude 就可以'),fb=()=>{o.focus();o.select();toast('請長按或 Ctrl+C 複製下方文字')};try{navigator.clipboard.writeText(txt).then(done,fb)}catch(e){fb()}};
  $('#glb').onclick=()=>{const b=new Blob([glb()],{type:'model/gltf-binary'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='erhu_model.glb';document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),500);toast('已產生 erhu_model.glb（在 Claude 裡預覽時無法下載，請用 GitHub 版）')};
