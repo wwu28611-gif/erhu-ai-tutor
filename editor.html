@@ -276,7 +276,7 @@ function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.l
   /* each pass: one full turn round the neck, then one full turn biting round both strings, then on to the next pass */
   const phi=.55;for(let k=0;k<n8;k++){const pts=[],yy=y;
    for(let q=0;q<=28;q++){const a=phi+q/28*Math.PI*2;pts.push([NX+Math.cos(a)*rN,yy+pitch*.45*q/28,Math.sin(a)*rN])}
-   const ys=P.nutY+(n8>1?(k/(n8-1)-.5)*P.nutBite:0),b0=Math.PI-.55;for(let q=0;q<=24;q++){const b=b0-q/24*Math.PI*2;pts.push([cx+Math.cos(b)*cxr,ys+cr*.6*(q/24-.5),Math.sin(b)*cz])}/* all passes bunch onto one narrow spot of the strings, so the strands fan out like a V */
+   const ys=P.nutY+(n8>1?(k/(n8-1)-.5)*P.nutBite:0),b0=Math.PI/2+.05;for(let q=0;q<=16;q++){const b=b0-q/16*(2*b0);pts.push([cx+Math.cos(b)*cxr,ys,Math.sin(b)*cz])}/* the cord only hooks over the front of the strings; all the turning is done on the neck *//* all passes bunch onto one narrow spot of the strings, so the strands fan out like a V */
    pts.push([NX+Math.cos(phi)*rN,yy+pitch*.95,Math.sin(phi)*rN]);dbl(pts);y+=pitch}
   for(let k=0;k<nt;k++)neckTurn();
   /* knot and tails at the back */
