@@ -469,6 +469,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 
 #simVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.simw.cambg{background:#000}.simw #simCv{position:relative;z-index:1}
 .simar{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.6rem}.simar .btn{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem .5rem;font-size:.875rem}.simar .btn.on{background:var(--ac);color:#fff}
+.simih{display:flex;align-items:center;justify-content:space-between;gap:.6rem}.simsay{border:1px solid var(--line,#ddd);background:none;color:inherit;border-radius:2rem;padding:.3rem .75rem;font:inherit;font-size:.8rem;cursor:pointer;white-space:nowrap}
 .simarp{font-size:.72rem;margin:.4rem .2rem 0;line-height:1.45}
 
 .airintro{margin-top:.7rem}.airintro b{font-size:1rem}.airintro ol{margin:.5rem 0 .9rem 1.1rem;padding:0;font-size:.875rem;line-height:1.7;color:var(--mut)}
@@ -609,11 +610,8 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="pt" style="margin-top:.2rem"><h1 data-i="simT"></h1><p data-i="simSub"></p></div>
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="play" data-i="simPlayL"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
- <p class="mut simnote" id="simEdit"><span data-i="mdMoved"></span> <a href="editor.html" target="_blank" rel="noopener" data-i="mdOpen"></a></p>
- <div class="simar"><button class="btn" id="simAR"><span>📱</span><span data-i="arBtn"></span></button><button class="btn alt" id="simCamBg"><span>📷</span><span data-i="arCam"></span></button></div>
- <p class="mut simarp" data-i="arHint"></p>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v62</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v63</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1266,7 +1264,8 @@ arHint|AR 會用手機的相機把二胡放在地上或桌上，可以走過去�
 arPhone|AR 需要用手機開啟（iPhone 用 Safari、Android 用 Chrome）|AR needs a phone (Safari on iPhone, Chrome on Android)|AR はスマホで開いてください（iPhone は Safari、Android は Chrome）
 arInApp|LINE、Messenger 等內建瀏覽器無法使用 AR，請點右上角選單「用瀏覽器開啟」|In-app browsers can't open AR. Use the menu to open in your browser|アプリ内ブラウザでは AR が使えません。メニューから「ブラウザで開く」を選んでください
 arCamOn|相機已開啟，拖曳轉動二胡、兩指縮放大小|Camera on: drag to turn, pinch to resize|カメラ オン：ドラッグで回転、ピンチで拡大縮小
-airL|空氣二胡|Air erhu|エア二胡
+simSay|語音介紹|Listen|音声で聞く
+airL|虛擬二胡|Virtual erhu|バーチャル二胡
 airT|把虛擬二胡拿在手上拉|Play a virtual erhu with your body|体で弾くバーチャル二胡
 air1|手機立在前方約 1.5 公尺，用自拍鏡頭，坐著讓上半身和大腿入鏡|Stand the phone about 1.5 m away (front camera), sit so your upper body and thighs are in view|スマホを約1.5m前に立て、座って上半身と太ももを映します
 air2|坐好後右手比「1」，倒數 3 秒內擺好拉琴姿勢：左手虎口在肩膀高度握住琴桿（千斤的位置）、右手持弓。二胡會依你的姿勢校正後出現，之後跟著你的身體移動|Sit, then show “1” with your right hand. During the 3-second countdown take your playing pose: left thumb-web at shoulder height on the neck (where the nut is), right hand holding the bow. The erhu is fitted to that pose and then follows your body|座ったら右手で「1」。3秒のカウント中に構えます：左手の親指の付け根を肩の高さで棹に（千斤の位置）、右手は弓を持つ形。その姿勢に合わせて二胡が現れ、体に追従します
@@ -1284,7 +1283,7 @@ airCalNoL|沒看到左手，先用預設位置；可再比「1」重新校正|Le
 airCalAgain|比「1」重新校正|Show “1” to recalibrate|「1」で再調整
 air3|左手沿著琴桿往下滑，離千斤越遠音越高，每條弦一個八度；琴弦上的白點是各音的位置；上方按鈕切換內弦、外弦|Slide your left hand down the neck: further from the nut is higher, one octave per string; the white dots mark each note; switch strings with the top buttons|左手を棹に沿って下げるほど音が高くなります（各弦1オクターブ）。弦上の白い点が各音の位置です。上のボタンで弦を切替
 air4|按「錄影」可以錄下你的演奏，分享到 IG、TikTok|Tap Record to capture your performance and share it|「録画」で演奏を録画して共有できます
-airGo|開始空氣二胡|Start air erhu|エア二胡を始める
+airGo|開始虛擬二胡|Start virtual erhu|バーチャル二胡を始める
 airLoading|正在開啟相機與偵測模型…|Opening camera and models…|カメラとモデルを準備中…
 airFrame|坐進虛線人形框裡，讓上半身和大腿入鏡|Sit inside the dashed outline so your upper body and thighs are in view|点線の人型に合わせて座り、上半身と太ももを映してください
 airBody|看不到身體，請退後一點，讓肩膀和腰都入鏡|Can't see your body; step back so shoulders and hips are in view|体が見えません。肩と腰が映るように下がってください
@@ -2959,7 +2958,7 @@ function controls(){const pts=new Map();let st=null,moved=0,pinch0=0,dist0=0;
 /* ---------- parts ---------- */
 const PARTS=[[1,'pHead',[NX-2.5,77,0],42],[2,'pPeg',[NX-5,63.5,0],55],[3,'pNut',[NX+1.5,45,0],40],[4,'pNeck',[NX,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[0,18,0],130]];
 function choose(id){sel=id;const p=PARTS.find(x=>x[0]===id);const box=$('#simInfo');if(!p){box.innerHTML=`<p class="mut">${t('simTap')}</p>`;$$('#simParts button').forEach(b=>b.classList.remove('sel'));return}
- const [ti,de]=t(p[1]).split('§');box.innerHTML=`<b>${ti}</b><p>${de||''}</p>`;$$('#simParts button').forEach(b=>b.classList.toggle('sel',+b.dataset.p===id));
+ const [ti,de]=t(p[1]).split('§');box.innerHTML=`<div class="simih"><b>${ti}</b><button class="simsay" id="simSay" aria-label="${t('simSay')}">🔊 ${t('simSay')}</button></div><p>${de||''}</p>`;$('#simSay').onclick=()=>tts(ti+'。'+(de||''),true);$$('#simParts button').forEach(b=>b.classList.toggle('sel',+b.dataset.p===id));
  const tgt=p[2];tween({tx:tgt[0]*.5,ty:tgt[1],tz:tgt[2]*.5,dist:p[3]});tts(ti+'。'+(de||''))}
 let tw=null;function tween(to){const from={tx:cam.tx,ty:cam.ty,tz:cam.tz,dist:cam.dist},t0=performance.now();cancelAnimationFrame(tw);
  const step=()=>{const k=Math.min(1,(performance.now()-t0)/600),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;for(const q in to)cam[q]=from[q]+(to[q]-from[q])*e;if(k<1)tw=requestAnimationFrame(step)};step()}
@@ -3121,7 +3120,7 @@ function airSave(){const f=airFile(),a=document.createElement('a');a.href=URL.cr
 /* ---------- view wiring ---------- */
 let ready=false;
 function mdUI(){}
-function setMode(m){if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('.simar').hidden=m==='air';$('#simEdit').hidden=m==='air';$('.simarp').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
+function setMode(m){if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
  $('.simw').classList.toggle('play',m==='play');if(m==='play'){sel=0;cam.auto=false;tween({tx:3,ty:20,tz:0,dist:96});cam.yaw=1.05;cam.pitch=.18;plUI()}else{plStop();choose(0);tween({tx:0,ty:40,tz:0,dist:158})}}
 function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#simNoGL').hidden=false;return}controls();bowPad();ready=true;
   $('#simParts').innerHTML=PARTS.map(p=>`<button data-p="${p[0]}">${t(p[1]).split('§')[0]}</button>`).join('');
@@ -3151,10 +3150,10 @@ function openAR(){if(inApp()){toast(t('arInApp'));return}
  toast(t('arPhone'))}
 let simStream=null;
 async function simCamBg(on){const v=$('#simVid'),w=$('.simw');if(on===undefined)on=!simStream;
- if(!on){if(simStream)simStream.getTracks().forEach(x=>x.stop());simStream=null;v.hidden=true;w.classList.remove('cambg');$('#simCamBg').classList.remove('on');return}
+ if(!on){if(simStream)simStream.getTracks().forEach(x=>x.stop());simStream=null;v.hidden=true;w.classList.remove('cambg');return}
  try{simStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280}},audio:false});v.srcObject=simStream;await v.play();v.hidden=false;w.classList.add('cambg');$('#simCamBg').classList.add('on');toast(t('arCamOn'))}
  catch(e){toast(t('camErr'))}}
-$('#simAR').onclick=openAR;$('#simCamBg').onclick=()=>simCamBg();
+
 
 /* ---- 術科學生首頁 ---- */
 const SCATS=[['basic','scBasic'],['scale','scScale'],['etude','scEtude'],['piece','scPiece']],SCMAP={tk_long:'basic',tk_cross:'basic',tk_into:'basic',tk_finger:'basic',tk_shift:'basic',tk_scale:'scale',tk_seq:'scale',tk_hard:'etude',tk_etude:'etude',tk_exam:'piece'};
