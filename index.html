@@ -1252,7 +1252,7 @@ airCalPose|擺好拉琴姿勢：左手虎口在肩膀高度握琴桿、右手持
 airCalOK|校正完成，開始拉吧|Calibrated — start playing|調整完了、どうぞ
 airCalNoL|沒看到左手，先用預設位置；可再比「1」重新校正|Left hand not seen; using the default position — show “1” to retry|左手が見えないため既定位置です。「1」で再調整できます
 airCalAgain|比「1」重新校正|Show “1” to recalibrate|「1」で再調整
-air3|左手沿著琴桿往下滑，離千斤越遠音越高，每條弦一個八度；琴弦上的白點是各音的位置。右手持弓時只伸食指＝內弦，食指和中指一起伸＝外弦（上方按鈕也能切換）；換弓方向時聲音會短暫斷開|Slide your left hand down the neck: further from the nut is higher, one octave per string; the white dots mark each note. In the bow hold, index finger out = inner string, index + middle out = outer string (the top buttons work too). The sound breaks briefly when the bow changes direction|左手を棹に沿って下げるほど音が高くなります（各弦1オクターブ）。弦上の白い点が各音の位置です。弓の持ち手で人差し指だけ伸ばす＝内弦、人差し指と中指＝外弦（上のボタンでも切替）。弓を返す時に音が一瞬切れます
+air3|左手沿著琴桿往下滑，離千斤越遠音越高，每條弦一個八度；琴弦上的白點是各音的位置；上方按鈕切換內弦、外弦|Slide your left hand down the neck: further from the nut is higher, one octave per string; the white dots mark each note; switch strings with the top buttons|左手を棹に沿って下げるほど音が高くなります（各弦1オクターブ）。弦上の白い点が各音の位置です。上のボタンで弦を切替
 air4|按「錄影」可以錄下你的演奏，分享到 IG、TikTok|Tap Record to capture your performance and share it|「録画」で演奏を録画して共有できます
 airGo|開始空氣二胡|Start air erhu|エア二胡を始める
 airLoading|正在開啟相機與偵測模型…|Opening camera and models…|カメラとモデルを準備中…
@@ -2915,8 +2915,6 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  /* gestures (held 0.3 s, fire once until released): 1 -> 3-second calibration countdown; 2 -> start/stop recording */
  const gs=hs.map(h=>airGest(h,VW0,VH0)).find(Boolean)||null;
  if(gs&&gs===AIR.gK){if(!AIR.gL&&ts-AIR.gT>300){AIR.gL=1;if(gs==='one'&&AIR.ct==null){AIR.ct=ts;AIR.cs=[];airBeep(660)}else if(gs==='two'&&AIR.cal&&AIR.ct==null&&!(AIR.recCD>ts)){AIR.recCD=ts+1500;airBeep(880);airRecToggle()}}}else{AIR.gK=gs;AIR.gT=ts;AIR.gL=0}
- /* right hand bow hold: index only extended = inner string, index + middle extended = outer string (held 0.1 s) */
- if(RHd&&!gs&&AIR.cal){const k=airStrG(RHd,VW0,VH0);if(k&&k===AIR.sK){if(k!==PL.str&&ts-AIR.sT>100){PL.str=k;PL.note=null;airStrUI();if(PL.src)plNote()}}else{AIR.sK=k;AIR.sT=ts}}
  if(AIR.ct!=null||!AIR.cal){airDecay();
   if(AIR.ct!=null&&BF){const left=3-(ts-AIR.ct)/1000;
    if(left<=.6){/* sample: nut = the left hand's thumb web; drum straight down the torso at hip height */
@@ -2942,7 +2940,7 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  if(rq){rq=[F.rx(rq[0],ts),F.ry(rq[1],ts)];const hm=M.inv(rq[0],rq[1]),vx=hm[0]-BP0[0],vy=hm[1]-BP0[1],L=Math.hypot(vx,vy)||1;
   let phi=Math.atan2(vy,vx)-Math.atan2(BD[1],BD[0]);while(phi>Math.PI)phi-=2*Math.PI;while(phi<-Math.PI)phi+=2*Math.PI;phi=Math.max(-.75,Math.min(.75,phi));
   AIR.phi=AIR.phi==null?phi:AIR.phi+(phi-AIR.phi)*.5;const z=Math.max(-42,Math.min(14,L-(S1B-1)));AIR.bow=z;
-  const now=ts/1000;if(AIR.bowPrev!=null){const sp=Math.abs(AIR.bow-AIR.bowPrev)/Math.max(.016,now-AIR.tPrev),vv=Math.min(1,sp/38);AIR.vol=AIR.vol*.55+vv*.45;const db=AIR.bow-AIR.bowPrev;if(Math.abs(db)>.05){const nd=Math.sign(db);if(AIR.dir&&nd!==AIR.dir&&(AIR.run||0)>1.5){AIR.gap=ts+140;AIR.run=0}AIR.dir=nd;AIR.run=(AIR.run||0)+Math.abs(db)}}AIR.bowPrev=AIR.bow;AIR.tPrev=now}
+  const now=ts/1000;if(AIR.bowPrev!=null){const sp=Math.abs(AIR.bow-AIR.bowPrev)/Math.max(.016,now-AIR.tPrev),vv=Math.min(1,sp/38);AIR.vol=AIR.vol*.55+vv*.45;if(Math.abs(AIR.bow-AIR.bowPrev)>.05)AIR.dir=Math.sign(AIR.bow-AIR.bowPrev)}AIR.bowPrev=AIR.bow;AIR.tPrev=now}
  else airDecay();
  const cph=Math.cos(AIR.phi||0),sph=Math.sin(AIR.phi||0),bd=[BD[0]*cph-BD[1]*sph,BD[0]*sph+BD[1]*cph],tx=BP0[0]-(cph*BP0[0]-sph*BP0[1])+bd[0]*AIR.bow,ty=BP0[1]-(sph*BP0[0]+cph*BP0[1])+bd[1]*AIR.bow;
  BOWM=[cph,sph,0,0,-sph,cph,0,0,0,0,1,0,tx,ty,0,1];
@@ -2950,9 +2948,7 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  /* left hand: how far it has slid down from where it was at calibration = stopping point on the string (equal-tempered positions, two octaves) */
  const ys=airYs(PL.str);if(AIR.fing>=ys.length)AIR.fing=0;
  if(A.hasL&&A.hp&&A.H0){const pos=Math.max(0,M.inv(A.H0[0],A.H0[1])[1]-M.inv(A.hp[0],A.hp[1])[1]),e=i=>Math.abs(NUTY-ys[i]-pos);let bi=0;ys.forEach((_,i)=>{if(e(i)<e(bi))bi=i});if(bi!==AIR.fing&&e(bi)+.6<e(AIR.fing))AIR.fing=bi}
- PL.mid=AIRN[PL.str][AIR.fing];if(AIR.vol>.04){if(!PL.src||PL.note!==PL.mid)plNote()}
- /* bow change: a short silence so push and pull sound like separate strokes */
- if(ts<(AIR.gap||0)){if(PL.g){PL.g.gain.setTargetAtTime(0,ctx().currentTime,.008);PL.gv=0}PL.vol=0}else{plVol(AIR.vol);PL.vol=AIR.vol}
+ PL.mid=AIRN[PL.str][AIR.fing];if(AIR.vol>.04){if(!PL.src||PL.note!==PL.mid)plNote()}plVol(AIR.vol);PL.vol=AIR.vol;
  /* render */
  OVR={VP:M.VP,eye:M.eye};gl.canvas.width=VW;gl.canvas.height=VH;W=VW;H=VH;draw(false);OVR=null;BOWM=null;g.drawImage(gl.canvas,0,0);
  ys.forEach((yy,i)=>{if(!i)return;const sp=M.fwd([SX(PL.str,yy),yy,SZ(PL.str,yy)]);g.fillStyle=i===AIR.fing?'rgba(250,204,21,.95)':'rgba(255,255,255,.55)';g.beginPath();g.arc(sp[0],sp[1],A.sc*(i===AIR.fing?1.1:.42),0,7);g.fill()});
@@ -2961,8 +2957,6 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  airHUD(A.sc);next()}
 function airGest(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b].y)*H),ext=(t,q)=>d(0,t)>d(0,q)*1.15,cur=(t,q)=>d(0,t)<d(0,q)*1.05,up=(t,m)=>(h[m].y-h[t].y)*H>Math.abs(h[t].x-h[m].x)*W*1.2;
  if(!(ext(8,6)&&up(8,5)&&cur(16,14)&&cur(20,18)))return null;if(cur(12,10))return 'one';if(ext(12,10)&&up(12,9))return 'two';return null}
-function airStrG(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b].y)*H),i=d(0,8);
- if(!(i>d(0,6)*1.12&&d(0,16)<i*.72&&d(0,20)<i*.72))return null;const m=d(0,12);return m>i*.82?'out':m<i*.66?'in':null}
 function airOne(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b].y)*H),ext=(t,q)=>d(0,t)>d(0,q)*1.15,cur=(t,q)=>d(0,t)<d(0,q)*1.05;
  return ext(8,6)&&cur(12,10)&&cur(16,14)&&cur(20,18)&&(h[5].y-h[8].y)*H>Math.abs(h[8].x-h[5].x)*W*1.2}
 function airBeep(f){try{const a=ctx(),o=a.createOscillator(),gn=a.createGain();o.frequency.value=f;gn.gain.setValueAtTime(.0001,a.currentTime);gn.gain.exponentialRampToValueAtTime(.25,a.currentTime+.01);gn.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.18);o.connect(gn).connect(a.destination);o.start();o.stop(a.currentTime+.2)}catch(e){}}
