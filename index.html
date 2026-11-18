@@ -451,7 +451,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 .hudbar{position:relative;flex:1;min-width:3.5rem;height:.4rem;border-radius:1rem;background:linear-gradient(90deg,#ef4444,#f59e0b 30%,#22c55e 42%,#22c55e 58%,#f59e0b 70%,#ef4444);margin-left:auto}.hudbar i{position:absolute;left:50%;top:-.15rem;bottom:-.15rem;width:2px;background:#fff;opacity:.6}.hudbar em{position:absolute;top:-.3rem;left:50%;width:.6rem;height:1rem;margin-left:-.3rem;border-radius:.3rem;background:#fff;transition:left .12s}
 
 .simcard{display:flex;align-items:center;gap:.8rem;width:100%;text-align:left;margin-top:.9rem;cursor:pointer;background:linear-gradient(135deg,var(--sf),var(--acs));border:1px solid var(--ln);color:var(--fg);font:inherit}
-.lsim{width:100%;margin:0 0 .8rem}.simcimg{width:2.6rem;height:2.6rem;object-fit:contain}.simci{font-size:2rem;width:3.2rem;height:3.2rem;display:grid;place-items:center;background:var(--sf);border-radius:1rem;flex:none;box-shadow:var(--sh)}.simct{flex:1;display:flex;flex-direction:column;gap:.15rem}.simct b{font-size:1rem}.simct .mut{font-size:.78rem;line-height:1.4}
+.lsim{width:100%;margin:0 0 .8rem}.lsown{display:grid;gap:.6rem}.lsownp{font-size:.8rem;margin:.5rem 0 0;text-align:center}.simcimg{width:2.6rem;height:2.6rem;object-fit:contain}.simci{font-size:2rem;width:3.2rem;height:3.2rem;display:grid;place-items:center;background:var(--sf);border-radius:1rem;flex:none;box-shadow:var(--sh)}.simct{flex:1;display:flex;flex-direction:column;gap:.15rem}.simct b{font-size:1rem}.simct .mut{font-size:.78rem;line-height:1.4}
 .simcb{background:var(--ac);color:#fff;border-radius:2rem;padding:.4rem .85rem;font-size:.8rem;font-weight:700;white-space:nowrap}
 .simw{position:relative;margin-top:.7rem;border-radius:1.2rem;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#f4efe6 0%,#d9d0c2 70%,#c9bfaf 100%);height:min(56vh,27rem);box-shadow:var(--sh)}
 :root[data-theme="dark"] .simw{background:radial-gradient(ellipse at 50% 40%,#3a3632 0%,#24211e 70%,#1a1816 100%)}
@@ -611,7 +611,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v68</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v69</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1271,6 +1271,12 @@ arHint|AR 會用手機的相機把二胡放在地上或桌上，可以走過去�
 arPhone|AR 需要用手機開啟（iPhone 用 Safari、Android 用 Chrome）|AR needs a phone (Safari on iPhone, Chrome on Android)|AR はスマホで開いてください（iPhone は Safari、Android は Chrome）
 arInApp|LINE、Messenger 等內建瀏覽器無法使用 AR，請點右上角選單「用瀏覽器開啟」|In-app browsers can't open AR. Use the menu to open in your browser|アプリ内ブラウザでは AR が使えません。メニューから「ブラウザで開く」を選んでください
 arCamOn|相機已開啟，拖曳轉動二胡、兩指縮放大小|Camera on: drag to turn, pinch to resize|カメラ オン：ドラッグで回転、ピンチで拡大縮小
+lsHave|我有二胡|I have an erhu|二胡を持っている
+lsNoErhu|我沒有二胡|I don't have an erhu|二胡を持っていない
+lsNoErhuD|沒有二胡也可以：用手機鏡頭拿虛擬二胡完成這一步|No erhu? Use the virtual erhu with your camera to finish this step|二胡がなくても大丈夫：カメラでバーチャル二胡を使ってこのステップを完了できます
+vtBow90|讓弓和琴桿保持 90 度|Keep the bow at 90° to the neck|弓と棹を90度に保つ
+vtHold|很好，保持住 {s} / {n} 秒|Good, hold it {s} / {n} s|いいね、そのまま {s} / {n} 秒
+vtAngle|現在大約 {a} 度，右手往上或往下調整|About {a}° now, move your right hand up or down|今はおよそ {a} 度。右手を上下に調整
 lsSimT|用 3D 二胡認識每個零件|Explore each part in 3D|3D 二胡で各パーツを見る
 lsSimD|轉一轉、點零件，還能聽語音介紹|Spin it, tap a part and listen to its explanation|回して、パーツをタップして音声で聞こう
 lsBackL|回到課程|Back to lesson|レッスンに戻る
@@ -2495,7 +2501,7 @@ const TRACKS={
    {id:'b3b',title:'如何正確運弓',gain:'用正確的運弓動作，讓弓和琴桿保持 90 度',steps:[
     {t:'learn',vid:'bow_demo.mp4',cards:[L_('先做運弓暖身','先不要拿琴和弓。右手做出握弓的準備動作，手臂放鬆，像拿著弓一樣在空中左右推拉。','✋'),L_('手腕帶著手走','往外拉的時候手腕先走、手掌跟在後面；往內推的時候手腕先往內收，手掌再跟上，手腕要像彈簧一樣放鬆。','〰️'),L_('走一直線','推拉的路線要平直，不要畫成弧線，速度保持平均。','📏'),L_('用左手拿手機','把手機拿在左手，後鏡頭從上方對著右手，就能看到引導線。','📱')]},
     {t:'stroke',n:8,h:'運弓暖身：在空中推拉 8 次',p:'先不要拿琴。左手拿手機，用後鏡頭從上方拍右手，跟著引導線平直地推拉。'},
-    {t:'cam',need:['bow'],hold:2,h:'拿起琴和弓，弓和琴桿保持 90 度 2 秒',p:'手機會自動換回自拍鏡頭。把手機立在前方約 1 公尺，讓上半身和琴入鏡，畫面上的弓線變綠就對了。'}]},
+    {t:'cam',need:['bow'],hold:2,virt:1,h:'拿起琴和弓，弓和琴桿保持 90 度 2 秒',p:'手機會自動換回自拍鏡頭。把手機立在前方約 1 公尺，讓上半身和琴入鏡，畫面上的弓線變綠就對了。'}]},
    {id:'b4',title:'拉響內弦',gain:'拉響內弦空弦（Do）',steps:[
     {t:'learn',cards:[L_('空弦就是不按任何手指','拉內弦的空弦，就是簡譜的 1，也就是 Do。','🎵'),L_('慢慢拉、力量平均','弓速慢一點，從頭到尾力量一樣，聲音會比較穩。','🐢')]},
     {t:'tune',s:'D',hold:2,h:'拉內弦空弦，讓指針停在綠色區 2 秒',p:'如果一直偏高或偏低，先轉上方的琴軸把弦調準。'}]},
@@ -2681,7 +2687,7 @@ function renderLesson(){if(!LS)return;const l=LX[LS.lid],steps=l.steps,b=$('#lsB
  else if(st.t==='rate')h=`<div class="lstep"><span class="lsi">⭐</span><h3>${t('rateT')}</h3><div class="stars">${[1,2,3,4,5].map(i=>`<button data-rate="${i}" class="${i<=LS.rate?'on':''}">★</button>`).join('')}</div><p class="mut">${t('rateD')}</p></div><button class="btn lg" id="lsNext" ${LS.rate?'':'disabled'}>${t('done')}</button>`;
  else{const tk=st.t==='timer'?tkTaskFor(st.k):null,goal=st.t==='timer'?t('timerGoal').replace('{n}',tk?tkNm(tk):t(st.k)).replace('{m}',tk?tk.min:20):st.h;
   h=`<div class="lstep"><span class="lsi">${SICON[st.t]}</span><h3>${esc(goal)}</h3>${st.p?`<p class="mut">${esc(st.p)}</p>`:''}${LS.tries>=2?`<p class="lstry">${t('lsTryHint')}</p>`:''}</div>
-   <button class="btn lg" id="lsGo">${t('lsGo')}</button><button class="quiet tlskip" id="lsSkip">${t('lsSkipStep')}</button>`}
+   ${st.virt?`<div class="lsown"><button class="btn lg" id="lsGo">🎻 ${t('lsHave')}</button><button class="btn alt lg" id="lsVirt">📱 ${t('lsNoErhu')}</button></div><p class="mut lsownp">${t('lsNoErhuD')}</p>`:`<button class="btn lg" id="lsGo">${t('lsGo')}</button>`}<button class="quiet tlskip" id="lsSkip">${t('lsSkipStep')}</button>`}
  if(LS.si===0&&!isDaily(l)&&!lDone(l))h+=`<button class="quiet tlskip" id="lsKnow">${t('iKnow')}</button>`;
  b.innerHTML=h}
 function lsAdvance(){ttsStop();LS.si++;LS.tries=0;LS.rate=0;const l=LX[LS.lid];if(LS.si>=l.steps.length)lsFinish();else lsSave();renderLesson();$('main').scrollTop=0}
@@ -2721,6 +2727,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-ls]');if(a
  const id=e.target.id;
  if(id==='lsNext')lsAdvance();else if(id==='lsGo')lsStartTool();else if(id==='lsSkip')lsAdvance();
  else if(e.target.closest('#lsSim')){SIMBACK='lesson';view('sim')}
+ else if(e.target.closest('#lsVirt')){const st=curStep();LS.tool=true;LS.passed=false;LS.toolView='sim';SIMBACK='lesson';view('sim');SIM.virt({k:'bow90',hold:(st&&st.hold||2)*1000})}
  else if(id==='lsSay'){const st=curStep();if(st&&st.cards)tts(st.cards.map(c=>c.h+'。'+c.p).join(' '),1)}
  else if(id==='lsHome'){LS=null;view('course')}
  else if(id==='lsKnow'&&LS){const n=LS.lid;LS=null;markKnown(n);view('today')}
@@ -3115,6 +3122,10 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  else airDecay();
  const cph=Math.cos(AIR.phi||0),sph=Math.sin(AIR.phi||0),bd=[BD[0]*cph-BD[1]*sph,BD[0]*sph+BD[1]*cph],tx=BP0[0]-(cph*BP0[0]-sph*BP0[1])+bd[0]*AIR.bow,ty=BP0[1]-(sph*BP0[0]+cph*BP0[1])+bd[1]*AIR.bow;
  BOWM=[cph,sph,0,0,-sph,cph,0,0,0,0,1,0,tx,ty,0,1];
+ /* lesson task: bow square to the neck (the neck is the model's vertical axis, so the bow must lie horizontal in model space) */
+ if(AIR.task&&AIR.task.k==='bow90'){const T=AIR.task,ang=Math.asin(Math.min(1,Math.abs(bd[1])))*180/Math.PI,ok=!!rq&&ang<12;
+  T.acc=ok?T.acc+(T.last?ts-T.last:0):0;T.last=ts;T.ang=ang;T.ok=ok;
+  if(T.acc>=T.hold&&!T.done){T.done=1;airBeep(990);setTimeout(()=>{AIR.task=null;airStop();if(typeof lsPass==='function')lsPass()},700)}}
  /* left hand: how far it slides down from the nut picks the finger */
  /* left hand: how far it has slid down from where it was at calibration = stopping point on the string (equal-tempered positions, two octaves) */
  AIR.free=airSc()==='free';const ys=airYs(PL.str);if(!AIR.free&&(AIR.fing>=ys.length||AIR.fing<0))AIR.fing=0;
@@ -3140,7 +3151,13 @@ function airBeep(f){try{const a=ctx(),o=a.createOscillator(),gn=a.createGain();o
 function airFreeName(){const m=AIR.midF==null?AIRS.maj[PL.str][0]:AIR.midF,r=Math.round(m),c=Math.round((m-r)*100),CH=['1','♯1','2','♯2','3','4','♯4','5','♯5','6','♯6','7'];
  return CH[((r-62)%12+12)%12]+(r>=74?'̇':'')+(Math.abs(c)>=8?(c>0?' +':' ')+c+'¢':'')}
 function airDecay(){if(AIR.on&&performance.now()-(AIR.bowT||0)<300)return;AIR.vol*=.85;plVol(S.airMute?0:AIR.vol);PL.vol=AIR.vol}
-function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=AIR.free?airFreeName():(AIRJS[airSc()][PL.str][AIR.fing]||''),f=Math.round(VW/22);
+function airTaskHUD(){const T=AIR.task;if(!T||!AIR.cal||!AIR.cx)return;const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,f=Math.round(VW/26),pad=f*.7;
+ const l1=t('vtBow90'),l2=T.done?t('lbGreat'):T.ok?t('vtHold').replace('{s}',(Math.min(T.acc,T.hold)/1000).toFixed(1)).replace('{n}',T.hold/1000):t('vtAngle').replace('{a}',Math.round(90-(T.ang||0)));
+ g.save();g.font=`700 ${f}px sans-serif`;const w=Math.min(VW*.92,Math.max(g.measureText(l1).width,g.measureText(l2).width)+pad*2),x=(VW-w)/2,y=VH*.72;
+ g.fillStyle='rgba(15,20,18,.72)';g.beginPath();g.roundRect?g.roundRect(x,y,w,f*3.2,f*.6):g.rect(x,y,w,f*3.2);g.fill();g.textAlign='center';g.textBaseline='top';g.fillStyle='#fff';g.fillText(l1,VW/2,y+pad*.6);
+ g.font=`600 ${Math.round(f*.9)}px sans-serif`;g.fillStyle=T.ok||T.done?'#6fe3a6':'#ffd27a';g.fillText(l2,VW/2,y+pad*.6+f*1.35);
+ if(T.ok&&!T.done){g.fillStyle='rgba(111,227,166,.9)';g.fillRect(x,y+f*3.2-f*.25,w*Math.min(1,T.acc/T.hold),f*.25)}g.restore()}
+function airHUD(sc){airTaskHUD();const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=AIR.free?airFreeName():(AIRJS[airSc()][PL.str][AIR.fing]||''),f=Math.round(VW/22);
  g.font=`800 ${f*2}px sans-serif`;g.textAlign='right';g.fillStyle='rgba(255,255,255,.95)';g.strokeStyle='rgba(0,0,0,.55)';g.lineWidth=f*.25;const tx=VW-f,ty=f*2.6;g.strokeText(nm,tx,ty);g.fillText(nm,tx,ty);
  g.font=`700 ${f*.7}px sans-serif`;const s2=(PL.str==='in'?t('simIn'):t('simOut'))+(AIR.vol>.05?' · '+t(AIR.dir>0?'simPull':'simPush'):'');g.strokeText(s2,tx,ty+f*1.1);g.fillText(s2,tx,ty+f*1.1);
  g.textAlign='left';g.font=`700 ${f*.6}px sans-serif`;g.fillStyle='rgba(255,255,255,.75)';g.fillText(t('app'),f*.8,VH-f*.8)}
@@ -3179,9 +3196,10 @@ function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#si
   $('#airMute').onclick=()=>{S.airMute=!S.airMute;save();airStrUI();if(S.airMute)plVol(0);toast(t(S.airMute?'airMuteOn':'airMuteOff'))}}
  if(mode==='air'){setMode('air');return}
  on=true;lastT=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);setMode(mode)}
-function close(){on=false;cancelAnimationFrame(raf);plStop();if(AIR.on)airStop()}
+function close(){on=false;cancelAnimationFrame(raf);plStop();AIR.task=null;if(AIR.on)airStop()}
+function virt(task){setMode('air');AIR.task={...task,acc:0,last:null};airStart()}
 function relabel(){if(!ready)return;$$('#simParts button').forEach(b=>{const p=PARTS.find(x=>x[0]===+b.dataset.p);b.textContent=t(p[1]).split('§')[0]});choose(sel);plUI()}
-return {open,close,relabel,_air:AIR,_pl:PL,_build:build,_skin:skinCanvas,_C:C,_cam:cam,_pick:(x,y)=>pickAt(x,y),_choose:choose,get mode(){return mode}}})();
+return {open,close,relabel,virt,_air:AIR,_pl:PL,_build:build,_skin:skinCanvas,_C:C,_cam:cam,_pick:(x,y)=>pickAt(x,y),_choose:choose,get mode(){return mode}}})();
 
 /* ---- AR：iPhone 用 Quick Look（USDZ），Android 用 Scene Viewer（GLB）；其他裝置可用相機背景 ---- */
 const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),isAndroid=()=>/Android/i.test(navigator.userAgent),inApp=()=>/FBAN|FBAV|FB_IAB|Messenger|Line\/|Instagram|wv\)/i.test(navigator.userAgent);
