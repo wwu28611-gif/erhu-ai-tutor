@@ -466,6 +466,10 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 .simbow{position:relative;height:5.2rem;border-radius:1rem;background:repeating-linear-gradient(90deg,var(--sf) 0 18px,var(--sf2) 18px 19px);border:1.5px dashed var(--bd);touch-action:none;display:grid;place-items:center;user-select:none;-webkit-user-select:none;overflow:hidden}
 .simbow p{margin:0;font-size:.8rem;color:var(--mut);pointer-events:none}.simbk{position:absolute;top:50%;left:50%;width:2.6rem;height:2.6rem;margin:-1.3rem 0 0 -1.3rem;border-radius:50%;background:var(--ac);opacity:.85;box-shadow:0 4px 12px -2px rgba(0,0,0,.35);pointer-events:none}
 .simbow em{position:absolute;top:.4rem;right:.7rem;font-style:normal;font-weight:700;font-size:.8rem;color:var(--ac)}.simtip{font-size:.75rem;margin:.6rem .2rem 0;line-height:1.5}
+
+#simVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.simw.cambg{background:#000}.simw #simCv{position:relative;z-index:1}
+.simar{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.6rem}.simar .btn{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem .5rem;font-size:.875rem}.simar .btn.on{background:var(--ac);color:#fff}
+.simarp{font-size:.72rem;margin:.4rem .2rem 0;line-height:1.45}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -592,7 +596,9 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <button class="quiet plback" data-go="today">‹ <span data-i="nToday"></span></button>
  <div class="pt" style="margin-top:.2rem"><h1 data-i="simT"></h1><p data-i="simSub"></p></div>
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="play" data-i="simPlayL"></button></div>
- <div class="simw"><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
+ <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
+ <div class="simar"><button class="btn" id="simAR"><span>📱</span><span data-i="arBtn"></span></button><button class="btn alt" id="simCamBg"><span>📷</span><span data-i="arCam"></span></button></div>
+ <p class="mut simarp" data-i="arHint"></p>
  <div id="simLearn"><div class="card simi" id="simInfo"></div><div class="simparts" id="simParts"></div></div>
  <div id="simPlay" hidden>
   <div class="seg" id="simStr"><button id="simStrIn" data-i="simIn"></button><button id="simStrOut" data-i="simOut"></button></div>
@@ -1210,6 +1216,12 @@ pBridge|琴碼§放在琴皮上的小木塊，撐起兩條弦，把振動傳給�
 pStr|琴弦§兩條金屬弦：內弦（D，較低）和外弦（A，較高）。|Strings§Two metal strings: the inner string (D, lower) and the outer string (A, higher).|弦§2本の金属弦。内弦（D・低い）と外弦（A・高い）。
 pBase|琴托§琴筒下方的底座，放在左大腿上，讓二胡站穩。|Base§The block under the sound box that rests on your left thigh and keeps the erhu steady.|琴托§琴筒の下の台座。左ももに置いて二胡を安定させます。
 pBow|弓§竹子做的弓桿加上馬尾弓毛。二胡的弓毛夾在兩條弦中間，拿不出來：往外推碰外弦，往內拉碰內弦。|Bow§A bamboo stick with horsehair. The hair runs between the two strings and can't be removed: press outward for the outer string, inward for the inner one.|弓§竹の弓竿と馬の毛。弓毛は2本の弦の間を通っていて外せません。外へ押すと外弦、内へ引くと内弦。
+arBtn|AR 放進房間|AR in your room|AR で部屋に置く
+arCam|相機背景|Camera view|カメラ背景
+arHint|AR 會用手機的相機把二胡放在地上或桌上，可以走過去從各個角度看（實際大小約 85 公分）。「相機背景」則是把 3D 二胡疊在相機畫面上。|AR places the erhu on your floor or table so you can walk around it (about 85 cm, real size). Camera view overlays the 3D erhu on your camera.|AR でスマホのカメラを使い、二胡を床や机に置いて周りから見られます（実寸約85cm）。「カメラ背景」はカメラ映像に3D二胡を重ねます。
+arPhone|AR 需要用手機開啟（iPhone 用 Safari、Android 用 Chrome）|AR needs a phone (Safari on iPhone, Chrome on Android)|AR はスマホで開いてください（iPhone は Safari、Android は Chrome）
+arInApp|LINE、Messenger 等內建瀏覽器無法使用 AR，請點右上角選單「用瀏覽器開啟」|In-app browsers can't open AR. Use the menu to open in your browser|アプリ内ブラウザでは AR が使えません。メニューから「ブラウザで開く」を選んでください
+arCamOn|相機已開啟，拖曳轉動二胡、兩指縮放大小|Camera on: drag to turn, pinch to resize|カメラ オン：ドラッグで回転、ピンチで拡大縮小
 nLearn|學習|Learn|学習
 nSongs|曲庫|Songs|曲
 nPrac|練習室|Practice|練習室
@@ -1526,7 +1538,7 @@ $('#voice').onchange=e=>{S.voice=e.target.checked;save()};
 $('#click').onchange=e=>{S.click=e.target.checked;save()};
 
 $('#reset').onclick=()=>{S=Object.assign({},def);norm();try{localStorage.removeItem('erhu')}catch(e){};apply();$('#ov').classList.add('on')};
-function view(v){if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v==='cam')preloadModels();if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&v!=='play'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&v!=='play'&&P&&P.on)stopDrill();if(v==='play'||v==='drill')placeDrill(v);if(v==='sim')SIM.open();else SIM.close();if(v==='play')plUI();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));const grp=NAVG[v]||v;$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===grp));$('#ptabs').hidden=grp!=='prac'||v==='home';$$('#ptabs button').forEach(b=>b.classList.toggle('sel',b.dataset.go===v));if(v==='me')meUI();if(v==='songs')songsUI();$('main').scrollTop=0}
+function view(v){if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v==='cam')preloadModels();if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&v!=='play'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&v!=='play'&&P&&P.on)stopDrill();if(v==='play'||v==='drill')placeDrill(v);if(v==='sim')SIM.open();else{SIM.close();if(simStream)simCamBg(false)}if(v==='play')plUI();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));const grp=NAVG[v]||v;$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===grp));$('#ptabs').hidden=grp!=='prac'||v==='home';$$('#ptabs button').forEach(b=>b.classList.toggle('sel',b.dataset.go===v));if(v==='me')meUI();if(v==='songs')songsUI();$('main').scrollTop=0}
 $$('nav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b&&!b.disabled)view(b.dataset.go)});
 
@@ -2816,7 +2828,20 @@ function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#si
  on=true;lastT=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);setMode(mode)}
 function close(){on=false;cancelAnimationFrame(raf);plStop()}
 function relabel(){if(!ready)return;$$('#simParts button').forEach(b=>{const p=PARTS.find(x=>x[0]===+b.dataset.p);b.textContent=t(p[1]).split('§')[0]});choose(sel);plUI()}
-return {open,close,relabel,_cam:cam,_pick:(x,y)=>pickAt(x,y),_choose:choose,get mode(){return mode}}})();
+return {open,close,relabel,_build:build,_skin:skinCanvas,_C:C,_cam:cam,_pick:(x,y)=>pickAt(x,y),_choose:choose,get mode(){return mode}}})();
+
+/* ---- AR：iPhone 用 Quick Look（USDZ），Android 用 Scene Viewer（GLB）；其他裝置可用相機背景 ---- */
+const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),isAndroid=()=>/Android/i.test(navigator.userAgent),inApp=()=>/FBAN|FBAV|FB_IAB|Messenger|Line\/|Instagram|wv\)/i.test(navigator.userAgent);
+function openAR(){if(inApp()){toast(t('arInApp'));return}
+ if(isIOS()){const a=document.createElement('a');a.rel='ar';a.href='erhu.usdz';const im=document.createElement('img');im.alt='';a.appendChild(im);document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),1000);return}
+ if(isAndroid()){const glb=new URL('erhu.glb',location.href).href;(window.__arGo||(u=>{location.href=u}))('intent://arvr.google.com/scene-viewer/1.0?file='+encodeURIComponent(glb)+'&mode=ar_preferred&title='+encodeURIComponent(t('simT'))+'#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url='+encodeURIComponent(location.href)+';end;');return}
+ toast(t('arPhone'))}
+let simStream=null;
+async function simCamBg(on){const v=$('#simVid'),w=$('.simw');if(on===undefined)on=!simStream;
+ if(!on){if(simStream)simStream.getTracks().forEach(x=>x.stop());simStream=null;v.hidden=true;w.classList.remove('cambg');$('#simCamBg').classList.remove('on');return}
+ try{simStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280}},audio:false});v.srcObject=simStream;await v.play();v.hidden=false;w.classList.add('cambg');$('#simCamBg').classList.add('on');toast(t('arCamOn'))}
+ catch(e){toast(t('camErr'))}}
+$('#simAR').onclick=openAR;$('#simCamBg').onclick=()=>simCamBg();
 
 /* ---- 術科學生首頁 ---- */
 const SCATS=[['basic','scBasic'],['scale','scScale'],['etude','scEtude'],['piece','scPiece']],SCMAP={tk_long:'basic',tk_cross:'basic',tk_into:'basic',tk_finger:'basic',tk_shift:'basic',tk_scale:'scale',tk_seq:'scale',tk_hard:'etude',tk_etude:'etude',tk_exam:'piece'};
