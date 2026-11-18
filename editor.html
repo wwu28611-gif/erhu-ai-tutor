@@ -177,7 +177,7 @@ const PDEF=[
  ['capLen',1,'象牙端蓋長度',0.55,.1,3,.05,'cm'],['blackLen',1,'黑色飾帶寬',0.55,0,1.5,.05,'cm'],['ivoryLen',1,'白色飾帶寬',0.75,0,1.5,.05,'cm'],
  ['boxY0',11,'軸箱下緣高度',57.2,52,62,.1,'cm'],['boxY1',11,'軸箱上緣高度',71.2,66,76,.1,'cm'],['boxW',11,'軸箱寬（左右）',1.45,1,2.2,.01,'cm'],['boxD',11,'軸箱厚（前後）',1.35,1,2.2,.01,'cm'],['boxCh',11,'四角倒角',.45,0,1,.01,'cm'],['boxFlare',11,'下方過渡長度',.7,0,2.5,.05,'cm'],['boxShoulder',11,'上方過渡長度',.9,0,3,.05,'cm'],
  ['peg1Y',2,'上弦軸高度',66.5,61,75,.1,'cm'],['peg2Y',2,'下弦軸高度',60.5,56,70,.1,'cm'],['pegFront',2,'前端突出（離琴桿中心）',3.9,1.5,6,.05,'cm'],['pegLen',2,'弦軸總長',16.5,9,22,.1,'cm'],['pegW',2,'尾端最粗（半徑）',1.2,.6,2.2,.01,'cm'],['pegShaft',2,'前端粗細（半徑）',.42,.25,.8,.01,'cm'],['pegSwell',2,'變粗的曲線',1.25,.6,2.5,.05,''],['pegFlutes',2,'稜線數（0＝圓）',8,0,12,1,'條'],['pegFlute',2,'稜溝深度',.14,0,.3,.01,''],['pegFlat',2,'扁平度',1,.6,1.3,.01,'×'],['pegTip',2,'前端象牙長度',.5,0,1.5,.05,'cm'],['pegBand',2,'尾端飾帶寬',.16,0,.5,.01,'cm'],['pegDome',2,'尾端象牙圓頂長',.75,.2,1.6,.05,'cm'],
- ['nutY',3,'千斤高度',43.3,36,52,.1,'cm'],['nutGap',3,'弦與琴桿距離',1.5,.6,3,.05,'cm'],['nutBase',3,'先繞琴桿圈數',0,0,6,1,'圈'],['nut8',3,'繞桿＋勒弦次數',6,1,10,1,'次'],['nutTop',3,'收尾繞琴桿圈數',0,0,6,1,'圈'],['nutCord',3,'繩子粗細（單股）',.05,.03,.1,.005,'cm'],['nutTail',3,'線頭長度',.4,0,1,.05,'cm'],
+ ['nutY',3,'千斤高度',43.3,36,52,.1,'cm'],['nutGap',3,'弦與琴桿距離',1.5,.6,3,.05,'cm'],['nutBase',3,'先繞琴桿圈數',0,0,6,1,'圈'],['nutBite',3,'勒弦處寬度',.3,0,1.5,.01,'cm'],['nut8',3,'繞桿＋勒弦次數',7,1,10,1,'次'],['nutTop',3,'收尾繞琴桿圈數',0,0,6,1,'圈'],['nutCord',3,'繩子粗細（單股）',.05,.03,.1,.005,'cm'],['nutTail',3,'線頭長度',.4,0,1,.05,'cm'],
  ['fineOn',13,'顯示微調器',1,0,1,1,''],['fineY',13,'微調器高度（內弦）',51.8,46,56,.1,'cm'],['fineSep',13,'外弦微調器往下錯開',2.6,0,6,.1,'cm'],
  ['neckX',4,'琴桿前後位置',2.7,-4,5,.05,'cm'],['neckR',4,'下端半徑',1.2,.8,1.8,.01,'cm'],['neckTop',4,'上端半徑',1.05,.7,1.6,.01,'cm'],
  ['strTopX',8,'琴頭端前後（離琴桿中心）',3.2,0,6,.05,'cm'],['strTopDY',8,'琴頭端上下',.3,-3,3,.05,'cm'],['strBotX',8,'琴筒端前後（離蛇皮）',.35,-3,4,.05,'cm'],['strBotY',8,'琴筒端高度（離筒底）',.5,0,9,.05,'cm'],['strGap',8,'兩弦間距',.44,.2,1,.01,'cm'],['strR',8,'弦粗細',.07,.03,.15,.005,'cm'],
@@ -276,7 +276,7 @@ function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.l
   /* each pass: one full turn round the neck, then one full turn biting round both strings, then on to the next pass */
   const phi=.55;for(let k=0;k<n8;k++){const pts=[],yy=y;
    for(let q=0;q<=28;q++){const a=phi+q/28*Math.PI*2;pts.push([NX+Math.cos(a)*rN,yy+pitch*.45*q/28,Math.sin(a)*rN])}
-   const b0=Math.PI-.55;for(let q=0;q<=24;q++){const b=b0-q/24*Math.PI*2;pts.push([cx+Math.cos(b)*cxr,yy+pitch*.45+pitch*.45*q/24,Math.sin(b)*cz])}
+   const ys=P.nutY+(n8>1?(k/(n8-1)-.5)*P.nutBite:0),b0=Math.PI-.55;for(let q=0;q<=24;q++){const b=b0-q/24*Math.PI*2;pts.push([cx+Math.cos(b)*cxr,ys+cr*.6*(q/24-.5),Math.sin(b)*cz])}/* all passes bunch onto one narrow spot of the strings, so the strands fan out like a V */
    pts.push([NX+Math.cos(phi)*rN,yy+pitch*.95,Math.sin(phi)*rN]);dbl(pts);y+=pitch}
   for(let k=0;k<nt;k++)neckTurn();
   /* knot and tails at the back */
