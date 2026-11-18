@@ -473,6 +473,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 
 .airintro{margin-top:.7rem}.airintro b{font-size:1rem}.airintro ol{margin:.5rem 0 .9rem 1.1rem;padding:0;font-size:.875rem;line-height:1.7;color:var(--mut)}
 .airw{position:relative;margin-top:.7rem;border-radius:1.1rem;overflow:hidden;background:#000;height:min(72vh,40rem)}.airw video{position:absolute;width:1px;height:1px;opacity:0}#airCv{width:100%;height:100%;object-fit:contain;display:block}
+.simedit{margin:.6rem 0}body:has(#simEdit[open]) .simw{position:sticky;top:0;z-index:5;height:46vh;box-shadow:0 6px 18px rgba(0,0,0,.18)}.simedit summary{font-weight:700;cursor:pointer}.mdr{display:grid;grid-template-columns:6.5rem 1fr 3rem;align-items:center;gap:.5rem;margin:.35rem 0;font-size:.85rem}.mdr input{width:100%}.mdr output{text-align:right;font-variant-numeric:tabular-nums}.mdr.chg span{color:#c2410c;font-weight:700}
 .airtop{position:absolute;top:.6rem;left:.6rem;right:.6rem;display:flex;flex-direction:column;align-items:flex-start;gap:.4rem}.airtop .seg{background:rgba(20,22,24,.7)}.airtop .seg button{color:#fff;font-size:.8rem}.airtop .seg button.sel{background:#fff;color:#111}
 .airmsg{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);background:rgba(20,22,24,.82);color:#fff;border-radius:1rem;padding:.7rem 1rem;font-size:.875rem;text-align:center;max-width:80%}
 .airrect{position:absolute;top:3.4rem;left:.8rem;color:#ef4444;font-weight:800;font-size:.9rem;text-shadow:0 1px 3px rgba(0,0,0,.6)}
@@ -608,10 +609,11 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="pt" style="margin-top:.2rem"><h1 data-i="simT"></h1><p data-i="simSub"></p></div>
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="play" data-i="simPlayL"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
+ <details class="card simedit" id="simEdit"><summary>🛠 <span data-i="mdT"></span></summary><p class="mut" data-i="mdHint"></p><div id="simEditL"></div><div class="row" style="gap:.5rem;margin-top:.6rem"><button class="btn" id="mdCopy" data-i="mdCopy"></button><button class="btn alt" id="mdReset" data-i="mdReset"></button></div><textarea id="mdOut" readonly hidden style="width:100%;margin-top:.5rem;font:12px monospace;min-height:5rem"></textarea></details>
  <div class="simar"><button class="btn" id="simAR"><span>📱</span><span data-i="arBtn"></span></button><button class="btn alt" id="simCamBg"><span>📷</span><span data-i="arCam"></span></button></div>
  <p class="mut simarp" data-i="arHint"></p>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v60</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v61</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1203,6 +1205,27 @@ ttsInApp|LINE、Messenger 等 App 內建的瀏覽器不支援語音，請點右�
 ttsTest|測試語音|Test voice|音声テスト
 ttsHello|你好，我是你的二胡練習夥伴。聽得到我的聲音，語音功能就正常。|Hello, I'm your erhu practice partner. If you can hear me, voice works.|こんにちは。この声が聞こえれば音声は正常です。
 sndR|實體節拍器|Real metronome|実機風
+mdT|調整模型|Adjust model|モデル調整
+mdHint|拖動滑桿，3D 模型會即時改變；調好後按「複製設定」貼給我。橘色字代表改過的項目|Drag the sliders and the 3D model updates live; when happy, tap “Copy settings” and send them to me. Orange labels are changed|スライダーで3Dモデルがすぐ変わります。決まったら「設定をコピー」して送ってください。オレンジは変更済み
+mdCopy|複製設定|Copy settings|設定をコピー
+mdReset|全部重設|Reset all|すべてリセット
+mdResetD|已重設為原本的模型|Model reset|リセットしました
+mdCopied|已複製，貼到對話給我就可以|Copied — paste it to me in the chat|コピーしました。チャットに貼ってください
+mdCopyM|請長按下方文字複製|Long-press the text below to copy|下の文字を長押ししてコピー
+md_drumR|琴筒粗細|Drum radius|胴の太さ
+md_drumL|琴筒長度|Drum length|胴の長さ
+md_nutY|千斤高度|Nut height|千斤の高さ
+md_peg1|上弦軸高度|Upper peg height|上の糸巻き高さ
+md_peg2|下弦軸高度|Lower peg height|下の糸巻き高さ
+md_pegLen|弦軸長度|Peg length|糸巻きの長さ
+md_pegW|弦軸把手粗細|Peg handle width|糸巻きつまみの太さ
+md_neckR|琴桿粗細|Neck thickness|棹の太さ
+md_headY|琴頭起彎高度|Head bend start|頭の曲がり始め
+md_headR|琴頭彎曲半徑|Head curve radius|頭の曲率半径
+md_headA|琴頭彎曲程度|Head curl amount|頭の曲がり具合
+md_fineY|微調器高度|Fine tuner height|微調整器の高さ
+md_bowLen|弓長|Bow length|弓の長さ
+md_bowAng|弓的傾斜角度|Bow angle|弓の角度
 simT|3D 二胡模擬器|3D Erhu Simulator|3D 二胡シミュレーター
 simSub|轉一轉、點零件，還能試拉看看|Spin it, tap the parts and try playing|回して、パーツをタップして、弾いてみよう
 simCard|轉一轉認識每個零件，再用手指試拉真實的二胡聲音|Spin it to learn each part, then try playing with real erhu sound|パーツを学んで、本物の二胡の音で弾いてみよう
@@ -2688,7 +2711,7 @@ function setMode(m){S.mode=m;$('#brandT').textContent=t('app')}
 
 /* ==== 3D 二胡模擬器：自製輕量 WebGL（不需外部函式庫，離線也能用） ==== */
 const SIM=(()=>{
-let gl,cv,prog,pickFB,pickTex,pickRB,meshes=[],skinTex,raf=0,on=false,mode='learn',sel=0,W=0,H=0;
+let GLX=null,gl,cv,prog,pickFB,pickTex,pickRB,meshes=[],skinTex,raf=0,on=false,mode='learn',sel=0,W=0,H=0;
 const cam={yaw:.72,pitch:.12,dist:158,tx:0,ty:40,tz:0,auto:true};
 /* ---------- small math ---------- */
 const V=(x,y,z)=>[x,y,z],sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]],mul=(a,s)=>[a[0]*s,a[1]*s,a[2]*s],
@@ -2724,13 +2747,20 @@ function ellip(g,c,rx,ry,rz,seg=12){const o=g.p.length/3;for(let i=0;i<=seg;i++)
 /* ---------- the erhu (dimensions follow a standard 81 cm erhu) ---------- */
 const C={wood:[.30,.15,.11],ebony:[.085,.07,.065],dark:[.16,.08,.06],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.11,.14,.30],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12]};
 /* coordinates in cm: skin faces +x, pegs run along x (paddles to the back), strings sit in front of the neck */
-const H0T=80.5,NX=-1.2,TY=6.2,TR=4.6,TX0=-6.5,TX1=6.5,BRY=TY+1.1,BRX=TX1+1.0,NUTY=44,NUTX=NX+2.7,PEGY=[66.5,60.5];
-const PTX=NX+2.55;/* x where strings leave the pegs' small ends */
+let H0T=80.5,NX=-1.2,TY=6.2,TR=4.6,TX0=-6.5,TX1=6.5,BRY=TY+1.1,BRX=TX1+1.0,NUTY=44,NUTX=NX+2.7,PEGY=[66.5,60.5];
+let PTX=NX+2.55;
+/* adjustable model: [key, default, min, max, step]; the editor panel writes S.mdl, applyMdl() turns it into the geometry constants */
+const MDEF=[['drumR',4.6,3.5,6,.1],['drumL',13,10,16,.2],['nutY',44,38,50,.2],['peg1',66.5,62,70,.2],['peg2',60.5,57,65,.2],['pegLen',15,10,20,.2],['pegW',.95,.5,1.6,.05],
+ ['neckR',1.2,.8,1.8,.05],['headY',74.5,73.5,78,.1],['headR',5.6,3,8,.1],['headA',1.85,1,2.6,.05],['fineY',49.5,46,54,.2],['bowLen',80,60,95,.5],['bowAng',30,15,45,.5]];
+let MK={};
+function applyMdl(){MK={};MDEF.forEach(([k,d])=>MK[k]=(S.mdl&&S.mdl[k]!=null)?S.mdl[k]:d);
+ TR=MK.drumR;TX0=-MK.drumL/2;TX1=MK.drumL/2;BRY=TY+1.1;BRX=TX1+1.0;NUTY=MK.nutY;PEGY=[MK.peg1,MK.peg2];H0T=MK.headY+MK.headR+.4;
+ const a=MK.bowAng*Math.PI/180;BD=[Math.cos(a),-Math.sin(a),0];BP0=[BRX,BRY+3.0,0]}/* x where strings leave the pegs' small ends */
 const SX=(k,y)=>{if(y<=BRY)return BRX;if(y<=NUTY){const t=(y-BRY)/(NUTY-BRY);return BRX+(NUTX-BRX)*t}const t=Math.min(1,(y-NUTY)/(PEGY[1]-NUTY));return NUTX+(PTX-NUTX)*t};
 const SZ=(k,y)=>(k==='in'?-1:1)*(y<=BRY?.22:y<=NUTY?.22+.18*(y-BRY)/(NUTY-BRY):.4);
 /* bow: rests diagonally (tip up toward the back, frog down toward the front), hair through the strings just above the bridge */
-const S1B=31,BD=nrm([.866,-.5,0]),BP0=[BRX,BRY+3.0,0],BAT=s2=>add(BP0,mul(BD,s2));
-function build(){const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);parts.push({id,mat,g,...o})};
+const S1B=31;let BD=nrm([.866,-.5,0]),BP0=[BRX,BRY+3.0,0];const BAT=s2=>add(BP0,mul(BD,s2));
+function build(){applyMdl();const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);parts.push({id,mat,g,...o})};
  const bot=TY-TR*Math.cos(Math.PI/6);
  P(9,'dark',g=>{box(g,[-.3,bot-.75,0],[11.5,1.5,7.6])});
  let hexP;P(5,'wood',g=>{hexP=hexPrism(g,0,TY,TX0,TX1,TR);hexCap(g,TY,TX0,hexP,-1)});
@@ -2738,19 +2768,19 @@ function build(){const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);par
  P(5,'ivory',g=>{hexPrism(g,0,TY,TX1-.5,TX1+.02,TR+.1)});
  P(6,'skin',g=>{hexCap(g,TY,TX1+.03,hexP.map(([y,z])=>[y*.97,z*.97]),1,TR*2)},{tex:1});
  /* neck: thin round lower part, thicker peg section with a step, crook head */
- P(4,'ebony',g=>{sweep(g,line([NX,bot+.2,0],[NX,56,0],6),t=>1.2-.15*t,16);sweep(g,line([NX,55.6,0],[NX,57.2,0],1),t=>1.05+.4*t,16,false);sweep(g,line([NX,57.2,0],[NX,71.2,0],4),1.45,16);sweep(g,line([NX,71.2,0],[NX,71.21,0],1),1.45,16)});
- const H0=74.5,HR=5.6,HA=1.85,hp=a=>[NX-HR+HR*Math.cos(a),H0+HR*Math.sin(a),0],HN=24,hr=t=>t<.6?1.05-.12*t:Math.max(.12,.98-1.6*(t-.6)*(t-.6)*4.2);
+ P(4,'ebony',g=>{sweep(g,line([NX,bot+.2,0],[NX,56,0],6),t=>MK.neckR-.15*t,16);sweep(g,line([NX,55.6,0],[NX,57.2,0],1),t=>MK.neckR-.15+.4*t,16,false);sweep(g,line([NX,57.2,0],[NX,71.2,0],4),1.45,16);sweep(g,line([NX,71.2,0],[NX,71.21,0],1),1.45,16)});
+ const H0=MK.headY,HR=MK.headR,HA=MK.headA,hp=a=>[NX-HR+HR*Math.cos(a),H0+HR*Math.sin(a),0],HN=24,hr=t=>t<.6?1.05-.12*t:Math.max(.12,.98-1.6*(t-.6)*(t-.6)*4.2);
  const hpts=[[NX,71.6,0],[NX,73,0],[NX,H0,0]];for(let k=1;k<=HN;k++)hpts.push(hp(k/HN*HA));const HT=hpts.length-1,seg=(a,b)=>hpts.slice(a,b+1),tr=(a,b)=>t=>hr((a+(b-a)*t)/HT);
  const cA=Math.round(HT*.70),cB=Math.round(HT*.74),cC=Math.round(HT*.82),cD=Math.round(HT*.86);
  P(1,'ebony',g=>{sweep(g,line([NX,71.2,0],[NX,72,0],1),t=>1.45-.4*t,16,false);sweep(g,seg(0,cA),tr(0,cA),16)});
  P(1,'black',g=>{sweep(g,seg(cA,cB),tr(cA,cB),16,false);sweep(g,seg(cC,cD),tr(cC,cD),16,false)});
  P(1,'ivory',g=>{sweep(g,seg(cB,cC),tr(cB,cC),16,false);sweep(g,seg(cD,HT),tr(cD,HT),16)});
  /* pegs: teardrop paddles toward the back, small ends with ivory and a red ring toward the front */
- PEGY.forEach((y,i)=>{P(2,'ebony',g=>{const pts=[];for(let k=0;k<=12;k++){pts.push([NX+2.4-k*1.25,y,0])}sweep(g,pts,t=>t<.22?.42:.42+Math.pow((t-.22)/.78,1.6)*.95,14)});
-  P(2,'ivory',g=>{sweep(g,line([NX-12.6,y,0],[NX-13.3,y,0],1),1.32,14);sweep(g,line([NX+2.4,y,0],[NX+2.9,y,0],1),.42,10)});
+ PEGY.forEach((y,i)=>{P(2,'ebony',g=>{const pts=[];for(let k=0;k<=12;k++){pts.push([NX+2.4-k*MK.pegLen/12,y,0])}sweep(g,pts,t=>t<.22?.42:.42+Math.pow((t-.22)/.78,1.6)*MK.pegW,14)});
+  P(2,'ivory',g=>{sweep(g,line([NX+2.4-MK.pegLen,y,0],[NX+1.7-MK.pegLen,y,0],1),.37+MK.pegW,14);sweep(g,line([NX+2.4,y,0],[NX+2.9,y,0],1),.42,10)});
   P(2,'red',g=>sweep(g,line([NX+1.9,y,0],[NX+2.4,y,0],1),.47,10))});
  /* fine tuners (brass) */
- ['in','out'].forEach(k=>P(3,'brass',g=>{const y=49.5,x=SX(k,y),z=SZ(k,y);box(g,[x,y,z],[.5,2.2,.35]);sweep(g,line([x,y+.6,z],[x+1.2,y+.6,z],1),.22,8);box(g,[x,y-.7,z],[.7,.45,.45])}));
+ ['in','out'].forEach(k=>P(3,'brass',g=>{const y=MK.fineY,x=SX(k,y),z=SZ(k,y);box(g,[x,y,z],[.5,2.2,.35]);sweep(g,line([x,y+.6,z],[x+1.2,y+.6,z],1),.22,8);box(g,[x,y-.7,z],[.7,.45,.45])}));
  /* qianjin: navy cord wound round the neck and looped to the strings */
  P(3,'cord',g=>{for(let k=0;k<7;k++){const y=NUTY-.5+k*.16;{const ring=[];for(let q=0;q<=20;q++){const a=q/20*Math.PI*2;ring.push([NX+Math.cos(a)*1.2,y,Math.sin(a)*1.2])}sweep(g,ring,.085,5,false)}
   [-1,1].forEach(sd=>sweep(g,line([NX+1.15,y,sd*.25],[SX('in',NUTY)+.08,y,sd*.45],1),.06,5,false))}});
@@ -2760,7 +2790,7 @@ function build(){const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);par
    [NUTY+.3,30,18,BRY].forEach(y=>pts.push(P3(y)));pts.push([TX1+.3,bot+.6,SZ(k,0)*.6]);
    for(let s2=0;s2<pts.length-1;s2++)sweep(g,line(pts[s2],pts[s2+1],1),r,6,false)},{str:k})});
  /* bow ~81 cm (same as the erhu): hair through the strings, stick on the near side */
- const S0=-49,S1=S1B,SZo=-1.7,at=(s2,dz=0,dy=0)=>{const p=BAT(s2);return [p[0],p[1]+dy,p[2]+dz]};
+ const S0=S1B-MK.bowLen,S1=S1B,SZo=-1.7,at=(s2,dz=0,dy=0)=>{const p=BAT(s2);return [p[0],p[1]+dy,p[2]+dz]};
  P(10,'stick',g=>{const pts=[];for(let k=0;k<=18;k++){const t=k/18,s2=S0-1+t*(S1-S0+2);pts.push(at(s2,SZo-Math.sin(t*Math.PI)*.35,0))}sweep(g,pts,t=>.33+.12*t,10);
   sweep(g,[at(S0-1,SZo),at(S0-1.8,SZo*.6),at(S0-2,SZo*.2),at(S0-1.4,0)],.22,8)},{bow:1});
  P(10,'black',g=>{sweep(g,[at(S0-1.7,SZo*.4),at(S0-2.1,SZo*.15)],.28,8);sweep(g,[at(S1+1,SZo),at(S1+2.8,SZo)],.42,10)},{bow:1});
@@ -2792,14 +2822,16 @@ void main(){if(uIsPick>.5){gl_FragColor=vec4(uPick,1.);return;}
  vec3 col=base*(amb+d*vec3(1.,.96,.9)*.95+d2)+vec3(sp);col+=uGlow*vec3(.98,.78,.2)*.55;
  gl_FragColor=vec4(pow(col,vec3(.95)),1.);}`;
 function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(o));return o}
+function mkMeshes(){const ext=GLX;return build().map(pt=>{const b=k=>{const o=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,o);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(pt.g[k]),gl.STATIC_DRAW);return o};
+  const big=pt.g.p.length/3>65535,ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,big&&ext?new Uint32Array(pt.g.i):new Uint16Array(pt.g.i),gl.STATIC_DRAW);
+  return {...pt,bp:b('p'),bn:b('n'),bu:b('u'),ib,cnt:pt.g.i.length,it:big&&ext?gl.UNSIGNED_INT:gl.UNSIGNED_SHORT}});}
+function rebuildModel(){if(!gl)return;meshes.forEach(m=>{gl.deleteBuffer(m.bp);gl.deleteBuffer(m.bn);gl.deleteBuffer(m.bu);gl.deleteBuffer(m.ib)});meshes=mkMeshes()}
 function init(canvas){cv=canvas;gl=cv.getContext('webgl',{antialias:true,preserveDrawingBuffer:false})||cv.getContext('experimental-webgl');if(!gl)return false;
  prog=gl.createProgram();gl.attachShader(prog,sh(gl.VERTEX_SHADER,VS));gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(prog);gl.useProgram(prog);
  const U=n=>gl.getUniformLocation(prog,n);prog.u={VP:U('uVP'),M:U('uM'),C:U('uC'),Eye:U('uEye'),Wood:U('uWood'),Tex:U('uTex'),S:U('uS'),Glow:U('uGlow'),Pick:U('uPick'),IsPick:U('uIsPick'),Spec:U('uSpec')};
  prog.a={P:gl.getAttribLocation(prog,'aP'),N:gl.getAttribLocation(prog,'aN'),U:gl.getAttribLocation(prog,'aU')};
  const ext=gl.getExtension('OES_element_index_uint');
- meshes=build().map(pt=>{const b=k=>{const o=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,o);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(pt.g[k]),gl.STATIC_DRAW);return o};
-  const big=pt.g.p.length/3>65535,ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,big&&ext?new Uint32Array(pt.g.i):new Uint16Array(pt.g.i),gl.STATIC_DRAW);
-  return {...pt,bp:b('p'),bn:b('n'),bu:b('u'),ib,cnt:pt.g.i.length,it:big&&ext?gl.UNSIGNED_INT:gl.UNSIGNED_SHORT}});
+ GLX=ext;meshes=mkMeshes();
  skinTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,skinTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,skinCanvas());
  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
  gl.enable(gl.DEPTH_TEST);return true}
@@ -3001,7 +3033,14 @@ function airSave(){const f=airFile(),a=document.createElement('a');a.href=URL.cr
 
 /* ---------- view wiring ---------- */
 let ready=false;
-function setMode(m){if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('.simar').hidden=m==='air';$('.simarp').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
+function mdUI(){const L=$('#simEditL');L.innerHTML=MDEF.map(([k,d,a,b,st])=>`<label class="mdr" data-k="${k}"><span>${t('md_'+k)}</span><input type="range" min="${a}" max="${b}" step="${st}" value="${MK[k]}"><output>${(+MK[k]).toFixed(st<.1?2:1)}</output></label>`).join('');
+ const mark=()=>$$('#simEditL .mdr').forEach(r=>{const d=MDEF.find(x=>x[0]===r.dataset.k)[1];r.classList.toggle('chg',Math.abs(MK[r.dataset.k]-d)>1e-6)});mark();
+ let tm=0;$$('#simEditL input').forEach(inp=>inp.oninput=()=>{const r=inp.closest('.mdr'),k=r.dataset.k,st=+inp.step;S.mdl=S.mdl||{};S.mdl[k]=+inp.value;r.querySelector('output').textContent=(+inp.value).toFixed(st<.1?2:1);
+  cancelAnimationFrame(tm);tm=requestAnimationFrame(()=>{rebuildModel();mark();save()})});
+ $('#mdReset').onclick=()=>{S.mdl={};save();applyMdl();rebuildModel();mdUI();$('#mdOut').hidden=true;toast(t('mdResetD'))};
+ $('#mdCopy').onclick=async()=>{const o={};MDEF.forEach(([k,d])=>{if(Math.abs(MK[k]-d)>1e-6)o[k]=MK[k]});const txt='二胡模型設定 '+JSON.stringify(o);const ta=$('#mdOut');ta.value=txt;ta.hidden=false;
+  try{await navigator.clipboard.writeText(txt);toast(t('mdCopied'))}catch(e){ta.select();toast(t('mdCopyM'))}}}
+function setMode(m){if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('.simar').hidden=m==='air';$('#simEdit').hidden=m==='air';$('.simarp').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
  $('.simw').classList.toggle('play',m==='play');if(m==='play'){sel=0;cam.auto=false;tween({tx:3,ty:20,tz:0,dist:96});cam.yaw=1.05;cam.pitch=.18;plUI()}else{plStop();choose(0);tween({tx:0,ty:40,tz:0,dist:158})}}
 function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#simNoGL').hidden=false;return}controls();bowPad();ready=true;
   $('#simParts').innerHTML=PARTS.map(p=>`<button data-p="${p[0]}">${t(p[1]).split('§')[0]}</button>`).join('');
@@ -3009,6 +3048,7 @@ function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#si
   $$('#simMode button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
   $('#simStrIn').onclick=()=>{PL.str='in';PL.note=null;plUI();if(PL.src)plNote()};$('#simStrOut').onclick=()=>{PL.str='out';PL.note=null;plUI();if(PL.src)plNote()};
   $$('#simFing button').forEach((b,i)=>b.onpointerdown=async()=>{PL.fing=i;await plEnsure();plNote();plUI()});
+  mdUI();
   $('#airGo').onclick=airStart;$('#airX').onclick=()=>{airStop()};$('#airRec').onclick=airRecToggle;$('#airShare').onclick=airShare;$('#airSave').onclick=airSave;$('#airAgain').onclick=()=>{AIR.blob=null;airStart()};
   {let d0=null;const cv=$('#airCv');cv.style.touchAction='none';cv.addEventListener('pointerdown',e=>{d0={x:e.clientX,y:e.clientY,o:(S.airOff||[0,0]).slice()};cv.setPointerCapture(e.pointerId)});
    cv.addEventListener('pointermove',e=>{if(!d0)return;S.airOff=[d0.o[0]+(e.clientX-d0.x)/cv.clientWidth,d0.o[1]+(e.clientY-d0.y)/cv.clientHeight]});
