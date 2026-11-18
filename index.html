@@ -2663,8 +2663,11 @@ function ellip(g,c,rx,ry,rz,seg=12){const o=g.p.length/3;for(let i=0;i<=seg;i++)
 const C={wood:[.30,.15,.11],ebony:[.085,.07,.065],dark:[.16,.08,.06],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.11,.14,.30],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12]};
 /* coordinates in cm: skin faces +x, pegs run along x (paddles to the back), strings sit in front of the neck */
 const NX=-1.2,TY=6.2,TR=4.6,TX0=-6.5,TX1=6.5,BRY=TY+1.1,BRX=TX1+1.0,NUTY=44,NUTX=NX+2.7,PEGY=[66.5,60.5];
-const SX=(k,y)=>{/* string x at height y; inner string nearer the neck, outer string further forward */const d=k==='in'?-.24:.24;
- if(y<=BRY)return BRX+d*.6;if(y<=NUTY){const t=(y-BRY)/(NUTY-BRY);return BRX+(NUTX-BRX)*t+d*(.6+.6*t)}return NUTX+d*1.2+(NX+1.3-NUTX)*Math.min(1,(y-NUTY)/(PEGY[0]-NUTY))};
+const PTX=NX+2.55;/* x where strings leave the pegs' small ends */
+const SX=(k,y)=>{if(y<=BRY)return BRX;if(y<=NUTY){const t=(y-BRY)/(NUTY-BRY);return BRX+(NUTX-BRX)*t}const t=Math.min(1,(y-NUTY)/(PEGY[1]-NUTY));return NUTX+(PTX-NUTX)*t};
+const SZ=(k,y)=>(k==='in'?-1:1)*(y<=BRY?.22:y<=NUTY?.22+.18*(y-BRY)/(NUTY-BRY):.4);
+/* bow: rests diagonally (tip up toward the back, frog down toward the front), hair through the strings just above the bridge */
+const BD=nrm([.866,-.5,0]),BP0=[BRX,BRY+3.0,0],BAT=s2=>add(BP0,mul(BD,s2));
 function build(){const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);parts.push({id,mat,g,...o})};
  const bot=TY-TR*Math.cos(Math.PI/6);
  P(9,'dark',g=>{box(g,[-.3,bot-.75,0],[11.5,1.5,7.6])});
@@ -2673,34 +2676,37 @@ function build(){const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);par
  P(5,'ivory',g=>{hexPrism(g,0,TY,TX1-.5,TX1+.02,TR+.1)});
  P(6,'skin',g=>{hexCap(g,TY,TX1+.03,hexP.map(([y,z])=>[y*.97,z*.97]),1,TR*2)},{tex:1});
  /* neck: thin round lower part, thicker peg section with a step, crook head */
- P(4,'ebony',g=>{sweep(g,line([NX,bot+.2,0],[NX,56,0],6),t=>1.2-.15*t,16);sweep(g,line([NX,55.6,0],[NX,57.2,0],1),t=>1.05+.4*t,16,false);sweep(g,line([NX,57.2,0],[NX,72,0],4),1.45,16)});
- const HR=7.5,HA=1.2,H0=75,hp=a=>[NX-HR+HR*Math.cos(a),H0+HR*Math.sin(a),0];
- P(1,'ebony',g=>{const pts=[[NX,72,0],[NX,73.5,0],[NX,H0,0]];for(let k=1;k<=16;k++)pts.push(hp(k/16*HA));sweep(g,pts,t=>1.4-.4*t,16)});
- P(1,'black',g=>{const e=hp(HA),d=nrm([-Math.sin(HA),Math.cos(HA),0]);sweep(g,[e,add(e,mul(d,.35))],.98,14)});
- P(1,'ivory',g=>{const e=hp(HA),d=nrm([-Math.sin(HA),Math.cos(HA),0]);sweep(g,[add(e,mul(d,.35)),add(e,mul(d,1.5))],t=>.98-.1*t,14)});
+ P(4,'ebony',g=>{sweep(g,line([NX,bot+.2,0],[NX,56,0],6),t=>1.2-.15*t,16);sweep(g,line([NX,55.6,0],[NX,57.2,0],1),t=>1.05+.4*t,16,false);sweep(g,line([NX,57.2,0],[NX,71.2,0],4),1.45,16);sweep(g,line([NX,71.2,0],[NX,71.21,0],1),1.45,16)});
+ const H0=74.5,HR=5.6,HA=1.85,hp=a=>[NX-HR+HR*Math.cos(a),H0+HR*Math.sin(a),0],HN=24,hr=t=>t<.6?1.05-.12*t:Math.max(.12,.98-1.6*(t-.6)*(t-.6)*4.2);
+ const hpts=[[NX,71.6,0],[NX,73,0],[NX,H0,0]];for(let k=1;k<=HN;k++)hpts.push(hp(k/HN*HA));const HT=hpts.length-1,seg=(a,b)=>hpts.slice(a,b+1),tr=(a,b)=>t=>hr((a+(b-a)*t)/HT);
+ const cA=Math.round(HT*.70),cB=Math.round(HT*.74),cC=Math.round(HT*.82),cD=Math.round(HT*.86);
+ P(1,'ebony',g=>{sweep(g,line([NX,71.2,0],[NX,72,0],1),t=>1.45-.4*t,16,false);sweep(g,seg(0,cA),tr(0,cA),16)});
+ P(1,'black',g=>{sweep(g,seg(cA,cB),tr(cA,cB),16,false);sweep(g,seg(cC,cD),tr(cC,cD),16,false)});
+ P(1,'ivory',g=>{sweep(g,seg(cB,cC),tr(cB,cC),16,false);sweep(g,seg(cD,HT),tr(cD,HT),16)});
  /* pegs: teardrop paddles toward the back, small ends with ivory and a red ring toward the front */
  PEGY.forEach((y,i)=>{P(2,'ebony',g=>{const pts=[];for(let k=0;k<=12;k++){pts.push([NX+2.4-k*1.25,y,0])}sweep(g,pts,t=>t<.22?.42:.42+Math.pow((t-.22)/.78,1.6)*.95,14)});
   P(2,'ivory',g=>{sweep(g,line([NX-12.6,y,0],[NX-13.3,y,0],1),1.32,14);sweep(g,line([NX+2.4,y,0],[NX+2.9,y,0],1),.42,10)});
   P(2,'red',g=>sweep(g,line([NX+1.9,y,0],[NX+2.4,y,0],1),.47,10))});
  /* fine tuners (brass) */
- ['in','out'].forEach(k=>P(3,'brass',g=>{const y=49.5,x=SX(k,y);box(g,[x,y,0],[.35,2.2,.5]);sweep(g,line([x,y+.6,.25],[x,y+.6,1.4],1),.25,8);box(g,[x-.35,y-.6,0],[.6,.5,.5])}));
+ ['in','out'].forEach(k=>P(3,'brass',g=>{const y=49.5,x=SX(k,y),z=SZ(k,y);box(g,[x,y,z],[.5,2.2,.35]);sweep(g,line([x,y+.6,z],[x+1.2,y+.6,z],1),.22,8);box(g,[x,y-.7,z],[.7,.45,.45])}));
  /* qianjin: navy cord wound round the neck and looped to the strings */
  P(3,'cord',g=>{for(let k=0;k<7;k++){const y=NUTY-.5+k*.16;{const ring=[];for(let q=0;q<=20;q++){const a=q/20*Math.PI*2;ring.push([NX+Math.cos(a)*1.2,y,Math.sin(a)*1.2])}sweep(g,ring,.085,5,false)}
-  sweep(g,line([NX+1.2,y,.2],[SX('out',NUTY)+.1,y,.05],1),.06,5,false)}});
+  [-1,1].forEach(sd=>sweep(g,line([NX+1.15,y,sd*.25],[SX('in',NUTY)+.08,y,sd*.45],1),.06,5,false))}});
  P(7,'ivory',g=>{box(g,[TX1+.5,BRY-.45,0],[1.0,1.1,1.0])});
  P(7,'felt',g=>{box(g,[TX1+.25,TY-2.4,0],[.5,1.4,1.6])});
- [['in',.075],['out',.06]].forEach(([k,r])=>{P(8,'str',g=>{const top=k==='in'?PEGY[0]:PEGY[1],pts=[[NX+1.3,top-.6,0]];
-   [56,NUTY,30,18,BRY].forEach(y=>{if(y<top)pts.push([SX(k,y),y,0])});pts.push([TX1+.3,bot+.6,0]);
+ [['in',.075],['out',.06]].forEach(([k,r])=>{P(8,'str',g=>{const top=k==='in'?PEGY[0]:PEGY[1],P3=y=>[SX(k,y),y,SZ(k,y)],pts=[[PTX,top,SZ(k,99)],[PTX,PEGY[1]-1,SZ(k,99)]];
+   [NUTY+.3,30,18,BRY].forEach(y=>pts.push(P3(y)));pts.push([TX1+.3,bot+.6,SZ(k,0)*.6]);
    for(let s2=0;s2<pts.length-1;s2++)sweep(g,line(pts[s2],pts[s2+1],1),r,6,false)},{str:k})});
- /* bow: stick outside the strings, white hair passing between them */
- const by=BRY+2.2,hx=(SX('in',by)+SX('out',by))/2,sx=hx+1.9;
- P(10,'stick',g=>{const pts=[];for(let k=0;k<=16;k++){const t=k/16,z=-38+t*78;pts.push([sx+Math.sin(t*Math.PI)*.3,by+.1,z])}sweep(g,pts,t=>.42-.13*t,10);
-  sweep(g,[[sx,by+.1,40],[sx-.5,by+.06,41.2],[hx+.2,by,41.9],[hx,by,41.6]],.24,8)},{bow:1});
- P(10,'black',g=>{sweep(g,line([sx,by+.1,41],[sx-.2,by+.08,41.6],1),.3,8);sweep(g,line([sx,by+.1,-38.6],[sx,by+.1,-40.2],1),.36,10)},{bow:1});
- P(10,'frog',g=>{sweep(g,[[sx,by+.1,-36.5],[sx-.6,by+.08,-37.2],[hx+.2,by,-37.4],[hx,by,-36.8]],.42,8);box(g,[sx-.6,by-.2,-37.6],[1.3,1.2,.9])},{bow:1});
- P(10,'brass',g=>sweep(g,line([sx,by+.1,-38.6],[sx,by+.1,-38],1),.46,10),{bow:1});
- P(10,'hair',g=>{const a=-36.8,b2=41.5;quad(g,[hx-.06,by-.38,a],[hx-.06,by-.38,b2],[hx-.06,by+.38,b2],[hx-.06,by+.38,a],[-1,0,0]);quad(g,[hx+.06,by-.38,b2],[hx+.06,by-.38,a],[hx+.06,by+.38,a],[hx+.06,by+.38,b2],[1,0,0]);
-  sweep(g,line([hx,by,-36.6],[hx,by,-29],2),.32,8)},{bow:1});
+ /* bow ~81 cm (same as the erhu): hair through the strings, stick on the near side */
+ const S0=-49,S1=31,SZo=-1.7,at=(s2,dz=0,dy=0)=>{const p=BAT(s2);return [p[0],p[1]+dy,p[2]+dz]};
+ P(10,'stick',g=>{const pts=[];for(let k=0;k<=18;k++){const t=k/18,s2=S0-1+t*(S1-S0+2);pts.push(at(s2,SZo-Math.sin(t*Math.PI)*.35,0))}sweep(g,pts,t=>.33+.12*t,10);
+  sweep(g,[at(S0-1,SZo),at(S0-1.8,SZo*.6),at(S0-2,SZo*.2),at(S0-1.4,0)],.22,8)},{bow:1});
+ P(10,'black',g=>{sweep(g,[at(S0-1.7,SZo*.4),at(S0-2.1,SZo*.15)],.28,8);sweep(g,[at(S1+1,SZo),at(S1+2.8,SZo)],.42,10)},{bow:1});
+ P(10,'brass',g=>sweep(g,[at(S1+.4,SZo),at(S1+1,SZo)],.5,10),{bow:1});
+ P(10,'frog',g=>{sweep(g,[at(S1-1.2,SZo),at(S1-.4,SZo*.5),at(S1-.6,0)],.45,8);const c=at(S1-.8,SZo*.55);box(g,c,[1.2,1.2,1.2])},{bow:1});
+ P(10,'hair',g=>{const n=nrm(cross(BD,[0,0,1])),a=at(S0-1.4),b2=at(S1-.6),w=.38;
+  const A1=add(a,mul(n,w)),A2=add(a,mul(n,-w)),B1=add(b2,mul(n,w)),B2=add(b2,mul(n,-w));quad(g,A2,B2,B1,A1,[0,0,1]);quad(g,A1,B1,B2,A2,[0,0,-1]);
+  sweep(g,[at(S1-.8),at(S1-8)],.3,8)},{bow:1});
  return parts}
 /* ---------- procedural python-skin texture ---------- */
 function skinCanvas(){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');x.fillStyle='#1f130b';x.fillRect(0,0,256,256);
@@ -2741,7 +2747,7 @@ let bowZ=0,vib={in:0,out:0},glowT=0;
 function draw(pick){const e=eye(),VP=mm(persp(.62,W/H,5,600),look(e,[cam.tx,cam.ty,cam.tz],[0,1,0]));gl.viewport(0,0,W,H);
  gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);const u=prog.u,a=prog.a;gl.uniformMatrix4fv(u.VP,false,VP);gl.uniform3fv(u.Eye,e);gl.uniform1f(u.IsPick,pick?1:0);
  const now=performance.now()/1000;
- meshes.forEach(m=>{let M=m.bow?trans(0,0,bowZ):trans(0,0,0);if(m.str&&vib[m.str]>.02)M=trans(Math.sin(now*90)*.05*vib[m.str],0,Math.cos(now*71)*.06*vib[m.str]);
+ meshes.forEach(m=>{let M=m.bow?trans(BD[0]*bowZ,BD[1]*bowZ,0):trans(0,0,0);if(m.str&&vib[m.str]>.02)M=trans(Math.sin(now*90)*.05*vib[m.str],0,Math.cos(now*71)*.06*vib[m.str]);
   gl.uniformMatrix4fv(u.M,false,M);const c=m.mat==='skin'?[1,1,1]:C[m.mat];gl.uniform3fv(u.C,c);gl.uniform1f(u.Wood,m.mat==='wood'||m.mat==='dark'||m.mat==='ebony'||m.mat==='stick'?1:0);gl.uniform1f(u.Tex,m.tex?1:0);
   gl.uniform1f(u.Spec,m.mat==='ebony'?.55:m.mat==='wood'||m.mat==='dark'||m.mat==='stick'?.35:m.mat==='str'||m.mat==='brass'?.8:.15);
   gl.uniform1f(u.Glow,!pick&&sel&&m.id===sel?(.55+.45*Math.sin(now*5)):(m.str&&vib[m.str]>.02&&!pick?vib[m.str]:0));gl.uniform3fv(u.Pick,[m.id/255,0,0]);
@@ -2769,7 +2775,7 @@ function controls(){const pts=new Map();let st=null,moved=0,pinch0=0,dist0=0;
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(35,Math.min(260,cam.dist*(1+Math.sign(e.deltaY)*.08)))},{passive:false})}
 /* ---------- parts ---------- */
-const PARTS=[[1,'pHead',[-4,78,0],50],[2,'pPeg',[-6,63,0],55],[3,'pNut',[1,46,0],40],[4,'pNeck',[-1,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[9,9,2],120]];
+const PARTS=[[1,'pHead',[-3,77,0],42],[2,'pPeg',[-6,63,0],55],[3,'pNut',[1,46,0],40],[4,'pNeck',[-1,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[0,18,0],130]];
 function choose(id){sel=id;const p=PARTS.find(x=>x[0]===id);const box=$('#simInfo');if(!p){box.innerHTML=`<p class="mut">${t('simTap')}</p>`;$$('#simParts button').forEach(b=>b.classList.remove('sel'));return}
  const [ti,de]=t(p[1]).split('§');box.innerHTML=`<b>${ti}</b><p>${de||''}</p>`;$$('#simParts button').forEach(b=>b.classList.toggle('sel',+b.dataset.p===id));
  const tgt=p[2];tween({tx:tgt[0]*.5,ty:tgt[1],tz:tgt[2]*.5,dist:p[3]});tts(ti+'。'+(de||''))}
@@ -2794,7 +2800,7 @@ function bowPad(){const pad=$('#simBow');let id=null,decay=0;
  pad.addEventListener('pointerdown',async e=>{pad.setPointerCapture(e.pointerId);id=e.pointerId;PL.lastX=e.clientX;PL.lastT=performance.now();await plEnsure();plNote()});
  pad.addEventListener('pointermove',e=>{if(e.pointerId!==id)return;const now=performance.now(),dx=e.clientX-PL.lastX,dt=Math.max(8,now-PL.lastT),w=pad.getBoundingClientRect().width,sp=Math.abs(dx)/w/(dt/1000);
   PL.lastX=e.clientX;PL.lastT=now;const v=Math.min(1,sp/1.1);PL.vol=PL.vol*.6+v*.4;plVol(PL.vol);if(dx)PL.dir=Math.sign(dx);
-  PL.pos=Math.max(0,Math.min(1,PL.pos+dx/w*.9));bowZ=(PL.pos-.5)*-44;$('#simBowK').style.left=`calc(${PL.pos} * (100% - 2.6rem) + 1.3rem)`;$('#simBowD').textContent=PL.vol>.05?t(PL.dir>0?'simPull':'simPush'):'';
+  PL.pos=Math.max(0,Math.min(1,PL.pos+dx/w*.9));bowZ=(PL.pos-.5)*36;$('#simBowK').style.left=`calc(${PL.pos} * (100% - 2.6rem) + 1.3rem)`;$('#simBowD').textContent=PL.vol>.05?t(PL.dir>0?'simPull':'simPush'):'';
   clearTimeout(decay);decay=setTimeout(()=>{PL.vol*=.3;plVol(PL.vol)},90)});
  const up=e=>{if(e.pointerId!==id)return;id=null;plVol(0);$('#simBowD').textContent=''};pad.addEventListener('pointerup',up);pad.addEventListener('pointercancel',up)}
 /* ---------- view wiring ---------- */
