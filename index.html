@@ -611,7 +611,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v64</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v65</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -798,7 +798,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <p class="lbl" data-i="gA11y"></p>
  <div class="list"><div class="li" style="flex-direction:column;align-items:stretch"><span data-i="sFont"></span><div class="seg" id="ftSeg"><button data-v="0.875" data-i="fS"></button><button data-v="1" data-i="fM"></button><button data-v="1.2" data-i="fL"></button><button data-v="2" data-i="fX"></button></div></div><label class="li"><span class="t" data-i="sHC"></span><input type="checkbox" id="hc"></label><label class="li"><span class="t" data-i="sRead"></span><input type="checkbox" id="read"></label><label class="li"><span class="t" data-i="sRM"></span><input type="checkbox" id="rm"></label><label class="li"><span class="t" data-i="sBig"></span><input type="checkbox" id="bigBtn"></label><label class="li"><span class="t" data-i="sElder"></span><input type="checkbox" id="elder"></label></div><div class="gap"></div>
  <p class="lbl" data-i="gAI"></p>
- <div class="list"><label class="li"><span class="t" data-i="sVoice"></span><input type="checkbox" id="voice"></label><button class="li" id="ttsTest"><span class="t" data-i="ttsTest"></span><svg class="ic"><use href="#i-spk"/></svg></button><div class="li"><span class="t" data-i="sDetail"></span><div class="seg" id="dtSeg"><button data-v="simple" data-i="dSimple"></button><button data-v="detail" data-i="dFull"></button></div></div><label class="li"><span class="t" data-i="sTips"></span><input type="checkbox" id="aTips"></label><label class="li"><span class="t" data-i="sSpeak"></span><input type="checkbox" id="aSpeak"></label></div><div class="gap"></div>
+ <div class="list"><label class="li"><span class="t" data-i="sVoice"></span><input type="checkbox" id="voice"></label><label class="li" id="voicePickRow"><span class="t" data-i="sVoicePick"></span><select id="voicePick" style="max-width:55%;font:inherit;padding:.3rem;border-radius:.5rem"></select></label><label class="li"><span class="t" data-i="sVoiceRate"></span><select id="voiceRate" style="font:inherit;padding:.3rem;border-radius:.5rem"><option value=".8"></option><option value="1"></option><option value="1.2"></option></select></label><button class="li" id="ttsTest"><span class="t" data-i="ttsTest"></span><svg class="ic"><use href="#i-spk"/></svg></button><div class="li"><span class="t" data-i="sDetail"></span><div class="seg" id="dtSeg"><button data-v="simple" data-i="dSimple"></button><button data-v="detail" data-i="dFull"></button></div></div><label class="li"><span class="t" data-i="sTips"></span><input type="checkbox" id="aTips"></label><label class="li"><span class="t" data-i="sSpeak"></span><input type="checkbox" id="aSpeak"></label></div><div class="gap"></div>
  <p class="lbl" data-i="sBasic"></p>
  <div class="list">
   <label class="li"><span class="t" data-i="sLang"></span><select class="langsel"></select></label>
@@ -1200,6 +1200,12 @@ gsAllOff|已關閉調音器與節拍器|Tuner and metronome off|チューナー�
 cg8b|比 3、比 4§比 3 根手指維持 2 秒，可以隱藏或再顯示畫面左下角的調音器、節拍器指示；比 4 根手指（大拇指收起來）維持 2 秒，會同時關閉調音器和節拍器。|Three and four§Hold 3 fingers for 2 s to hide or show the tuner and metronome display at bottom left. Hold 4 fingers (thumb tucked) for 2 s to turn both off.|3と4§指3本を2秒で左下の表示を隠す・戻す。指4本（親指は曲げる）を2秒でチューナーとメトロノームを両方オフ。
 ttsNone|這個瀏覽器沒有語音朗讀功能，請改用 Chrome 或 Safari 開啟|This browser has no speech; please open in Chrome or Safari|この ブラウザは読み上げ非対応です。Chrome か Safari で開いてください
 ttsInApp|LINE、Messenger 等 App 內建的瀏覽器不支援語音，請點右上角選單「用瀏覽器開啟」|In-app browsers (LINE, Messenger…) don't support speech. Use the menu to open in your browser|アプリ内ブラウザは読み上げ非対応です。メニューから「ブラウザで開く」を選んでください
+sVoicePick|語音聲線|Voice|声
+sVoiceAuto|自動（台灣國語優先）|Automatic|自動
+sVoiceRate|語速|Speech speed|話す速さ
+vrSlow|慢|Slow|ゆっくり
+vrNorm|標準|Normal|標準
+vrFast|快|Fast|速い
 ttsTest|測試語音|Test voice|音声テスト
 ttsHello|你好，我是你的二胡練習夥伴。聽得到我的聲音，語音功能就正常。|Hello, I'm your erhu practice partner. If you can hear me, voice works.|こんにちは。この声が聞こえれば音声は正常です。
 sndR|實體節拍器|Real metronome|実機風
@@ -1605,7 +1611,7 @@ function apply(){
 function setRole(r){const c=ROLES[r];if(S.task&&S.task.auto)delete S.task;Object.assign(S,{role:r,scale:c.scale,voice:c.voice,bpm:c.bpm,detail:c.detail,autoTips:c.autoTips,elder:r==='senior'?1:0});S.mode=r==='free'?'h':'t';save();$('#ov').classList.remove('on');apply();view(startView());if(!S.toured)setTimeout(()=>startWalk(),300)}
 $$('.role').forEach(b=>b.onclick=()=>setRole(b.dataset.r));
 $('#chg').onclick=()=>$('#ov').classList.add('on');
-$$('.langsel').forEach(s=>s.onchange=()=>{S.lang=s.value;save();trCourse();apply();SIM.relabel()});
+$$('.langsel').forEach(s=>s.onchange=()=>{S.lang=s.value;save();trCourse();apply();SIM.relabel();try{voicePickUI()}catch(e){}});
 $('#ref').onchange=e=>{S.ref=+e.target.value;save()};
 $('#key').onchange=e=>{S.key=+e.target.value;save()};
 $('#voice').onchange=e=>{S.voice=e.target.checked;save()};
@@ -1959,15 +1965,31 @@ let TL=[],TI=0,GK=null,GI=0,GS=[];
 /* 統一的語音朗讀：選對語言的聲音、避開 Chrome cancel 後立刻 speak 被吃掉的問題、偵測不支援的瀏覽器（如 LINE、Messenger 內建瀏覽器） */
 let ttsWarned=0,ttsOK=0;
 const ttsLang=()=>({'zh-TW':'zh-TW',en:'en-US',ja:'ja-JP'}[S.lang]||'zh-TW');
-function ttsVoice(){const vs=(window.speechSynthesis&&speechSynthesis.getVoices())||[],L=ttsLang(),p=L.split('-')[0];
- return vs.find(v=>v.lang.replace('_','-')===L)||(p==='zh'&&vs.find(v=>/zh[-_](HK|Hant)/i.test(v.lang)))||vs.find(v=>v.lang.toLowerCase().startsWith(p))||null}
+/* ---- voice: Mandarin only (never Cantonese), Taiwan voices first, user can pick one in 我的 ---- */
+const ttsNorm=v=>(v.lang||'').replace(/_/g,'-').toLowerCase();
+const ttsCanto=v=>{const l=ttsNorm(v),n=(v.name||'').toLowerCase();return /^yue|zh-hk|zh-mo|hant-hk/.test(l)||/canton|粵|粤|廣東|广东|hong ?kong|香港|sin-ji|sinji|aasing|善怡/.test(n)};
+function ttsScore(v){const l=ttsNorm(v),n=(v.name||'').toLowerCase();if(!/^(zh|cmn)/.test(l)||ttsCanto(v))return 0;
+ let sc=1;if(/tw|hant/.test(l)||/taiwan|台灣|台湾|國語|mei-?jia|美佳|hanhan|zhiwei|yating/.test(n))sc=4;else if(/cn|hans/.test(l)||/mainland|普通话|普通話|ting-?ting|婷婷|tian-?tian/.test(n))sc=2;
+ if(/google/.test(n))sc+=.5;if(v.localService)sc+=.2;return sc}
+function ttsZhVoices(){const vs=(window.speechSynthesis&&speechSynthesis.getVoices())||[];return vs.filter(v=>ttsScore(v)>0).sort((a,b)=>ttsScore(b)-ttsScore(a))}
+function ttsVoice(){const vs=(window.speechSynthesis&&speechSynthesis.getVoices())||[],L=ttsLang();
+ if(L==='zh-TW'){const zh=ttsZhVoices();if(S.ttsVoice){const m=zh.find(v=>v.voiceURI===S.ttsVoice);if(m)return m}return zh[0]||null}
+ const p=L.split('-')[0];return vs.find(v=>ttsNorm(v)===L.toLowerCase())||vs.find(v=>ttsNorm(v).startsWith(p))||null}
+/* text as it should be heard: no emoji or layout symbols, units and music marks spoken in words */
+function ttsClean(x){let s=String(x);
+ s=s.replace(/§/g,'。').replace(/<[^>]+>/g,'');if(ttsLang()==='zh-TW')s=s.replace(/♯/g,'升').replace(/♭/g,'降').replace(/−(\d)/g,'負$1');s=s.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu,'');
+ if(ttsLang()==='zh-TW'){
+  s=s.replace(/([0-7])̈/g,'倍高音$1').replace(/([0-7])̇/g,'高音$1').replace(/([0-7])̣/g,'低音$1')
+   .replace(/♯/g,'升').replace(/♭/g,'降').replace(/(\d)\s*¢/g,'$1音分').replace(/(\d)\s*cm\b/gi,'$1公分').replace(/(\d)\s*mm\b/gi,'$1毫米').replace(/(\d)\s*°/g,'$1度')
+   .replace(/(\d)\s*%/g,'百分之$1').replace(/(\d)\s*×/g,'$1倍').replace(/BPM/gi,'拍每分鐘').replace(/\bAR\b/g,'A R').replace(/[→←↑↓]/g,'，').replace(/[·•｜|]/g,'，').replace(/[「」『』《》【】〈〉]/g,'').replace(/…+|\.{3,}/g,'。')}
+ return s.replace(/\s+/g,' ').trim()}
 function ttsNo(){if(ttsWarned)return;ttsWarned=1;toast(t(/FBAN|FBAV|FB_IAB|Messenger|Line\/|Instagram|wv\)/i.test(navigator.userAgent)?'ttsInApp':'ttsNone'))}
 function tts(x,force){if(!x)return false;if(!force&&!(S.voice||S.read))return false;if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined'){if(force)ttsNo();return false}
- const u=new SpeechSynthesisUtterance(String(x).slice(0,600)),v=ttsVoice();u.lang=v?v.lang:ttsLang();if(v)u.voice=v;u.rate=S.elder?.85:1;u.onstart=()=>{ttsOK=1};
+ const txt=ttsClean(x);if(!txt)return false;const u=new SpeechSynthesisUtterance(txt.slice(0,600)),v=ttsVoice();u.lang=v?v.lang.replace(/_/g,'-'):ttsLang();if(v)u.voice=v;u.rate=(S.elder?.85:.95)*(S.ttsRate||1);u.pitch=1;u.onstart=()=>{ttsOK=1};
  const go=()=>{try{speechSynthesis.resume();speechSynthesis.speak(u)}catch(e){}};
  if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setTimeout(go,80)}else go();
  if(force&&!ttsOK)setTimeout(()=>{if(!ttsOK&&!speechSynthesis.speaking)ttsNo()},1800);return true}
-if('speechSynthesis' in window){try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}catch(e){}}
+if('speechSynthesis' in window){try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{speechSynthesis.getVoices();try{voicePickUI()}catch(e){}}}catch(e){}}
 /* iOS/Android 需要在使用者第一次點擊時「解鎖」語音 */
 document.addEventListener('pointerdown',function unl(){document.removeEventListener('pointerdown',unl,true);try{if('speechSynthesis' in window){const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}}catch(e){}},true);
 function speak(x,force){return tts(x,force)}
@@ -2698,6 +2720,13 @@ $('#lbBack').onclick=()=>{if(playing)toggle();if(!$('#tkFull').hidden)tkClose();
 $('#lbSkip').onclick=()=>{if(!LS)return;if(playing)toggle();if(!$('#tkFull').hidden)tkClose();lbHide();view('lesson');lsAdvance()};
 $('#aiSay').onclick=()=>tts($('#aiMsg').textContent,1);
 $('#ttsTest').onclick=()=>{ttsWarned=0;tts(t('ttsHello'),1)};
+function voicePickUI(){const sel=$('#voicePick');if(!sel)return;const row=$('#voicePickRow');if(ttsLang()!=='zh-TW'){row.hidden=true;return}row.hidden=false;
+ const zh=ttsZhVoices(),cur=S.ttsVoice&&zh.some(v=>v.voiceURI===S.ttsVoice)?S.ttsVoice:'';
+ const lab=v=>{const l=ttsNorm(v);return (/tw|hant/.test(l)?'台灣國語':/cn|hans/.test(l)?'大陸普通話':'國語')+'・'+(v.name||'').replace(/\s*\(.*?\)/g,'').slice(0,22)};
+ sel.innerHTML=`<option value="">${t('sVoiceAuto')}</option>`+zh.map(v=>`<option value="${v.voiceURI.replace(/"/g,'&quot;')}">${lab(v)}</option>`).join('');sel.value=cur;
+ sel.onchange=()=>{S.ttsVoice=sel.value||null;save();ttsWarned=0;tts(t('ttsHello'),1)};
+ const rs=$('#voiceRate');[...rs.options].forEach((o,i)=>o.textContent=t(['vrSlow','vrNorm','vrFast'][i]));rs.value=String(S.ttsRate||1);rs.onchange=()=>{S.ttsRate=+rs.value;save();tts(t('ttsHello'),1)}}
+voicePickUI();
 $('#wishAdd').onclick=()=>{const v=$('#wishIn').value.trim().slice(0,40);if(!v)return;crInit().wish.push(v);$('#wishIn').value='';save();songsUI();toast(t('wishOk'))};
 $('#wishIn').onkeydown=e=>{if(e.key==='Enter')$('#wishAdd').click()};
 /* ---- mode switch: AI 老師 / 小幫手 ---- */
