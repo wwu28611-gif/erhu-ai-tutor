@@ -478,6 +478,9 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 .airrect{position:absolute;top:3.4rem;left:.8rem;color:#ef4444;font-weight:800;font-size:.9rem;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .airbar{position:absolute;left:0;right:0;bottom:.7rem;display:flex;justify-content:center;gap:.6rem}.airbar .cbtn{background:rgba(20,22,24,.8);color:#fff;border:0;border-radius:2rem;padding:.6rem 1.1rem;font-weight:700}#airRec.on{background:#ef4444}
 #airOut{margin-top:.7rem;display:flex;flex-direction:column;gap:.6rem}#airPrev{width:100%;max-height:60vh;border-radius:.8rem;background:#000}.airob{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+
+.airw.fs{position:fixed;inset:0;z-index:95;margin:0;border-radius:0;height:100vh;height:100dvh}#airCv{object-fit:cover}
+.airw.fs .airtop{top:max(.7rem,env(safe-area-inset-top))}.airw.fs .airbar{bottom:max(1rem,env(safe-area-inset-bottom))}body.airon{overflow:hidden}body.airon nav{display:none}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
 <symbol id="i-logo" viewBox="0 0 24 24"><path d="M12 3v11M12 14a4 4 0 1 0 0 7 4 4 0 0 0 0-7zM8 8l8 3"/></symbol>
@@ -2860,22 +2863,24 @@ function airVP(ax,ay,s,th,yaw,P0,w,h){/* model -> clip: yaw around P0, then 2D s
   inv:(px,py)=>{const dx=(px-ax)/s,dy=(ay-py)/s,X=c*dx+sn*dy,Y=-sn*dx+c*dy;return [P0[0]+X/cy,P0[1]+Y]},fwd:p=>{const q=map(p);return [(q[0]+1)*w/2,(1-q[1])*h/2]}}}
 function airMsg(k){$('#airMsg').textContent=k?t(k):'';$('#airMsg').hidden=!k}
 async function airStart(){const v=$('#airVid');AIR.cv=$('#airCv');AIR.cx=AIR.cv.getContext('2d');AIR.mk=document.createElement('canvas');AIR.mx=AIR.mk.getContext('2d');
- $('#airIntro').hidden=true;$('#airOut').hidden=true;$('#airW').hidden=false;airMsg('airLoading');
- try{AIR.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:720},height:{ideal:1280}},audio:false});v.srcObject=AIR.stream;await v.play()}
+ $('#airIntro').hidden=true;$('#airOut').hidden=true;$('#airW').hidden=false;$('#airW').classList.add('fs');document.body.classList.add('airon');try{const el=$('#airW');(el.requestFullscreen||el.webkitRequestFullscreen||(()=>{})).call(el)?.catch?.(()=>{})}catch(e){}airMsg('airLoading');
+ try{AIR.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:false});v.srcObject=AIR.stream;await v.play()}
  catch(e){airMsg('');$('#airW').hidden=true;$('#airIntro').hidden=false;toast(t('camErr'));return}
  try{await loadModels()}catch(e){airStop();toast(t('mdlErr'));return}
  await plEnsure();AIR.on=true;AIR.v=v;AIR.sm={};AIR.bowPrev=null;AIR.frame=0;airMsg('airFrame');PL.str=PL.str||'in';airStrUI();airLoop()}
-function airStop(){AIR.on=false;if(AIR.rec&&AIR.rec.state==='recording')AIR.rec.stop();if(AIR.stream)AIR.stream.getTracks().forEach(x=>x.stop());AIR.stream=null;plStop();$('#airW').hidden=true;if(!AIR.blob)$('#airIntro').hidden=false}
+function airStop(){AIR.on=false;if(AIR.rec&&AIR.rec.state==='recording')AIR.rec.stop();if(AIR.stream)AIR.stream.getTracks().forEach(x=>x.stop());AIR.stream=null;plStop();$('#airW').hidden=true;$('#airW').classList.remove('fs');document.body.classList.remove('airon');try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}if(!AIR.blob)$('#airIntro').hidden=false}
 function airStrUI(){$$('#airStr button').forEach(b=>b.classList.toggle('sel',b.dataset.s===PL.str))}
-function handPath(g,lm,W,H){const P=i=>[(1-lm[i].x)*W,lm[i].y*H],pw=Math.hypot(P(5)[0]-P(17)[0],P(5)[1]-P(17)[1]);g.lineJoin=g.lineCap='round';g.lineWidth=pw*.42;
+function handPath(g,lm,toS){const P=i=>toS(lm[i].x,lm[i].y),pw=Math.hypot(P(5)[0]-P(17)[0],P(5)[1]-P(17)[1]);g.lineJoin=g.lineCap='round';g.lineWidth=pw*.42;
  g.beginPath();[0,1,2,5,9,13,17].forEach((i,k)=>{const p=P(i);k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.closePath();g.fill();g.stroke();
  [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16],[17,18,19,20]].forEach(ch=>{g.beginPath();ch.forEach((i,k)=>{const p=P(i);k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.stroke()})}
 function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v.requestVideoFrameCallback?v.requestVideoFrameCallback(airLoop):requestAnimationFrame(airLoop)};
- const VW=v.videoWidth,VH=v.videoHeight;if(!VW){next();return}
+ const VW0=v.videoWidth,VH0=v.videoHeight;if(!VW0){next();return}
+ const dpr=Math.min(1.5,devicePixelRatio||1),VW=Math.round(AIR.cv.clientWidth*dpr)||VW0,VH=Math.round(AIR.cv.clientHeight*dpr)||VH0;
  if(AIR.cv.width!==VW||AIR.cv.height!==VH){AIR.cv.width=AIR.mk.width=VW;AIR.cv.height=AIR.mk.height=VH}
+ const kc=Math.max(VW/VW0,VH/VH0),ox=(VW-VW0*kc)/2,oy=(VH-VH0*kc)/2,toS=(x,y)=>[VW-(ox+x*VW0*kc),oy+y*VH0*kc],drawVid=c=>{c.save();c.translate(VW,0);c.scale(-1,1);c.drawImage(v,ox,oy,VW0*kc,VH0*kc);c.restore()};
  const ts=performance.now();let hr;try{hr=hl.detectForVideo(v,ts);if(++AIR.frame%2===0||!AIR.pose){const pr=pl.detectForVideo(v,ts);AIR.pose=(pr.landmarks||[])[0]||null}}catch(e){next();return}
- const g=AIR.cx,p=AIR.pose,S=AIR.sm;g.save();g.translate(VW,0);g.scale(-1,1);g.drawImage(v,0,0,VW,VH);g.restore();
- const vis=i=>p&&(p[i].visibility??1)>.45,SP=i=>[(1-p[i].x)*VW,p[i].y*VH];
+ const g=AIR.cx,p=AIR.pose,S=AIR.sm;drawVid(g);
+ const vis=i=>p&&(p[i].visibility??1)>.45,SP=i=>toS(p[i].x,p[i].y);
  if(!p||!vis(11)||!vis(12)||!vis(23)){airMsg('airBody');airDecay();airHUD();next();return}
  airMsg(null);
  const ls=SP(11),rs=SP(12),lh=SP(23),rh=SP(24),shW=Math.hypot(ls[0]-rs[0],ls[1]-rs[1]),torso=Math.hypot((ls[0]+rs[0]-lh[0]-rh[0])/2,(ls[1]+rs[1]-lh[1]-rh[1])/2);
@@ -2887,20 +2892,20 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  const hs=(hr.landmarks||[]).map(lm=>lm);let LHd=null,RHd=null;
  if(hs.length){const d=(lm,j)=>Math.hypot(lm[0].x-p[j].x,lm[0].y-p[j].y);if(hs.length===1){if(d(hs[0],16)<d(hs[0],15))RHd=hs[0];else LHd=hs[0]}else{const a=d(hs[0],16)+d(hs[1],15),b=d(hs[1],16)+d(hs[0],15);if(a<=b){RHd=hs[0];LHd=hs[1]}else{RHd=hs[1];LHd=hs[0]}}}
  /* right hand drives the bow (frog follows the hand along the bow axis) */
- const rw=RHd?[(1-RHd[9].x)*VW,RHd[9].y*VH]:vis(16)?SP(16):null;
+ const rw=RHd?toS(RHd[9].x,RHd[9].y):vis(16)?SP(16):null;
  if(rw){const hm=M.inv(rw[0],rw[1]),F=BAT(S1B-1),z=Math.max(-42,Math.min(14,(hm[0]-F[0])*BD[0]+(hm[1]-F[1])*BD[1]));AIR.bow=ema(S,'bow',z,.6);
   const now=ts/1000;if(AIR.bowPrev!=null){const sp=Math.abs(AIR.bow-AIR.bowPrev)/Math.max(.016,now-AIR.tPrev);const vv=Math.min(1,sp/40);AIR.vol=AIR.vol*.55+vv*.45;if(AIR.bow!==AIR.bowPrev)AIR.dir=Math.sign(AIR.bow-AIR.bowPrev)}AIR.bowPrev=AIR.bow;AIR.tPrev=now}
  else airDecay();
  /* left hand height along the neck chooses the finger */
- if(LHd){const hp=M.inv((1-LHd[9].x)*VW,LHd[9].y*VH),near=Math.abs(hp[0]-NX)<14;const y=hp[1];let f=0;if(near&&y<NUTY-2)f=y>38?1:y>33?2:y>28?3:4;if(f!==AIR.fing){AIR.fing=f;PL.fing=f;if(PL.src)plNote()}}
+ if(LHd){const lp=toS(LHd[9].x,LHd[9].y),hp=M.inv(lp[0],lp[1]),near=Math.abs(hp[0]-NX)<14;const y=hp[1];let f=0;if(near&&y<NUTY-2)f=y>38?1:y>33?2:y>28?3:4;if(f!==AIR.fing){AIR.fing=f;PL.fing=f;if(PL.src)plNote()}}
  PL.fing=AIR.fing;if(AIR.vol>.04){if(!PL.src||PL.note!==NOTES[PL.str][PL.fing])plNote()}plVol(AIR.vol);PL.vol=AIR.vol;
  /* render erhu */
  bowZ=AIR.bow;OVR={VP:M.VP,eye:M.eye};gl.canvas.width=VW;gl.canvas.height=VH;W=VW;H=VH;draw(false);OVR=null;g.drawImage(gl.canvas,0,0);
  /* finger marker on the string */
  if(AIR.fing){const yy=[0,40,35,30.5,26][AIR.fing],sp=M.fwd([SX(PL.str,yy),yy,SZ(PL.str,yy)]);g.fillStyle='rgba(250,204,21,.9)';g.beginPath();g.arc(sp[0],sp[1],sc*1.1,0,7);g.fill()}
  /* hands drawn back on top of the erhu so the fingers wrap the neck / hold the bow */
- const mx=AIR.mx;[LHd,RHd].forEach(h=>{if(!h)return;mx.globalCompositeOperation='source-over';mx.clearRect(0,0,VW,VH);mx.fillStyle='#000';mx.strokeStyle='#000';handPath(mx,h,VW,VH);
-  mx.globalCompositeOperation='source-in';mx.save();mx.translate(VW,0);mx.scale(-1,1);mx.drawImage(v,0,0,VW,VH);mx.restore();g.drawImage(AIR.mk,0,0)});
+ const mx=AIR.mx;[LHd,RHd].forEach(h=>{if(!h)return;mx.globalCompositeOperation='source-over';mx.clearRect(0,0,VW,VH);mx.fillStyle='#000';mx.strokeStyle='#000';handPath(mx,h,toS);
+  mx.globalCompositeOperation='source-in';drawVid(mx);g.drawImage(AIR.mk,0,0)});
  airHUD(sc);next()}
 function airDecay(){AIR.vol*=.6;plVol(AIR.vol);PL.vol=AIR.vol}
 function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=JP[PL.str][AIR.fing],f=Math.round(VW/22);
