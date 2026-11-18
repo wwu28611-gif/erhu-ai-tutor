@@ -473,7 +473,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 
 .airintro{margin-top:.7rem}.airintro b{font-size:1rem}.airintro ol{margin:.5rem 0 .9rem 1.1rem;padding:0;font-size:.875rem;line-height:1.7;color:var(--mut)}
 .airw{position:relative;margin-top:.7rem;border-radius:1.1rem;overflow:hidden;background:#000;height:min(72vh,40rem)}.airw video{position:absolute;width:1px;height:1px;opacity:0}#airCv{width:100%;height:100%;object-fit:contain;display:block}
-.simedit{margin:.6rem 0}body:has(#simEdit[open]) .simw{position:sticky;top:0;z-index:5;height:46vh;box-shadow:0 6px 18px rgba(0,0,0,.18)}.simedit summary{font-weight:700;cursor:pointer}.mdr{display:grid;grid-template-columns:6.5rem 1fr 3rem;align-items:center;gap:.5rem;margin:.35rem 0;font-size:.85rem}.mdr input{width:100%}.mdr output{text-align:right;font-variant-numeric:tabular-nums}.mdr.chg span{color:#c2410c;font-weight:700}
+.simedit{margin:.6rem 0}.simnote{font-size:.78rem;margin:.5rem .2rem}.simnote a{color:inherit;text-decoration:underline}body:has(#simEdit[open]) .simw{position:sticky;top:0;z-index:5;height:46vh;box-shadow:0 6px 18px rgba(0,0,0,.18)}.simedit summary{font-weight:700;cursor:pointer}.mdr{display:grid;grid-template-columns:6.5rem 1fr 3rem;align-items:center;gap:.5rem;margin:.35rem 0;font-size:.85rem}.mdr input{width:100%}.mdr output{text-align:right;font-variant-numeric:tabular-nums}.mdr.chg span{color:#c2410c;font-weight:700}
 .airtop{position:absolute;top:.6rem;left:.6rem;right:.6rem;display:flex;flex-direction:column;align-items:flex-start;gap:.4rem}.airtop .seg{background:rgba(20,22,24,.7)}.airtop .seg button{color:#fff;font-size:.8rem}.airtop .seg button.sel{background:#fff;color:#111}
 .airmsg{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);background:rgba(20,22,24,.82);color:#fff;border-radius:1rem;padding:.7rem 1rem;font-size:.875rem;text-align:center;max-width:80%}
 .airrect{position:absolute;top:3.4rem;left:.8rem;color:#ef4444;font-weight:800;font-size:.9rem;text-shadow:0 1px 3px rgba(0,0,0,.6)}
@@ -609,11 +609,11 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="pt" style="margin-top:.2rem"><h1 data-i="simT"></h1><p data-i="simSub"></p></div>
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="play" data-i="simPlayL"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
- <details class="card simedit" id="simEdit"><summary>🛠 <span data-i="mdT"></span></summary><p class="mut" data-i="mdHint"></p><div id="simEditL"></div><div class="row" style="gap:.5rem;margin-top:.6rem"><button class="btn" id="mdCopy" data-i="mdCopy"></button><button class="btn alt" id="mdReset" data-i="mdReset"></button></div><textarea id="mdOut" readonly hidden style="width:100%;margin-top:.5rem;font:12px monospace;min-height:5rem"></textarea></details>
+ <p class="mut simnote" id="simEdit"><span data-i="mdMoved"></span> <a href="editor.html" target="_blank" rel="noopener" data-i="mdOpen"></a></p>
  <div class="simar"><button class="btn" id="simAR"><span>📱</span><span data-i="arBtn"></span></button><button class="btn alt" id="simCamBg"><span>📷</span><span data-i="arCam"></span></button></div>
  <p class="mut simarp" data-i="arHint"></p>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v61</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v62</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1226,6 +1226,8 @@ md_headA|琴頭彎曲程度|Head curl amount|頭の曲がり具合
 md_fineY|微調器高度|Fine tuner height|微調整器の高さ
 md_bowLen|弓長|Bow length|弓の長さ
 md_bowAng|弓的傾斜角度|Bow angle|弓の角度
+mdMoved|這個 3D 二胡是用「二胡模型工作台」定稿的模型；想再調整細節，請到工作台修改後把設定貼給我|This 3D erhu comes from the Erhu Model Workbench; to fine-tune details, edit it there and send me the settings|この3D二胡は「二胡モデル工作台」で確定したモデルです。細部の調整は工作台で行い、設定を送ってください
+mdOpen|打開二胡模型工作台|Open the model workbench|モデル工作台を開く
 simT|3D 二胡模擬器|3D Erhu Simulator|3D 二胡シミュレーター
 simSub|轉一轉、點零件，還能試拉看看|Spin it, tap the parts and try playing|回して、パーツをタップして、弾いてみよう
 simCard|轉一轉認識每個零件，再用手指試拉真實的二胡聲音|Spin it to learn each part, then try playing with real erhu sound|パーツを学んで、本物の二胡の音で弾いてみよう
@@ -2744,62 +2746,147 @@ function box(g,c,s){const [x,y,z]=c,[a,b,d]=s.map(v=>v/2);const F=[[[1,0,0],[[x+
 function ellip(g,c,rx,ry,rz,seg=12){const o=g.p.length/3;for(let i=0;i<=seg;i++){const th=i/seg*Math.PI;for(let j=0;j<=seg;j++){const ph=j/seg*Math.PI*2,n=[Math.sin(th)*Math.cos(ph),Math.cos(th),Math.sin(th)*Math.sin(ph)];
  g.p.push(c[0]+n[0]*rx,c[1]+n[1]*ry,c[2]+n[2]*rz);g.n.push(...nrm([n[0]/rx,n[1]/ry,n[2]/rz]));g.u.push(j/seg,i/seg)}}
  for(let i=0;i<seg;i++)for(let j=0;j<seg;j++){const a=o+i*(seg+1)+j,b=a+seg+1;g.i.push(a,b,a+1,a+1,b,b+1)}}
-/* ---------- the erhu (dimensions follow a standard 81 cm erhu) ---------- */
-const C={wood:[.30,.15,.11],ebony:[.085,.07,.065],dark:[.16,.08,.06],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.11,.14,.30],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12]};
-/* coordinates in cm: skin faces +x, pegs run along x (paddles to the back), strings sit in front of the neck */
-let H0T=80.5,NX=-1.2,TY=6.2,TR=4.6,TX0=-6.5,TX1=6.5,BRY=TY+1.1,BRX=TX1+1.0,NUTY=44,NUTX=NX+2.7,PEGY=[66.5,60.5];
-let PTX=NX+2.55;
-/* adjustable model: [key, default, min, max, step]; the editor panel writes S.mdl, applyMdl() turns it into the geometry constants */
-const MDEF=[['drumR',4.6,3.5,6,.1],['drumL',13,10,16,.2],['nutY',44,38,50,.2],['peg1',66.5,62,70,.2],['peg2',60.5,57,65,.2],['pegLen',15,10,20,.2],['pegW',.95,.5,1.6,.05],
- ['neckR',1.2,.8,1.8,.05],['headY',74.5,73.5,78,.1],['headR',5.6,3,8,.1],['headA',1.85,1,2.6,.05],['fineY',49.5,46,54,.2],['bowLen',80,60,95,.5],['bowAng',30,15,45,.5]];
-let MK={};
-function applyMdl(){MK={};MDEF.forEach(([k,d])=>MK[k]=(S.mdl&&S.mdl[k]!=null)?S.mdl[k]:d);
- TR=MK.drumR;TX0=-MK.drumL/2;TX1=MK.drumL/2;BRY=TY+1.1;BRX=TX1+1.0;NUTY=MK.nutY;PEGY=[MK.peg1,MK.peg2];H0T=MK.headY+MK.headR+.4;
- const a=MK.bowAng*Math.PI/180;BD=[Math.cos(a),-Math.sin(a),0];BP0=[BRX,BRY+3.0,0]}/* x where strings leave the pegs' small ends */
-const SX=(k,y)=>{if(y<=BRY)return BRX;if(y<=NUTY){const t=(y-BRY)/(NUTY-BRY);return BRX+(NUTX-BRX)*t}const t=Math.min(1,(y-NUTY)/(PEGY[1]-NUTY));return NUTX+(PTX-NUTX)*t};
-const SZ=(k,y)=>(k==='in'?-1:1)*(y<=BRY?.22:y<=NUTY?.22+.18*(y-BRY)/(NUTY-BRY):.4);
-/* bow: rests diagonally (tip up toward the back, frog down toward the front), hair through the strings just above the bridge */
-const S1B=31;let BD=nrm([.866,-.5,0]),BP0=[BRX,BRY+3.0,0];const BAT=s2=>add(BP0,mul(BD,s2));
-function build(){applyMdl();const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);parts.push({id,mat,g,...o})};
- const bot=TY-TR*Math.cos(Math.PI/6);
- P(9,'dark',g=>{box(g,[-.3,bot-.75,0],[11.5,1.5,7.6])});
- let hexP;P(5,'wood',g=>{hexP=hexPrism(g,0,TY,TX0,TX1,TR);hexCap(g,TY,TX0,hexP,-1)});
- P(5,'dark',g=>{[0,1,2].forEach(k=>hexPrism(g,0,TY,TX0+.6+k*.75,TX0+.95+k*.75,TR+.09))});
- P(5,'ivory',g=>{hexPrism(g,0,TY,TX1-.5,TX1+.02,TR+.1)});
- P(6,'skin',g=>{hexCap(g,TY,TX1+.03,hexP.map(([y,z])=>[y*.97,z*.97]),1,TR*2)},{tex:1});
- /* neck: thin round lower part, thicker peg section with a step, crook head */
- P(4,'ebony',g=>{sweep(g,line([NX,bot+.2,0],[NX,56,0],6),t=>MK.neckR-.15*t,16);sweep(g,line([NX,55.6,0],[NX,57.2,0],1),t=>MK.neckR-.15+.4*t,16,false);sweep(g,line([NX,57.2,0],[NX,71.2,0],4),1.45,16);sweep(g,line([NX,71.2,0],[NX,71.21,0],1),1.45,16)});
- const H0=MK.headY,HR=MK.headR,HA=MK.headA,hp=a=>[NX-HR+HR*Math.cos(a),H0+HR*Math.sin(a),0],HN=24,hr=t=>t<.6?1.05-.12*t:Math.max(.12,.98-1.6*(t-.6)*(t-.6)*4.2);
- const hpts=[[NX,71.6,0],[NX,73,0],[NX,H0,0]];for(let k=1;k<=HN;k++)hpts.push(hp(k/HN*HA));const HT=hpts.length-1,seg=(a,b)=>hpts.slice(a,b+1),tr=(a,b)=>t=>hr((a+(b-a)*t)/HT);
- const cA=Math.round(HT*.70),cB=Math.round(HT*.74),cC=Math.round(HT*.82),cD=Math.round(HT*.86);
- P(1,'ebony',g=>{sweep(g,line([NX,71.2,0],[NX,72,0],1),t=>1.45-.4*t,16,false);sweep(g,seg(0,cA),tr(0,cA),16)});
- P(1,'black',g=>{sweep(g,seg(cA,cB),tr(cA,cB),16,false);sweep(g,seg(cC,cD),tr(cC,cD),16,false)});
- P(1,'ivory',g=>{sweep(g,seg(cB,cC),tr(cB,cC),16,false);sweep(g,seg(cD,HT),tr(cD,HT),16)});
- /* pegs: teardrop paddles toward the back, small ends with ivory and a red ring toward the front */
- PEGY.forEach((y,i)=>{P(2,'ebony',g=>{const pts=[];for(let k=0;k<=12;k++){pts.push([NX+2.4-k*MK.pegLen/12,y,0])}sweep(g,pts,t=>t<.22?.42:.42+Math.pow((t-.22)/.78,1.6)*MK.pegW,14)});
-  P(2,'ivory',g=>{sweep(g,line([NX+2.4-MK.pegLen,y,0],[NX+1.7-MK.pegLen,y,0],1),.37+MK.pegW,14);sweep(g,line([NX+2.4,y,0],[NX+2.9,y,0],1),.42,10)});
-  P(2,'red',g=>sweep(g,line([NX+1.9,y,0],[NX+2.4,y,0],1),.47,10))});
- /* fine tuners (brass) */
- ['in','out'].forEach(k=>P(3,'brass',g=>{const y=MK.fineY,x=SX(k,y),z=SZ(k,y);box(g,[x,y,z],[.5,2.2,.35]);sweep(g,line([x,y+.6,z],[x+1.2,y+.6,z],1),.22,8);box(g,[x,y-.7,z],[.7,.45,.45])}));
- /* qianjin: navy cord wound round the neck and looped to the strings */
- P(3,'cord',g=>{for(let k=0;k<7;k++){const y=NUTY-.5+k*.16;{const ring=[];for(let q=0;q<=20;q++){const a=q/20*Math.PI*2;ring.push([NX+Math.cos(a)*1.2,y,Math.sin(a)*1.2])}sweep(g,ring,.085,5,false)}
-  [-1,1].forEach(sd=>sweep(g,line([NX+1.15,y,sd*.25],[SX('in',NUTY)+.08,y,sd*.45],1),.06,5,false))}});
- P(7,'ivory',g=>{box(g,[TX1+.5,BRY-.45,0],[1.0,1.1,1.0])});
- P(7,'felt',g=>{box(g,[TX1+.25,TY-2.4,0],[.5,1.4,1.6])});
- [['in',.075],['out',.06]].forEach(([k,r])=>{P(8,'str',g=>{const top=k==='in'?PEGY[0]:PEGY[1],P3=y=>[SX(k,y),y,SZ(k,y)],pts=[[PTX,top,SZ(k,99)],[PTX,PEGY[1]-1,SZ(k,99)]];
-   [NUTY+.3,30,18,BRY].forEach(y=>pts.push(P3(y)));pts.push([TX1+.3,bot+.6,SZ(k,0)*.6]);
-   for(let s2=0;s2<pts.length-1;s2++)sweep(g,line(pts[s2],pts[s2+1],1),r,6,false)},{str:k})});
- /* bow ~81 cm (same as the erhu): hair through the strings, stick on the near side */
- const S0=S1B-MK.bowLen,S1=S1B,SZo=-1.7,at=(s2,dz=0,dy=0)=>{const p=BAT(s2);return [p[0],p[1]+dy,p[2]+dz]};
- P(10,'stick',g=>{const pts=[];for(let k=0;k<=18;k++){const t=k/18,s2=S0-1+t*(S1-S0+2);pts.push(at(s2,SZo-Math.sin(t*Math.PI)*.35,0))}sweep(g,pts,t=>.33+.12*t,10);
-  sweep(g,[at(S0-1,SZo),at(S0-1.8,SZo*.6),at(S0-2,SZo*.2),at(S0-1.4,0)],.22,8)},{bow:1});
- P(10,'black',g=>{sweep(g,[at(S0-1.7,SZo*.4),at(S0-2.1,SZo*.15)],.28,8);sweep(g,[at(S1+1,SZo),at(S1+2.8,SZo)],.42,10)},{bow:1});
- P(10,'brass',g=>sweep(g,[at(S1+.4,SZo),at(S1+1,SZo)],.5,10),{bow:1});
- P(10,'frog',g=>{sweep(g,[at(S1-1.2,SZo),at(S1-.4,SZo*.5),at(S1-.6,0)],.45,8);const c=at(S1-.8,SZo*.55);box(g,c,[1.2,1.2,1.2])},{bow:1});
- P(10,'hair',g=>{const n=nrm(cross(BD,[0,0,1])),a=at(S0-1.4),b2=at(S1-.6),w=.38;
-  const A1=add(a,mul(n,w)),A2=add(a,mul(n,-w)),B1=add(b2,mul(n,w)),B2=add(b2,mul(n,-w));quad(g,A2,B2,B1,A1,[0,0,1]);quad(g,A1,B1,B2,A2,[0,0,-1]);
-  sweep(g,[at(S1-.8),at(S1-8)],.3,8)},{bow:1});
+/* ===================== erhu model v2: every detail has its own number ===================== */
+let NX=2.7;const TY=6.2;
+const C={wood:[0,0,0],ebony:[.085,.07,.065],dark:[0,0,0],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.10,.12,.22],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12],pegwood:[0,0,0],inner:[.10,.06,.045],lattice:[.55,.30,.16]};
+/* [key, part, label, default, min, max, step, unit] */
+const PDEF=[
+ ['headRise',1,'直段長度',2.8,0,8,.1,'cm'],['headBend',1,'彎曲半徑',5.3,2,9,.1,'cm'],['headAng',1,'彎曲角度',69,40,190,1,'°'],['headR',1,'琴頭粗細（半徑）',.95,.6,1.4,.01,'cm'],
+ ['tipLen',1,'角尖段長度',3.7,1,7,.1,'cm'],['tipR',1,'角尖末端半徑',1.47,.6,2.2,.01,'cm'],['tipCurve',1,'變粗的曲線',1.4,.5,3,.05,''],['tipCut',1,'端面斜切角度',27,0,70,1,'°'],['tipRoll',1,'端面旋轉（繞尖端軸）',3,-180,180,1,'°'],['tipOval',1,'端面橢圓：寬窄比',1,.6,1.6,.01,'×'],['tipOvalRot',1,'端面橢圓：方向',-90,-90,90,1,'°'],
+ ['capLen',1,'象牙端蓋長度',0.55,.1,3,.05,'cm'],['blackLen',1,'黑色飾帶寬',0.55,0,1.5,.05,'cm'],['ivoryLen',1,'白色飾帶寬',0.75,0,1.5,.05,'cm'],
+ ['boxY0',11,'軸箱下緣高度',57.2,52,62,.1,'cm'],['boxY1',11,'軸箱上緣高度',71.2,66,76,.1,'cm'],['boxW',11,'軸箱寬（左右）',1.45,1,2.2,.01,'cm'],['boxD',11,'軸箱厚（前後）',1.35,1,2.2,.01,'cm'],['boxCh',11,'四角倒角',.45,0,1,.01,'cm'],['boxFlare',11,'下方過渡長度',.7,0,2.5,.05,'cm'],['boxShoulder',11,'上方過渡長度',.9,0,3,.05,'cm'],
+ ['peg1Y',2,'上弦軸高度',66.5,61,75,.1,'cm'],['peg2Y',2,'下弦軸高度',60.5,56,70,.1,'cm'],['pegFront',2,'前端突出（離琴桿中心）',5.3,1.5,6,.05,'cm'],['pegLen',2,'弦軸總長',16.5,9,22,.1,'cm'],['pegW',2,'尾端最粗（半徑）',1.2,.6,2.2,.01,'cm'],['pegShaft',2,'前端粗細（半徑）',.42,.25,.8,.01,'cm'],['pegSwell',2,'變粗的曲線',1.25,.6,2.5,.05,''],['pegFlutes',2,'稜線數（0＝圓）',8,0,12,1,'條'],['pegFlute',2,'稜溝深度',.14,0,.3,.01,''],['pegFlat',2,'扁平度',1,.6,1.3,.01,'×'],['pegTip',2,'前端象牙長度',.5,0,1.5,.05,'cm'],['pegBand',2,'尾端飾帶寬',.16,0,.5,.01,'cm'],['pegDome',2,'尾端象牙圓頂長',.75,.2,1.6,.05,'cm'],
+ ['nutY',3,'千斤高度',43.3,36,52,.1,'cm'],['nutGap',3,'弦與琴桿距離',1.5,.6,3,.05,'cm'],['nutBase',3,'先繞琴桿圈數',0,0,6,1,'圈'],['nutBite',3,'勒弦處寬度',.3,0,1.5,.01,'cm'],['nut8',3,'繞桿＋勒弦次數',7,1,10,1,'次'],['nutTop',3,'收尾繞琴桿圈數',0,0,6,1,'圈'],['nutCord',3,'繩子粗細（單股）',.05,.03,.1,.005,'cm'],['nutTail',3,'線頭長度',.4,0,1,.05,'cm'],
+ ['fineOn',13,'顯示微調器',1,0,1,1,''],['fineY',13,'微調器高度（內弦）',51.8,46,56,.1,'cm'],['fineSep',13,'外弦微調器往下錯開',2.6,0,6,.1,'cm'],
+ ['neckX',4,'琴桿前後位置',2.7,-4,5,.05,'cm'],['neckR',4,'下端半徑',1.2,.8,1.8,.01,'cm'],['neckTop',4,'上端半徑',1.05,.7,1.6,.01,'cm'],
+ ['strTopX',8,'琴頭端前後（離琴桿中心）',4.45,0,6,.05,'cm'],['strTopDY',8,'琴頭端上下',-0.2,-3,3,.05,'cm'],['strBotX',8,'琴筒端前後（離蛇皮）',.35,-3,4,.05,'cm'],['strBotY',8,'琴筒端高度（離筒底）',.5,0,9,.05,'cm'],['strGap',8,'兩弦間距',.44,.2,1,.01,'cm'],['strR',8,'弦粗細',.07,.03,.15,.005,'cm'],
+ ['brY',7,'琴碼高度位置',.1,-3,3,.05,'cm'],['brH',7,'琴碼高',.8,.4,2,.05,'cm'],['brW',7,'琴碼寬',1.05,.4,2,.05,'cm'],
+ ['drumR',5,'琴筒半徑',4.6,3.5,6,.05,'cm'],['drumL',5,'琴筒長度',13,10,16,.1,'cm'],['drumWall',5,'筒壁厚度',.45,.15,1,.01,'cm'],['ringL',5,'前端白圈寬',.5,0,1.5,.05,'cm'],['backRings',5,'後端線條數',3,0,6,1,'條'],
+ ['winOn',12,'顯示音窗',1,0,1,1,''],['winInset',12,'音窗深度',.35,0,3,.05,'cm'],['winCell',12,'花格大小',1.35,.7,3,.05,'cm'],['winBar',12,'花格線粗',.12,.05,.3,.01,'cm'],['winWave',12,'花格彎曲',.32,0,.7,.01,''],['winRot',12,'花格角度',45,0,90,1,'°'],
+ ['baseW',9,'琴托長',11.5,6,16,.1,'cm'],['baseH',9,'琴托高',1.5,.5,4,.05,'cm'],['baseD',9,'琴托寬',7.6,4,11,.1,'cm'],
+ ['bowLen',10,'弓長',80,60,95,.5,'cm'],['bowAng',10,'弓的角度',30,10,50,.5,'°'],['bowHair',10,'弓毛寬（半）',.38,.15,.8,.01,'cm'],['bowStick',10,'弓桿粗細',.33,.2,.6,.01,'cm']];
+let P={};
+function setP(over){P={};PDEF.forEach(d=>P[d[0]]=over&&over[d[0]]!=null?over[d[0]]:d[3]);NX=P.neckX}
+const smooth=t=>t*t*(3-2*t);
+/* profile helpers: 24 points by angle, so different shapes morph into each other */
+const PN=24,ANG=[...Array(PN)].map((_,i)=>i/PN*Math.PI*2);
+const profEll=(ra,rb)=>ANG.map(a=>[Math.cos(a)*ra,Math.sin(a)*rb]);
+const profOct=(W,D,ch)=>ANG.map(a=>{const c=Math.abs(Math.cos(a)),s=Math.abs(Math.sin(a)),K=W+D-ch*1.2,r=Math.min(c>1e-6?W/c:1e9,s>1e-6?D/s:1e9,K/(c+s));return [Math.cos(a)*r,Math.sin(a)*r]});
+const lerpP=(A,B,t)=>A.map((p,i)=>[p[0]+(B[i][0]-p[0])*t,p[1]+(B[i][1]-p[1])*t]);
+/* sweep a 2D profile along a path in the x-y plane (b axis = z) */
+function sweepP(g,pts,prof,caps=true,cut=null){const N=pts.length,rings=[];
+ const PR=[...Array(N)].map((_,k)=>prof(k,N));
+ for(let k=0;k<N;k++){const T=nrm(sub(pts[Math.min(k+1,N-1)],pts[Math.max(k-1,0)])),Nn=[T[1],-T[0],0],Bz=[0,0,1],pr=PR[k],k0=Math.max(k-1,0),k1=Math.min(k+1,N-1),ds=len(sub(pts[k1],pts[k0]))||1;
+  const ring=pr.map((q,i)=>{const pp=pr[(i+1)%PN],pm=pr[(i+PN-1)%PN],da=pp[0]-pm[0],db=pp[1]-pm[1],l=Math.hypot(da,db)||1,na=db/l,nb=-da/l;
+   let p=add(pts[k],add(mul(Nn,q[0]),mul(Bz,q[1])));if(cut&&k===N-1){const c=Math.cos(cut.roll),s2=Math.sin(cut.roll),pj=v=>v[0]*c+v[1]*s2,rm=Math.max(...pr.map(pj));p=add(p,mul(T,(pj(q)+rm)*Math.tan(cut.a)))}
+   const dr=(Math.hypot(...PR[k1][i])-Math.hypot(...PR[k0][i]))/ds;return [p,nrm(add(add(mul(Nn,na),mul(Bz,nb)),mul(T,-dr)))]});ring.T=T;rings.push(ring)}
+ const o=g.p.length/3;rings.forEach((r,k)=>{r.forEach(([p,n],i)=>{g.p.push(...p);g.n.push(...n);g.u.push(i/PN,k/(N-1))});const [p,n]=r[0];g.p.push(...p);g.n.push(...n);g.u.push(1,k/(N-1))});
+ for(let k=0;k<N-1;k++)for(let s=0;s<PN;s++){const a=o+k*(PN+1)+s,b=a+PN+1;g.i.push(a,b,a+1,a+1,b,b+1)}
+ if(caps)[[0,-1],[N-1,1]].forEach(([k,sg])=>{let n=mul(rings[k].T,sg);if(cut&&k===N-1){const r=rings[k],a=sub(r[0][0],r[PN/2][0]),b=sub(r[PN/4][0],r[3*PN/4][0]);n=nrm(cross(a,b));if(dot(n,rings[k].T)<0)n=mul(n,-1)}
+  const c=g.p.length/3,ctr=rings[k].reduce((s,[p])=>add(s,mul(p,1/PN)),[0,0,0]);g.p.push(...ctr);g.n.push(...n);g.u.push(.5,.5);rings[k].forEach(([p])=>{g.p.push(...p);g.n.push(...n);g.u.push(0,0)});
+  for(let s=0;s<PN;s++){const a=c+1+s,b=c+1+(s+1)%PN;sg>0?g.i.push(c,a,b):g.i.push(c,b,a)}})}
+/* hex helpers for the drum (axis along x) */
+const hexPts=R=>[...Array(6)].map((_,s)=>{const a=Math.PI/6+s*Math.PI/3;return [Math.cos(a)*R,Math.sin(a)*R]});
+function hexWall(g,x0,x1,R,inward){const H=hexPts(R);for(let s=0;s<6;s++){const [y0,z0]=H[s],[y1,z1]=H[(s+1)%6];let n=nrm([0,(y0+y1)/2,(z0+z1)/2]);if(inward)n=mul(n,-1);quad(g,[x0,TY+y0,z0],[x1,TY+y0,z0],[x1,TY+y1,z1],[x0,TY+y1,z1],n)}}
+function hexAnn(g,x,Ro,Ri,dir){const A=hexPts(Ro),B=hexPts(Ri);for(let s=0;s<6;s++){const t=(s+1)%6;quad(g,[x,TY+A[s][0],A[s][1]],[x,TY+A[t][0],A[t][1]],[x,TY+B[t][0],B[t][1]],[x,TY+B[s][0],B[s][1]],[dir,0,0])}}
+const inHex=(y,z,R)=>{const a=Math.abs(y),b=Math.abs(z);return b<=R*Math.sqrt(3)/2*1.0001&&a*Math.sqrt(3)/2+b*.5<=R*Math.sqrt(3)/2};
+function hexFace(g,x,R,dir){const H=hexPts(R),c=g.p.length/3;g.p.push(x,TY,0);g.n.push(dir,0,0);g.u.push(.5,.5);H.forEach(([y,z])=>{g.p.push(x,TY+y,z);g.n.push(dir,0,0);g.u.push(.5+z/R/2,.5-y/R/2)});for(let s=0;s<6;s++){const a=c+1+s,b=c+1+(s+1)%6;dir>0?g.i.push(c,a,b):g.i.push(c,b,a)}}
+/* derived positions used by build, handles and the ruler */
+function geo(){const TX1=P.drumL/2,TX0=-TX1,bot=TY-P.drumR*Math.cos(Math.PI/6),neckRAt=y=>{const y0=bot,y1=P.boxY0-P.boxFlare,t=Math.max(0,Math.min(1,(y-y0)/(y1-y0)));return P.neckR+(P.neckTop-P.neckR)*t};
+ const coilR=0,nutX=NX+neckRAt(P.nutY)+P.nutGap+coilR,brX=TX1+P.brH,brYa=TY+P.brY;
+ return {TX0,TX1,bot,neckRAt,nutX,coilR,brX,brYa,top:i=>[NX+P.strTopX,(i?P.peg2Y:P.peg1Y)+P.strTopDY],topMid:[NX+P.strTopX,(P.peg1Y+P.peg2Y)/2+P.strTopDY],bottom:[TX1+P.strBotX,bot+P.strBotY]}}
+function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.length)parts.push({id,mat,g,...o})},Gm=geo(),{TX0,TX1,bot}=Gm;
+ /* base */
+ Q(9,'dark',g=>box(g,[-.3,bot-P.baseH/2,0],[P.baseW,P.baseH,P.baseD]));
+ /* drum: hollow hexagonal tube */
+ const R=P.drumR,Ri=Math.max(.5,R-P.drumWall);
+ Q(5,'wood',g=>{hexWall(g,TX0,TX1-P.ringL,R);hexAnn(g,TX0,R,Ri,-1)});
+ Q(5,'inner',g=>hexWall(g,TX0,TX1,Ri,true));
+ Q(5,'ivory',g=>{if(P.ringL>0){hexWall(g,TX1-P.ringL,TX1+.02,R+.06);hexAnn(g,TX1-P.ringL,R+.06,R,-1);hexAnn(g,TX1+.02,R+.06,Ri,1)}});
+ Q(5,'dark',g=>{for(let k=0;k<P.backRings;k++){const x=TX0+.12+k*.32;hexWall(g,x,x+.16,R+.07);hexAnn(g,x,R+.07,R,-1);hexAnn(g,x+.16,R+.07,R,1)}});
+ Q(6,'skin',g=>{const H=hexPts(Ri+.02),c=g.p.length/3,x=TX1-.02;g.p.push(x,TY,0);g.n.push(1,0,0);g.u.push(.5,.5);H.forEach(([y,z])=>{g.p.push(x,TY+y,z);g.n.push(1,0,0);g.u.push(.5+z/R/2,.5-y/R/2)});for(let s=0;s<6;s++)g.i.push(c,c+1+s,c+1+(s+1)%6)},{tex:1});
+ /* sound window: wavy lattice inside a frame at the back */
+ if(P.winOn>.5)Q(12,'lattice',g=>{const x=TX0+P.winInset,Rw=Ri-.02,cell=P.winCell,a=P.winRot*Math.PI/180,u=[Math.cos(a),Math.sin(a)],v=[-u[1],u[0]];
+  hexAnn(g,x-.12,Rw,Rw-.28,-1);hexAnn(g,x+.12,Rw,Rw-.28,1);hexWall(g,x-.12,x+.12,Rw-.28,true);
+  const lim=Rw-.28;[[u,v],[v,u]].forEach(([d,pp],fam)=>{for(let o=-R*1.5;o<=R*1.5;o+=cell){let seg=[];const flush=()=>{if(seg.length>1)sweep(g,seg,P.winBar,6,false);seg=[]};
+   for(let s=-R*1.6;s<=R*1.6;s+=cell/10){const w=Math.sin((s/cell)*Math.PI*2+fam*Math.PI)*P.winWave*cell*.5,y=d[0]*s+pp[0]*(o+w),z=d[1]*s+pp[1]*(o+w);if(inHex(y,z,lim))seg.push([x,TY+y,z]);else flush()}flush()}})});
+ /* neck */
+ Q(4,'ebony',g=>{const y0=bot+.2,y1=P.boxY0-P.boxFlare,pts=line([NX,y0,0],[NX,y1,0],8);sweepP(g,pts,(k,N)=>{const r=Gm.neckRAt(y0+(y1-y0)*k/(N-1));return profEll(r,r)},true)});
+ /* peg box: chamfered block with flares above and below */
+ Q(11,'ebony',g=>{const oct=profOct(P.boxW,P.boxD,P.boxCh),y0=P.boxY0-P.boxFlare;
+  if(P.boxFlare>0)sweepP(g,line([NX,y0,0],[NX,P.boxY0,0],6),(k,N)=>lerpP(profEll(P.neckTop,P.neckTop),oct,smooth(k/(N-1))),false);
+  sweepP(g,line([NX,P.boxY0,0],[NX,P.boxY1,0],2),()=>oct,P.boxFlare<=0);
+  if(P.boxShoulder>0)sweepP(g,line([NX,P.boxY1,0],[NX,P.boxY1+P.boxShoulder,0],6),(k,N)=>lerpP(oct,profEll(P.headR,P.headR),smooth(k/(N-1))),false)});
+ /* head: straight rise, circular crook toward the peg handles, flattened duck-bill tip with ivory/black bands */
+ {const y0=P.boxY1+P.boxShoulder,y1=y0+P.headRise,B=P.headBend,A=P.headAng*Math.PI/180,path=[];
+  for(let k=0;k<=6;k++)path.push([NX,y0+(y1-y0)*k/6,0]);const na=Math.max(8,Math.round(A/.08));for(let k=1;k<=na;k++){const a=A*k/na;path.push([NX-B+B*Math.cos(a),y1+B*Math.sin(a),0])}
+  const end=path[path.length-1],T=[-Math.sin(A),Math.cos(A),0];for(let k=1;k<=14;k++)path.push(add(end,mul(T,P.tipLen*k/14)));
+  const S=[0];for(let k=1;k<path.length;k++)S.push(S[k-1]+len(sub(path[k],path[k-1])));const L=S[S.length-1],tip0=L-P.tipLen;
+  const prof=s=>{if(s<=tip0)return profEll(P.headR,P.headR);const t=Math.pow((s-tip0)/P.tipLen,P.tipCurve),r=P.headR+(P.tipR-P.headR)*t,rot=P.tipOvalRot*Math.PI/180*t,cr=Math.cos(rot),sr=Math.sin(rot);return profEll(r,r*(1+(P.tipOval-1)*t)).map(([a,b])=>[a*cr-b*sr,a*sr+b*cr])};
+  /* resample with exact band boundaries */
+  const b3=L-P.capLen,b2=b3-P.blackLen,b1=b2-P.ivoryLen,cuts=[0,b1,b2,b3,L].map(v=>Math.max(0,Math.min(L,v))),at=s=>{let k=1;while(k<S.length-1&&S[k]<s)k++;const t=(s-S[k-1])/((S[k]-S[k-1])||1);return add(path[k-1],mul(sub(path[k],path[k-1]),t))};
+  const mats=['ebony','ivory','black','ivory'];for(let q=0;q<4;q++){const s0=cuts[q],s1=cuts[q+1];if(s1-s0<1e-4)continue;const n=Math.max(2,Math.ceil((s1-s0)/.25)),ss=[...Array(n+1)].map((_,k)=>s0+(s1-s0)*k/n);
+   Q(1,mats[q],g=>sweepP(g,ss.map(at),k=>prof(ss[k]),q===3||(q===0&&false),q===3?{a:P.tipCut*Math.PI/180,roll:P.tipRoll*Math.PI/180}:null))}}
+ /* pegs: long club shape, fluted, thickening to an ivory end with black-and-ivory bands and a lobed dome */
+ const pegProf=(r,t)=>{const n=Math.round(P.pegFlutes),d=n?P.pegFlute*Math.min(1,t*1.6):0;return ANG.map(a=>{const rr=r*(1-d*(1-Math.abs(Math.cos(n*a/2))));return [Math.cos(a)*rr,Math.sin(a)*rr*P.pegFlat]})};
+ [P.peg1Y,P.peg2Y].forEach(y=>{const x0=NX+P.pegFront-.5,bw=P.pegBand,L=P.pegLen-.5-(bw*4)-P.pegDome,rAt=t=>P.pegShaft+Math.pow(t,P.pegSwell)*(P.pegW-P.pegShaft);
+  Q(2,'pegwood',g=>{const pts=[];for(let k=0;k<=24;k++)pts.push([x0-k*L/24,y,0]);sweepP(g,pts,(k,N)=>pegProf(rAt(k/(N-1)),k/(N-1)),false)});
+  /* bands: ivory, black, ivory, black, then the ivory dome */
+  let xb=x0-L;const band=(mat,w)=>{if(w<=0)return;const a=xb,b=xb-w;Q(2,mat,g=>sweepP(g,line([a,y,0],[b,y,0],1),()=>pegProf(P.pegW,1),false));xb=b};
+  band('ivory',bw*.6);band('black',bw);band('ivory',bw*1.4);band('black',bw*.7);
+  Q(2,'ivory',g=>{const n=10,pts=[];for(let k=0;k<=n;k++){const u=k/n;pts.push([xb-P.pegDome*Math.sin(u*Math.PI/2),y,0])}sweepP(g,pts,(k,N)=>{const u=k/(N-1);return pegProf(P.pegW*Math.max(.04,Math.cos(u*Math.PI/2)),1)},true)});
+  if(P.pegTip>0)Q(2,'ivory',g=>sweepP(g,line([x0+.05,y,0],[x0+.05+P.pegTip,y,0],2),()=>profEll(P.pegShaft,P.pegShaft),true));
+  Q(2,'red',g=>sweepP(g,line([x0-.45,y,0],[x0+.05,y,0],1),()=>profEll(P.pegShaft+.05,P.pegShaft+.05),true))});
+ /* strings: peg -> qianjin -> bridge -> tail at the drum */
+ const sp=(k,s)=>(k==='in'?-1:1)*s;
+ const strPts=k=>{const i=k==='in'?0:1,t=Gm.top(i);return [[t[0],t[1],0],[Gm.nutX,P.nutY,sp(k,.1)],[Gm.brX,Gm.brYa,sp(k,P.strGap/2)],[Gm.bottom[0],Gm.bottom[1],sp(k,P.strGap*.3)]]};
+ ['in','out'].forEach(k=>Q(8,'str',g=>{const p=strPts(k);for(let s=0;s<p.length-1;s++)sweep(g,line(p[s],p[s+1],1),k==='in'?P.strR:P.strR*.85,6,false)},{str:k}));
+ /* bridge + felt */
+ Q(7,'ivory',g=>box(g,[TX1+P.brH/2,Gm.brYa-P.brW*.35,0],[P.brH,P.brW*1.1,P.brW]));
+ Q(7,'felt',g=>box(g,[TX1+.2,TY-P.drumR*.5,0],[.4,1.4,1.6]));
+ /* qianjin: cord wound round the neck, strands pulled out to a small wrap round both strings */
+ /* qianjin, tied the traditional way with a doubled cord:
+    loop at the back of the neck -> 3-4 tight turns round the neck -> figure-eight round neck and both strings 4-6 times -> 2-3 turns round the neck, knot, short tails */
+ Q(3,'cord',g=>{const cr=P.nutCord,rN=Gm.neckRAt(P.nutY)+cr,cx=Gm.nutX,cz=.1+P.strR+cr,cxr=P.strR+cr,pitch=cr*4.2;
+  const nb=P.nutBase,n8=P.nut8,nt=P.nutTop,total=nb+n8+nt,y0=P.nutY-total*pitch/2;let y=y0;
+  const dbl=(pts)=>{[-1,1].forEach(o=>sweep(g,pts.map(p=>[p[0],p[1]+o*cr*.95,p[2]]),cr,5,false))};
+  const neckTurn=()=>{const pts=[];for(let q=0;q<=24;q++){const a=q/24*Math.PI*2;pts.push([NX+Math.cos(a)*rN,y+pitch*q/24,Math.sin(a)*rN])}dbl(pts);y+=pitch};
+  for(let k=0;k<nb;k++)neckTurn();
+  /* each pass: one full turn round the neck, then one full turn biting round both strings, then on to the next pass */
+  /* each pass: from the front of the neck out to the strings, hook over their front, come back to the SAME side of the neck
+     and wind on round the back of the neck to where the next pass starts (no crossing between neck and strings) */
+  const phi=.55;for(let k=0;k<n8;k++){const pts=[],yy=y,ys=P.nutY+(n8>1?(k/(n8-1)-.5)*P.nutBite:0),b0=Math.PI/2+.05;
+   pts.push([NX+Math.cos(phi)*rN,yy,Math.sin(phi)*rN]);
+   for(let q=0;q<=16;q++){const b=b0-q/16*(2*b0);pts.push([cx+Math.cos(b)*cxr,ys,Math.sin(b)*cz])}
+   for(let q=0;q<=28;q++){const a=-phi-q/28*(Math.PI*2-2*phi);pts.push([NX+Math.cos(a)*rN,yy+pitch*(.15+.85*q/28),Math.sin(a)*rN])}
+   dbl(pts);y+=pitch}
+  for(let k=0;k<nt;k++)neckTurn();
+  /* knot and tails at the back */
+  ellip(g,[NX-rN,y-pitch*.5,0],cr*3,cr*3,cr*3,8);if(P.nutTail>0)[-1,1].forEach(o=>sweep(g,[[NX-rN-cr*2,y-pitch*.5,o*cr*2],[NX-rN-cr*2-P.nutTail*.7,y-pitch*.5-P.nutTail*.6,o*cr*4]],cr,5,true))});
+ /* fine tuners */
+ if(P.fineOn>.5)['in','out'].forEach(k=>Q(13,'brass',g=>{const p=strPts(k),FY=k==='in'?P.fineY:P.fineY-P.fineSep;let s0=-1;for(let q=0;q<p.length-1;q++)if((p[q][1]-FY)*(p[q+1][1]-FY)<=0){s0=q;break}if(s0<0)return;const A=p[s0],Bp=p[s0+1],t=(A[1]-FY)/((A[1]-Bp[1])||1),x=A[0]+(Bp[0]-A[0])*t,z=A[2]+(Bp[2]-A[2])*t,y=FY;
+  box(g,[x,y,z],[.5,2.2,.35]);sweep(g,line([x,y+.6,z],[x+1.2,y+.6,z],1),.22,8);box(g,[x,y-.7,z],[.7,.45,.45])}));
+ /* bow */
+ const S1=31,a=P.bowAng*Math.PI/180;BD=[Math.cos(a),-Math.sin(a),0];BP0=[Gm.brX,Gm.brYa+4.3,0];const BAT=s=>add(BP0,mul(BD,s)),S0=S1-P.bowLen,SZo=-1.7,at=(s2,dz=0)=>{const p=BAT(s2);return [p[0],p[1],p[2]+dz]};
+ Q(10,'stick',g=>{const pts=[];for(let k=0;k<=18;k++){const t=k/18,s2=S0-1+t*(S1-S0+2);pts.push(at(s2,SZo-Math.sin(t*Math.PI)*.35))}sweep(g,pts,t=>P.bowStick+.12*t,10);sweep(g,[at(S0-1,SZo),at(S0-1.8,SZo*.6),at(S0-2,SZo*.2),at(S0-1.4,0)],.22,8)},{bow:1});
+ Q(10,'black',g=>{sweep(g,[at(S0-1.7,SZo*.4),at(S0-2.1,SZo*.15)],.28,8);sweep(g,[at(S1+1,SZo),at(S1+2.8,SZo)],.42,10)},{bow:1});
+ Q(10,'brass',g=>sweep(g,[at(S1+.4,SZo),at(S1+1,SZo)],.5,10),{bow:1});
+ Q(10,'frog',g=>{sweep(g,[at(S1-1.2,SZo),at(S1-.4,SZo*.5),at(S1-.6,0)],.45,8);box(g,at(S1-.8,SZo*.55),[1.2,1.2,1.2])},{bow:1});
+ Q(10,'hair',g=>{const n=nrm(cross(BD,[0,0,1])),A0=at(S0-1.4),B0=at(S1-.6),w=P.bowHair;quad(g,add(A0,mul(n,-w)),add(B0,mul(n,-w)),add(B0,mul(n,w)),add(A0,mul(n,w)),[0,0,1]);quad(g,add(A0,mul(n,w)),add(B0,mul(n,w)),add(B0,mul(n,-w)),add(A0,mul(n,-w)),[0,0,-1]);sweep(g,[at(S1-.8),at(S1-8)],.3,8)},{bow:1});
  return parts}
+
+/* ---------- integration: final model from the 二胡模型工作台 ---------- */
+let BD=[.866,-.5,0],BP0=[0,0,0],NUTY=43.3,BRY=7.3;const S1B=31;
+let STRP={in:null,out:null};
+function modelGeo(){setP(null);const g=geo();NUTY=P.nutY;BRY=g.brYa;const sp=(k,s)=>(k==='in'?-1:1)*s;
+ ['in','out'].forEach(k=>{const i=k==='in'?0:1,t=g.top(i);STRP[k]=[[t[0],t[1],0],[g.nutX,P.nutY,sp(k,.1)],[g.brX,g.brYa,sp(k,P.strGap/2)],[g.bottom[0],g.bottom[1],sp(k,P.strGap*.3)]]})}
+/* point on a string at height y (used for finger dots and the vibrating highlight) */
+const strAt=(k,y)=>{const p=STRP[k];for(let q=0;q<p.length-1;q++){const A=p[q],B=p[q+1];if((A[1]-y)*(B[1]-y)<=0){const t=(A[1]-y)/((A[1]-B[1])||1);return [A[0]+(B[0]-A[0])*t,y,A[2]+(B[2]-A[2])*t]}}return p[1]};
+const SX=(k,y)=>strAt(k,y)[0],SZ=(k,y)=>strAt(k,y)[2];
+/* the workbench has extra parts (peg box, sound window, fine tuners); for tapping they count as neck, drum and qianjin */
+const PIDMAP={11:4,12:5,13:3};
+function build(){modelGeo();const parts=build2();parts.forEach(p=>{if(PIDMAP[p.id])p.id=PIDMAP[p.id]});return parts}
+modelGeo();
 /* ---------- procedural python-skin texture ---------- */
 function skinCanvas(){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');x.fillStyle='#1f130b';x.fillRect(0,0,256,256);
  let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
@@ -2870,7 +2957,7 @@ function controls(){const pts=new Map();let st=null,moved=0,pinch0=0,dist0=0;
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(35,Math.min(260,cam.dist*(1+Math.sign(e.deltaY)*.08)))},{passive:false})}
 /* ---------- parts ---------- */
-const PARTS=[[1,'pHead',[-3,77,0],42],[2,'pPeg',[-6,63,0],55],[3,'pNut',[1,46,0],40],[4,'pNeck',[-1,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[0,18,0],130]];
+const PARTS=[[1,'pHead',[NX-2.5,77,0],42],[2,'pPeg',[NX-5,63.5,0],55],[3,'pNut',[NX+1.5,45,0],40],[4,'pNeck',[NX,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[0,18,0],130]];
 function choose(id){sel=id;const p=PARTS.find(x=>x[0]===id);const box=$('#simInfo');if(!p){box.innerHTML=`<p class="mut">${t('simTap')}</p>`;$$('#simParts button').forEach(b=>b.classList.remove('sel'));return}
  const [ti,de]=t(p[1]).split('§');box.innerHTML=`<b>${ti}</b><p>${de||''}</p>`;$$('#simParts button').forEach(b=>b.classList.toggle('sel',+b.dataset.p===id));
  const tgt=p[2];tween({tx:tgt[0]*.5,ty:tgt[1],tz:tgt[2]*.5,dist:p[3]});tts(ti+'。'+(de||''))}
@@ -3033,13 +3120,7 @@ function airSave(){const f=airFile(),a=document.createElement('a');a.href=URL.cr
 
 /* ---------- view wiring ---------- */
 let ready=false;
-function mdUI(){const L=$('#simEditL');L.innerHTML=MDEF.map(([k,d,a,b,st])=>`<label class="mdr" data-k="${k}"><span>${t('md_'+k)}</span><input type="range" min="${a}" max="${b}" step="${st}" value="${MK[k]}"><output>${(+MK[k]).toFixed(st<.1?2:1)}</output></label>`).join('');
- const mark=()=>$$('#simEditL .mdr').forEach(r=>{const d=MDEF.find(x=>x[0]===r.dataset.k)[1];r.classList.toggle('chg',Math.abs(MK[r.dataset.k]-d)>1e-6)});mark();
- let tm=0;$$('#simEditL input').forEach(inp=>inp.oninput=()=>{const r=inp.closest('.mdr'),k=r.dataset.k,st=+inp.step;S.mdl=S.mdl||{};S.mdl[k]=+inp.value;r.querySelector('output').textContent=(+inp.value).toFixed(st<.1?2:1);
-  cancelAnimationFrame(tm);tm=requestAnimationFrame(()=>{rebuildModel();mark();save()})});
- $('#mdReset').onclick=()=>{S.mdl={};save();applyMdl();rebuildModel();mdUI();$('#mdOut').hidden=true;toast(t('mdResetD'))};
- $('#mdCopy').onclick=async()=>{const o={};MDEF.forEach(([k,d])=>{if(Math.abs(MK[k]-d)>1e-6)o[k]=MK[k]});const txt='二胡模型設定 '+JSON.stringify(o);const ta=$('#mdOut');ta.value=txt;ta.hidden=false;
-  try{await navigator.clipboard.writeText(txt);toast(t('mdCopied'))}catch(e){ta.select();toast(t('mdCopyM'))}}}
+function mdUI(){}
 function setMode(m){if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('.simar').hidden=m==='air';$('#simEdit').hidden=m==='air';$('.simarp').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
  $('.simw').classList.toggle('play',m==='play');if(m==='play'){sel=0;cam.auto=false;tween({tx:3,ty:20,tz:0,dist:96});cam.yaw=1.05;cam.pitch=.18;plUI()}else{plStop();choose(0);tween({tx:0,ty:40,tz:0,dist:158})}}
 function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#simNoGL').hidden=false;return}controls();bowPad();ready=true;
