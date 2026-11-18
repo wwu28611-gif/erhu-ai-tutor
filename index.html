@@ -611,7 +611,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v67</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v68</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1260,7 +1260,8 @@ pNut|千斤§綁住兩條弦、拉向琴桿的線圈，決定弦可以振動的�
 pNeck|琴桿§長長的木桿，左手在這裡按弦。二胡沒有指板，手指直接按在弦上，不碰到琴桿。|Neck§The long wooden rod. The left hand presses the strings here; the erhu has no fingerboard, so fingers press the strings in the air.|棹§長い木の棒。左手で弦を押さえます。指板がないので、弦を空中で押さえます。
 pTube|琴筒§六角形的木筒，是二胡的共鳴箱，聲音在這裡放大。|Sound box§The hexagonal wooden tube that resonates and amplifies the sound.|琴筒§六角形の木の筒。共鳴して音を大きくします。
 pSkin|琴皮§蒙在琴筒正面的蟒蛇皮，弦的振動透過琴碼傳到琴皮，二胡特有的音色就是這樣來的。|Snakeskin§Python skin stretched over the front of the sound box. String vibrations pass through the bridge into the skin, giving the erhu its unique voice.|蛇皮§琴筒の前に張られたニシキヘビの皮。駒を通して振動が伝わり、二胡独特の音色を生みます。
-pBridge|琴碼§放在琴皮上的小木塊，撐起兩條弦，把振動傳給琴皮。|Bridge§A small block on the skin that holds up the strings and passes their vibration to the skin.|駒§蛇皮の上の小さな駒。弦を支え、振動を皮に伝えます。
+pBridge|琴碼§琴碼架設於琴弦與琴皮之間，負責傳導琴弦振動，影響二胡音色與共鳴。|Bridge§The bridge sits between the strings and the skin. It carries the strings' vibration and shapes the erhu's tone and resonance.|駒§駒は弦と皮の間に立ち、弦の振動を伝えて、二胡の音色と響きを左右します。
+pFelt|墊布§墊布放置於琴碼下方，用來保護琴皮、調整音色，減少雜音與共振。|Felt pad§The felt pad sits below the bridge. It protects the skin, adjusts the tone and cuts down buzzing and unwanted resonance.|フェルト§駒の下に置く布で、皮を守り、音色を整え、雑音や余計な共鳴を抑えます。
 pStr|琴弦§兩條金屬弦：內弦（D，較低）和外弦（A，較高）。|Strings§Two metal strings: the inner string (D, lower) and the outer string (A, higher).|弦§2本の金属弦。内弦（D・低い）と外弦（A・高い）。
 pBase|琴托§琴筒下方的底座，放在左大腿上，讓二胡站穩。|Base§The block under the sound box that rests on your left thigh and keeps the erhu steady.|琴托§琴筒の下の台座。左ももに置いて二胡を安定させます。
 pBow|弓§竹子做的弓桿加上馬尾弓毛。二胡的弓毛夾在兩條弦中間，拿不出來：往外推碰外弦，往內拉碰內弦。|Bow§A bamboo stick with horsehair. The hair runs between the two strings and can't be removed: press outward for the outer string, inward for the inner one.|弓§竹の弓竿と馬の毛。弓毛は2本の弦の間を通っていて外せません。外へ押すと外弦、内へ引くと内弦。
@@ -2880,7 +2881,7 @@ function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.l
  ['in','out'].forEach(k=>Q(8,'str',g=>{const p=strPts(k);for(let s=0;s<p.length-1;s++)sweep(g,line(p[s],p[s+1],1),k==='in'?P.strR:P.strR*.85,6,false)},{str:k}));
  /* bridge + felt */
  Q(7,'ivory',g=>box(g,[TX1+P.brH/2,Gm.brYa-P.brW*.35,0],[P.brH,P.brW*1.1,P.brW]));
- Q(7,'felt',g=>box(g,[TX1+.2,TY-P.drumR*.5,0],[.4,1.4,1.6]));
+ Q(14,'felt',g=>box(g,[TX1+.2,TY-P.drumR*.5,0],[.4,1.4,1.6]));
  /* qianjin: cord wound round the neck, strands pulled out to a small wrap round both strings */
  /* qianjin, tied the traditional way with a doubled cord:
     loop at the back of the neck -> 3-4 tight turns round the neck -> figure-eight round neck and both strings 4-6 times -> 2-3 turns round the neck, knot, short tails */
@@ -2994,7 +2995,7 @@ function controls(){const pts=new Map();let st=null,moved=0,pinch0=0,dist0=0;
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(35,Math.min(260,cam.dist*(1+Math.sign(e.deltaY)*.08)))},{passive:false})}
 /* ---------- parts ---------- */
-const PARTS=[[1,'pHead',[NX-2.5,77,0],42],[2,'pPeg',[NX-5,63.5,0],55],[3,'pNut',[NX+1.5,45,0],40],[4,'pNeck',[NX,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[0,18,0],130]];
+const PARTS=[[1,'pHead',[NX-2.5,77,0],42],[2,'pPeg',[NX-5,63.5,0],55],[3,'pNut',[NX+1.5,45,0],40],[4,'pNeck',[NX,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[14,'pFelt',[7,3.8,0],30],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[0,18,0],130]];
 function choose(id){ttsStop();sel=id;const p=PARTS.find(x=>x[0]===id);const box=$('#simInfo');if(!p){box.innerHTML=`<p class="mut">${t('simTap')}</p>`;$$('#simParts button').forEach(b=>b.classList.remove('sel'));return}
  const [ti,de]=t(p[1]).split('§');box.innerHTML=`<div class="simih"><b>${ti}</b><button class="simsay" id="simSay" aria-label="${t('simSay')}">🔊 ${t('simSay')}</button></div><p>${de||''}</p>`;$('#simSay').onclick=()=>tts(ti+'。'+(de||''),true);$$('#simParts button').forEach(b=>b.classList.toggle('sel',+b.dataset.p===id));
  const tgt=p[2];tween({tx:tgt[0]*.5,ty:tgt[1],tz:tgt[2]*.5,dist:p[3]});tts(ti+'。'+(de||''))}
