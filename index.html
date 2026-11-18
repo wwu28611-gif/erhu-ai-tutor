@@ -469,6 +469,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 
 #simVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.simw.cambg{background:#000}.simw #simCv{position:relative;z-index:1}
 .simar{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.6rem}.simar .btn{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem .5rem;font-size:.875rem}.simar .btn.on{background:var(--ac);color:#fff}
+.simw #asmOv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.asmbar{position:relative;height:1.4rem;border-radius:1rem;background:var(--sf,#eee);overflow:hidden;margin:.6rem 0}.asmbar i{position:absolute;inset:0 auto 0 0;background:var(--ac,#2f6f5a);opacity:.85;transition:width .15s}.asmbar span{position:relative;display:block;text-align:center;font-size:.78rem;line-height:1.4rem;font-weight:700}.asmbtn{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.6rem}.asmsteps{display:flex;gap:.35rem;flex-wrap:wrap;margin:.6rem .1rem}.asmsteps span{width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;font-size:.75rem;font-weight:700;border:1px solid var(--line,#ccc);opacity:.6}.asmsteps span.d{background:var(--ac,#2f6f5a);color:#fff;border-color:transparent;opacity:1}.asmsteps span.c{border:2px solid var(--ac,#2f6f5a);opacity:1}
 .simih{display:flex;align-items:center;justify-content:space-between;gap:.6rem}.simsay{border:1px solid var(--line,#ddd);background:none;color:inherit;border-radius:2rem;padding:.3rem .75rem;font:inherit;font-size:.8rem;cursor:pointer;white-space:nowrap}
 .simarp{font-size:.72rem;margin:.4rem .2rem 0;line-height:1.45}
 
@@ -608,10 +609,10 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 <section id="v-sim"><div class="narrow">
  <button class="quiet plback" id="simBack" data-go="today">‹ <span data-i="nToday"></span></button>
  <div class="pt" style="margin-top:.2rem"><h1 data-i="simT"></h1><p data-i="simSub"></p></div>
- <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
- <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
+ <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="asm" data-i="asmL"></button><button data-m="air" data-i="airL"></button></div>
+ <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><canvas id="asmOv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v70</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v71</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -619,6 +620,10 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
   <div class="card" id="airOut" hidden><b data-i="recDone"></b><video id="airPrev" controls playsinline></video><div class="airob"><button class="btn" id="airShare" data-i="recShare"></button><button class="btn alt" id="airSave" data-i="recSave"></button></div><button class="quiet" id="airAgain" data-i="recAgain"></button></div>
  </div>
  <div id="simLearn"><div class="card simi" id="simInfo"></div><div class="simparts" id="simParts"></div></div>
+ <div id="simAsm" hidden><div class="card simi" id="asmCard"><div class="simih"><b id="asmT"></b><button class="simsay" id="asmSay">🔊 <span data-i="simSay"></span></button></div><p id="asmD"></p>
+  <div class="asmbar" id="asmBarW" hidden><i id="asmBar"></i><span id="asmBarL"></span></div>
+  <div class="asmbtn"><button class="btn alt" id="asmHint" data-i="asHint"></button><button class="btn" id="asmAgain" data-i="asAgain" hidden></button><button class="quiet" id="asmReset" data-i="asReset"></button></div></div>
+  <div class="asmsteps" id="asmSteps"></div></div>
  <div id="simPlay" hidden>
   <div class="seg" id="simStr"><button id="simStrIn" data-i="simIn"></button><button id="simStrOut" data-i="simOut"></button></div>
   <p class="lbl" style="margin:.8rem .2rem .35rem" data-i="simLH"></p>
@@ -1280,6 +1285,27 @@ vtAngle|現在大約 {a} 度，右手往上或往下調整|About {a}° now, move
 lsSimT|用 3D 二胡認識每個零件|Explore each part in 3D|3D 二胡で各パーツを見る
 lsSimD|轉一轉、點零件，還能聽語音介紹|Spin it, tap a part and listen to its explanation|回して、パーツをタップして音声で聞こう
 lsBackL|回到課程|Back to lesson|レッスンに戻る
+asmL|組裝二胡|Build the erhu|二胡を組み立てる
+as1|放上琴筒§把琴筒拖到下方的琴托上，蛇皮那一面朝向前方。|Place the drum§Drag the drum onto the stand below, with the snakeskin facing forward.|胴を置く§胴を下の台に運び、蛇皮の面を前に向けます。
+as2|插上琴桿§把琴桿拖過來，從上方插進琴筒，琴頭在最上面。|Fit the neck§Drag the neck over and push it down into the drum, with the scroll at the top.|棹を差す§棹を運び、上から胴に差し込みます。頭が一番上です。
+as3|裝上弦軸§把兩支弦軸拖到琴桿上方的軸箱，插進軸孔。|Fit the pegs§Drag the two pegs to the peg box at the top of the neck and push them into their holes.|糸巻きを付ける§2本の糸巻きを棹上部の糸倉に運び、穴に差し込みます。
+as4|掛上琴弦§把琴弦拖到琴上：弦尾掛在琴筒下方，另一端接到弦軸，內弦接上軸、外弦接下軸。|Fit the strings§Drag the strings onto the erhu: the loop hooks below the drum and the other end goes to the pegs, inner string on the upper peg, outer on the lower.|弦を張る§弦を二胡に運びます。輪は胴の下に掛け、反対側は糸巻きへ。内弦は上、外弦は下の糸巻きです。
+as5|轉琴軸把弦調緊§在畫面上上下滑動來轉琴軸。真的二胡要一邊轉、一邊把琴軸往裡推，弦才不會鬆掉。|Tighten the strings§Swipe up and down on the picture to turn the pegs. On a real erhu, push the peg inward as you turn so it holds.|糸巻きで弦を締める§画面を上下にスワイプして糸巻きを回します。実際は回しながら奥へ押し込むと緩みません。
+as6|綁上千斤§把千斤拖到琴桿上，它會把兩條弦拉向琴桿。|Tie on the qianjin§Drag the qianjin onto the neck; it pulls both strings toward the neck.|千斤を結ぶ§千斤を棹に運びます。2本の弦を棹側へ引き寄せます。
+as7|放上琴碼§把琴碼拖到琴皮上，站正、底部貼平，兩條弦卡在凹槽裡。|Set the bridge§Drag the bridge onto the skin, upright and flat, with the strings in its grooves.|駒を立てる§駒を皮の上に運び、まっすぐ底を密着させ、弦を溝に乗せます。
+as8|塞好墊布§把墊布拖到琴碼下方，塞在琴弦和琴皮之間。|Tuck in the felt§Drag the felt pad below the bridge, between the strings and the skin.|フェルトを挟む§フェルトを駒の下、弦と皮の間に運びます。
+as9|放進弓§把弓拖到琴上，弓毛要穿在內弦和外弦中間。|Fit the bow§Drag the bow onto the erhu; the hair goes between the inner and outer strings.|弓を通す§弓を二胡に運びます。弓毛は内弦と外弦の間に通します。
+as10|幫弓毛上松香§拖著松香，在弓毛上左右來回擦 6 次。|Rosin the bow§Drag the rosin back and forth along the bow hair 6 times.|松脂を塗る§松脂を持って弓毛の上を左右に6回往復させます。
+asDone|組裝完成！§你已經把一把二胡組好了，可以到「虛擬二胡」拉拉看。|All built!§You have put a whole erhu together. Try playing it in the virtual erhu.|組み立て完成！§二胡が組み上がりました。「バーチャル二胡」で弾いてみましょう。
+asStep|第 {i} / {n} 步|Step {i} / {n}|ステップ {i} / {n}
+asHint|幫我放好|Place it for me|置いてもらう
+asAgain|再組一次|Build again|もう一度
+asReset|重新開始|Start over|最初から
+asDrag|拖曳發亮的零件到黃色虛線圈・拖空白處可旋轉|Drag the glowing part to the yellow circle · drag empty space to rotate|光る部品を黄色い円へ・空白をドラッグで回転
+asTightHint|在畫面上上下滑動來轉琴軸|Swipe up and down to turn the pegs|上下にスワイプして糸巻きを回す
+asRubHint|把松香拖到弓毛上|Drag the rosin onto the bow hair|松脂を弓毛の上へ
+asRubOn|左右來回擦|Rub back and forth|左右に往復
+asRubN|已擦 {n} / 6 次|{n} / 6 strokes|{n} / 6 回
 simSay|語音介紹|Listen|音声で聞く
 airL|虛擬二胡|Virtual erhu|バーチャル二胡
 airT|把虛擬二胡拿在手上拉|Play a virtual erhu with your body|体で弾くバーチャル二胡
@@ -2813,7 +2839,7 @@ function ellip(g,c,rx,ry,rz,seg=12){const o=g.p.length/3;for(let i=0;i<=seg;i++)
  for(let i=0;i<seg;i++)for(let j=0;j<seg;j++){const a=o+i*(seg+1)+j,b=a+seg+1;g.i.push(a,b,a+1,a+1,b,b+1)}}
 /* ===================== erhu model v2: every detail has its own number ===================== */
 let NX=2.7;const TY=6.2;
-const C={wood:[0,0,0],ebony:[.085,.07,.065],dark:[0,0,0],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.10,.12,.22],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12],pegwood:[0,0,0],inner:[.10,.06,.045],lattice:[.55,.30,.16]};
+const C={wood:[0,0,0],ebony:[.085,.07,.065],dark:[0,0,0],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.10,.12,.22],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12],pegwood:[0,0,0],rosin:[.86,.52,.12],inner:[.10,.06,.045],lattice:[.55,.30,.16]};
 /* [key, part, label, default, min, max, step, unit] */
 const PDEF=[
  ['headRise',1,'直段長度',2.8,0,8,.1,'cm'],['headBend',1,'彎曲半徑',5.3,2,9,.1,'cm'],['headAng',1,'彎曲角度',69,40,190,1,'°'],['headR',1,'琴頭粗細（半徑）',.95,.6,1.4,.01,'cm'],
@@ -2950,7 +2976,8 @@ const strAt=(k,y)=>{const p=STRP[k];for(let q=0;q<p.length-1;q++){const A=p[q],B
 const SX=(k,y)=>strAt(k,y)[0],SZ=(k,y)=>strAt(k,y)[2];
 /* the workbench has extra parts (peg box, sound window, fine tuners); for tapping they count as neck, drum and qianjin */
 const PIDMAP={11:4,12:5,13:3};
-function build(){modelGeo();const parts=build2();parts.forEach(p=>{if(PIDMAP[p.id])p.id=PIDMAP[p.id]});return parts}
+function build(){modelGeo();const parts=build2();parts.forEach(p=>{if(PIDMAP[p.id])p.id=PIDMAP[p.id]});
+ {const g=G();sweep(g,line([22,6.5,4],[22,9.1,4],1),2.2,20);parts.push({id:15,mat:'rosin',g,asm:1})}return parts}
 modelGeo();
 /* ---------- procedural python-skin texture ---------- */
 function skinCanvas(){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');x.fillStyle='#1f130b';x.fillRect(0,0,256,256);
@@ -2994,10 +3021,10 @@ let OVR=null,BOWM=null;
 function draw(pick){const e=OVR?OVR.eye:eye(),VP=OVR?OVR.VP:mm(persp(.62,W/H,5,600),look(e,[cam.tx,cam.ty,cam.tz],[0,1,0]));gl.viewport(0,0,W,H);
  gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);const u=prog.u,a=prog.a;gl.uniformMatrix4fv(u.VP,false,VP);gl.uniform3fv(u.Eye,e);gl.uniform1f(u.IsPick,pick?1:0);
  const now=performance.now()/1000;
- meshes.forEach(m=>{let M=m.bow?(BOWM||trans(BD[0]*bowZ,BD[1]*bowZ,0)):trans(0,0,0);if(m.str&&vib[m.str]>.02)M=trans(Math.sin(now*90)*.05*vib[m.str],0,Math.cos(now*71)*.06*vib[m.str]);
+ if(!pick&&!OVR)VPL=VP;meshes.forEach(m=>{if(m.asm&&!(ASM.on&&ASM.si>=ASTEPS.length-2))return;let M=m.bow?(BOWM||trans(BD[0]*bowZ,BD[1]*bowZ,0)):trans(0,0,0);if(ASM.on){const o=ASM.off[m.id];if(o)M=mm(trans(o[0],o[1],o[2]),M)}else if(m.asm)return;if(!ASM.on&&m.str&&vib[m.str]>.02)M=trans(Math.sin(now*90)*.05*vib[m.str],0,Math.cos(now*71)*.06*vib[m.str]);
   gl.uniformMatrix4fv(u.M,false,M);const c=m.mat==='skin'?[1,1,1]:C[m.mat];gl.uniform3fv(u.C,c);gl.uniform1f(u.Wood,m.mat==='wood'||m.mat==='dark'||m.mat==='ebony'||m.mat==='stick'?1:0);gl.uniform1f(u.Tex,m.tex?1:0);
   gl.uniform1f(u.Spec,m.mat==='ebony'?.55:m.mat==='wood'||m.mat==='dark'||m.mat==='stick'?.35:m.mat==='str'||m.mat==='brass'?.8:.15);
-  gl.uniform1f(u.Glow,!pick&&sel&&m.id===sel?(.55+.45*Math.sin(now*5)):(m.str&&vib[m.str]>.02&&!pick?vib[m.str]:0));gl.uniform3fv(u.Pick,[m.id/255,0,0]);
+  gl.uniform1f(u.Glow,!pick&&ASM.on&&asmLit(m.id)?(.45+.4*Math.sin(now*5)):!pick&&sel&&m.id===sel?(.55+.45*Math.sin(now*5)):(m.str&&vib[m.str]>.02&&!pick?vib[m.str]:0));gl.uniform3fv(u.Pick,[m.id/255,0,0]);
   if(m.tex){gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,skinTex);gl.uniform1i(u.S,0)}
   gl.bindBuffer(gl.ARRAY_BUFFER,m.bp);gl.enableVertexAttribArray(a.P);gl.vertexAttribPointer(a.P,3,gl.FLOAT,false,0,0);
   gl.bindBuffer(gl.ARRAY_BUFFER,m.bn);gl.enableVertexAttribArray(a.N);gl.vertexAttribPointer(a.N,3,gl.FLOAT,false,0,0);
@@ -3010,15 +3037,59 @@ function pickAt(px,py){if(!pickFB){pickFB=gl.createFramebuffer();pickTex=gl.crea
  const cnt={};for(let i=0;i<9;i++){const id=px2[i*4];if(px2[i*4+3]>0&&id)cnt[id]=(cnt[id]||0)+1}let best=0,bc=0;for(const k in cnt)if(cnt[k]>bc){bc=cnt[k];best=+k}return best}
 let lastT=0;
 function frame(t){if(!on)return;raf=requestAnimationFrame(frame);const dt=Math.min(.05,(t-lastT)/1000||0);lastT=t;resize();if(cam.auto)cam.yaw+=dt*.25;
- vib.in*=Math.pow(.02,dt);vib.out*=Math.pow(.02,dt);if(PL.vol>.03)vib[PL.str]=Math.max(vib[PL.str],Math.min(1,PL.vol*1.3));draw(false)}
+ vib.in*=Math.pow(.02,dt);vib.out*=Math.pow(.02,dt);if(PL.vol>.03)vib[PL.str]=Math.max(vib[PL.str],Math.min(1,PL.vol*1.3));draw(false);if(ASM.on)asmFrame()}
+/* ---------- 組裝二胡: parts start apart, drag each glowing part to its dashed circle, like building a kit ---------- */
+let VPL=null;
+const ASTEPS=[{ids:[5,6],k:'as1'},{ids:[4,1],k:'as2'},{ids:[2],k:'as3'},{ids:[8],k:'as4'},{k:'as5',tight:1},{ids:[3],k:'as6'},{ids:[7],k:'as7'},{ids:[14],k:'as8'},{ids:[10],k:'as9'},{k:'as10',rosin:1},{k:'asDone',done:1}];
+const AOFF={5:[-34,4,0],6:[-34,4,0],4:[30,-6,0],1:[30,-6,0],2:[-30,6,0],8:[22,6,0],3:[-24,-12,0],13:[-24,-12,0],7:[26,-4,0],14:[30,-10,0],10:[6,-34,0]};
+const ASM={on:false,si:0,off:{},drag:null,anim:null,prog:0,rub:{n:0,dir:0,acc:0}};
+function asmAnchor(si){const st=ASTEPS[si],g=geo();if(!st)return null;const id=st.ids&&st.ids[0];
+ return ({5:[0,TY,0],4:[NX,36,0],2:[NX-3,(P.peg1Y+P.peg2Y)/2,0],8:[NX+2,30,0],3:[g.nutX-.4,P.nutY,0],7:[g.brX,g.brYa,0],14:[g.TX1+.2,TY-P.drumR*.5,0],10:add(BP0,mul(BD,-9))})[id]||null}
+const asmLit=id=>{const st=ASTEPS[ASM.si];if(!st)return false;if(st.tight)return id===2;if(st.rosin)return id===15;return !!st.ids&&st.ids.includes(id)};
+function asmProj(p){if(!VPL)return null;const v=VPL,x=v[0]*p[0]+v[4]*p[1]+v[8]*p[2]+v[12],y=v[1]*p[0]+v[5]*p[1]+v[9]*p[2]+v[13],w=v[3]*p[0]+v[7]*p[1]+v[11]*p[2]+v[15];return [(x/w*.5+.5)*W,(1-(y/w*.5+.5))*H]}
+function asmStart(){const hn=$('.simw .simhint');if(hn)hn.textContent=t('asDrag');ASM.on=true;ASM.si=0;ASM.off={};Object.keys(AOFF).forEach(k=>ASM.off[k]=AOFF[k].slice());ASM.off[15]=[0,0,0];ASM.prog=0;ASM.rub={n:0,dir:0,acc:0};ASM.anim=null;ASM.drag=null;
+ sel=0;cam.auto=false;cam.yaw=.18;cam.pitch=.1;tween({tx:0,ty:32,tz:0,dist:190});asmUI()}
+function asmStop(){const hn=$('.simw .simhint');if(hn)hn.textContent=t('simDrag');ASM.on=false;ASM.drag=null;const o=$('#asmOv');if(o)o.getContext('2d').clearRect(0,0,o.width,o.height)}
+function asmPx(e){const r=cv.getBoundingClientRect(),d=W/r.width;return [(e.clientX-r.left)*d,(e.clientY-r.top)*d]}
+function asmDown(e){const st=ASTEPS[ASM.si];if(!st||st.done||ASM.anim)return false;const [px,py]=asmPx(e);
+ if(st.tight){ASM.drag={k:'t',y:e.clientY,id:e.pointerId};return true}
+ let id=pickAt(px,py);if(!st.rosin&&st.ids&&!st.ids.includes(id)){/* thin parts (strings, pegs) are hard to hit: also accept a touch near the part */const a=asmAnchor(ASM.si),q=asmProj(add(a,ASM.off[st.ids[0]]||[0,0,0]));if(q&&Math.hypot(q[0]-px,q[1]-py)<Math.max(50,W*.13))id=st.ids[0]}
+ if(st.rosin?id===15:(st.ids&&st.ids.includes(id))){const ids=st.rosin?[15]:st.ids.concat(st.ids.includes(3)?[13]:[]);ASM.drag={k:'p',x:e.clientX,y:e.clientY,ids,o0:ids.map(i=>(ASM.off[i]||[0,0,0]).slice()),id:e.pointerId,lx:e.clientX};return true}
+ return false}
+function asmMove(e){const D=ASM.drag;if(!D||D.id!==e.pointerId)return false;const st=ASTEPS[ASM.si];
+ if(D.k==='t'){ASM.prog=Math.min(1,ASM.prog+Math.abs(e.clientY-D.y)/650);D.y=e.clientY;vib.in=vib.out=.25*ASM.prog;asmUI(true);if(ASM.prog>=1){ASM.drag=null;asmNext()}return true}
+ const r=cv.getBoundingClientRect(),k=2*cam.dist*Math.tan(.31)/r.height,dx=(e.clientX-D.x)*k,dy=-(e.clientY-D.y)*k,R=[Math.cos(cam.yaw),0,-Math.sin(cam.yaw)];
+ D.ids.forEach((i,j)=>{ASM.off[i]=[D.o0[j][0]+R[0]*dx,D.o0[j][1]+dy,D.o0[j][2]+R[2]*dx]});
+ if(st.rosin){/* count strokes while the rosin is on the bow hair */const hp=[asmProj(add(BP0,mul(BD,-40))),asmProj(add(BP0,mul(BD,26)))],rp=asmProj(add([22,7.8,4],ASM.off[15]));
+  if(hp[0]&&rp){const ax=hp[1][0]-hp[0][0],ay=hp[1][1]-hp[0][1],L=Math.hypot(ax,ay)||1,t=Math.max(0,Math.min(1,((rp[0]-hp[0][0])*ax+(rp[1]-hp[0][1])*ay)/(L*L))),dd=Math.hypot(rp[0]-hp[0][0]-ax*t,rp[1]-hp[0][1]-ay*t);
+   const mv=(e.clientX-D.lx);D.lx=e.clientX;ASM.near=dd<H*.07;if(ASM.near&&Math.abs(mv)>0){const dir=Math.sign(mv);if(dir===ASM.rub.dir)ASM.rub.acc+=Math.abs(mv);else{if(ASM.rub.acc>W*.06){ASM.rub.n++;tkTick()}ASM.rub.dir=dir;ASM.rub.acc=Math.abs(mv)}
+    ASM.prog=Math.min(1,ASM.rub.n/6);asmUI(true);if(ASM.rub.n>=6){ASM.drag=null;asmNext()}}}}
+ return true}
+function asmUp(e){const D=ASM.drag;if(!D||D.id!==e.pointerId)return false;ASM.drag=null;const st=ASTEPS[ASM.si];
+ if(D.k==='p'&&!st.rosin){const a=asmAnchor(ASM.si),o=ASM.off[D.ids[0]],p0=asmProj(a),p1=asmProj(add(a,o));if(p0&&p1&&Math.hypot(p0[0]-p1[0],p0[1]-p1[1])<Math.max(40,W*.08))asmSnap(D.ids)}
+ return true}
+function asmSnap(ids){ASM.anim={ids,from:ids.map(i=>(ASM.off[i]||[0,0,0]).slice()),t0:performance.now()}}
+function tkTick(){try{airBeep(1200)}catch(e){}}
+function asmNext(){try{airBeep(880)}catch(e){}ASM.si++;ASM.prog=0;ASM.rub={n:0,dir:0,acc:0};if(ASTEPS[ASM.si]&&ASTEPS[ASM.si].done){try{setTimeout(()=>airBeep(1320),180)}catch(e){}}asmUI();if(S.voice){const st=ASTEPS[ASM.si];if(st)tts(t(st.k).replace('§','。'))}}
+function asmFrame(){const A=ASM.anim;if(A){const k=Math.min(1,(performance.now()-A.t0)/260),e=1-Math.pow(1-k,3);A.ids.forEach((i,j)=>{ASM.off[i]=A.from[j].map(v=>v*(1-e))});if(k>=1){ASM.anim=null;A.ids.forEach(i=>ASM.off[i]=[0,0,0]);if(A.ids.includes(3))ASM.off[13]=[0,0,0];asmNext()}}
+ const o=$('#asmOv');if(!o)return;if(o.width!==W||o.height!==H){o.width=W;o.height=H}const g=o.getContext('2d');g.clearRect(0,0,W,H);const st=ASTEPS[ASM.si];if(!st||st.done)return;const d=Math.min(2,devicePixelRatio||1);
+ if(st.ids){const a=asmAnchor(ASM.si),p0=asmProj(a),p1=asmProj(add(a,ASM.off[st.ids[0]]||[0,0,0]));if(!p0)return;
+  g.save();g.setLineDash([7*d,6*d]);g.lineWidth=2.5*d;g.strokeStyle='rgba(250,204,21,.95)';g.beginPath();g.arc(p0[0],p0[1],Math.max(22*d,W*.05),0,7);g.stroke();
+  if(p1&&Math.hypot(p1[0]-p0[0],p1[1]-p0[1])>30*d){g.setLineDash([3*d,7*d]);g.lineWidth=2*d;g.strokeStyle='rgba(250,204,21,.7)';g.beginPath();g.moveTo(p1[0],p1[1]);g.lineTo(p0[0],p0[1]);g.stroke()}g.restore()}
+ if(st.tight||st.rosin){g.save();g.font=`700 ${13*d}px sans-serif`;g.textAlign='center';g.fillStyle='rgba(0,0,0,.55)';const txt=st.tight?t('asTightHint'):t(ASM.near?'asRubOn':'asRubHint'),w=g.measureText(txt).width+24*d;g.fillRect((W-w)/2,H*.06,w,26*d);g.fillStyle='#fff';g.textBaseline='middle';g.fillText(txt,W/2,H*.06+13*d);g.restore()}}
+function asmUI(light){const st=ASTEPS[ASM.si],n=ASTEPS.length-1,box=$('#asmCard');if(!box)return;
+ if(!light){const [ti,de]=t(st.k).split('§');$('#asmT').textContent=st.done?ti:`${t('asStep').replace('{i}',ASM.si+1).replace('{n}',n)}・${ti}`;$('#asmD').textContent=de||'';
+  $('#asmSay').onclick=()=>tts(ti+'。'+(de||''),true);$('#asmHint').hidden=!!st.done||!!st.tight||!!st.rosin;$('#asmAgain').hidden=!st.done;
+  $('#asmSteps').innerHTML=ASTEPS.slice(0,n).map((x,i)=>`<span class="${i<ASM.si?'d':i===ASM.si?'c':''}">${i<ASM.si?'✓':i+1}</span>`).join('')}
+ $('#asmBarW').hidden=!(st.tight||st.rosin);$('#asmBar').style.width=Math.round(ASM.prog*100)+'%';$('#asmBarL').textContent=st.rosin?t('asRubN').replace('{n}',ASM.rub.n):Math.round(ASM.prog*100)+'%'}
 /* ---------- camera controls (drag rotate, pinch / wheel zoom) ---------- */
 function controls(){const pts=new Map();let st=null,moved=0,pinch0=0,dist0=0;
- cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);pts.set(e.pointerId,[e.clientX,e.clientY]);cam.auto=false;moved=0;if(pts.size===1)st={x:e.clientX,y:e.clientY,yaw:cam.yaw,pitch:cam.pitch};
+ cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);if(mode==='asm'&&!pts.size&&asmDown(e)){cam.auto=false;return}pts.set(e.pointerId,[e.clientX,e.clientY]);cam.auto=false;moved=0;if(pts.size===1)st={x:e.clientX,y:e.clientY,yaw:cam.yaw,pitch:cam.pitch};
   if(pts.size===2){const [a,b]=[...pts.values()];pinch0=Math.hypot(a[0]-b[0],a[1]-b[1]);dist0=cam.dist}});
- cv.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,[e.clientX,e.clientY]);
+ cv.addEventListener('pointermove',e=>{if(mode==='asm'&&asmMove(e))return;if(!pts.has(e.pointerId))return;pts.set(e.pointerId,[e.clientX,e.clientY]);
   if(pts.size===2){const [a,b]=[...pts.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);cam.dist=Math.max(35,Math.min(260,dist0*pinch0/d));moved=9;return}
   if(st){const dx=e.clientX-st.x,dy=e.clientY-st.y;moved=Math.max(moved,Math.hypot(dx,dy));cam.yaw=st.yaw-dx*.008;cam.pitch=Math.max(-.6,Math.min(1.2,st.pitch+dy*.006))}});
- const up=e=>{const was=pts.size;pts.delete(e.pointerId);if(was===1&&moved<6&&mode==='learn'){const r=cv.getBoundingClientRect(),d=W/r.width;choose(pickAt((e.clientX-r.left)*d,(e.clientY-r.top)*d))}if(!pts.size)st=null};
+ const up=e=>{if(mode==='asm'&&asmUp(e))return;const was=pts.size;pts.delete(e.pointerId);if(was===1&&moved<6&&mode==='learn'){const r=cv.getBoundingClientRect(),d=W/r.width;choose(pickAt((e.clientX-r.left)*d,(e.clientY-r.top)*d))}if(!pts.size)st=null};
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(35,Math.min(260,cam.dist*(1+Math.sign(e.deltaY)*.08)))},{passive:false})}
 /* ---------- parts ---------- */
@@ -3198,12 +3269,14 @@ function airSave(){const f=airFile(),a=document.createElement('a');a.href=URL.cr
 /* ---------- view wiring ---------- */
 let ready=false;
 function mdUI(){}
-function setMode(m){if(m!==mode)ttsStop();if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
- $('.simw').classList.toggle('play',m==='play');if(m==='play'){sel=0;cam.auto=false;tween({tx:3,ty:20,tz:0,dist:96});cam.yaw=1.05;cam.pitch=.18;plUI()}else{plStop();choose(0);tween({tx:0,ty:40,tz:0,dist:158})}}
+function setMode(m){if(m!==mode)ttsStop();if(mode==='asm'&&m!=='asm')asmStop();$('#simAsm').hidden=m!=='asm';if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
+ $('.simw').classList.toggle('play',m==='play');if(m==='asm'){sel=0;choose(0);asmStart();return}if(m==='play'){sel=0;cam.auto=false;tween({tx:3,ty:20,tz:0,dist:96});cam.yaw=1.05;cam.pitch=.18;plUI()}else{plStop();choose(0);tween({tx:0,ty:40,tz:0,dist:158})}}
 function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#simNoGL').hidden=false;return}controls();bowPad();ready=true;
   $('#simParts').innerHTML=PARTS.map(p=>`<button data-p="${p[0]}">${t(p[1]).split('§')[0]}</button>`).join('');
   $$('#simParts button').forEach(b=>b.onclick=()=>{cam.auto=false;choose(+b.dataset.p)});
   $$('#simMode button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+  $('#asmHint').onclick=()=>{const st=ASTEPS[ASM.si];if(st&&st.ids&&!ASM.anim)asmSnap(st.ids.concat(st.ids.includes(3)?[13]:[]))};
+  $('#asmReset').onclick=()=>asmStart();$('#asmAgain').onclick=()=>asmStart();
   $('#simStrIn').onclick=()=>{PL.str='in';PL.note=null;plUI();if(PL.src)plNote()};$('#simStrOut').onclick=()=>{PL.str='out';PL.note=null;plUI();if(PL.src)plNote()};
   $$('#simFing button').forEach((b,i)=>b.onpointerdown=async()=>{PL.fing=i;await plEnsure();plNote();plUI()});
   mdUI();
@@ -3216,10 +3289,10 @@ function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#si
   $('#airMute').onclick=()=>{S.airMute=!S.airMute;save();airStrUI();if(S.airMute)plVol(0);toast(t(S.airMute?'airMuteOn':'airMuteOff'))}}
  if(mode==='air'){setMode('air');return}
  on=true;lastT=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);setMode(mode)}
-function close(){on=false;cancelAnimationFrame(raf);plStop();AIR.task=null;if(AIR.on)airStop()}
+function close(){on=false;cancelAnimationFrame(raf);plStop();AIR.task=null;if(ASM.on)asmStop();if(AIR.on)airStop()}
 function virt(task){setMode('air');AIR.task={...task,acc:0,last:null};airStart()}
 function relabel(){if(!ready)return;$$('#simParts button').forEach(b=>{const p=PARTS.find(x=>x[0]===+b.dataset.p);b.textContent=t(p[1]).split('§')[0]});choose(sel);plUI()}
-return {open,close,relabel,virt,_air:AIR,_pl:PL,_build:build,_skin:skinCanvas,_C:C,_cam:cam,_pick:(x,y)=>pickAt(x,y),_choose:choose,get mode(){return mode}}})();
+return {open,close,relabel,virt,_asm:{S:ASM,anchor:i=>asmAnchor(i),proj:p=>asmProj(p),steps:ASTEPS,add:(a,b)=>add(a,b)},_air:AIR,_pl:PL,_build:build,_skin:skinCanvas,_C:C,_cam:cam,_pick:(x,y)=>pickAt(x,y),_choose:choose,get mode(){return mode}}})();
 
 /* ---- AR：iPhone 用 Quick Look（USDZ），Android 用 Scene Viewer（GLB）；其他裝置可用相機背景 ---- */
 const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),isAndroid=()=>/Android/i.test(navigator.userAgent),inApp=()=>/FBAN|FBAV|FB_IAB|Messenger|Line\/|Instagram|wv\)/i.test(navigator.userAgent);
