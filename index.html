@@ -1245,14 +1245,14 @@ airL|空氣二胡|Air erhu|エア二胡
 airT|把虛擬二胡拿在手上拉|Play a virtual erhu with your body|体で弾くバーチャル二胡
 air1|手機立在前方約 1.5 公尺，用自拍鏡頭，坐著讓上半身和大腿入鏡|Stand the phone about 1.5 m away (front camera), sit so your upper body and thighs are in view|スマホを約1.5m前に立て、座って上半身と太ももを映します
 air2|坐好後右手比「1」，倒數 3 秒內擺好拉琴姿勢：左手虎口在肩膀高度握住琴桿（千斤的位置）、右手持弓。二胡會依你的姿勢校正後出現，之後跟著你的身體移動|Sit, then show “1” with your right hand. During the 3-second countdown take your playing pose: left thumb-web at shoulder height on the neck (where the nut is), right hand holding the bow. The erhu is fitted to that pose and then follows your body|座ったら右手で「1」。3秒のカウント中に構えます：左手の親指の付け根を肩の高さで棹に（千斤の位置）、右手は弓を持つ形。その姿勢に合わせて二胡が現れ、体に追従します
-air2b|右手握弓，往外拉、往內推就會出聲，越快越大聲；想重新校正，隨時再比一次「1」|Pull and push the bow with your right hand to play — faster is louder. Show “1” again any time to recalibrate|右手で弓を押し引きすると音が出ます（速いほど大きく）。もう一度「1」で再調整
+air2b|右手握弓，往外拉、往內推就會出聲，越快越大聲；想重新校正，隨時再比一次「1」；比「2」開始／停止錄影|Pull and push the bow with your right hand to play — faster is louder. Show “1” again any time to recalibrate; show “2” to start or stop recording|右手で弓を押し引きすると音が出ます（速いほど大きく）。もう一度「1」で再調整、「2」で録画の開始／停止
 airCal1|坐好後右手比「1」開始校正|Sit, then show “1” to calibrate|座ったら「1」で調整開始
 airCalHold|保持「1」…|Hold “1”…|「1」をキープ…
 airCalPose|擺好拉琴姿勢：左手虎口在肩膀高度握琴桿、右手持弓，不要動|Hold your playing pose: left hand on the neck at shoulder height, right hand on the bow — stay still|構えてください：左手は肩の高さで棹を、右手は弓を。動かないで
 airCalOK|校正完成，開始拉吧|Calibrated — start playing|調整完了、どうぞ
 airCalNoL|沒看到左手，先用預設位置；可再比「1」重新校正|Left hand not seen; using the default position — show “1” to retry|左手が見えないため既定位置です。「1」で再調整できます
 airCalAgain|比「1」重新校正|Show “1” to recalibrate|「1」で再調整
-air3|左手沿著琴桿往下滑，離千斤越遠音越高；上方按鈕切換內弦、外弦|Slide your left hand down the neck: the further from the nut, the higher the note; switch strings with the top buttons|左手を棹に沿って下げるほど音が高くなります。上のボタンで弦を切替
+air3|左手沿著琴桿往下滑，離千斤越遠音越高，每條弦有兩個八度；琴弦上的白點是各音的位置，越往下越密；上方按鈕切換內弦、外弦|Slide your left hand down the neck: further from the nut is higher, two octaves per string; the white dots on the string mark each note and get closer together lower down; switch strings with the top buttons|左手を棹に沿って下げるほど音が高くなります（各弦2オクターブ）。弦上の白い点が各音の位置で、下ほど間隔が狭くなります。上のボタンで弦を切替
 air4|按「錄影」可以錄下你的演奏，分享到 IG、TikTok|Tap Record to capture your performance and share it|「録画」で演奏を録画して共有できます
 airGo|開始空氣二胡|Start air erhu|エア二胡を始める
 airLoading|正在開啟相機與偵測模型…|Opening camera and models…|カメラとモデルを準備中…
@@ -2841,9 +2841,12 @@ let tw=null;function tween(to){const from={tx:cam.tx,ty:cam.ty,tz:cam.tz,dist:ca
  const step=()=>{const k=Math.min(1,(performance.now()-t0)/600),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;for(const q in to)cam[q]=from[q]+(to[q]-from[q])*e;if(k<1)tw=requestAnimationFrame(step)};step()}
 /* ---------- play: real erhu samples, bow speed = volume ---------- */
 const PL={str:'in',fing:0,vol:0,src:null,g:null,note:null,lastX:null,lastT:0,dir:0,pos:.5};
+const AIRN={in:[62,64,66,67,69,71,73,74,76,78,79,81,83,85,86],out:[69,71,73,74,76,78,79,81,83,85,86,88,90,91,93]},
+ AIRJ={in:'1 2 3 4 5 6 7 1̇ 2̇ 3̇ 4̇ 5̇ 6̇ 7̇ 1̈'.split(' '),out:'5 6 7 1̇ 2̇ 3̇ 4̇ 5̇ 6̇ 7̇ 1̈ 2̈ 3̈ 4̈ 5̈'.split(' ')},
+ airYs=k=>AIRN[k].map(m=>NUTY-(NUTY-BRY)*(1-Math.pow(2,-(m-AIRN[k][0])/12)));
 const NOTES={in:[62,64,66,67,69],out:[69,71,73,74,76]},JP={in:['1','2','3','4','5'],out:['5','6','7','1̇','2̇']};
 async function plEnsure(){const a=ctx();if(a.state!=='running')await a.resume();await erhuBank(a);if(!PL.g){PL.g=a.createGain();PL.g.gain.value=0;PL.g.connect(a.destination)}return a}
-function plNote(){const a=ctx(),m=NOTES[PL.str][PL.fing];if(PL.note===m&&PL.src)return;PL.note=m;const f=S.ref*Math.pow(2,(m-69)/12),old=PL.src,oldG=PL.sg;
+function plNote(){const a=ctx(),m=PL.mid!=null?PL.mid:NOTES[PL.str][PL.fing];if(PL.note===m&&PL.src)return;PL.note=m;const f=S.ref*Math.pow(2,(m-69)/12),old=PL.src,oldG=PL.sg;
  const ng=a.createGain();ng.gain.value=0;ng.connect(PL.g);let src;
  if(EBANK){let sm=EBANK[0];EBANK.forEach(x=>{if(Math.abs(Math.log2(x.f0/f))<Math.abs(Math.log2(sm.f0/f)))sm=x});src=a.createBufferSource();src.buffer=EBANK.buf;src.playbackRate.value=f/sm.f0;src.loop=true;src.loopStart=sm.off+.35;src.loopEnd=sm.off+sm.len-.12;src.start(0,sm.off+.08)}
  else{src=a.createOscillator();src.type='sawtooth';src.frequency.value=f;const lp=a.createBiquadFilter();lp.frequency.value=2400;src.connect(lp);lp.connect(ng);src.start();src._lp=lp}
@@ -2877,7 +2880,7 @@ async function airStart(){const v=$('#airVid');AIR.cv=$('#airCv');AIR.cx=AIR.cv.
  catch(e){airMsg('');$('#airW').hidden=true;$('#airIntro').hidden=false;toast(t('camErr'));return}
  try{await loadModels()}catch(e){airStop();toast(t('mdlErr'));return}
  await plEnsure();AIR.on=true;AIR.v=v;AIR.sm={};AIR.F=null;AIR.last=null;AIR.everBody=0;AIR.phi=null;AIR.bowPrev=null;AIR.frame=0;AIR.cal=null;AIR.cal0=0;AIR.ct=null;AIR.gT=null;BOWM=null;airMsg('airFrame');PL.str=PL.str||'in';airStrUI();airLoop()}
-function airStop(){AIR.on=false;if(AIR.rec&&AIR.rec.state==='recording')AIR.rec.stop();if(AIR.stream)AIR.stream.getTracks().forEach(x=>x.stop());AIR.stream=null;plStop();$('#airW').hidden=true;$('#airW').classList.remove('fs');document.body.classList.remove('airon');try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}if(!AIR.blob)$('#airIntro').hidden=false}
+function airStop(){AIR.on=false;PL.mid=null;if(AIR.rec&&AIR.rec.state==='recording')AIR.rec.stop();if(AIR.stream)AIR.stream.getTracks().forEach(x=>x.stop());AIR.stream=null;plStop();$('#airW').hidden=true;$('#airW').classList.remove('fs');document.body.classList.remove('airon');try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}if(!AIR.blob)$('#airIntro').hidden=false}
 function airStrUI(){$$('#airStr button').forEach(b=>b.classList.toggle('sel',b.dataset.s===PL.str))}
 function handPath(g,lm,toS){const P=i=>toS(lm[i].x,lm[i].y),pw=Math.hypot(P(5)[0]-P(17)[0],P(5)[1]-P(17)[1]);g.lineJoin=g.lineCap='round';g.lineWidth=pw*.42;
  g.beginPath();[0,1,2,5,9,13,17].forEach((i,k)=>{const p=P(i);k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1])});g.closePath();g.fill();g.stroke();
@@ -2899,7 +2902,7 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  const vis=i=>p&&(p[i].visibility??1)>.45,SP=i=>toS(p[i].x,p[i].y);
  const bodyOK=p&&vis(11)&&vis(12);
  if(bodyOK)AIR.lastBody=ts;
- if(!bodyOK&&(!AIR.last||!AIR.cal||ts-(AIR.lastBody||0)>500)){airGuide(g,VW,VH);airMsg(AIR.everBody?'airBody':'airFrame');AIR.ct=null;AIR.gT=null;airDecay();airHUD();next();return}
+ if(!bodyOK&&(!AIR.last||!AIR.cal||ts-(AIR.lastBody||0)>500)){airGuide(g,VW,VH);airMsg(AIR.everBody?'airBody':'airFrame');AIR.ct=null;AIR.gK=null;airDecay();airHUD();next();return}
  AIR.everBody=1;
  /* hands: player's left hand (pose 15 side) holds the neck, right hand (pose 16 side) holds the bow */
  const hs=hr.landmarks||[];let LHd=null,RHd=null;
@@ -2909,19 +2912,19 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
   BF={O:[(ls[0]+rs[0])/2,(ls[1]+rs[1])/2],w,ex,ey:[ex[1],-ex[0]]};
   BF.rel=P=>{const x=P[0]-BF.O[0],y=P[1]-BF.O[1];return[(x*BF.ex[0]+y*BF.ex[1])/BF.w,(x*BF.ey[0]+y*BF.ey[1])/BF.w]};
   BF.abs=r=>[BF.O[0]+(r[0]*BF.ex[0]+r[1]*BF.ey[0])*BF.w,BF.O[1]+(r[0]*BF.ex[1]+r[1]*BF.ey[1])*BF.w]}
- /* gesture 1 (index finger up) held 0.6 s -> 3-second countdown, then the erhu is fitted to the pose the player holds */
- const one=hs.some(h=>airOne(h,VW0,VH0));
- if(one&&AIR.ct==null){AIR.gT=AIR.gT||ts;if(ts-AIR.gT>600){AIR.ct=ts;AIR.gT=null;AIR.cs=[];airBeep(660)}}else if(!one)AIR.gT=null;
+ /* gestures (held 0.3 s, fire once until released): 1 -> 3-second calibration countdown; 2 -> start/stop recording */
+ const gs=hs.map(h=>airGest(h,VW0,VH0)).find(Boolean)||null;
+ if(gs&&gs===AIR.gK){if(!AIR.gL&&ts-AIR.gT>300){AIR.gL=1;if(gs==='one'&&AIR.ct==null){AIR.ct=ts;AIR.cs=[];airBeep(660)}else if(gs==='two'&&AIR.cal&&AIR.ct==null&&!(AIR.recCD>ts)){AIR.recCD=ts+1500;airBeep(880);airRecToggle()}}}else{AIR.gK=gs;AIR.gT=ts;AIR.gL=0}
  if(AIR.ct!=null||!AIR.cal){airDecay();
   if(AIR.ct!=null&&BF){const left=3-(ts-AIR.ct)/1000;
    if(left<=.6){/* sample: nut = the left hand's thumb web; drum straight down the torso at hip height */
     const N=LHd?toS((LHd[2].x+LHd[5].x)/2,(LHd[2].y+LHd[5].y)/2):null,Nr=N?BF.rel(N):[.3,0];
     let dH=1.05;if(vis(23)&&vis(24)){const H=BF.rel([(SP(23)[0]+SP(24)[0])/2,(SP(23)[1]+SP(24)[1])/2]);dH=Math.max(.85,Math.min(1.4,H[1]-Nr[1]))}
-    AIR.cs.push({Nr,Dr:[Nr[0]-.03,Nr[1]+dH],L:!!N})}
+    AIR.cs.push({Nr,Dr:[Nr[0]-.03,Nr[1]+dH],Hr:LHd?BF.rel(toS(LHd[9].x,LHd[9].y)):[Nr[0],Nr[1]+.08],L:!!N})}
    if(left<=0){const cs=AIR.cs.some(c=>c.L)?AIR.cs.filter(c=>c.L):AIR.cs,m=k=>[0,1].map(i=>cs.reduce((a,c)=>a+c[k][i],0)/cs.length);
-    AIR.cal={Nr:m('Nr'),Dr:m('Dr')};AIR.ct=null;AIR.F=airFilters();AIR.last=null;S.airOff=[0,0];airBeep(990);toast(t(cs[0]&&cs[0].L?'airCalOK':'airCalNoL'))}
+    AIR.cal={Nr:m('Nr'),Dr:m('Dr'),Hr:m('Hr')};AIR.fing=0;AIR.ct=null;AIR.F=airFilters();AIR.last=null;S.airOff=[0,0];airBeep(990);toast(t(cs[0]&&cs[0].L?'airCalOK':'airCalNoL'))}
    else{airMsg('airCalPose');const f=Math.round(VW/4);g.save();g.font=`800 ${f}px sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillStyle='rgba(255,255,255,.92)';g.strokeStyle='rgba(0,0,0,.45)';g.lineWidth=f*.06;const cy=VH*.28;g.strokeText(Math.ceil(left),VW/2,cy);g.fillText(Math.ceil(left),VW/2,cy);g.restore()}}
-  else if(AIR.ct==null)airMsg(AIR.gT?'airCalHold':(AIR.cal0?'airCalAgain':'airCal1'));
+  else if(AIR.ct==null)airMsg(AIR.gK==='one'&&!AIR.gL?'airCalHold':(AIR.cal0?'airCalAgain':'airCal1'));
   if(AIR.ct!=null||!AIR.cal){airHUD();next();return}}
  airMsg(null);AIR.cal0=1;
  let A=AIR.last;
@@ -2929,7 +2932,8 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
   const ax=F.ax(D0[0]+o[0],ts),ay=F.ay(D0[1]+o[1],ts),nx=F.hx(N0[0]+o[0],ts),ny=F.hy(N0[1]+o[1],ts),dx=nx-ax,dy=ny-ay;
   let th=Math.atan2(-dx,-dy);th=Math.max(-.6,Math.min(.6,th));th=F.th(th,ts);const sc=F.s(Math.hypot(dx,dy)/(NUTY-TY),ts);
   let hp=null;if(LHd){hp=toS(LHd[9].x,LHd[9].y);AIR.lhSeen=ts;AIR.lhP=hp}else if(AIR.lhP&&ts-(AIR.lhSeen||0)<500)hp=AIR.lhP;
-  A=AIR.last={ax,ay,sc,th,hp,hasL:!!hp,rs:SP(16),vis16:vis(16)}}
+  const H0=BF.abs(AIR.cal.Hr||AIR.cal.Nr);
+  A=AIR.last={ax,ay,sc,th,hp,hasL:!!hp,H0:[H0[0]+o[0],H0[1]+o[1]],rs:SP(16),vis16:vis(16)}}
  const P0=[NX,TY,0],M=airVP(A.ax,A.ay,A.sc,A.th,.32,P0,VW,VH);
  /* bow: frog in the right hand, axis from the hand to the strings just above the bridge */
  let rq=RHd?toS((RHd[5].x+RHd[9].x)/2,(RHd[5].y+RHd[9].y)/2):(A.vis16&&bodyOK?SP(16):null);
@@ -2941,19 +2945,23 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  const cph=Math.cos(AIR.phi||0),sph=Math.sin(AIR.phi||0),bd=[BD[0]*cph-BD[1]*sph,BD[0]*sph+BD[1]*cph],tx=BP0[0]-(cph*BP0[0]-sph*BP0[1])+bd[0]*AIR.bow,ty=BP0[1]-(sph*BP0[0]+cph*BP0[1])+bd[1]*AIR.bow;
  BOWM=[cph,sph,0,0,-sph,cph,0,0,0,0,1,0,tx,ty,0,1];
  /* left hand: how far it slides down from the nut picks the finger */
- if(A.hasL&&A.hp){const hm=M.inv(A.hp[0],A.hp[1]),y=hm[1];let f=0;if(y<NUTY-2)f=y>38?1:y>33?2:y>28?3:4;if(f!==AIR.fing){AIR.fing=f;PL.fing=f;if(PL.src)plNote()}}
- PL.fing=AIR.fing;if(AIR.vol>.04){if(!PL.src||PL.note!==NOTES[PL.str][PL.fing])plNote()}plVol(AIR.vol);PL.vol=AIR.vol;
+ /* left hand: how far it has slid down from where it was at calibration = stopping point on the string (equal-tempered positions, two octaves) */
+ const ys=airYs(PL.str);if(AIR.fing>=ys.length)AIR.fing=0;
+ if(A.hasL&&A.hp&&A.H0){const pos=Math.max(0,M.inv(A.H0[0],A.H0[1])[1]-M.inv(A.hp[0],A.hp[1])[1]),e=i=>Math.abs(NUTY-ys[i]-pos);let bi=0;ys.forEach((_,i)=>{if(e(i)<e(bi))bi=i});if(bi!==AIR.fing&&e(bi)+.3<e(AIR.fing))AIR.fing=bi}
+ PL.mid=AIRN[PL.str][AIR.fing];if(AIR.vol>.04){if(!PL.src||PL.note!==PL.mid)plNote()}plVol(AIR.vol);PL.vol=AIR.vol;
  /* render */
  OVR={VP:M.VP,eye:M.eye};gl.canvas.width=VW;gl.canvas.height=VH;W=VW;H=VH;draw(false);OVR=null;BOWM=null;g.drawImage(gl.canvas,0,0);
- if(AIR.fing){const yy=[0,40,35,30.5,26][AIR.fing],sp=M.fwd([SX(PL.str,yy),yy,SZ(PL.str,yy)]);g.fillStyle='rgba(250,204,21,.9)';g.beginPath();g.arc(sp[0],sp[1],A.sc*1.1,0,7);g.fill()}
+ ys.forEach((yy,i)=>{if(!i)return;const sp=M.fwd([SX(PL.str,yy),yy,SZ(PL.str,yy)]);g.fillStyle=i===AIR.fing?'rgba(250,204,21,.95)':'rgba(255,255,255,.55)';g.beginPath();g.arc(sp[0],sp[1],A.sc*(i===AIR.fing?1.1:.42),0,7);g.fill()});
  const mx=AIR.mx;[LHd,RHd].forEach(h=>{if(!h)return;mx.globalCompositeOperation='source-over';mx.clearRect(0,0,VW,VH);mx.fillStyle='#000';mx.strokeStyle='#000';handPath(mx,h,toS);
   mx.globalCompositeOperation='source-in';drawVid(mx);g.drawImage(AIR.mk,0,0)});
  airHUD(A.sc);next()}
+function airGest(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b].y)*H),ext=(t,q)=>d(0,t)>d(0,q)*1.15,cur=(t,q)=>d(0,t)<d(0,q)*1.05,up=(t,m)=>(h[m].y-h[t].y)*H>Math.abs(h[t].x-h[m].x)*W*1.2;
+ if(!(ext(8,6)&&up(8,5)&&cur(16,14)&&cur(20,18)))return null;if(cur(12,10))return 'one';if(ext(12,10)&&up(12,9))return 'two';return null}
 function airOne(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b].y)*H),ext=(t,q)=>d(0,t)>d(0,q)*1.15,cur=(t,q)=>d(0,t)<d(0,q)*1.05;
  return ext(8,6)&&cur(12,10)&&cur(16,14)&&cur(20,18)&&(h[5].y-h[8].y)*H>Math.abs(h[8].x-h[5].x)*W*1.2}
 function airBeep(f){try{const a=ctx(),o=a.createOscillator(),gn=a.createGain();o.frequency.value=f;gn.gain.setValueAtTime(.0001,a.currentTime);gn.gain.exponentialRampToValueAtTime(.25,a.currentTime+.01);gn.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.18);o.connect(gn).connect(a.destination);o.start();o.stop(a.currentTime+.2)}catch(e){}}
 function airDecay(){AIR.vol*=.6;plVol(AIR.vol);PL.vol=AIR.vol}
-function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=JP[PL.str][AIR.fing],f=Math.round(VW/22);
+function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=AIRJ[PL.str][AIR.fing]||'',f=Math.round(VW/22);
  g.font=`800 ${f*2}px sans-serif`;g.textAlign='right';g.fillStyle='rgba(255,255,255,.95)';g.strokeStyle='rgba(0,0,0,.55)';g.lineWidth=f*.25;const tx=VW-f,ty=f*2.6;g.strokeText(nm,tx,ty);g.fillText(nm,tx,ty);
  g.font=`700 ${f*.7}px sans-serif`;const s2=(PL.str==='in'?t('simIn'):t('simOut'))+(AIR.vol>.05?' · '+t(AIR.dir>0?'simPull':'simPush'):'');g.strokeText(s2,tx,ty+f*1.1);g.fillText(s2,tx,ty+f*1.1);
  g.textAlign='left';g.font=`700 ${f*.6}px sans-serif`;g.fillStyle='rgba(255,255,255,.75)';g.fillText(t('app'),f*.8,VH-f*.8)}
