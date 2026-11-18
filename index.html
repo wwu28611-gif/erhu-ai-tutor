@@ -608,10 +608,10 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 <section id="v-sim"><div class="narrow">
  <button class="quiet plback" data-go="today">‹ <span data-i="nToday"></span></button>
  <div class="pt" style="margin-top:.2rem"><h1 data-i="simT"></h1><p data-i="simSub"></p></div>
- <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="play" data-i="simPlayL"></button><button data-m="air" data-i="airL"></button></div>
+ <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v63</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v64</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1227,8 +1227,8 @@ md_bowAng|弓的傾斜角度|Bow angle|弓の角度
 mdMoved|這個 3D 二胡是用「二胡模型工作台」定稿的模型；想再調整細節，請到工作台修改後把設定貼給我|This 3D erhu comes from the Erhu Model Workbench; to fine-tune details, edit it there and send me the settings|この3D二胡は「二胡モデル工作台」で確定したモデルです。細部の調整は工作台で行い、設定を送ってください
 mdOpen|打開二胡模型工作台|Open the model workbench|モデル工作台を開く
 simT|3D 二胡模擬器|3D Erhu Simulator|3D 二胡シミュレーター
-simSub|轉一轉、點零件，還能試拉看看|Spin it, tap the parts and try playing|回して、パーツをタップして、弾いてみよう
-simCard|轉一轉認識每個零件，再用手指試拉真實的二胡聲音|Spin it to learn each part, then try playing with real erhu sound|パーツを学んで、本物の二胡の音で弾いてみよう
+simSub|轉一轉、點零件，還能拉虛擬二胡|Spin it, tap the parts, then play the virtual erhu|回して、パーツをタップして、バーチャル二胡を弾こう
+simCard|轉一轉認識每個零件，再用手機鏡頭拉虛擬二胡|Spin it to learn each part, then play the virtual erhu with your camera|パーツを学んで、カメラでバーチャル二胡を弾こう
 simGo|試玩|Try it|試す
 simLearn|認識零件|Parts|パーツ
 simPlayL|試拉看看|Play|弾いてみる
@@ -2981,10 +2981,12 @@ function plNote(){const a=ctx(),m=PL.mid!=null?PL.mid:NOTES[PL.str][PL.fing];if(
 /* seamless sustain: the steady part of each recorded note with its end cross-faded into its start, so long bows don't pulse at the loop point */
 function plLoop(a,sm){if(sm._lb)return sm._lb;const B=EBANK.buf,sr=B.sampleRate,d=B.getChannelData(0),s0=Math.round((sm.off+.3)*sr),L=Math.round((sm.len-.42)*sr),X=Math.round(.3*sr),N=L-X,ob=a.createBuffer(1,N,sr),o=ob.getChannelData(0);
  for(let i=0;i<N;i++){const v=d[s0+i]||0;if(i<X){const w=i/X;o[i]=v*Math.sqrt(w)+(d[s0+N+i]||0)*Math.sqrt(1-w)}else o[i]=v}return sm._lb=ob}
-function plBend(m){const a=ctx();if(!PL.src||PL.note==null||Math.abs(m-PL.note)>1.5){PL.mid=Math.round(m);PL.note=null;plNote()}
- const f=S.ref*Math.pow(2,(m-69)/12);if(PL.sf0)PL.src.playbackRate.setTargetAtTime(f/PL.sf0,a.currentTime,.02);else if(PL.src.frequency)PL.src.frequency.setTargetAtTime(f,a.currentTime,.02)}
+/* fretless: keep one recorded note playing and glide its pitch; only switch recording when the pitch has moved far from it
+   (switching back and forth near a boundary, and jittery pitch, made the sound phasey) */
+function plBend(m){const a=ctx();if(!PL.src||PL.bm==null||Math.abs(m-PL.bm)>2.6){PL.mid=Math.round(m);PL.note=null;plNote();PL.bm=PL.mid}PL.bent=1;
+ const f=S.ref*Math.pow(2,(m-69)/12);if(PL.sf0)PL.src.playbackRate.setTargetAtTime(f/PL.sf0,a.currentTime,.045);else if(PL.src.frequency)PL.src.frequency.setTargetAtTime(f,a.currentTime,.045)}
 function plVol(v){PL.vol=v;if(PL.g){const a=ctx();PL.g.gain.setTargetAtTime(v*1.1,a.currentTime,v>PL.gv?.03:.08);PL.gv=v}}
-function plStop(){plVol(0);const s=PL.src;PL.src=null;PL.note=null;if(s)setTimeout(()=>{try{s.stop()}catch(e){}},300)}
+function plStop(){PL.bm=null;PL.bent=0;plVol(0);const s=PL.src;PL.src=null;PL.note=null;if(s)setTimeout(()=>{try{s.stop()}catch(e){}},300)}
 function plUI(){$('#simStrIn').classList.toggle('sel',PL.str==='in');$('#simStrOut').classList.toggle('sel',PL.str==='out');
  $$('#simFing button').forEach((b,i)=>{b.querySelector('b').textContent=JP[PL.str][i];b.classList.toggle('sel',i===PL.fing)})}
 function bowPad(){const pad=$('#simBow');let id=null,decay=0;
@@ -3078,9 +3080,9 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  /* left hand: how far it has slid down from where it was at calibration = stopping point on the string (equal-tempered positions, two octaves) */
  AIR.free=airSc()==='free';const ys=airYs(PL.str);if(!AIR.free&&(AIR.fing>=ys.length||AIR.fing<0))AIR.fing=0;
  if(!AIR.free){if(A.hasL&&A.hp&&A.H0){const pos=Math.max(0,M.inv(A.H0[0],A.H0[1])[1]-M.inv(A.hp[0],A.hp[1])[1]),e=i=>Math.abs(NUTY-ys[i]-pos);let bi=0;ys.forEach((_,i)=>{if(e(i)<e(bi))bi=i});if(bi!==AIR.fing&&e(bi)+.6<e(AIR.fing))AIR.fing=bi}
- PL.mid=AIRS[airSc()][PL.str][AIR.fing];if(AIR.vol>.04){if(!PL.src||PL.note!==PL.mid)plNote()}}
+ if(PL.bent){PL.bent=0;PL.bm=null;PL.note=null}PL.mid=AIRS[airSc()][PL.str][AIR.fing];if(AIR.vol>.04){if(!PL.src||PL.note!==PL.mid)plNote()}}
  else{/* fretless: pitch slides continuously between the scale dots, so slides and microtones work like a real erhu */
-  if(A.hasL&&A.hp&&A.H0){const pos=Math.max(0,M.inv(A.H0[0],A.H0[1])[1]-M.inv(A.hp[0],A.hp[1])[1]);AIR.fp=AIR.fp==null?pos:AIR.fp+(pos-AIR.fp)*.5}
+  if(A.hasL&&A.hp&&A.H0){const pos=Math.max(0,M.inv(A.H0[0],A.H0[1])[1]-M.inv(A.hp[0],A.hp[1])[1]);AIR.fp=AIR.fp==null?pos:Math.abs(pos-AIR.fp)<.12?AIR.fp:AIR.fp+(pos-AIR.fp)*.3}
   const fp=Math.max(0,Math.min(NUTY-ys[ys.length-1],AIR.fp||0)),sm=AIRS.maj[PL.str],j=Math.min(ys.length-2,Math.floor(fp/3.4)),u=(fp-j*3.4)/3.4,mid=sm[j]+(sm[j+1]-sm[j])*Math.min(1,u);
   AIR.midF=mid;AIR.fing=-1;if(AIR.vol>.04)plBend(mid)}
  plVol(S.airMute?0:AIR.vol);PL.vol=AIR.vol;
