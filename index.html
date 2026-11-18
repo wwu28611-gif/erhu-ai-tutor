@@ -611,7 +611,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="simar"><button class="btn" id="simAR"><span>📱</span><span data-i="arBtn"></span></button><button class="btn alt" id="simCamBg"><span>📷</span><span data-i="arCam"></span></button></div>
  <p class="mut simarp" data-i="arHint"></p>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1244,7 +1244,14 @@ arCamOn|相機已開啟，拖曳轉動二胡、兩指縮放大小|Camera on: dra
 airL|空氣二胡|Air erhu|エア二胡
 airT|把虛擬二胡拿在手上拉|Play a virtual erhu with your body|体で弾くバーチャル二胡
 air1|手機立在前方約 1.5 公尺，用自拍鏡頭，坐著讓上半身和大腿入鏡|Stand the phone about 1.5 m away (front camera), sit so your upper body and thighs are in view|スマホを約1.5m前に立て、座って上半身と太ももを映します
-air2|二胡底部放在左大腿，琴桿會穿過你的左手，就像握在手上；右手握弓，往外拉、往內推就會出聲，越快越大聲|The erhu sits on your left thigh and its neck runs through your left hand as if you hold it; your right hand holds the bow — pull and push to play, faster is louder|二胡は左ももに置かれ、棹が左手を通ります。右手で弓を持ち、押し引きで音が出ます（速いほど大きく）
+air2|坐好後右手比「1」，倒數 3 秒內擺好拉琴姿勢：左手虎口在肩膀高度握住琴桿（千斤的位置）、右手持弓。二胡會依你的姿勢校正後出現，之後跟著你的身體移動|Sit, then show “1” with your right hand. During the 3-second countdown take your playing pose: left thumb-web at shoulder height on the neck (where the nut is), right hand holding the bow. The erhu is fitted to that pose and then follows your body|座ったら右手で「1」。3秒のカウント中に構えます：左手の親指の付け根を肩の高さで棹に（千斤の位置）、右手は弓を持つ形。その姿勢に合わせて二胡が現れ、体に追従します
+air2b|右手握弓，往外拉、往內推就會出聲，越快越大聲；想重新校正，隨時再比一次「1」|Pull and push the bow with your right hand to play — faster is louder. Show “1” again any time to recalibrate|右手で弓を押し引きすると音が出ます（速いほど大きく）。もう一度「1」で再調整
+airCal1|坐好後右手比「1」開始校正|Sit, then show “1” to calibrate|座ったら「1」で調整開始
+airCalHold|保持「1」…|Hold “1”…|「1」をキープ…
+airCalPose|擺好拉琴姿勢：左手虎口在肩膀高度握琴桿、右手持弓，不要動|Hold your playing pose: left hand on the neck at shoulder height, right hand on the bow — stay still|構えてください：左手は肩の高さで棹を、右手は弓を。動かないで
+airCalOK|校正完成，開始拉吧|Calibrated — start playing|調整完了、どうぞ
+airCalNoL|沒看到左手，先用預設位置；可再比「1」重新校正|Left hand not seen; using the default position — show “1” to retry|左手が見えないため既定位置です。「1」で再調整できます
+airCalAgain|比「1」重新校正|Show “1” to recalibrate|「1」で再調整
 air3|左手沿著琴桿往下滑，離千斤越遠音越高；上方按鈕切換內弦、外弦|Slide your left hand down the neck: the further from the nut, the higher the note; switch strings with the top buttons|左手を棹に沿って下げるほど音が高くなります。上のボタンで弦を切替
 air4|按「錄影」可以錄下你的演奏，分享到 IG、TikTok|Tap Record to capture your performance and share it|「録画」で演奏を録画して共有できます
 airGo|開始空氣二胡|Start air erhu|エア二胡を始める
@@ -2869,7 +2876,7 @@ async function airStart(){const v=$('#airVid');AIR.cv=$('#airCv');AIR.cx=AIR.cv.
  try{AIR.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:false});v.srcObject=AIR.stream;await v.play()}
  catch(e){airMsg('');$('#airW').hidden=true;$('#airIntro').hidden=false;toast(t('camErr'));return}
  try{await loadModels()}catch(e){airStop();toast(t('mdlErr'));return}
- await plEnsure();AIR.on=true;AIR.v=v;AIR.sm={};AIR.F=null;AIR.last=null;AIR.everBody=0;AIR.phi=null;AIR.bowPrev=null;AIR.frame=0;airMsg('airFrame');PL.str=PL.str||'in';airStrUI();airLoop()}
+ await plEnsure();AIR.on=true;AIR.v=v;AIR.sm={};AIR.F=null;AIR.last=null;AIR.everBody=0;AIR.phi=null;AIR.bowPrev=null;AIR.frame=0;AIR.cal=null;AIR.cal0=0;AIR.ct=null;AIR.gT=null;BOWM=null;airMsg('airFrame');PL.str=PL.str||'in';airStrUI();airLoop()}
 function airStop(){AIR.on=false;if(AIR.rec&&AIR.rec.state==='recording')AIR.rec.stop();if(AIR.stream)AIR.stream.getTracks().forEach(x=>x.stop());AIR.stream=null;plStop();$('#airW').hidden=true;$('#airW').classList.remove('fs');document.body.classList.remove('airon');try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}if(!AIR.blob)$('#airIntro').hidden=false}
 function airStrUI(){$$('#airStr button').forEach(b=>b.classList.toggle('sel',b.dataset.s===PL.str))}
 function handPath(g,lm,toS){const P=i=>toS(lm[i].x,lm[i].y),pw=Math.hypot(P(5)[0]-P(17)[0],P(5)[1]-P(17)[1]);g.lineJoin=g.lineCap='round';g.lineWidth=pw*.42;
@@ -2890,29 +2897,39 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  const ts=performance.now();let hr;try{hr=hl.detectForVideo(v,ts);if(++AIR.frame%2===0||!AIR.pose){const pr=pl.detectForVideo(v,ts);AIR.pose=(pr.landmarks||[])[0]||null}}catch(e){next();return}
  if(!AIR.F)AIR.F=airFilters();const F=AIR.F,g=AIR.cx,p=AIR.pose;drawVid(g);
  const vis=i=>p&&(p[i].visibility??1)>.45,SP=i=>toS(p[i].x,p[i].y);
- const bodyOK=p&&vis(11)&&vis(12)&&vis(23)&&vis(24);
+ const bodyOK=p&&vis(11)&&vis(12);
  if(bodyOK)AIR.lastBody=ts;
- if(!bodyOK&&(!AIR.last||ts-(AIR.lastBody||0)>500)){airGuide(g,VW,VH);airMsg(AIR.everBody?'airBody':'airFrame');airDecay();airHUD();next();return}
- airMsg(null);AIR.everBody=1;
+ if(!bodyOK&&(!AIR.last||!AIR.cal||ts-(AIR.lastBody||0)>500)){airGuide(g,VW,VH);airMsg(AIR.everBody?'airBody':'airFrame');AIR.ct=null;AIR.gT=null;airDecay();airHUD();next();return}
+ AIR.everBody=1;
  /* hands: player's left hand (pose 15 side) holds the neck, right hand (pose 16 side) holds the bow */
  const hs=hr.landmarks||[];let LHd=null,RHd=null;
  if(hs.length&&p){const d=(lm,j)=>Math.hypot(lm[0].x-p[j].x,lm[0].y-p[j].y);if(hs.length===1){if(d(hs[0],16)<d(hs[0],15))RHd=hs[0];else LHd=hs[0]}else{const a=d(hs[0],16)+d(hs[1],15),b=d(hs[1],16)+d(hs[0],15);if(a<=b){RHd=hs[0];LHd=hs[1]}else{RHd=hs[1];LHd=hs[0]}}}
+ /* body frame from the shoulders: origin = shoulder centre, x = toward the left shoulder, y = down the torso, unit = shoulder width */
+ let BF=null;if(bodyOK){const ls=SP(11),rs=SP(12),w=Math.hypot(ls[0]-rs[0],ls[1]-rs[1])||1,ex=[(ls[0]-rs[0])/w,(ls[1]-rs[1])/w];
+  BF={O:[(ls[0]+rs[0])/2,(ls[1]+rs[1])/2],w,ex,ey:[ex[1],-ex[0]]};
+  BF.rel=P=>{const x=P[0]-BF.O[0],y=P[1]-BF.O[1];return[(x*BF.ex[0]+y*BF.ex[1])/BF.w,(x*BF.ey[0]+y*BF.ey[1])/BF.w]};
+  BF.abs=r=>[BF.O[0]+(r[0]*BF.ex[0]+r[1]*BF.ey[0])*BF.w,BF.O[1]+(r[0]*BF.ex[1]+r[1]*BF.ey[1])*BF.w]}
+ /* gesture 1 (index finger up) held 0.6 s -> 3-second countdown, then the erhu is fitted to the pose the player holds */
+ const one=hs.some(h=>airOne(h,VW0,VH0));
+ if(one&&AIR.ct==null){AIR.gT=AIR.gT||ts;if(ts-AIR.gT>600){AIR.ct=ts;AIR.gT=null;AIR.cs=[];airBeep(660)}}else if(!one)AIR.gT=null;
+ if(AIR.ct!=null||!AIR.cal){airDecay();
+  if(AIR.ct!=null&&BF){const left=3-(ts-AIR.ct)/1000;
+   if(left<=.6){/* sample: nut = the left hand's thumb web; drum straight down the torso at hip height */
+    const N=LHd?toS((LHd[2].x+LHd[5].x)/2,(LHd[2].y+LHd[5].y)/2):null,Nr=N?BF.rel(N):[.3,0];
+    let dH=1.05;if(vis(23)&&vis(24)){const H=BF.rel([(SP(23)[0]+SP(24)[0])/2,(SP(23)[1]+SP(24)[1])/2]);dH=Math.max(.85,Math.min(1.4,H[1]-Nr[1]))}
+    AIR.cs.push({Nr,Dr:[Nr[0]-.03,Nr[1]+dH],L:!!N})}
+   if(left<=0){const cs=AIR.cs.some(c=>c.L)?AIR.cs.filter(c=>c.L):AIR.cs,m=k=>[0,1].map(i=>cs.reduce((a,c)=>a+c[k][i],0)/cs.length);
+    AIR.cal={Nr:m('Nr'),Dr:m('Dr')};AIR.ct=null;AIR.F=airFilters();AIR.last=null;S.airOff=[0,0];airBeep(990);toast(t(cs[0]&&cs[0].L?'airCalOK':'airCalNoL'))}
+   else{airMsg('airCalPose');const f=Math.round(VW/4);g.save();g.font=`800 ${f}px sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillStyle='rgba(255,255,255,.92)';g.strokeStyle='rgba(0,0,0,.45)';g.lineWidth=f*.06;const cy=VH*.28;g.strokeText(Math.ceil(left),VW/2,cy);g.fillText(Math.ceil(left),VW/2,cy);g.restore()}}
+  else if(AIR.ct==null)airMsg(AIR.gT?'airCalHold':(AIR.cal0?'airCalAgain':'airCal1'));
+  if(AIR.ct!=null||!AIR.cal){airHUD();next();return}}
+ airMsg(null);AIR.cal0=1;
  let A=AIR.last;
- if(bodyOK){const ls=SP(11),rs=SP(12),lh=SP(23),rh=SP(24),shW=Math.hypot(ls[0]-rs[0],ls[1]-rs[1]),torso=Math.hypot((ls[0]+rs[0]-lh[0]-rh[0])/2,(ls[1]+rs[1]-lh[1]-rh[1])/2);
-  /* drum sits on the left thigh, between the waist and the thigh (just below the hip crease), inside the leg */
-  const hc=[lh[0]*.7+rh[0]*.3,lh[1]*.7+rh[1]*.3];let an;if(vis(25)){const kn=SP(25);an=[hc[0]+(kn[0]-lh[0])*.12,hc[1]+(kn[1]-lh[1])*.12]}else an=[hc[0],hc[1]+torso*.05];
-  const off=S.airOff||[0,0];an=[an[0]+off[0]*VW,an[1]+off[1]*VH];
-  const shY=(ls[1]*.6+rs[1]*.4);
-  /* neck aims at the left hand (so it always runs through the grip); fallback: beside the left shoulder */
-  let hp=null;if(LHd){const q=toS(LHd[9].x,LHd[9].y);hp=[F.hx(q[0],ts),F.hy(q[1],ts)];AIR.lhSeen=ts;AIR.lhRel=[hp[0]-an[0],hp[1]-an[1]]}
-  else if(AIR.lhRel&&ts-(AIR.lhSeen||0)<500)hp=[an[0]+AIR.lhRel[0],an[1]+AIR.lhRel[1]];
-  if(!hp)hp=[ls[0]+(ls[0]-rs[0])*.15,ls[1]];
-  const ax=F.ax(an[0],ts),ay=F.ay(an[1],ts),dx=hp[0]-ax,dy=hp[1]-ay;let th=Math.atan2(-dx,-dy);th=Math.max(-.4,Math.min(.4,th));th=F.th(th,ts);
-  /* size: the nut (千斤) lands at shoulder height; the scroll must clear the top of the head */
-  const ct=Math.cos(th);let s1=Math.max(4,ay-shY)/((NUTY-TY)*ct);
-  if(vis(0)){const nz=SP(0),headTop=nz[1]-Math.max(shW*.45,(shY-nz[1])*.9);const need=(ay-headTop)/((H0T-TY)*ct);if(need>s1)s1=need}
-  const sc=F.s(Math.max(s1,shW/60),ts);
-  A=AIR.last={ax,ay,sc,th,hp,hasL:!!LHd||(AIR.lhRel&&ts-(AIR.lhSeen||0)<500),rs:SP(16),vis16:vis(16)}}
+ if(BF){const off=S.airOff||[0,0],o=[off[0]*VW,off[1]*VH],N0=BF.abs(AIR.cal.Nr),D0=BF.abs(AIR.cal.Dr);
+  const ax=F.ax(D0[0]+o[0],ts),ay=F.ay(D0[1]+o[1],ts),nx=F.hx(N0[0]+o[0],ts),ny=F.hy(N0[1]+o[1],ts),dx=nx-ax,dy=ny-ay;
+  let th=Math.atan2(-dx,-dy);th=Math.max(-.6,Math.min(.6,th));th=F.th(th,ts);const sc=F.s(Math.hypot(dx,dy)/(NUTY-TY),ts);
+  let hp=null;if(LHd){hp=toS(LHd[9].x,LHd[9].y);AIR.lhSeen=ts;AIR.lhP=hp}else if(AIR.lhP&&ts-(AIR.lhSeen||0)<500)hp=AIR.lhP;
+  A=AIR.last={ax,ay,sc,th,hp,hasL:!!hp,rs:SP(16),vis16:vis(16)}}
  const P0=[NX,TY,0],M=airVP(A.ax,A.ay,A.sc,A.th,.32,P0,VW,VH);
  /* bow: frog in the right hand, axis from the hand to the strings just above the bridge */
  let rq=RHd?toS((RHd[5].x+RHd[9].x)/2,(RHd[5].y+RHd[9].y)/2):(A.vis16&&bodyOK?SP(16):null);
@@ -2932,6 +2949,9 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  const mx=AIR.mx;[LHd,RHd].forEach(h=>{if(!h)return;mx.globalCompositeOperation='source-over';mx.clearRect(0,0,VW,VH);mx.fillStyle='#000';mx.strokeStyle='#000';handPath(mx,h,toS);
   mx.globalCompositeOperation='source-in';drawVid(mx);g.drawImage(AIR.mk,0,0)});
  airHUD(A.sc);next()}
+function airOne(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b].y)*H),ext=(t,q)=>d(0,t)>d(0,q)*1.15,cur=(t,q)=>d(0,t)<d(0,q)*1.05;
+ return ext(8,6)&&cur(12,10)&&cur(16,14)&&cur(20,18)&&(h[5].y-h[8].y)*H>Math.abs(h[8].x-h[5].x)*W*1.2}
+function airBeep(f){try{const a=ctx(),o=a.createOscillator(),gn=a.createGain();o.frequency.value=f;gn.gain.setValueAtTime(.0001,a.currentTime);gn.gain.exponentialRampToValueAtTime(.25,a.currentTime+.01);gn.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.18);o.connect(gn).connect(a.destination);o.start();o.stop(a.currentTime+.2)}catch(e){}}
 function airDecay(){AIR.vol*=.6;plVol(AIR.vol);PL.vol=AIR.vol}
 function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=JP[PL.str][AIR.fing],f=Math.round(VW/22);
  g.font=`800 ${f*2}px sans-serif`;g.textAlign='right';g.fillStyle='rgba(255,255,255,.95)';g.strokeStyle='rgba(0,0,0,.55)';g.lineWidth=f*.25;const tx=VW-f,ty=f*2.6;g.strokeText(nm,tx,ty);g.fillText(nm,tx,ty);
