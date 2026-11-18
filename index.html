@@ -611,9 +611,9 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="simar"><button class="btn" id="simAR"><span>📱</span><span data-i="arBtn"></span></button><button class="btn alt" id="simCamBg"><span>📷</span><span data-i="arCam"></span></button></div>
  <p class="mut simarp" data-i="arHint"></p>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v60</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
-   <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button></div></div>
+   <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
    <div class="airbar"><button class="cbtn" id="airMute" aria-label="sound">🔊</button><button class="cbtn" id="airRec">● <span data-i="recStart"></span></button><button class="cbtn" id="airX" aria-label="close">✕</button></div></div>
   <div class="card" id="airOut" hidden><b data-i="recDone"></b><video id="airPrev" controls playsinline></video><div class="airob"><button class="btn" id="airShare" data-i="recShare"></button><button class="btn alt" id="airSave" data-i="recSave"></button></div><button class="quiet" id="airAgain" data-i="recAgain"></button></div>
@@ -1248,6 +1248,7 @@ air2|坐好後右手比「1」，倒數 3 秒內擺好拉琴姿勢：左手虎�
 air2b|右手握弓，往外拉、往內推就會出聲，越快越大聲；想重新校正，隨時再比一次「1」；比「2」開始／停止錄影|Pull and push the bow with your right hand to play — faster is louder. Show “1” again any time to recalibrate; show “2” to start or stop recording|右手で弓を押し引きすると音が出ます（速いほど大きく）。もう一度「1」で再調整、「2」で録画の開始／停止
 airMaj|自然大調|Major|長調
 airPen|中國音階|Pentatonic|五音音階
+airFree|無調性|Fretless|無調
 airMuteOn|二胡聲音已關閉|Erhu sound off|二胡の音オフ
 airMuteOff|二胡聲音已開啟|Erhu sound on|二胡の音オン
 airCal1|坐好後右手比「1」開始校正|Sit, then show “1” to calibrate|座ったら「1」で調整開始
@@ -2848,20 +2849,22 @@ const PL={str:'in',fing:0,vol:0,src:null,g:null,note:null,lastX:null,lastT:0,dir
 /* air erhu scales (key of D): natural major, or the Chinese pentatonic 1 2 3 5 6 — one octave plus one note */
 const AIRS={maj:{in:[62,64,66,67,69,71,73,74,76],out:[69,71,73,74,76,78,79,81,83]},pen:{in:[62,64,66,69,71,74,76],out:[69,71,74,76,78,81,83]}},
  AIRJS={maj:{in:'1 2 3 4 5 6 7 1̇ 2̇'.split(' '),out:'5 6 7 1̇ 2̇ 3̇ 4̇ 5̇ 6̇'.split(' ')},pen:{in:'1 2 3 5 6 1̇ 2̇'.split(' '),out:'5 6 1̇ 2̇ 3̇ 5̇ 6̇'.split(' ')}},
- airSc=()=>S.airScale==='pen'?'pen':'maj',
- airYs=k=>AIRS[airSc()][k].map((m,i)=>NUTY-i*3.4);/* one octave, evenly and widely spaced so each note is easy to find */
+ airSc=()=>S.airScale==='pen'||S.airScale==='free'?S.airScale:'maj',
+ airYs=k=>AIRS[airSc()==='free'?'maj':airSc()][k].map((m,i)=>NUTY-i*3.4);/* one octave, evenly and widely spaced so each note is easy to find */
 const NOTES={in:[62,64,66,67,69],out:[69,71,73,74,76]},JP={in:['1','2','3','4','5'],out:['5','6','7','1̇','2̇']};
 async function plEnsure(){const a=ctx();if(a.state!=='running')await a.resume();await erhuBank(a);if(!PL.g){PL.g=a.createGain();PL.g.gain.value=0;PL.g.connect(a.destination)}return a}
 function plNote(){const a=ctx(),m=PL.mid!=null?PL.mid:NOTES[PL.str][PL.fing];if(PL.note===m&&PL.src)return;PL.note=m;const f=S.ref*Math.pow(2,(m-69)/12),old=PL.src,oldG=PL.sg;
  const ng=a.createGain();ng.gain.value=0;ng.connect(PL.g);let src;
- if(EBANK){let sm=EBANK[0];EBANK.forEach(x=>{if(Math.abs(Math.log2(x.f0/f))<Math.abs(Math.log2(sm.f0/f)))sm=x});src=a.createBufferSource();src.buffer=plLoop(a,sm);src.playbackRate.value=f/sm.f0;src.loop=true;src.start(0)}
- else{src=a.createOscillator();src.type='sawtooth';src.frequency.value=f;const lp=a.createBiquadFilter();lp.frequency.value=2400;src.connect(lp);lp.connect(ng);src.start();src._lp=lp}
+ if(EBANK){let sm=EBANK[0];EBANK.forEach(x=>{if(Math.abs(Math.log2(x.f0/f))<Math.abs(Math.log2(sm.f0/f)))sm=x});src=a.createBufferSource();src.buffer=plLoop(a,sm);src.playbackRate.value=f/sm.f0;src.loop=true;src.start(0);PL.sf0=sm.f0}
+ else{PL.sf0=null;src=a.createOscillator();src.type='sawtooth';src.frequency.value=f;const lp=a.createBiquadFilter();lp.frequency.value=2400;src.connect(lp);lp.connect(ng);src.start();src._lp=lp}
  if(!src._lp)src.connect(ng);ng.gain.setTargetAtTime(1,a.currentTime,.02);PL.src=src;PL.sg=ng;
  if(old){oldG.gain.setTargetAtTime(0,a.currentTime,.02);setTimeout(()=>{try{old.stop()}catch(e){}},200)}
  $$('#simFing button').forEach((b,i)=>b.classList.toggle('sel',i===PL.fing))}
 /* seamless sustain: the steady part of each recorded note with its end cross-faded into its start, so long bows don't pulse at the loop point */
 function plLoop(a,sm){if(sm._lb)return sm._lb;const B=EBANK.buf,sr=B.sampleRate,d=B.getChannelData(0),s0=Math.round((sm.off+.3)*sr),L=Math.round((sm.len-.42)*sr),X=Math.round(.3*sr),N=L-X,ob=a.createBuffer(1,N,sr),o=ob.getChannelData(0);
  for(let i=0;i<N;i++){const v=d[s0+i]||0;if(i<X){const w=i/X;o[i]=v*Math.sqrt(w)+(d[s0+N+i]||0)*Math.sqrt(1-w)}else o[i]=v}return sm._lb=ob}
+function plBend(m){const a=ctx();if(!PL.src||PL.note==null||Math.abs(m-PL.note)>1.5){PL.mid=Math.round(m);PL.note=null;plNote()}
+ const f=S.ref*Math.pow(2,(m-69)/12);if(PL.sf0)PL.src.playbackRate.setTargetAtTime(f/PL.sf0,a.currentTime,.02);else if(PL.src.frequency)PL.src.frequency.setTargetAtTime(f,a.currentTime,.02)}
 function plVol(v){PL.vol=v;if(PL.g){const a=ctx();PL.g.gain.setTargetAtTime(v*1.1,a.currentTime,v>PL.gv?.03:.08);PL.gv=v}}
 function plStop(){plVol(0);const s=PL.src;PL.src=null;PL.note=null;if(s)setTimeout(()=>{try{s.stop()}catch(e){}},300)}
 function plUI(){$('#simStrIn').classList.toggle('sel',PL.str==='in');$('#simStrOut').classList.toggle('sel',PL.str==='out');
@@ -2955,11 +2958,17 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  BOWM=[cph,sph,0,0,-sph,cph,0,0,0,0,1,0,tx,ty,0,1];
  /* left hand: how far it slides down from the nut picks the finger */
  /* left hand: how far it has slid down from where it was at calibration = stopping point on the string (equal-tempered positions, two octaves) */
- const ys=airYs(PL.str);if(AIR.fing>=ys.length)AIR.fing=0;
- if(A.hasL&&A.hp&&A.H0){const pos=Math.max(0,M.inv(A.H0[0],A.H0[1])[1]-M.inv(A.hp[0],A.hp[1])[1]),e=i=>Math.abs(NUTY-ys[i]-pos);let bi=0;ys.forEach((_,i)=>{if(e(i)<e(bi))bi=i});if(bi!==AIR.fing&&e(bi)+.6<e(AIR.fing))AIR.fing=bi}
- PL.mid=AIRS[airSc()][PL.str][AIR.fing];if(AIR.vol>.04){if(!PL.src||PL.note!==PL.mid)plNote()}plVol(S.airMute?0:AIR.vol);PL.vol=AIR.vol;
+ AIR.free=airSc()==='free';const ys=airYs(PL.str);if(!AIR.free&&(AIR.fing>=ys.length||AIR.fing<0))AIR.fing=0;
+ if(!AIR.free){if(A.hasL&&A.hp&&A.H0){const pos=Math.max(0,M.inv(A.H0[0],A.H0[1])[1]-M.inv(A.hp[0],A.hp[1])[1]),e=i=>Math.abs(NUTY-ys[i]-pos);let bi=0;ys.forEach((_,i)=>{if(e(i)<e(bi))bi=i});if(bi!==AIR.fing&&e(bi)+.6<e(AIR.fing))AIR.fing=bi}
+ PL.mid=AIRS[airSc()][PL.str][AIR.fing];if(AIR.vol>.04){if(!PL.src||PL.note!==PL.mid)plNote()}}
+ else{/* fretless: pitch slides continuously between the scale dots, so slides and microtones work like a real erhu */
+  if(A.hasL&&A.hp&&A.H0){const pos=Math.max(0,M.inv(A.H0[0],A.H0[1])[1]-M.inv(A.hp[0],A.hp[1])[1]);AIR.fp=AIR.fp==null?pos:AIR.fp+(pos-AIR.fp)*.5}
+  const fp=Math.max(0,Math.min(NUTY-ys[ys.length-1],AIR.fp||0)),sm=AIRS.maj[PL.str],j=Math.min(ys.length-2,Math.floor(fp/3.4)),u=(fp-j*3.4)/3.4,mid=sm[j]+(sm[j+1]-sm[j])*Math.min(1,u);
+  AIR.midF=mid;AIR.fing=-1;if(AIR.vol>.04)plBend(mid)}
+ plVol(S.airMute?0:AIR.vol);PL.vol=AIR.vol;
  /* render */
  OVR={VP:M.VP,eye:M.eye};gl.canvas.width=VW;gl.canvas.height=VH;W=VW;H=VH;draw(false);OVR=null;BOWM=null;g.drawImage(gl.canvas,0,0);
+ if(AIR.free&&AIR.fp!=null){const yy=NUTY-Math.max(0,Math.min(NUTY-ys[ys.length-1],AIR.fp)),sp=M.fwd([SX(PL.str,yy),yy,SZ(PL.str,yy)]);g.fillStyle='rgba(250,204,21,.95)';g.beginPath();g.arc(sp[0],sp[1],A.sc*1.1,0,7);g.fill()}
  ys.forEach((yy,i)=>{if(!i)return;const sp=M.fwd([SX(PL.str,yy),yy,SZ(PL.str,yy)]);g.fillStyle=i===AIR.fing?'rgba(250,204,21,.95)':'rgba(255,255,255,.55)';g.beginPath();g.arc(sp[0],sp[1],A.sc*(i===AIR.fing?1.1:.42),0,7);g.fill()});
  const mx=AIR.mx;[LHd,RHd].forEach(h=>{if(!h)return;mx.globalCompositeOperation='source-over';mx.clearRect(0,0,VW,VH);mx.fillStyle='#000';mx.strokeStyle='#000';handPath(mx,h,toS);
   mx.globalCompositeOperation='source-in';drawVid(mx);g.drawImage(AIR.mk,0,0)});
@@ -2969,8 +2978,10 @@ function airGest(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b]
 function airOne(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b].y)*H),ext=(t,q)=>d(0,t)>d(0,q)*1.15,cur=(t,q)=>d(0,t)<d(0,q)*1.05;
  return ext(8,6)&&cur(12,10)&&cur(16,14)&&cur(20,18)&&(h[5].y-h[8].y)*H>Math.abs(h[8].x-h[5].x)*W*1.2}
 function airBeep(f){try{const a=ctx(),o=a.createOscillator(),gn=a.createGain();o.frequency.value=f;gn.gain.setValueAtTime(.0001,a.currentTime);gn.gain.exponentialRampToValueAtTime(.25,a.currentTime+.01);gn.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.18);o.connect(gn).connect(a.destination);o.start();o.stop(a.currentTime+.2)}catch(e){}}
+function airFreeName(){const m=AIR.midF==null?AIRS.maj[PL.str][0]:AIR.midF,r=Math.round(m),c=Math.round((m-r)*100),CH=['1','♯1','2','♯2','3','4','♯4','5','♯5','6','♯6','7'];
+ return CH[((r-62)%12+12)%12]+(r>=74?'̇':'')+(Math.abs(c)>=8?(c>0?' +':' ')+c+'¢':'')}
 function airDecay(){if(AIR.on&&performance.now()-(AIR.bowT||0)<300)return;AIR.vol*=.85;plVol(S.airMute?0:AIR.vol);PL.vol=AIR.vol}
-function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=AIRJS[airSc()][PL.str][AIR.fing]||'',f=Math.round(VW/22);
+function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=AIR.free?airFreeName():(AIRJS[airSc()][PL.str][AIR.fing]||''),f=Math.round(VW/22);
  g.font=`800 ${f*2}px sans-serif`;g.textAlign='right';g.fillStyle='rgba(255,255,255,.95)';g.strokeStyle='rgba(0,0,0,.55)';g.lineWidth=f*.25;const tx=VW-f,ty=f*2.6;g.strokeText(nm,tx,ty);g.fillText(nm,tx,ty);
  g.font=`700 ${f*.7}px sans-serif`;const s2=(PL.str==='in'?t('simIn'):t('simOut'))+(AIR.vol>.05?' · '+t(AIR.dir>0?'simPull':'simPush'):'');g.strokeText(s2,tx,ty+f*1.1);g.fillText(s2,tx,ty+f*1.1);
  g.textAlign='left';g.font=`700 ${f*.6}px sans-serif`;g.fillStyle='rgba(255,255,255,.75)';g.fillText(t('app'),f*.8,VH-f*.8)}
@@ -3003,7 +3014,7 @@ function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#si
    cv.addEventListener('pointermove',e=>{if(!d0)return;S.airOff=[d0.o[0]+(e.clientX-d0.x)/cv.clientWidth,d0.o[1]+(e.clientY-d0.y)/cv.clientHeight]});
    cv.addEventListener('pointerup',()=>{if(d0){save();d0=null}});cv.addEventListener('dblclick',()=>{S.airOff=[0,0];save();toast(t('airReset'))})}
   $$('#airStr button').forEach(b=>b.onclick=()=>{PL.str=b.dataset.s;PL.note=null;airStrUI();if(PL.src)plNote()});
-  $$('#airScale button').forEach(b=>b.onclick=()=>{S.airScale=b.dataset.k;save();AIR.fing=0;PL.note=null;airStrUI();toast(t(b.dataset.k==='pen'?'airPen':'airMaj'))});
+  $$('#airScale button').forEach(b=>b.onclick=()=>{S.airScale=b.dataset.k;save();AIR.fing=0;PL.note=null;airStrUI();AIR.fp=null;toast(t({pen:'airPen',free:'airFree'}[b.dataset.k]||'airMaj'))});
   $('#airMute').onclick=()=>{S.airMute=!S.airMute;save();airStrUI();if(S.airMute)plVol(0);toast(t(S.airMute?'airMuteOn':'airMuteOff'))}}
  if(mode==='air'){setMode('air');return}
  on=true;lastT=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);setMode(mode)}
