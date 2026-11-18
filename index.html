@@ -2841,18 +2841,21 @@ let tw=null;function tween(to){const from={tx:cam.tx,ty:cam.ty,tz:cam.tz,dist:ca
  const step=()=>{const k=Math.min(1,(performance.now()-t0)/600),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;for(const q in to)cam[q]=from[q]+(to[q]-from[q])*e;if(k<1)tw=requestAnimationFrame(step)};step()}
 /* ---------- play: real erhu samples, bow speed = volume ---------- */
 const PL={str:'in',fing:0,vol:0,src:null,g:null,note:null,lastX:null,lastT:0,dir:0,pos:.5};
-const AIRN={in:[62,64,66,67,69,71,73,74],out:[69,71,73,74,76,78,79,81]},
- AIRJ={in:'1 2 3 4 5 6 7 1̇'.split(' '),out:'5 6 7 1̇ 2̇ 3̇ 4̇ 5̇'.split(' ')},
+const AIRN={in:[62,64,66,67,69,71,73,74,76],out:[69,71,73,74,76,78,79,81,83]},
+ AIRJ={in:'1 2 3 4 5 6 7 1̇ 2̇'.split(' '),out:'5 6 7 1̇ 2̇ 3̇ 4̇ 5̇ 6̇'.split(' ')},
  airYs=k=>AIRN[k].map((m,i)=>NUTY-i*3.4);/* one octave, evenly and widely spaced so each note is easy to find */
 const NOTES={in:[62,64,66,67,69],out:[69,71,73,74,76]},JP={in:['1','2','3','4','5'],out:['5','6','7','1̇','2̇']};
 async function plEnsure(){const a=ctx();if(a.state!=='running')await a.resume();await erhuBank(a);if(!PL.g){PL.g=a.createGain();PL.g.gain.value=0;PL.g.connect(a.destination)}return a}
 function plNote(){const a=ctx(),m=PL.mid!=null?PL.mid:NOTES[PL.str][PL.fing];if(PL.note===m&&PL.src)return;PL.note=m;const f=S.ref*Math.pow(2,(m-69)/12),old=PL.src,oldG=PL.sg;
  const ng=a.createGain();ng.gain.value=0;ng.connect(PL.g);let src;
- if(EBANK){let sm=EBANK[0];EBANK.forEach(x=>{if(Math.abs(Math.log2(x.f0/f))<Math.abs(Math.log2(sm.f0/f)))sm=x});src=a.createBufferSource();src.buffer=EBANK.buf;src.playbackRate.value=f/sm.f0;src.loop=true;src.loopStart=sm.off+.35;src.loopEnd=sm.off+sm.len-.12;src.start(0,sm.off+.08)}
+ if(EBANK){let sm=EBANK[0];EBANK.forEach(x=>{if(Math.abs(Math.log2(x.f0/f))<Math.abs(Math.log2(sm.f0/f)))sm=x});src=a.createBufferSource();src.buffer=plLoop(a,sm);src.playbackRate.value=f/sm.f0;src.loop=true;src.start(0)}
  else{src=a.createOscillator();src.type='sawtooth';src.frequency.value=f;const lp=a.createBiquadFilter();lp.frequency.value=2400;src.connect(lp);lp.connect(ng);src.start();src._lp=lp}
  if(!src._lp)src.connect(ng);ng.gain.setTargetAtTime(1,a.currentTime,.02);PL.src=src;PL.sg=ng;
  if(old){oldG.gain.setTargetAtTime(0,a.currentTime,.02);setTimeout(()=>{try{old.stop()}catch(e){}},200)}
  $$('#simFing button').forEach((b,i)=>b.classList.toggle('sel',i===PL.fing))}
+/* seamless sustain: the steady part of each recorded note with its end cross-faded into its start, so long bows don't pulse at the loop point */
+function plLoop(a,sm){if(sm._lb)return sm._lb;const B=EBANK.buf,sr=B.sampleRate,d=B.getChannelData(0),s0=Math.round((sm.off+.3)*sr),L=Math.round((sm.len-.42)*sr),X=Math.round(.3*sr),N=L-X,ob=a.createBuffer(1,N,sr),o=ob.getChannelData(0);
+ for(let i=0;i<N;i++){const v=d[s0+i]||0;if(i<X){const w=i/X;o[i]=v*Math.sqrt(w)+(d[s0+N+i]||0)*Math.sqrt(1-w)}else o[i]=v}return sm._lb=ob}
 function plVol(v){PL.vol=v;if(PL.g){const a=ctx();PL.g.gain.setTargetAtTime(v*1.1,a.currentTime,v>PL.gv?.03:.08);PL.gv=v}}
 function plStop(){plVol(0);const s=PL.src;PL.src=null;PL.note=null;if(s)setTimeout(()=>{try{s.stop()}catch(e){}},300)}
 function plUI(){$('#simStrIn').classList.toggle('sel',PL.str==='in');$('#simStrOut').classList.toggle('sel',PL.str==='out');
@@ -2940,7 +2943,7 @@ function airLoop(){if(!AIR.on)return;const v=AIR.v,next=()=>{if(!AIR.on)return;v
  if(rq){rq=[F.rx(rq[0],ts),F.ry(rq[1],ts)];const hm=M.inv(rq[0],rq[1]),vx=hm[0]-BP0[0],vy=hm[1]-BP0[1],L=Math.hypot(vx,vy)||1;
   let phi=Math.atan2(vy,vx)-Math.atan2(BD[1],BD[0]);while(phi>Math.PI)phi-=2*Math.PI;while(phi<-Math.PI)phi+=2*Math.PI;phi=Math.max(-.75,Math.min(.75,phi));
   AIR.phi=AIR.phi==null?phi:AIR.phi+(phi-AIR.phi)*.5;const z=Math.max(-42,Math.min(14,L-(S1B-1)));AIR.bow=z;
-  const now=ts/1000;if(AIR.bowPrev!=null){const sp=Math.abs(AIR.bow-AIR.bowPrev)/Math.max(.016,now-AIR.tPrev),vv=Math.min(1,sp/38);AIR.vol=AIR.vol*.55+vv*.45;if(Math.abs(AIR.bow-AIR.bowPrev)>.05)AIR.dir=Math.sign(AIR.bow-AIR.bowPrev)}AIR.bowPrev=AIR.bow;AIR.tPrev=now}
+  const now=ts/1000;if(AIR.bowPrev!=null){const sp=Math.abs(AIR.bow-AIR.bowPrev)/Math.max(.016,now-AIR.tPrev),vv=Math.min(1,sp/30);AIR.vol=vv>AIR.vol?AIR.vol*.5+vv*.5:AIR.vol*.86+vv*.14;AIR.bowT=ts;if(Math.abs(AIR.bow-AIR.bowPrev)>.05)AIR.dir=Math.sign(AIR.bow-AIR.bowPrev)}AIR.bowPrev=AIR.bow;AIR.tPrev=now}
  else airDecay();
  const cph=Math.cos(AIR.phi||0),sph=Math.sin(AIR.phi||0),bd=[BD[0]*cph-BD[1]*sph,BD[0]*sph+BD[1]*cph],tx=BP0[0]-(cph*BP0[0]-sph*BP0[1])+bd[0]*AIR.bow,ty=BP0[1]-(sph*BP0[0]+cph*BP0[1])+bd[1]*AIR.bow;
  BOWM=[cph,sph,0,0,-sph,cph,0,0,0,0,1,0,tx,ty,0,1];
@@ -2960,7 +2963,7 @@ function airGest(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b]
 function airOne(h,W,H){const d=(a,b)=>Math.hypot((h[a].x-h[b].x)*W,(h[a].y-h[b].y)*H),ext=(t,q)=>d(0,t)>d(0,q)*1.15,cur=(t,q)=>d(0,t)<d(0,q)*1.05;
  return ext(8,6)&&cur(12,10)&&cur(16,14)&&cur(20,18)&&(h[5].y-h[8].y)*H>Math.abs(h[8].x-h[5].x)*W*1.2}
 function airBeep(f){try{const a=ctx(),o=a.createOscillator(),gn=a.createGain();o.frequency.value=f;gn.gain.setValueAtTime(.0001,a.currentTime);gn.gain.exponentialRampToValueAtTime(.25,a.currentTime+.01);gn.gain.exponentialRampToValueAtTime(.0001,a.currentTime+.18);o.connect(gn).connect(a.destination);o.start();o.stop(a.currentTime+.2)}catch(e){}}
-function airDecay(){AIR.vol*=.6;plVol(AIR.vol);PL.vol=AIR.vol}
+function airDecay(){if(AIR.on&&performance.now()-(AIR.bowT||0)<300)return;AIR.vol*=.85;plVol(AIR.vol);PL.vol=AIR.vol}
 function airHUD(sc){const g=AIR.cx,VW=AIR.cv.width,VH=AIR.cv.height,nm=AIRJ[PL.str][AIR.fing]||'',f=Math.round(VW/22);
  g.font=`800 ${f*2}px sans-serif`;g.textAlign='right';g.fillStyle='rgba(255,255,255,.95)';g.strokeStyle='rgba(0,0,0,.55)';g.lineWidth=f*.25;const tx=VW-f,ty=f*2.6;g.strokeText(nm,tx,ty);g.fillText(nm,tx,ty);
  g.font=`700 ${f*.7}px sans-serif`;const s2=(PL.str==='in'?t('simIn'):t('simOut'))+(AIR.vol>.05?' · '+t(AIR.dir>0?'simPull':'simPush'):'');g.strokeText(s2,tx,ty+f*1.1);g.fillText(s2,tx,ty+f*1.1);
