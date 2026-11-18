@@ -169,14 +169,14 @@ function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShade
 
 /* ===================== erhu model v2: every detail has its own number ===================== */
 let NX=2.7;const TY=6.2;
-const C={wood:[.30,.15,.11],ebony:[.085,.07,.065],dark:[.16,.08,.06],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.10,.12,.22],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12],inner:[.10,.06,.045],lattice:[.55,.30,.16]};
+const C={wood:[.30,.15,.11],ebony:[.085,.07,.065],dark:[.16,.08,.06],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.10,.12,.22],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12],pegwood:[.36,.12,.06],inner:[.10,.06,.045],lattice:[.55,.30,.16]};
 /* [key, part, label, default, min, max, step, unit] */
 const PDEF=[
  ['headRise',1,'直段長度',2.5,0,8,.1,'cm'],['headBend',1,'彎曲半徑',4.8,2,9,.1,'cm'],['headAng',1,'彎曲角度',82,40,190,1,'°'],['headR',1,'琴頭粗細（半徑）',.95,.6,1.4,.01,'cm'],
  ['tipLen',1,'角尖段長度',3.7,1,7,.1,'cm'],['tipR',1,'角尖末端半徑',1.33,.6,2.2,.01,'cm'],['tipOval',1,'末端橢圓度',1.08,.7,1.5,.01,'×'],['tipCurve',1,'變粗的曲線',1.6,.5,3,.05,''],['tipCut',1,'端面斜切',54,0,70,1,'°'],
  ['capLen',1,'象牙端蓋長度',1.35,.3,3,.05,'cm'],['blackLen',1,'黑色飾帶寬',.45,0,1.5,.05,'cm'],['ivoryLen',1,'白色飾帶寬',.4,0,1.5,.05,'cm'],
  ['boxY0',11,'軸箱下緣高度',57.2,52,62,.1,'cm'],['boxY1',11,'軸箱上緣高度',71.2,66,76,.1,'cm'],['boxW',11,'軸箱寬（左右）',1.45,1,2.2,.01,'cm'],['boxD',11,'軸箱厚（前後）',1.35,1,2.2,.01,'cm'],['boxCh',11,'四角倒角',.45,0,1,.01,'cm'],['boxFlare',11,'下方過渡長度',.7,0,2.5,.05,'cm'],['boxShoulder',11,'上方過渡長度',.9,0,3,.05,'cm'],
- ['peg1Y',2,'上弦軸高度',66.5,61,75,.1,'cm'],['peg2Y',2,'下弦軸高度',60.5,56,70,.1,'cm'],['pegFront',2,'前端突出（離琴桿中心）',3.9,1.5,6,.05,'cm'],['pegLen',2,'弦軸總長',16.5,9,22,.1,'cm'],['pegW',2,'把手最粗（半徑）',1.3,.6,2.2,.01,'cm'],['pegShaft',2,'軸桿粗細（半徑）',.42,.25,.8,.01,'cm'],['pegFlat',2,'把手扁平度',1,.4,1.3,.01,'×'],['pegTip',2,'前端象牙長度',.5,0,1.5,.05,'cm'],
+ ['peg1Y',2,'上弦軸高度',66.5,61,75,.1,'cm'],['peg2Y',2,'下弦軸高度',60.5,56,70,.1,'cm'],['pegFront',2,'前端突出（離琴桿中心）',3.9,1.5,6,.05,'cm'],['pegLen',2,'弦軸總長',16.5,9,22,.1,'cm'],['pegW',2,'尾端最粗（半徑）',1.2,.6,2.2,.01,'cm'],['pegShaft',2,'前端粗細（半徑）',.42,.25,.8,.01,'cm'],['pegSwell',2,'變粗的曲線',1.25,.6,2.5,.05,''],['pegFlutes',2,'稜線數（0＝圓）',8,0,12,1,'條'],['pegFlute',2,'稜溝深度',.14,0,.3,.01,''],['pegFlat',2,'扁平度',1,.6,1.3,.01,'×'],['pegTip',2,'前端象牙長度',.5,0,1.5,.05,'cm'],['pegBand',2,'尾端飾帶寬',.16,0,.5,.01,'cm'],['pegDome',2,'尾端象牙圓頂長',.75,.2,1.6,.05,'cm'],
  ['nutY',3,'千斤高度',43.3,36,52,.1,'cm'],['nutGap',3,'弦與琴桿距離',.3,0,3,.05,'cm'],['nutLoop',3,'繞琴桿的繩股數',2,1,5,1,'股'],['nutTurns',3,'纏弦圈數',8,2,16,1,'圈'],['nutW',3,'纏弦寬度',1.05,.3,2.5,.05,'cm'],['nutCord',3,'繩子粗細',.06,.03,.12,.005,'cm'],
  ['fineOn',13,'顯示微調器',1,0,1,1,''],['fineY',13,'微調器高度',49.5,46,55,.1,'cm'],
  ['neckX',4,'琴桿前後位置',2.7,-4,5,.05,'cm'],['neckR',4,'下端半徑',1.2,.8,1.8,.01,'cm'],['neckTop',4,'上端半徑',1.05,.7,1.6,.01,'cm'],
@@ -196,10 +196,11 @@ const profOct=(W,D,ch)=>ANG.map(a=>{const c=Math.abs(Math.cos(a)),s=Math.abs(Mat
 const lerpP=(A,B,t)=>A.map((p,i)=>[p[0]+(B[i][0]-p[0])*t,p[1]+(B[i][1]-p[1])*t]);
 /* sweep a 2D profile along a path in the x-y plane (b axis = z) */
 function sweepP(g,pts,prof,caps=true,cut=null){const N=pts.length,rings=[];
- for(let k=0;k<N;k++){const T=nrm(sub(pts[Math.min(k+1,N-1)],pts[Math.max(k-1,0)])),Nn=[T[1],-T[0],0],Bz=[0,0,1],pr=prof(k,N);
+ const PR=[...Array(N)].map((_,k)=>prof(k,N));
+ for(let k=0;k<N;k++){const T=nrm(sub(pts[Math.min(k+1,N-1)],pts[Math.max(k-1,0)])),Nn=[T[1],-T[0],0],Bz=[0,0,1],pr=PR[k],k0=Math.max(k-1,0),k1=Math.min(k+1,N-1),ds=len(sub(pts[k1],pts[k0]))||1;
   const ring=pr.map((q,i)=>{const pp=pr[(i+1)%PN],pm=pr[(i+PN-1)%PN],da=pp[0]-pm[0],db=pp[1]-pm[1],l=Math.hypot(da,db)||1,na=db/l,nb=-da/l;
    let p=add(pts[k],add(mul(Nn,q[0]),mul(Bz,q[1])));if(cut&&k===N-1){const rm=Math.max(...pr.map(v=>v[0]));p=add(p,mul(T,(q[0]+rm)*Math.tan(cut)))}
-   return [p,nrm(add(mul(Nn,na),mul(Bz,nb)))]});ring.T=T;rings.push(ring)}
+   const dr=(Math.hypot(...PR[k1][i])-Math.hypot(...PR[k0][i]))/ds;return [p,nrm(add(add(mul(Nn,na),mul(Bz,nb)),mul(T,-dr)))]});ring.T=T;rings.push(ring)}
  const o=g.p.length/3;rings.forEach((r,k)=>{r.forEach(([p,n],i)=>{g.p.push(...p);g.n.push(...n);g.u.push(i/PN,k/(N-1))});const [p,n]=r[0];g.p.push(...p);g.n.push(...n);g.u.push(1,k/(N-1))});
  for(let k=0;k<N-1;k++)for(let s=0;s<PN;s++){const a=o+k*(PN+1)+s,b=a+PN+1;g.i.push(a,b,a+1,a+1,b,b+1)}
  if(caps)[[0,-1],[N-1,1]].forEach(([k,sg])=>{let n=mul(rings[k].T,sg);if(cut&&k===N-1){const r=rings[k],a=sub(r[0][0],r[PN/2][0]),b=sub(r[PN/4][0],r[3*PN/4][0]);n=nrm(cross(a,b));if(dot(n,rings[k].T)<0)n=mul(n,-1)}
@@ -247,10 +248,15 @@ function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.l
   const b3=L-P.capLen,b2=b3-P.blackLen,b1=b2-P.ivoryLen,cuts=[0,b1,b2,b3,L].map(v=>Math.max(0,Math.min(L,v))),at=s=>{let k=1;while(k<S.length-1&&S[k]<s)k++;const t=(s-S[k-1])/((S[k]-S[k-1])||1);return add(path[k-1],mul(sub(path[k],path[k-1]),t))};
   const mats=['ebony','ivory','black','ivory'];for(let q=0;q<4;q++){const s0=cuts[q],s1=cuts[q+1];if(s1-s0<1e-4)continue;const n=Math.max(2,Math.ceil((s1-s0)/.25)),ss=[...Array(n+1)].map((_,k)=>s0+(s1-s0)*k/n);
    Q(1,mats[q],g=>sweepP(g,ss.map(at),k=>prof(ss[k]),q===3||(q===0&&false),q===3?P.tipCut*Math.PI/180:null))}}
- /* pegs */
- [P.peg1Y,P.peg2Y].forEach(y=>{const x0=NX+P.pegFront-.5;
-  Q(2,'ebony',g=>{const pts=[];for(let k=0;k<=16;k++)pts.push([x0-k*P.pegLen/16,y,0]);sweepP(g,pts,(k,N)=>{const t=k/(N-1),r=t<.25?P.pegShaft:P.pegShaft+Math.pow((t-.25)/.75,1.4)*(P.pegW-P.pegShaft);return profEll(r,r*(t<.25?1:1+(P.pegFlat-1)*((t-.25)/.75)))},false)});
-  Q(2,'ivory',g=>{const xe=x0-P.pegLen,r=P.pegW;sweepP(g,line([xe,y,0],[xe-.6,y,0],2),(k,N)=>profEll(r*(1-.15*k/(N-1)),r*P.pegFlat*(1-.15*k/(N-1))),true);if(P.pegTip>0)sweepP(g,line([x0+.05,y,0],[x0+.05+P.pegTip,y,0],2),()=>profEll(P.pegShaft,P.pegShaft),true)});
+ /* pegs: long club shape, fluted, thickening to an ivory end with black-and-ivory bands and a lobed dome */
+ const pegProf=(r,t)=>{const n=Math.round(P.pegFlutes),d=n?P.pegFlute*Math.min(1,t*1.6):0;return ANG.map(a=>{const rr=r*(1-d*(1-Math.abs(Math.cos(n*a/2))));return [Math.cos(a)*rr,Math.sin(a)*rr*P.pegFlat]})};
+ [P.peg1Y,P.peg2Y].forEach(y=>{const x0=NX+P.pegFront-.5,bw=P.pegBand,L=P.pegLen-.5-(bw*4)-P.pegDome,rAt=t=>P.pegShaft+Math.pow(t,P.pegSwell)*(P.pegW-P.pegShaft);
+  Q(2,'pegwood',g=>{const pts=[];for(let k=0;k<=24;k++)pts.push([x0-k*L/24,y,0]);sweepP(g,pts,(k,N)=>pegProf(rAt(k/(N-1)),k/(N-1)),false)});
+  /* bands: ivory, black, ivory, black, then the ivory dome */
+  let xb=x0-L;const band=(mat,w)=>{if(w<=0)return;const a=xb,b=xb-w;Q(2,mat,g=>sweepP(g,line([a,y,0],[b,y,0],1),()=>pegProf(P.pegW,1),false));xb=b};
+  band('ivory',bw*.6);band('black',bw);band('ivory',bw*1.4);band('black',bw*.7);
+  Q(2,'ivory',g=>{const n=10,pts=[];for(let k=0;k<=n;k++){const u=k/n;pts.push([xb-P.pegDome*Math.sin(u*Math.PI/2),y,0])}sweepP(g,pts,(k,N)=>{const u=k/(N-1);return pegProf(P.pegW*Math.max(.04,Math.cos(u*Math.PI/2)),1)},true)});
+  if(P.pegTip>0)Q(2,'ivory',g=>sweepP(g,line([x0+.05,y,0],[x0+.05+P.pegTip,y,0],2),()=>profEll(P.pegShaft,P.pegShaft),true));
   Q(2,'red',g=>sweepP(g,line([x0-.45,y,0],[x0+.05,y,0],1),()=>profEll(P.pegShaft+.05,P.pegShaft+.05),true))});
  /* strings: peg -> qianjin -> bridge -> tail at the drum */
  const sp=(k,s)=>(k==='in'?-1:1)*s;
@@ -281,7 +287,7 @@ function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.l
 
 /* ===================== editor ===================== */
 const C0=JSON.parse(JSON.stringify(C));
-const MATN={wood:'琴筒木',ebony:'琴桿黑檀',dark:'深色木',ivory:'象牙白',str:'琴弦',hair:'弓毛',stick:'弓桿',black:'黑色飾帶',cord:'千斤繩',brass:'黃銅',felt:'琴碼墊',frog:'弓根',red:'紅色飾圈',inner:'琴筒內壁',lattice:'音窗花格'};
+const MATN={wood:'琴筒木',ebony:'琴桿黑檀',dark:'深色木',ivory:'象牙白',str:'琴弦',hair:'弓毛',stick:'弓桿',black:'黑色飾帶',cord:'千斤繩',brass:'黃銅',felt:'琴碼墊',frog:'弓根',red:'紅色飾圈',pegwood:'弦軸木',inner:'琴筒內壁',lattice:'音窗花格'};
 /* [id, name] ; pivots are computed from the current numbers */
 const PART=[[1,'琴頭'],[11,'軸箱'],[2,'弦軸'],[3,'千斤'],[13,'微調器'],[4,'琴桿'],[5,'琴筒'],[12,'音窗'],[6,'蛇皮'],[7,'琴碼'],[8,'琴弦'],[9,'琴托'],[10,'弓']];
 function pivotOf(id){const g=geo();return ({1:[NX-3,P.boxY1+P.headRise+3,0],11:[NX,(P.boxY0+P.boxY1)/2,0],2:[NX-6,(P.peg1Y+P.peg2Y)/2,0],3:[g.nutX-.4,P.nutY,0],13:[NX+2,P.fineY,0],4:[NX,30,0],5:[0,TY,0],12:[g.TX0,TY,0],6:[g.TX1,TY,0],7:[g.brX,g.brYa,0],8:[3,30,0],9:[0,1,0],10:[0,18,0]})[id]||[0,0,0]}
