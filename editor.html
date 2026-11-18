@@ -113,7 +113,6 @@ textarea{min-height:6rem;resize:vertical}
 </div>
 <div class="toast" id="toast" hidden></div>
 <script>
-const S={mdl:{}};
 /* ---------- small math ---------- */
 const V=(x,y,z)=>[x,y,z],sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]],mul=(a,s)=>[a[0]*s,a[1]*s,a[2]*s],
  dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2],cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],len=a=>Math.hypot(a[0],a[1],a[2]),nrm=a=>{const l=len(a)||1;return [a[0]/l,a[1]/l,a[2]/l]};
@@ -145,62 +144,6 @@ function box(g,c,s){const [x,y,z]=c,[a,b,d]=s.map(v=>v/2);const F=[[[1,0,0],[[x+
 function ellip(g,c,rx,ry,rz,seg=12){const o=g.p.length/3;for(let i=0;i<=seg;i++){const th=i/seg*Math.PI;for(let j=0;j<=seg;j++){const ph=j/seg*Math.PI*2,n=[Math.sin(th)*Math.cos(ph),Math.cos(th),Math.sin(th)*Math.sin(ph)];
  g.p.push(c[0]+n[0]*rx,c[1]+n[1]*ry,c[2]+n[2]*rz);g.n.push(...nrm([n[0]/rx,n[1]/ry,n[2]/rz]));g.u.push(j/seg,i/seg)}}
  for(let i=0;i<seg;i++)for(let j=0;j<seg;j++){const a=o+i*(seg+1)+j,b=a+seg+1;g.i.push(a,b,a+1,a+1,b,b+1)}}
-/* ---------- the erhu (dimensions follow a standard 81 cm erhu) ---------- */
-const C={wood:[.30,.15,.11],ebony:[.085,.07,.065],dark:[.16,.08,.06],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.11,.14,.30],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12]};
-/* coordinates in cm: skin faces +x, pegs run along x (paddles to the back), strings sit in front of the neck */
-let H0T=80.5,NX=-1.2,TY=6.2,TR=4.6,TX0=-6.5,TX1=6.5,BRY=TY+1.1,BRX=TX1+1.0,NUTY=44,NUTX=NX+2.7,PEGY=[66.5,60.5];
-let PTX=NX+2.55;
-/* adjustable model: [key, default, min, max, step]; the editor panel writes S.mdl, applyMdl() turns it into the geometry constants */
-const MDEF=[['drumR',4.6,3.5,6,.1],['drumL',13,10,16,.2],['nutY',44,38,50,.2],['peg1',66.5,62,70,.2],['peg2',60.5,57,65,.2],['pegLen',15,10,20,.2],['pegW',.95,.5,1.6,.05],
- ['neckR',1.2,.8,1.8,.05],['headY',74.5,73.5,78,.1],['headR',5.6,3,8,.1],['headA',1.85,1,2.6,.05],['fineY',49.5,46,54,.2],['bowLen',80,60,95,.5],['bowAng',30,15,45,.5]];
-let MK={};
-function applyMdl(){MK={};MDEF.forEach(([k,d])=>MK[k]=(S.mdl&&S.mdl[k]!=null)?S.mdl[k]:d);
- TR=MK.drumR;TX0=-MK.drumL/2;TX1=MK.drumL/2;BRY=TY+1.1;BRX=TX1+1.0;NUTY=MK.nutY;PEGY=[MK.peg1,MK.peg2];H0T=MK.headY+MK.headR+.4;
- const a=MK.bowAng*Math.PI/180;BD=[Math.cos(a),-Math.sin(a),0];BP0=[BRX,BRY+3.0,0]}/* x where strings leave the pegs' small ends */
-const SX=(k,y)=>{if(y<=BRY)return BRX;if(y<=NUTY){const t=(y-BRY)/(NUTY-BRY);return BRX+(NUTX-BRX)*t}const t=Math.min(1,(y-NUTY)/(PEGY[1]-NUTY));return NUTX+(PTX-NUTX)*t};
-const SZ=(k,y)=>(k==='in'?-1:1)*(y<=BRY?.22:y<=NUTY?.22+.18*(y-BRY)/(NUTY-BRY):.4);
-/* bow: rests diagonally (tip up toward the back, frog down toward the front), hair through the strings just above the bridge */
-const S1B=31;let BD=nrm([.866,-.5,0]),BP0=[BRX,BRY+3.0,0];const BAT=s2=>add(BP0,mul(BD,s2));
-function build(){applyMdl();const parts=[];const P=(id,mat,fn,o={})=>{const g=G();fn(g);parts.push({id,mat,g,...o})};
- const bot=TY-TR*Math.cos(Math.PI/6);
- P(9,'dark',g=>{box(g,[-.3,bot-.75,0],[11.5,1.5,7.6])});
- let hexP;P(5,'wood',g=>{hexP=hexPrism(g,0,TY,TX0,TX1,TR);hexCap(g,TY,TX0,hexP,-1)});
- P(5,'dark',g=>{[0,1,2].forEach(k=>hexPrism(g,0,TY,TX0+.6+k*.75,TX0+.95+k*.75,TR+.09))});
- P(5,'ivory',g=>{hexPrism(g,0,TY,TX1-.5,TX1+.02,TR+.1)});
- P(6,'skin',g=>{hexCap(g,TY,TX1+.03,hexP.map(([y,z])=>[y*.97,z*.97]),1,TR*2)},{tex:1});
- /* neck: thin round lower part, thicker peg section with a step, crook head */
- P(4,'ebony',g=>{sweep(g,line([NX,bot+.2,0],[NX,56,0],6),t=>MK.neckR-.15*t,16);sweep(g,line([NX,55.6,0],[NX,57.2,0],1),t=>MK.neckR-.15+.4*t,16,false);sweep(g,line([NX,57.2,0],[NX,71.2,0],4),1.45,16);sweep(g,line([NX,71.2,0],[NX,71.21,0],1),1.45,16)});
- const H0=MK.headY,HR=MK.headR,HA=MK.headA,hp=a=>[NX-HR+HR*Math.cos(a),H0+HR*Math.sin(a),0],HN=24,hr=t=>t<.6?1.05-.12*t:Math.max(.12,.98-1.6*(t-.6)*(t-.6)*4.2);
- const hpts=[[NX,71.6,0],[NX,73,0],[NX,H0,0]];for(let k=1;k<=HN;k++)hpts.push(hp(k/HN*HA));const HT=hpts.length-1,seg=(a,b)=>hpts.slice(a,b+1),tr=(a,b)=>t=>hr((a+(b-a)*t)/HT);
- const cA=Math.round(HT*.70),cB=Math.round(HT*.74),cC=Math.round(HT*.82),cD=Math.round(HT*.86);
- P(1,'ebony',g=>{sweep(g,line([NX,71.2,0],[NX,72,0],1),t=>1.45-.4*t,16,false);sweep(g,seg(0,cA),tr(0,cA),16)});
- P(1,'black',g=>{sweep(g,seg(cA,cB),tr(cA,cB),16,false);sweep(g,seg(cC,cD),tr(cC,cD),16,false)});
- P(1,'ivory',g=>{sweep(g,seg(cB,cC),tr(cB,cC),16,false);sweep(g,seg(cD,HT),tr(cD,HT),16)});
- /* pegs: teardrop paddles toward the back, small ends with ivory and a red ring toward the front */
- PEGY.forEach((y,i)=>{P(2,'ebony',g=>{const pts=[];for(let k=0;k<=12;k++){pts.push([NX+2.4-k*MK.pegLen/12,y,0])}sweep(g,pts,t=>t<.22?.42:.42+Math.pow((t-.22)/.78,1.6)*MK.pegW,14)});
-  P(2,'ivory',g=>{sweep(g,line([NX+2.4-MK.pegLen,y,0],[NX+1.7-MK.pegLen,y,0],1),.37+MK.pegW,14);sweep(g,line([NX+2.4,y,0],[NX+2.9,y,0],1),.42,10)});
-  P(2,'red',g=>sweep(g,line([NX+1.9,y,0],[NX+2.4,y,0],1),.47,10))});
- /* fine tuners (brass) */
- ['in','out'].forEach(k=>P(3,'brass',g=>{const y=MK.fineY,x=SX(k,y),z=SZ(k,y);box(g,[x,y,z],[.5,2.2,.35]);sweep(g,line([x,y+.6,z],[x+1.2,y+.6,z],1),.22,8);box(g,[x,y-.7,z],[.7,.45,.45])}));
- /* qianjin: navy cord wound round the neck and looped to the strings */
- P(3,'cord',g=>{for(let k=0;k<7;k++){const y=NUTY-.5+k*.16;{const ring=[];for(let q=0;q<=20;q++){const a=q/20*Math.PI*2;ring.push([NX+Math.cos(a)*1.2,y,Math.sin(a)*1.2])}sweep(g,ring,.085,5,false)}
-  [-1,1].forEach(sd=>sweep(g,line([NX+1.15,y,sd*.25],[SX('in',NUTY)+.08,y,sd*.45],1),.06,5,false))}});
- P(7,'ivory',g=>{box(g,[TX1+.5,BRY-.45,0],[1.0,1.1,1.0])});
- P(7,'felt',g=>{box(g,[TX1+.25,TY-2.4,0],[.5,1.4,1.6])});
- [['in',.075],['out',.06]].forEach(([k,r])=>{P(8,'str',g=>{const top=k==='in'?PEGY[0]:PEGY[1],P3=y=>[SX(k,y),y,SZ(k,y)],pts=[[PTX,top,SZ(k,99)],[PTX,PEGY[1]-1,SZ(k,99)]];
-   [NUTY+.3,30,18,BRY].forEach(y=>pts.push(P3(y)));pts.push([TX1+.3,bot+.6,SZ(k,0)*.6]);
-   for(let s2=0;s2<pts.length-1;s2++)sweep(g,line(pts[s2],pts[s2+1],1),r,6,false)},{str:k})});
- /* bow ~81 cm (same as the erhu): hair through the strings, stick on the near side */
- const S0=S1B-MK.bowLen,S1=S1B,SZo=-1.7,at=(s2,dz=0,dy=0)=>{const p=BAT(s2);return [p[0],p[1]+dy,p[2]+dz]};
- P(10,'stick',g=>{const pts=[];for(let k=0;k<=18;k++){const t=k/18,s2=S0-1+t*(S1-S0+2);pts.push(at(s2,SZo-Math.sin(t*Math.PI)*.35,0))}sweep(g,pts,t=>.33+.12*t,10);
-  sweep(g,[at(S0-1,SZo),at(S0-1.8,SZo*.6),at(S0-2,SZo*.2),at(S0-1.4,0)],.22,8)},{bow:1});
- P(10,'black',g=>{sweep(g,[at(S0-1.7,SZo*.4),at(S0-2.1,SZo*.15)],.28,8);sweep(g,[at(S1+1,SZo),at(S1+2.8,SZo)],.42,10)},{bow:1});
- P(10,'brass',g=>sweep(g,[at(S1+.4,SZo),at(S1+1,SZo)],.5,10),{bow:1});
- P(10,'frog',g=>{sweep(g,[at(S1-1.2,SZo),at(S1-.4,SZo*.5),at(S1-.6,0)],.45,8);const c=at(S1-.8,SZo*.55);box(g,c,[1.2,1.2,1.2])},{bow:1});
- P(10,'hair',g=>{const n=nrm(cross(BD,[0,0,1])),a=at(S0-1.4),b2=at(S1-.6),w=.38;
-  const A1=add(a,mul(n,w)),A2=add(a,mul(n,-w)),B1=add(b2,mul(n,w)),B2=add(b2,mul(n,-w));quad(g,A2,B2,B1,A1,[0,0,1]);quad(g,A1,B1,B2,A2,[0,0,-1]);
-  sweep(g,[at(S1-.8),at(S1-8)],.3,8)},{bow:1});
- return parts}
 /* ---------- procedural python-skin texture ---------- */
 function skinCanvas(){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');x.fillStyle='#1f130b';x.fillRect(0,0,256,256);
  let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
@@ -224,12 +167,120 @@ void main(){if(uIsPick>.5){gl_FragColor=vec4(uPick,1.);return;}
  gl_FragColor=vec4(pow(col,vec3(.95)),1.);}`;
 function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(o));return o}
 
+/* ===================== erhu model v2: every detail has its own number ===================== */
+const NX=-1.2,TY=6.2;
+const C={wood:[.30,.15,.11],ebony:[.085,.07,.065],dark:[.16,.08,.06],ivory:[.93,.89,.80],str:[.86,.86,.88],hair:[.95,.93,.87],stick:[.30,.12,.09],black:[.08,.08,.09],cord:[.10,.12,.22],brass:[.80,.62,.28],felt:[.86,.72,.36],frog:[.84,.70,.66],red:[.75,.12,.12],inner:[.10,.06,.045],lattice:[.55,.30,.16]};
+/* [key, part, label, default, min, max, step, unit] */
+const PDEF=[
+ ['headRise',1,'直段長度',2.5,0,8,.1,'cm'],['headBend',1,'彎曲半徑',4.6,2,9,.1,'cm'],['headAng',1,'彎曲角度',125,60,190,1,'°'],['headR',1,'琴頭粗細（半徑）',.95,.6,1.4,.01,'cm'],
+ ['tipLen',1,'鴨嘴長度',3.4,1,7,.1,'cm'],['tipW',1,'鴨嘴寬度',2.8,1,4.5,.05,'cm'],['tipT',1,'鴨嘴厚度',1.05,.5,2.5,.05,'cm'],['tipCut',1,'端面斜切',28,0,60,1,'°'],
+ ['capLen',1,'象牙端蓋長度',1.3,.3,3,.05,'cm'],['blackLen',1,'黑色飾帶寬',.45,0,1.5,.05,'cm'],['ivoryLen',1,'白色飾帶寬',.4,0,1.5,.05,'cm'],
+ ['boxY0',11,'軸箱下緣高度',57.2,52,62,.1,'cm'],['boxY1',11,'軸箱上緣高度',71.2,66,76,.1,'cm'],['boxW',11,'軸箱寬（左右）',1.45,1,2.2,.01,'cm'],['boxD',11,'軸箱厚（前後）',1.35,1,2.2,.01,'cm'],['boxCh',11,'四角倒角',.45,0,1,.01,'cm'],['boxFlare',11,'下方過渡長度',.7,0,2.5,.05,'cm'],['boxShoulder',11,'上方過渡長度',.9,0,3,.05,'cm'],
+ ['peg1Y',2,'上弦軸高度',66.5,61,75,.1,'cm'],['peg2Y',2,'下弦軸高度',60.5,56,70,.1,'cm'],['pegLen',2,'弦軸長度',15,9,20,.1,'cm'],['pegW',2,'把手最粗（半徑）',1.3,.6,2.2,.01,'cm'],['pegShaft',2,'軸桿粗細（半徑）',.42,.25,.8,.01,'cm'],['pegFlat',2,'把手扁平度',1,.4,1.3,.01,'×'],['pegTip',2,'前端象牙長度',.5,0,1.5,.05,'cm'],
+ ['nutY',3,'千斤高度',44,36,52,.1,'cm'],['nutGap',3,'弦與琴桿距離',1.0,.3,3,.05,'cm'],['nutW',3,'纏繞寬度',1.1,.3,2.5,.05,'cm'],['nutTurns',3,'纏繞圈數',9,3,16,1,'圈'],['nutStrands',3,'拉線股數',7,2,12,1,'股'],
+ ['fineOn',13,'顯示微調器',1,0,1,1,''],['fineY',13,'微調器高度',49.5,46,55,.1,'cm'],
+ ['neckR',4,'下端半徑',1.2,.8,1.8,.01,'cm'],['neckTop',4,'上端半徑',1.05,.7,1.6,.01,'cm'],
+ ['strTopX',8,'上端（琴頭）前後',2.55,0,4,.05,'cm'],['strTopDY',8,'上端（琴頭）上下',0,-3,3,.05,'cm'],['strBotX',8,'下端（琴筒）前後',6.8,0,10,.05,'cm'],['strBotY',8,'下端（琴筒）高度',2.8,0,8,.05,'cm'],['strGap',8,'兩弦間距',.44,.2,1,.01,'cm'],['strR',8,'弦粗細',.07,.03,.15,.005,'cm'],
+ ['brY',7,'琴碼高度位置',1.1,-3,3,.05,'cm'],['brH',7,'琴碼高',1.0,.4,2,.05,'cm'],['brW',7,'琴碼寬',1.0,.4,2,.05,'cm'],
+ ['drumR',5,'琴筒半徑',4.6,3.5,6,.05,'cm'],['drumL',5,'琴筒長度',13,10,16,.1,'cm'],['drumWall',5,'筒壁厚度',.45,.15,1,.01,'cm'],['ringL',5,'前端白圈寬',.5,0,1.5,.05,'cm'],['backRings',5,'後端線條數',3,0,6,1,'條'],
+ ['winOn',12,'顯示音窗',1,0,1,1,''],['winInset',12,'音窗深度',.35,0,3,.05,'cm'],['winCell',12,'花格大小',1.35,.7,3,.05,'cm'],['winBar',12,'花格線粗',.12,.05,.3,.01,'cm'],['winWave',12,'花格彎曲',.32,0,.7,.01,''],['winRot',12,'花格角度',45,0,90,1,'°'],
+ ['baseW',9,'琴托長',11.5,6,16,.1,'cm'],['baseH',9,'琴托高',1.5,.5,4,.05,'cm'],['baseD',9,'琴托寬',7.6,4,11,.1,'cm'],
+ ['bowLen',10,'弓長',80,60,95,.5,'cm'],['bowAng',10,'弓的角度',30,10,50,.5,'°'],['bowHair',10,'弓毛寬（半）',.38,.15,.8,.01,'cm'],['bowStick',10,'弓桿粗細',.33,.2,.6,.01,'cm']];
+let P={};
+function setP(over){P={};PDEF.forEach(d=>P[d[0]]=over&&over[d[0]]!=null?over[d[0]]:d[3])}
+const smooth=t=>t*t*(3-2*t);
+/* profile helpers: 24 points by angle, so different shapes morph into each other */
+const PN=24,ANG=[...Array(PN)].map((_,i)=>i/PN*Math.PI*2);
+const profEll=(ra,rb)=>ANG.map(a=>[Math.cos(a)*ra,Math.sin(a)*rb]);
+const profOct=(W,D,ch)=>ANG.map(a=>{const c=Math.abs(Math.cos(a)),s=Math.abs(Math.sin(a)),K=W+D-ch*1.2,r=Math.min(c>1e-6?W/c:1e9,s>1e-6?D/s:1e9,K/(c+s));return [Math.cos(a)*r,Math.sin(a)*r]});
+const lerpP=(A,B,t)=>A.map((p,i)=>[p[0]+(B[i][0]-p[0])*t,p[1]+(B[i][1]-p[1])*t]);
+/* sweep a 2D profile along a path in the x-y plane (b axis = z) */
+function sweepP(g,pts,prof,caps=true,cut=null){const N=pts.length,rings=[];
+ for(let k=0;k<N;k++){const T=nrm(sub(pts[Math.min(k+1,N-1)],pts[Math.max(k-1,0)])),Nn=[T[1],-T[0],0],Bz=[0,0,1],pr=prof(k,N);
+  const ring=pr.map((q,i)=>{const pp=pr[(i+1)%PN],pm=pr[(i+PN-1)%PN],da=pp[0]-pm[0],db=pp[1]-pm[1],l=Math.hypot(da,db)||1,na=db/l,nb=-da/l;
+   let p=add(pts[k],add(mul(Nn,q[0]),mul(Bz,q[1])));if(cut&&k===N-1)p=add(p,mul(T,q[0]*Math.tan(cut)));
+   return [p,nrm(add(mul(Nn,na),mul(Bz,nb)))]});ring.T=T;rings.push(ring)}
+ const o=g.p.length/3;rings.forEach((r,k)=>{r.forEach(([p,n],i)=>{g.p.push(...p);g.n.push(...n);g.u.push(i/PN,k/(N-1))});const [p,n]=r[0];g.p.push(...p);g.n.push(...n);g.u.push(1,k/(N-1))});
+ for(let k=0;k<N-1;k++)for(let s=0;s<PN;s++){const a=o+k*(PN+1)+s,b=a+PN+1;g.i.push(a,b,a+1,a+1,b,b+1)}
+ if(caps)[[0,-1],[N-1,1]].forEach(([k,sg])=>{let n=mul(rings[k].T,sg);if(cut&&k===N-1){const r=rings[k],a=sub(r[0][0],r[PN/2][0]),b=sub(r[PN/4][0],r[3*PN/4][0]);n=nrm(cross(a,b));if(dot(n,rings[k].T)<0)n=mul(n,-1)}
+  const c=g.p.length/3,ctr=rings[k].reduce((s,[p])=>add(s,mul(p,1/PN)),[0,0,0]);g.p.push(...ctr);g.n.push(...n);g.u.push(.5,.5);rings[k].forEach(([p])=>{g.p.push(...p);g.n.push(...n);g.u.push(0,0)});
+  for(let s=0;s<PN;s++){const a=c+1+s,b=c+1+(s+1)%PN;sg>0?g.i.push(c,a,b):g.i.push(c,b,a)}})}
+/* hex helpers for the drum (axis along x) */
+const hexPts=R=>[...Array(6)].map((_,s)=>{const a=Math.PI/6+s*Math.PI/3;return [Math.cos(a)*R,Math.sin(a)*R]});
+function hexWall(g,x0,x1,R,inward){const H=hexPts(R);for(let s=0;s<6;s++){const [y0,z0]=H[s],[y1,z1]=H[(s+1)%6];let n=nrm([0,(y0+y1)/2,(z0+z1)/2]);if(inward)n=mul(n,-1);quad(g,[x0,TY+y0,z0],[x1,TY+y0,z0],[x1,TY+y1,z1],[x0,TY+y1,z1],n)}}
+function hexAnn(g,x,Ro,Ri,dir){const A=hexPts(Ro),B=hexPts(Ri);for(let s=0;s<6;s++){const t=(s+1)%6;quad(g,[x,TY+A[s][0],A[s][1]],[x,TY+A[t][0],A[t][1]],[x,TY+B[t][0],B[t][1]],[x,TY+B[s][0],B[s][1]],[dir,0,0])}}
+const inHex=(y,z,R)=>{const a=Math.abs(y),b=Math.abs(z);return b<=R*Math.sqrt(3)/2*1.0001&&a*Math.sqrt(3)/2+b*.5<=R*Math.sqrt(3)/2};
+function hexFace(g,x,R,dir){const H=hexPts(R),c=g.p.length/3;g.p.push(x,TY,0);g.n.push(dir,0,0);g.u.push(.5,.5);H.forEach(([y,z])=>{g.p.push(x,TY+y,z);g.n.push(dir,0,0);g.u.push(.5+z/R/2,.5-y/R/2)});for(let s=0;s<6;s++){const a=c+1+s,b=c+1+(s+1)%6;dir>0?g.i.push(c,a,b):g.i.push(c,b,a)}}
+/* derived positions used by build, handles and the ruler */
+function geo(){const TX1=P.drumL/2,TX0=-TX1,bot=TY-P.drumR*Math.cos(Math.PI/6),neckRAt=y=>{const y0=bot,y1=P.boxY0-P.boxFlare,t=Math.max(0,Math.min(1,(y-y0)/(y1-y0)));return P.neckR+(P.neckTop-P.neckR)*t};
+ const nutX=NX+neckRAt(P.nutY)+P.nutGap,brX=TX1+P.brH,brYa=TY+P.brY;
+ return {TX0,TX1,bot,neckRAt,nutX,brX,brYa,top:i=>[NX+P.strTopX,(i?P.peg2Y:P.peg1Y)+P.strTopDY],topMid:[NX+P.strTopX,(P.peg1Y+P.peg2Y)/2+P.strTopDY],bottom:[P.strBotX,P.strBotY]}}
+function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.length)parts.push({id,mat,g,...o})},Gm=geo(),{TX0,TX1,bot}=Gm;
+ /* base */
+ Q(9,'dark',g=>box(g,[-.3,bot-P.baseH/2,0],[P.baseW,P.baseH,P.baseD]));
+ /* drum: hollow hexagonal tube */
+ const R=P.drumR,Ri=Math.max(.5,R-P.drumWall);
+ Q(5,'wood',g=>{hexWall(g,TX0,TX1-P.ringL,R);hexAnn(g,TX0,R,Ri,-1)});
+ Q(5,'inner',g=>hexWall(g,TX0,TX1,Ri,true));
+ Q(5,'ivory',g=>{if(P.ringL>0){hexWall(g,TX1-P.ringL,TX1+.02,R+.06);hexAnn(g,TX1-P.ringL,R+.06,R,-1);hexAnn(g,TX1+.02,R+.06,Ri,1)}});
+ Q(5,'dark',g=>{for(let k=0;k<P.backRings;k++){const x=TX0+.12+k*.32;hexWall(g,x,x+.16,R+.07);hexAnn(g,x,R+.07,R,-1);hexAnn(g,x+.16,R+.07,R,1)}});
+ Q(6,'skin',g=>{const H=hexPts(Ri+.02),c=g.p.length/3,x=TX1-.02;g.p.push(x,TY,0);g.n.push(1,0,0);g.u.push(.5,.5);H.forEach(([y,z])=>{g.p.push(x,TY+y,z);g.n.push(1,0,0);g.u.push(.5+z/R/2,.5-y/R/2)});for(let s=0;s<6;s++)g.i.push(c,c+1+s,c+1+(s+1)%6)},{tex:1});
+ /* sound window: wavy lattice inside a frame at the back */
+ if(P.winOn>.5)Q(12,'lattice',g=>{const x=TX0+P.winInset,Rw=Ri-.02,cell=P.winCell,a=P.winRot*Math.PI/180,u=[Math.cos(a),Math.sin(a)],v=[-u[1],u[0]];
+  hexAnn(g,x-.12,Rw,Rw-.28,-1);hexAnn(g,x+.12,Rw,Rw-.28,1);hexWall(g,x-.12,x+.12,Rw-.28,true);
+  const lim=Rw-.28;[[u,v],[v,u]].forEach(([d,pp],fam)=>{for(let o=-R*1.5;o<=R*1.5;o+=cell){let seg=[];const flush=()=>{if(seg.length>1)sweep(g,seg,P.winBar,6,false);seg=[]};
+   for(let s=-R*1.6;s<=R*1.6;s+=cell/10){const w=Math.sin((s/cell)*Math.PI*2+fam*Math.PI)*P.winWave*cell*.5,y=d[0]*s+pp[0]*(o+w),z=d[1]*s+pp[1]*(o+w);if(inHex(y,z,lim))seg.push([x,TY+y,z]);else flush()}flush()}})});
+ /* neck */
+ Q(4,'ebony',g=>{const y0=bot+.2,y1=P.boxY0-P.boxFlare,pts=line([NX,y0,0],[NX,y1,0],8);sweepP(g,pts,(k,N)=>{const r=Gm.neckRAt(y0+(y1-y0)*k/(N-1));return profEll(r,r)},true)});
+ /* peg box: chamfered block with flares above and below */
+ Q(11,'ebony',g=>{const oct=profOct(P.boxW,P.boxD,P.boxCh),y0=P.boxY0-P.boxFlare;
+  if(P.boxFlare>0)sweepP(g,line([NX,y0,0],[NX,P.boxY0,0],6),(k,N)=>lerpP(profEll(P.neckTop,P.neckTop),oct,smooth(k/(N-1))),false);
+  sweepP(g,line([NX,P.boxY0,0],[NX,P.boxY1,0],2),()=>oct,P.boxFlare<=0);
+  if(P.boxShoulder>0)sweepP(g,line([NX,P.boxY1,0],[NX,P.boxY1+P.boxShoulder,0],6),(k,N)=>lerpP(oct,profEll(P.headR,P.headR),smooth(k/(N-1))),false)});
+ /* head: straight rise, circular crook toward the peg handles, flattened duck-bill tip with ivory/black bands */
+ {const y0=P.boxY1+P.boxShoulder,y1=y0+P.headRise,B=P.headBend,A=P.headAng*Math.PI/180,path=[];
+  for(let k=0;k<=6;k++)path.push([NX,y0+(y1-y0)*k/6,0]);const na=Math.max(8,Math.round(A/.08));for(let k=1;k<=na;k++){const a=A*k/na;path.push([NX-B+B*Math.cos(a),y1+B*Math.sin(a),0])}
+  const end=path[path.length-1],T=[-Math.sin(A),Math.cos(A),0];for(let k=1;k<=14;k++)path.push(add(end,mul(T,P.tipLen*k/14)));
+  const S=[0];for(let k=1;k<path.length;k++)S.push(S[k-1]+len(sub(path[k],path[k-1])));const L=S[S.length-1],tip0=L-P.tipLen;
+  const prof=s=>{if(s<=tip0)return profEll(P.headR,P.headR);const t=Math.pow((s-tip0)/P.tipLen,1.3);return profEll(P.headR+(P.tipT/2-P.headR)*t,P.headR+(P.tipW/2-P.headR)*t)};
+  /* resample with exact band boundaries */
+  const b3=L-P.capLen,b2=b3-P.blackLen,b1=b2-P.ivoryLen,cuts=[0,b1,b2,b3,L].map(v=>Math.max(0,Math.min(L,v))),at=s=>{let k=1;while(k<S.length-1&&S[k]<s)k++;const t=(s-S[k-1])/((S[k]-S[k-1])||1);return add(path[k-1],mul(sub(path[k],path[k-1]),t))};
+  const mats=['ebony','ivory','black','ivory'];for(let q=0;q<4;q++){const s0=cuts[q],s1=cuts[q+1];if(s1-s0<1e-4)continue;const n=Math.max(2,Math.ceil((s1-s0)/.25)),ss=[...Array(n+1)].map((_,k)=>s0+(s1-s0)*k/n);
+   Q(1,mats[q],g=>sweepP(g,ss.map(at),k=>prof(ss[k]),q===3||(q===0&&false),q===3?P.tipCut*Math.PI/180:null))}}
+ /* pegs */
+ [P.peg1Y,P.peg2Y].forEach(y=>{const x0=NX+2.4;
+  Q(2,'ebony',g=>{const pts=[];for(let k=0;k<=16;k++)pts.push([x0-k*P.pegLen/16,y,0]);sweepP(g,pts,(k,N)=>{const t=k/(N-1),r=t<.25?P.pegShaft:P.pegShaft+Math.pow((t-.25)/.75,1.4)*(P.pegW-P.pegShaft);return profEll(r,r*(t<.25?1:1+(P.pegFlat-1)*((t-.25)/.75)))},false)});
+  Q(2,'ivory',g=>{const xe=x0-P.pegLen,r=P.pegW;sweepP(g,line([xe,y,0],[xe-.6,y,0],2),(k,N)=>profEll(r*(1-.15*k/(N-1)),r*P.pegFlat*(1-.15*k/(N-1))),true);if(P.pegTip>0)sweepP(g,line([x0+.05,y,0],[x0+.05+P.pegTip,y,0],2),()=>profEll(P.pegShaft,P.pegShaft),true)});
+  Q(2,'red',g=>sweepP(g,line([x0-.45,y,0],[x0+.05,y,0],1),()=>profEll(P.pegShaft+.05,P.pegShaft+.05),true))});
+ /* strings: peg -> qianjin -> bridge -> tail at the drum */
+ const sp=(k,s)=>(k==='in'?-1:1)*s;
+ const strPts=k=>{const i=k==='in'?0:1,t=Gm.top(i);return [[t[0],t[1],sp(k,.42)],[Gm.nutX,P.nutY,sp(k,.12)],[Gm.brX,Gm.brYa,sp(k,P.strGap/2)],[Gm.bottom[0],Gm.bottom[1],sp(k,P.strGap*.3)]]};
+ ['in','out'].forEach(k=>Q(8,'str',g=>{const p=strPts(k);for(let s=0;s<p.length-1;s++)sweep(g,line(p[s],p[s+1],1),k==='in'?P.strR:P.strR*.85,6,false)},{str:k}));
+ /* bridge + felt */
+ Q(7,'ivory',g=>box(g,[TX1+P.brH/2,Gm.brYa-P.brW*.35,0],[P.brH,P.brW*1.1,P.brW]));
+ Q(7,'felt',g=>box(g,[TX1+.2,TY-P.drumR*.5,0],[.4,1.4,1.6]));
+ /* qianjin: cord wound round the neck, strands pulled out to a small wrap round both strings */
+ Q(3,'cord',g=>{const r=Gm.neckRAt(P.nutY)+.06,n=P.nutTurns;for(let k=0;k<n;k++){const y=P.nutY-P.nutW/2+P.nutW*(k+.5)/n,ring=[];for(let q=0;q<=20;q++){const a=q/20*Math.PI*2;ring.push([NX+Math.cos(a)*r,y,Math.sin(a)*r])}sweep(g,ring,.07,5,false)}
+  const m=P.nutStrands;for(let k=0;k<m;k++){const t=m>1?k/(m-1):.5,zs=-.25+.5*t,ya=P.nutY-P.nutW*.45+P.nutW*.9*t;sweep(g,[[NX+r*.95,ya,zs*r*1.4],[Gm.nutX-.05,P.nutY+.05*(t-.5),zs*.5]],.055,5,false)}
+  for(let k=0;k<4;k++){const ring=[],yy=P.nutY-.12+k*.08;for(let q=0;q<=16;q++){const a=q/16*Math.PI*2;ring.push([Gm.nutX+Math.cos(a)*.13,yy,Math.sin(a)*.32])}sweep(g,ring,.045,5,false)}});
+ /* fine tuners */
+ if(P.fineOn>.5)['in','out'].forEach(k=>Q(13,'brass',g=>{const p=strPts(k),t=(p[1][1]-P.fineY)/(p[1][1]-p[2][1]);if(t<0||t>1)return;const x=p[1][0]+(p[2][0]-p[1][0])*t,z=p[1][2]+(p[2][2]-p[1][2])*t,y=P.fineY;
+  box(g,[x,y,z],[.5,2.2,.35]);sweep(g,line([x,y+.6,z],[x+1.2,y+.6,z],1),.22,8);box(g,[x,y-.7,z],[.7,.45,.45])}));
+ /* bow */
+ const S1=31,a=P.bowAng*Math.PI/180,BD=[Math.cos(a),-Math.sin(a),0],BP0=[Gm.brX,Gm.brYa+3.0,0],BAT=s=>add(BP0,mul(BD,s)),S0=S1-P.bowLen,SZo=-1.7,at=(s2,dz=0)=>{const p=BAT(s2);return [p[0],p[1],p[2]+dz]};
+ Q(10,'stick',g=>{const pts=[];for(let k=0;k<=18;k++){const t=k/18,s2=S0-1+t*(S1-S0+2);pts.push(at(s2,SZo-Math.sin(t*Math.PI)*.35))}sweep(g,pts,t=>P.bowStick+.12*t,10);sweep(g,[at(S0-1,SZo),at(S0-1.8,SZo*.6),at(S0-2,SZo*.2),at(S0-1.4,0)],.22,8)},{bow:1});
+ Q(10,'black',g=>{sweep(g,[at(S0-1.7,SZo*.4),at(S0-2.1,SZo*.15)],.28,8);sweep(g,[at(S1+1,SZo),at(S1+2.8,SZo)],.42,10)},{bow:1});
+ Q(10,'brass',g=>sweep(g,[at(S1+.4,SZo),at(S1+1,SZo)],.5,10),{bow:1});
+ Q(10,'frog',g=>{sweep(g,[at(S1-1.2,SZo),at(S1-.4,SZo*.5),at(S1-.6,0)],.45,8);box(g,at(S1-.8,SZo*.55),[1.2,1.2,1.2])},{bow:1});
+ Q(10,'hair',g=>{const n=nrm(cross(BD,[0,0,1])),A0=at(S0-1.4),B0=at(S1-.6),w=P.bowHair;quad(g,add(A0,mul(n,-w)),add(B0,mul(n,-w)),add(B0,mul(n,w)),add(A0,mul(n,w)),[0,0,1]);quad(g,add(A0,mul(n,w)),add(B0,mul(n,w)),add(B0,mul(n,-w)),add(A0,mul(n,-w)),[0,0,-1]);sweep(g,[at(S1-.8),at(S1-8)],.3,8)},{bow:1});
+ return parts}
+
 /* ===================== editor ===================== */
-const C0=JSON.parse(JSON.stringify(C));C.skin=[.42,.3,.2];
-const MATN={wood:'琴筒木',ebony:'琴桿黑檀',dark:'深色木',ivory:'象牙白',str:'琴弦',hair:'弓毛',stick:'弓桿',black:'黑色飾帶',cord:'千斤繩',brass:'黃銅',felt:'琴碼墊',frog:'弓根',red:'紅色飾圈'};
-const PART=[[1,'琴頭',[-3,77,0],42],[2,'弦軸',[-6,63,0],55],[3,'千斤與微調器',[1,46,0],40],[4,'琴桿',[-1,36,0],105],[5,'琴筒',[0,6,0],55],[6,'蛇皮',[6.5,6,0],42],[7,'琴碼',[7,6,0],32],[8,'琴弦',[4,30,0],95],[9,'琴托',[0,1,0],50],[10,'弓',[0,18,0],130]];
-const SHAPE={1:['headY','headR','headA'],2:['peg1','peg2','pegLen','pegW'],3:['nutY','fineY'],4:['neckR','nutY'],5:['drumR','drumL'],6:['drumR'],8:['nutY'],10:['bowLen','bowAng']};
-const LBL={drumR:['琴筒半徑','cm'],drumL:['琴筒長度','cm'],nutY:['千斤高度','cm'],peg1:['上弦軸高度','cm'],peg2:['下弦軸高度','cm'],pegLen:['弦軸長度','cm'],pegW:['把手粗細','cm'],neckR:['琴桿半徑','cm'],headY:['琴頭起彎','cm'],headR:['彎曲半徑','cm'],headA:['彎曲程度','rad'],fineY:['微調器高度','cm'],bowLen:['弓長','cm'],bowAng:['弓的角度','°']};
+const C0=JSON.parse(JSON.stringify(C));
+const MATN={wood:'琴筒木',ebony:'琴桿黑檀',dark:'深色木',ivory:'象牙白',str:'琴弦',hair:'弓毛',stick:'弓桿',black:'黑色飾帶',cord:'千斤繩',brass:'黃銅',felt:'琴碼墊',frog:'弓根',red:'紅色飾圈',inner:'琴筒內壁',lattice:'音窗花格'};
+/* [id, name] ; pivots are computed from the current numbers */
+const PART=[[1,'琴頭'],[11,'軸箱'],[2,'弦軸'],[3,'千斤'],[13,'微調器'],[4,'琴桿'],[5,'琴筒'],[12,'音窗'],[6,'蛇皮'],[7,'琴碼'],[8,'琴弦'],[9,'琴托'],[10,'弓']];
+function pivotOf(id){const g=geo();return ({1:[NX-3,P.boxY1+P.headRise+3,0],11:[NX,(P.boxY0+P.boxY1)/2,0],2:[NX-6,(P.peg1Y+P.peg2Y)/2,0],3:[g.nutX-.5,P.nutY,0],13:[NX+2,P.fineY,0],4:[NX,30,0],5:[0,TY,0],12:[g.TX0,TY,0],6:[g.TX1,TY,0],7:[g.brX,g.brYa,0],8:[3,30,0],9:[0,1,0],10:[0,18,0]})[id]||[0,0,0]}
 const XF=[['dx','左右移動',-15,15,.1,'cm'],['dy','上下移動',-15,15,.1,'cm'],['dz','前後移動',-15,15,.1,'cm'],['rz','旋轉',-45,45,.5,'°'],['s','縮放',.5,1.6,.01,'×']];
 /* E is the whole editable document: shape numbers, material colours, per-part moves, hidden parts */
 let E={mdl:{},mat:{},xf:{},hide:{}};
@@ -238,8 +289,8 @@ const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}
 let gl,cv,prog,meshes=[],skinTex,W=0,H=0,pickFB=null,sel=0,spin=false,ruler=true,GLX=null;
 const cam={yaw:.72,pitch:.12,dist:158,tx:0,ty:40,tz:0};
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,1800)}
-function applyDoc(){S.mdl=E.mdl;Object.keys(C0).forEach(k=>C[k]=E.mat[k]||C0[k])}
-function mk(){applyDoc();const ext=GLX;return build().map(pt=>{const b=k=>{const o=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,o);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(pt.g[k]),gl.STATIC_DRAW);return o};
+function applyDoc(){setP(E.mdl);Object.keys(C0).forEach(k=>C[k]=E.mat[k]||C0[k])}
+function mk(){applyDoc();const ext=GLX;return build2().map(pt=>{const b=k=>{const o=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,o);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(pt.g[k]),gl.STATIC_DRAW);return o};
  const big=pt.g.p.length/3>65535,ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,big&&ext?new Uint32Array(pt.g.i):new Uint16Array(pt.g.i),gl.STATIC_DRAW);
  return {...pt,bp:b('p'),bn:b('n'),bu:b('u'),ib,cnt:pt.g.i.length,it:big&&ext?gl.UNSIGNED_INT:gl.UNSIGNED_SHORT}})}
 function rebuild(){meshes.forEach(m=>{gl.deleteBuffer(m.bp);gl.deleteBuffer(m.bn);gl.deleteBuffer(m.bu);gl.deleteBuffer(m.ib)});meshes=mk();stats()}
@@ -250,7 +301,7 @@ function init(){cv=$('#gl');gl=cv.getContext('webgl',{antialias:true,premultipli
  skinTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,skinTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,skinCanvas());
  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
  gl.enable(gl.DEPTH_TEST);meshes=mk();return true}
-const pivot=id=>(PART.find(p=>p[0]===id)||[0,0,[0,0,0]])[2];
+const pivot=pivotOf;
 function partM(id){const x=E.xf[id];if(!x)return trans(0,0,0);const p=pivot(id),a=(x.rz||0)*Math.PI/180,c=Math.cos(a),s=Math.sin(a),k=x.s??1;
  /* T(p+d)·Rz·S·T(-p) */const R=[c*k,s*k,0,0,-s*k,c*k,0,0,0,0,k,0,0,0,0,1];return mm(trans(p[0]+(x.dx||0),p[1]+(x.dy||0),p[2]+(x.dz||0)),mm(R,trans(-p[0],-p[1],-p[2])))}
 function eye(){const cp=Math.cos(cam.pitch);return [cam.tx+cam.dist*cp*Math.sin(cam.yaw),cam.ty+cam.dist*Math.sin(cam.pitch),cam.tz+cam.dist*cp*Math.cos(cam.yaw)]}
@@ -275,13 +326,33 @@ function pickAt(px,py){if(!pickFB){pickFB=gl.createFramebuffer();const tx=gl.cre
 function proj(p){const v=VPc,x=v[0]*p[0]+v[4]*p[1]+v[8]*p[2]+v[12],y=v[1]*p[0]+v[5]*p[1]+v[9]*p[2]+v[13],w=v[3]*p[0]+v[7]*p[1]+v[11]*p[2]+v[15];return [(x/w*.5+.5)*W,(1-(y/w*.5+.5))*H]}
 /* bounding box of the visible instrument (bow excluded), in cm */
 let BB=null;function stats(){let mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];meshes.forEach(m=>{if(m.bow||E.hide[m.id])return;const M=partM(m.id),p=m.g.p;for(let i=0;i<p.length;i+=9){const x=p[i],y=p[i+1],z=p[i+2],q=[M[0]*x+M[4]*y+M[8]*z+M[12],M[1]*x+M[5]*y+M[9]*z+M[13],M[2]*x+M[6]*y+M[10]*z+M[14]];for(let k=0;k<3;k++){mn[k]=Math.min(mn[k],q[k]);mx[k]=Math.max(mx[k],q[k])}}});
- BB={mn,mx};const h=mx[1]-mn[1];$('#stat').textContent=`琴高 ${h.toFixed(1)} cm · 千斤 ${NUTY.toFixed(1)} cm · 弓長 ${(MK.bowLen).toFixed(1)} cm`}
-function overlay(){const c=$('#ov'),g=c.getContext('2d');g.clearRect(0,0,W,H);if(!ruler||!BB||!VPc)return;const d=Math.min(2,devicePixelRatio||1),x0=BB.mn[0]-14,y0=Math.max(0,Math.floor(BB.mn[1]/10)*10),y1=Math.ceil(BB.mx[1]/10)*10;
+ BB={mn,mx};const h=mx[1]-mn[1];$('#stat').textContent=`琴高 ${h.toFixed(1)} cm · 千斤 ${P.nutY.toFixed(1)} cm · 弓長 ${P.bowLen.toFixed(1)} cm`}
+function overlay(){const c=$('#ov'),g=c.getContext('2d');g.clearRect(0,0,W,H);if(!VPc)return;if(!ruler||!BB){drawHandles(g,Math.min(2,devicePixelRatio||1));return}const d=Math.min(2,devicePixelRatio||1),x0=BB.mn[0]-14,y0=Math.max(0,Math.floor(BB.mn[1]/10)*10),y1=Math.ceil(BB.mx[1]/10)*10;
  const st=getComputedStyle(document.documentElement),col=st.getPropertyValue('--mut').trim()||'#777',fg=st.getPropertyValue('--fg').trim()||'#222';
  g.lineWidth=1.2*d;g.strokeStyle=col;g.fillStyle=col;g.font=`500 ${10*d}px JetBrains Mono, monospace`;g.textAlign='right';g.textBaseline='middle';
  const a=proj([x0,y0,0]),b=proj([x0,y1,0]);g.beginPath();g.moveTo(a[0],a[1]);g.lineTo(b[0],b[1]);g.stroke();
  for(let y=y0;y<=y1;y+=5){const p=proj([x0,y,0]),q=proj([x0+(y%10?1.2:2.4),y,0]);g.beginPath();g.moveTo(p[0],p[1]);g.lineTo(q[0],q[1]);g.stroke();if(y%10===0)g.fillText(y+'',p[0]-4*d,p[1])}
- const n=proj([x0,NUTY,0]),n2=proj([NX,NUTY,0]);g.setLineDash([4*d,4*d]);g.strokeStyle=fg;g.globalAlpha=.5;g.beginPath();g.moveTo(n[0],n[1]);g.lineTo(n2[0],n2[1]);g.stroke();g.setLineDash([]);g.globalAlpha=1;g.fillStyle=fg;g.textAlign='left';g.fillText('千斤',n[0]+4*d,n[1]-8*d)}
+ const n=proj([x0,P.nutY,0]),n2=proj([NX,P.nutY,0]);g.setLineDash([4*d,4*d]);g.strokeStyle=fg;g.globalAlpha=.5;g.beginPath();g.moveTo(n[0],n[1]);g.lineTo(n2[0],n2[1]);g.stroke();g.setLineDash([]);g.globalAlpha=1;g.fillStyle=fg;g.textAlign='left';g.fillText('千斤',n[0]+4*d,n[1]-8*d);drawHandles(g,d)}
+/* string handles: three points you drag in the front plane */
+function handles(){const g=geo();return [{k:'top',p:[g.topMid[0],g.topMid[1],0],name:'琴頭端'},{k:'nut',p:[g.nutX,P.nutY,0],name:'千斤'},{k:'bot',p:[g.bottom[0],g.bottom[1],0],name:'琴筒端'}]}
+let HD=null;
+function drawHandles(g,d){if(sel!==8)return;const st=getComputedStyle(document.documentElement),acc=st.getPropertyValue('--acc').trim(),fg=st.getPropertyValue('--fg').trim();
+ g.font=`700 ${11*d}px "Noto Sans TC",sans-serif`;g.textAlign='left';g.textBaseline='middle';
+ handles().forEach(h=>{const s=proj(h.p),on=HD&&HD.k===h.k;g.beginPath();g.arc(s[0],s[1],(on?11:9)*d,0,7);g.fillStyle=acc;g.globalAlpha=.9;g.fill();g.globalAlpha=1;g.lineWidth=2.5*d;g.strokeStyle='#fff';g.stroke();
+  g.fillStyle=fg;g.fillText(h.name,s[0]+14*d,s[1])})}
+function inv4(m){const o=new Array(16),[a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15]=m;
+ o[0]=a5*a10*a15-a5*a11*a14-a9*a6*a15+a9*a7*a14+a13*a6*a11-a13*a7*a10;o[4]=-a4*a10*a15+a4*a11*a14+a8*a6*a15-a8*a7*a14-a12*a6*a11+a12*a7*a10;o[8]=a4*a9*a15-a4*a11*a13-a8*a5*a15+a8*a7*a13+a12*a5*a11-a12*a7*a9;o[12]=-a4*a9*a14+a4*a10*a13+a8*a5*a14-a8*a6*a13-a12*a5*a10+a12*a6*a9;
+ o[1]=-a1*a10*a15+a1*a11*a14+a9*a2*a15-a9*a3*a14-a13*a2*a11+a13*a3*a10;o[5]=a0*a10*a15-a0*a11*a14-a8*a2*a15+a8*a3*a14+a12*a2*a11-a12*a3*a10;o[9]=-a0*a9*a15+a0*a11*a13+a8*a1*a15-a8*a3*a13-a12*a1*a11+a12*a3*a9;o[13]=a0*a9*a14-a0*a10*a13-a8*a1*a14+a8*a2*a13+a12*a1*a10-a12*a2*a9;
+ o[2]=a1*a6*a15-a1*a7*a14-a5*a2*a15+a5*a3*a14+a13*a2*a7-a13*a3*a6;o[6]=-a0*a6*a15+a0*a7*a14+a4*a2*a15-a4*a3*a14-a12*a2*a7+a12*a3*a6;o[10]=a0*a5*a15-a0*a7*a13-a4*a1*a15+a4*a3*a13+a12*a1*a7-a12*a3*a5;o[14]=-a0*a5*a14+a0*a6*a13+a4*a1*a14-a4*a2*a13-a12*a1*a6+a12*a2*a5;
+ o[3]=-a1*a6*a11+a1*a7*a10+a5*a2*a11-a5*a3*a10-a9*a2*a7+a9*a3*a6;o[7]=a0*a6*a11-a0*a7*a10-a4*a2*a11+a4*a3*a10+a8*a2*a7-a8*a3*a6;o[11]=-a0*a5*a11+a0*a7*a9+a4*a1*a11-a4*a3*a9-a8*a1*a7+a8*a3*a5;o[15]=a0*a5*a10-a0*a6*a9-a4*a1*a10+a4*a2*a9+a8*a1*a6-a8*a2*a5;
+ const det=a0*o[0]+a1*o[4]+a2*o[8]+a3*o[12];return o.map(v=>v/det)}
+/* screen point -> point on the plane z = 0 */
+function onPlane(px,py){const I=inv4(VPc),x=px/W*2-1,y=1-py/H*2,un=(z)=>{const v=[I[0]*x+I[4]*y+I[8]*z+I[12],I[1]*x+I[5]*y+I[9]*z+I[13],I[2]*x+I[6]*y+I[10]*z+I[14],I[3]*x+I[7]*y+I[11]*z+I[15]];return [v[0]/v[3],v[1]/v[3],v[2]/v[3]]};
+ const a=un(-1),b=un(1),dz=b[2]-a[2];if(Math.abs(dz)<1e-6)return null;const t=-a[2]/dz;if(Math.abs(dz)<.02*len(sub(b,a)))return null;return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]}
+function setPar(k,v){const d=PDEF.find(q=>q[0]===k);v=Math.max(d[4],Math.min(d[5],Math.round(v/d[6])*d[6]));if(Math.abs(v-d[3])<1e-9)delete E.mdl[k];else E.mdl[k]=+v.toFixed(4)}
+function dragHandle(h,w){if(!w)return;const g=geo();if(h==='top'){setPar('strTopX',w[0]-NX);setPar('strTopDY',w[1]-(P.peg1Y+P.peg2Y)/2)}
+ else if(h==='nut'){setPar('nutY',w[1]);setPar('nutGap',w[0]-NX-g.neckRAt(w[1]))}else{setPar('strBotX',w[0]);setPar('strBotY',w[1])}
+ cancelAnimationFrame(rbT);rbT=requestAnimationFrame(()=>{rebuild();if(sel===8||sel===3)peditUI()})}
 /* reference photo behind (or over) the model */
 const REF={img:null,op:.55,sc:1,x:0,y:0,front:false};
 function drawRef(){const c=$('#ref'),g=c.getContext('2d');g.clearRect(0,0,W,H);if(!REF.img)return;const im=REF.img,k=Math.min(W/im.width,H/im.height)*REF.sc,w=im.width*k,h=im.height*k;
@@ -289,35 +360,36 @@ function drawRef(){const c=$('#ref'),g=c.getContext('2d');g.clearRect(0,0,W,H);i
 function resize(){const r=$('#stage').getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1),w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));
  if(w!==W||h!==H){H=h;['#gl','#ref','#ov'].forEach(q=>{$(q).width=w;$(q).height=h});W=w;pickFB=null;return true}return false}
 let tw=null;function tween(to){const from={...cam},t0=performance.now();cancelAnimationFrame(tw);const step=()=>{const k=Math.min(1,(performance.now()-t0)/550),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;for(const q in to)cam[q]=from[q]+(to[q]-from[q])*e;if(k<1)tw=requestAnimationFrame(step)};step()}
-const VIEWS={front:{yaw:Math.PI/2,pitch:0,tx:0,ty:40,tz:0,dist:150},side:{yaw:0,pitch:0,tx:0,ty:40,tz:0,dist:150},back:{yaw:-Math.PI/2,pitch:0,tx:0,ty:40,tz:0,dist:150},three:{yaw:.72,pitch:.12,tx:0,ty:40,tz:0,dist:158},head:{yaw:.9,pitch:.15,tx:-3,ty:70,tz:0,dist:48},drum:{yaw:1.1,pitch:.2,tx:2,ty:7,tz:0,dist:48}};
+const VIEWS={front:{yaw:0,pitch:0,tx:0,ty:40,tz:0,dist:150},side:{yaw:Math.PI/2,pitch:0,tx:0,ty:40,tz:0,dist:150},back:{yaw:Math.PI,pitch:0,tx:0,ty:40,tz:0,dist:150},three:{yaw:.72,pitch:.12,tx:0,ty:40,tz:0,dist:158},head:{yaw:.9,pitch:.15,tx:-3,ty:74,tz:0,dist:42},drum:{yaw:-2.2,pitch:.15,tx:0,ty:7,tz:0,dist:40}};
 let last=0;function frame(t){requestAnimationFrame(frame);resize();if(spin)cam.yaw+=Math.min(.05,(t-last)/1000||0)*.35;last=t;draw(false);if(REF.front){$('#ref').style.zIndex=2}else{$('#ref').style.zIndex=0}drawRef();overlay()}
 function controls(){const pts=new Map();let st=null,moved=0,p0=0,d0=0,pan=null;
  cv.addEventListener('contextmenu',e=>e.preventDefault());
- cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);pts.set(e.pointerId,[e.clientX,e.clientY]);moved=0;spin=false;$('#spin').classList.remove('on');
+ cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);if(sel===8&&!pts.size){const r=cv.getBoundingClientRect(),d=W/r.width,px=(e.clientX-r.left)*d,py=(e.clientY-r.top)*d;const h=handles().find(h=>{const s=proj(h.p);return Math.hypot(s[0]-px,s[1]-py)<22*d});if(h){HD={k:h.k,id:e.pointerId};return}}
+  pts.set(e.pointerId,[e.clientX,e.clientY]);moved=0;spin=false;$('#spin').classList.remove('on');
   if(pts.size===1)st={x:e.clientX,y:e.clientY,yaw:cam.yaw,pitch:cam.pitch,tx:cam.tx,ty:cam.ty,btn:e.button,sh:e.shiftKey};
   if(pts.size===2){const [a,b]=[...pts.values()];p0=Math.hypot(a[0]-b[0],a[1]-b[1]);d0=cam.dist;pan={x:(a[0]+b[0])/2,y:(a[1]+b[1])/2,ty:cam.ty,tx:cam.tx}}});
- cv.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,[e.clientX,e.clientY]);
+ cv.addEventListener('pointermove',e=>{if(HD&&HD.id===e.pointerId){const r=cv.getBoundingClientRect(),d=W/r.width;dragHandle(HD.k,onPlane((e.clientX-r.left)*d,(e.clientY-r.top)*d));return}if(!pts.has(e.pointerId))return;pts.set(e.pointerId,[e.clientX,e.clientY]);
   if(pts.size===2){const [a,b]=[...pts.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);cam.dist=Math.max(20,Math.min(320,d0*p0/d));const k=cam.dist/($('#stage').clientHeight||1)*.9;cam.ty=pan.ty+((a[1]+b[1])/2-pan.y)*k;moved=9;return}
   if(st){const dx=e.clientX-st.x,dy=e.clientY-st.y;moved=Math.max(moved,Math.hypot(dx,dy));
    if(st.btn===2||st.sh){const k=cam.dist/($('#stage').clientHeight||1)*.9;cam.ty=st.ty+dy*k;cam.tx=st.tx-dx*k*Math.cos(cam.yaw)}else{cam.yaw=st.yaw-dx*.008;cam.pitch=Math.max(-1.2,Math.min(1.3,st.pitch+dy*.006))}}});
- const up=e=>{const was=pts.size;pts.delete(e.pointerId);if(was===1&&moved<6){const r=cv.getBoundingClientRect(),d=W/r.width;choose(pickAt((e.clientX-r.left)*d,(e.clientY-r.top)*d),true)}if(!pts.size)st=null};
+ const up=e=>{if(HD&&HD.id===e.pointerId){HD=null;commit();peditUI();return}const was=pts.size;pts.delete(e.pointerId);if(was===1&&moved<6){const r=cv.getBoundingClientRect(),d=W/r.width;choose(pickAt((e.clientX-r.left)*d,(e.clientY-r.top)*d),true)}if(!pts.size)st=null};
  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(20,Math.min(320,cam.dist*(1+Math.sign(e.deltaY)*.08)))},{passive:false})}
 /* ---------- history ---------- */
 let HIST=[],FUT=[];const snap=()=>JSON.stringify(E);
-function commit(){const s=snap();if(HIST[HIST.length-1]!==s){HIST.push(s);if(HIST.length>120)HIST.shift();FUT=[]}LS.set('erhuEd.cur',E);histUI()}
+function commit(){const s=snap();if(HIST[HIST.length-1]!==s){HIST.push(s);if(HIST.length>120)HIST.shift();FUT=[]}LS.set('erhuEd2.cur',E);histUI()}
 function histUI(){$('#undo').disabled=HIST.length<2;$('#redo').disabled=!FUT.length}
 function restore(s){E=JSON.parse(s);rebuild();ui()}
-function undo(){if(HIST.length<2)return;FUT.push(HIST.pop());restore(HIST[HIST.length-1]);LS.set('erhuEd.cur',E);histUI();toast('已復原')}
-function redo(){if(!FUT.length)return;const s=FUT.pop();HIST.push(s);restore(s);LS.set('erhuEd.cur',E);histUI();toast('已重做')}
+function undo(){if(HIST.length<2)return;FUT.push(HIST.pop());restore(HIST[HIST.length-1]);LS.set('erhuEd2.cur',E);histUI();toast('已復原')}
+function redo(){if(!FUT.length)return;const s=FUT.pop();HIST.push(s);restore(s);LS.set('erhuEd2.cur',E);histUI();toast('已重做')}
 /* ---------- panels ---------- */
 const fmt=(v,st)=>(+v).toFixed(st<.1?2:st<1?1:0);
 function row(id,label,unit,v,mn,mx,st,def){const ch=Math.abs(v-def)>1e-6;return `<div class="row${ch?' chg':''}" data-id="${id}"><label for="r_${id}">${label}</label><input type="range" id="r_${id}" min="${mn}" max="${mx}" step="${st}" value="${v}"><input type="number" aria-label="${label}（${unit}）" min="${mn}" max="${mx}" step="${st}" value="${fmt(v,st)}"></div>`}
 function plistUI(){$('#plist').innerHTML=PART.map(([id,n])=>`<div class="it${sel===id?' on':''}${E.hide[id]?' hid':''}" data-id="${id}"><span>${n}</span><button class="eye" data-eye="${id}" aria-label="${E.hide[id]?'顯示':'隱藏'}${n}">${E.hide[id]?'顯示':'隱藏'}</button></div>`).join('');
  $$('#plist .it').forEach(el=>el.onclick=e=>{if(e.target.dataset.eye){const id=+e.target.dataset.eye;E.hide[id]=!E.hide[id];if(!E.hide[id])delete E.hide[id];stats();commit();plistUI();return}choose(+el.dataset.id,false)})}
 function peditUI(){const box=$('#pedit');if(!sel){box.innerHTML='<h2>零件設定</h2><p class="empty">點模型上的任何零件，或從上面清單選一個，就能調整它的形狀、位置和顏色。</p>';return}
- const p=PART.find(x=>x[0]===sel),keys=SHAPE[sel]||[],x=E.xf[sel]||{},mats=[...new Set(meshes.filter(m=>m.id===sel).map(m=>m.mat))].filter(m=>m!=='skin');
- let h=`<h2>${p[1]}：形狀</h2>`;h+=keys.length?keys.map(k=>{const d=MDEF.find(q=>q[0]===k);return row('m.'+k,LBL[k][0],LBL[k][1],MK[k],d[2],d[3],d[4],d[1])}).join(''):'<p class="note">這個零件沒有獨立的形狀參數，可以用下面的位置和大小調整。</p>';
+ const p=PART.find(x=>x[0]===sel),keys=PDEF.filter(d=>d[1]===sel),x=E.xf[sel]||{},mats=[...new Set(meshes.filter(m=>m.id===sel).map(m=>m.mat))].filter(m=>m!=='skin');
+ let h=`<h2>${p[1]}：形狀</h2>`+(sel===8?'<p class="note">在模型上直接拖動三個圓點（琴頭端、千斤、琴筒端）就能固定與拉伸琴弦。建議先切到「正面」視角。</p>':'');h+=keys.length?keys.map(d=>row('m.'+d[0],d[2],d[7],P[d[0]],d[4],d[5],d[6],d[3])).join(''):'<p class="note">這個零件跟著琴筒的大小走，可以用下面的位置和大小調整。</p>';
  h+=`<h2>${p[1]}：位置與大小</h2>`+XF.map(([k,l,mn,mx,st,u])=>row('x.'+k,l,u,x[k]??(k==='s'?1:0),mn,mx,st,k==='s'?1:0)).join('')+`<div class="hstack"><button id="xfReset">這個零件回到原位</button></div>`;
  if(mats.length)h+=`<h2>${p[1]}：顏色</h2><div class="mats">${mats.map(matHTML).join('')}</div>`;
  box.innerHTML=h;bindRows(box);bindMats(box);const r=$('#xfReset');if(r)r.onclick=()=>{delete E.xf[sel];stats();commit();peditUI();toast('已回到原位')}}
@@ -327,7 +399,7 @@ function matsUI(){$('#mats').innerHTML=Object.keys(C0).map(matHTML).join('')+'<d
 function bindMats(root){root.querySelectorAll('.mat input').forEach(inp=>{const k=inp.closest('.mat').dataset.mat;inp.oninput=()=>{E.mat[k]=unhex(inp.value);C[k]=E.mat[k];inp.closest('.mat').classList.add('chg')};inp.onchange=()=>commit()})}
 let rbT=0;function bindRows(root){root.querySelectorAll('.row').forEach(r=>{const id=r.dataset.id,[kind,k]=id.split('.'),rg=r.querySelector('input[type=range]'),nb=r.querySelector('input[type=number]'),st=+rg.step;
  const set=(v,fin)=>{v=Math.max(+rg.min,Math.min(+rg.max,+v));if(isNaN(v))return;rg.value=v;nb.value=fmt(v,st);
-  if(kind==='m'){E.mdl[k]=v;const d=MDEF.find(q=>q[0]===k)[1];if(Math.abs(v-d)<1e-6)delete E.mdl[k];r.classList.toggle('chg',Math.abs(v-d)>1e-6);cancelAnimationFrame(rbT);rbT=requestAnimationFrame(rebuild)}
+  if(kind==='m'){E.mdl[k]=v;const d=PDEF.find(q=>q[0]===k)[3];if(Math.abs(v-d)<1e-6)delete E.mdl[k];r.classList.toggle('chg',Math.abs(v-d)>1e-6);cancelAnimationFrame(rbT);rbT=requestAnimationFrame(rebuild)}
   else{const x=E.xf[sel]=E.xf[sel]||{};x[k]=v;const d=k==='s'?1:0;r.classList.toggle('chg',Math.abs(v-d)>1e-6);if(Object.keys(x).every(q=>Math.abs(x[q]-(q==='s'?1:0))<1e-6))delete E.xf[sel];stats()}
   if(fin)commit()};
  rg.oninput=()=>set(rg.value);rg.onchange=()=>set(rg.value,1);nb.onchange=()=>set(nb.value,1)})}
@@ -335,9 +407,9 @@ function ui(){plistUI();peditUI();matsUI();vUI()}
 function choose(id,fromModel){sel=id||0;$('#selb').hidden=!sel;if(sel)$('#selb').textContent='已選：'+PART.find(p=>p[0]===sel)[1];plistUI();peditUI();if(sel&&fromModel)tab('part')}
 function tab(n){$$('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===n));['part','color','ref','file'].forEach(k=>$('#p-'+k).hidden=k!==n)}
 /* ---------- versions & export ---------- */
-function vUI(){const V=LS.get('erhuEd.vers',[]);$('#vers').innerHTML=V.length?V.map((v,i)=>`<div class="ver"><b>${v.name.replace(/</g,'&lt;')}</b><small>${new Date(v.t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</small><button data-ld="${i}">載入</button><button data-del="${i}" aria-label="刪除">刪除</button></div>`).join(''):'<p class="empty">還沒有存過版本。調到一個滿意的樣子就存一份，之後可以隨時切回來。</p>';
- $$('#vers [data-ld]').forEach(b=>b.onclick=()=>{const v=LS.get('erhuEd.vers',[])[+b.dataset.ld];E=JSON.parse(JSON.stringify(v.data));rebuild();commit();ui();toast('已載入「'+v.name+'」')});
- $$('#vers [data-del]').forEach(b=>b.onclick=()=>{if(b.dataset.ok){const V=LS.get('erhuEd.vers',[]);V.splice(+b.dataset.del,1);LS.set('erhuEd.vers',V);vUI();toast('已刪除')}else{b.dataset.ok=1;b.textContent='再按一次確認';setTimeout(()=>{if(b.isConnected){delete b.dataset.ok;b.textContent='刪除'}},2500)}})}
+function vUI(){const V=LS.get('erhuEd2.vers',[]);$('#vers').innerHTML=V.length?V.map((v,i)=>`<div class="ver"><b>${v.name.replace(/</g,'&lt;')}</b><small>${new Date(v.t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</small><button data-ld="${i}">載入</button><button data-del="${i}" aria-label="刪除">刪除</button></div>`).join(''):'<p class="empty">還沒有存過版本。調到一個滿意的樣子就存一份，之後可以隨時切回來。</p>';
+ $$('#vers [data-ld]').forEach(b=>b.onclick=()=>{const v=LS.get('erhuEd2.vers',[])[+b.dataset.ld];E=JSON.parse(JSON.stringify(v.data));rebuild();commit();ui();toast('已載入「'+v.name+'」')});
+ $$('#vers [data-del]').forEach(b=>b.onclick=()=>{if(b.dataset.ok){const V=LS.get('erhuEd2.vers',[]);V.splice(+b.dataset.del,1);LS.set('erhuEd2.vers',V);vUI();toast('已刪除')}else{b.dataset.ok=1;b.textContent='再按一次確認';setTimeout(()=>{if(b.isConnected){delete b.dataset.ok;b.textContent='刪除'}},2500)}})}
 function docOut(){const o={v:1};if(Object.keys(E.mdl).length)o.mdl=E.mdl;if(Object.keys(E.mat).length)o.mat=Object.fromEntries(Object.entries(E.mat).map(([k,c])=>[k,hex(c)]));if(Object.keys(E.xf).length)o.xf=E.xf;if(Object.keys(E.hide).length)o.hide=Object.keys(E.hide).map(Number);return o}
 function docIn(o){const e={mdl:o.mdl||{},mat:{},xf:o.xf||{},hide:{}};Object.entries(o.mat||{}).forEach(([k,h])=>e.mat[k]=typeof h==='string'?unhex(h):h);(o.hide||[]).forEach(i=>e.hide[i]=true);return e}
 /* minimal GLB writer: one node per part, cm -> m, part moves baked in */
@@ -353,7 +425,7 @@ function glb(){const mats=[],mi={},nodes=[],meshesJ=[],acc=[],views=[],bufs=[];l
  const total=12+8+jb.length+8+off,out=new Uint8Array(total),dv=new DataView(out.buffer);dv.setUint32(0,0x46546C67,true);dv.setUint32(4,2,true);dv.setUint32(8,total,true);dv.setUint32(12,jb.length,true);dv.setUint32(16,0x4E4F534A,true);out.set(jb,20);
  let o=20+jb.length;dv.setUint32(o,off,true);dv.setUint32(o+4,0x004E4942,true);o+=8;bufs.forEach(b=>{out.set(b,o);o+=b.length});return out}
 /* ---------- wire up ---------- */
-function start(){if(!init())return;E=Object.assign({mdl:{},mat:{},xf:{},hide:{}},LS.get('erhuEd.cur',{}));rebuild();HIST=[snap()];histUI();controls();ui();choose(0);requestAnimationFrame(frame);
+function start(){if(!init())return;E=Object.assign({mdl:{},mat:{},xf:{},hide:{}},LS.get('erhuEd2.cur',{}));rebuild();HIST=[snap()];histUI();controls();ui();choose(0);requestAnimationFrame(frame);
  $$('#views button').forEach(b=>b.onclick=()=>{$$('#views button').forEach(x=>x.classList.toggle('on',x===b));spin=false;$('#spin').classList.remove('on');tween(VIEWS[b.dataset.v])});
  $$('.tabs button').forEach(b=>b.onclick=()=>tab(b.dataset.t));
  $('#undo').onclick=undo;$('#redo').onclick=redo;document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();e.shiftKey?redo():undo()}});
@@ -364,14 +436,14 @@ function start(){if(!init())return;E=Object.assign({mdl:{},mat:{},xf:{},hide:{}}
  [['rOp','op','%',v=>Math.round(v*100)],['rSc','sc','×',v=>(+v).toFixed(2)],['rX','x','',v=>(+v).toFixed(2)],['rY','y','',v=>(+v).toFixed(2)]].forEach(([id,k,u,f])=>{const i=$('#'+id),o=$('#'+id+'V');const s=()=>{REF[k]=+i.value;o.textContent=f(i.value)+u};i.oninput=s;s()});
  $('#rFront').onclick=()=>{REF.front=!REF.front;$('#rFront').classList.toggle('on',REF.front);$('#rFront').textContent=REF.front?'照片放回模型後面':'照片蓋在模型上'};
  $('#rClear').onclick=()=>{REF.img=null;$('#refCtl').hidden=true;$('#drop').textContent='點這裡選照片，或把照片拖進來';$('#refFile').value=''};
- $('#vSave').onclick=()=>{const V=LS.get('erhuEd.vers',[]),name=$('#vName').value.trim()||('版本 '+(V.length+1));V.unshift({name,t:Date.now(),data:JSON.parse(snap())});LS.set('erhuEd.vers',V);$('#vName').value='';vUI();toast('已存成「'+name+'」')};
+ $('#vSave').onclick=()=>{const V=LS.get('erhuEd2.vers',[]),name=$('#vName').value.trim()||('版本 '+(V.length+1));V.unshift({name,t:Date.now(),data:JSON.parse(snap())});LS.set('erhuEd2.vers',V);$('#vName').value='';vUI();toast('已存成「'+name+'」')};
  $('#copy').onclick=()=>{const txt='二胡模型設定 '+JSON.stringify(docOut());const o=$('#out');o.value=txt;o.hidden=false;
   const done=()=>toast('已複製，貼到對話給 Claude 就可以'),fb=()=>{o.focus();o.select();toast('請長按或 Ctrl+C 複製下方文字')};try{navigator.clipboard.writeText(txt).then(done,fb)}catch(e){fb()}};
  $('#glb').onclick=()=>{const b=new Blob([glb()],{type:'model/gltf-binary'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='erhu_model.glb';document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),500);toast('已產生 erhu_model.glb（在 Claude 裡預覽時無法下載，請用 GitHub 版）')};
  $('#imp').onclick=()=>{const t=$('#inp').value,i=t.indexOf('{');try{const o=JSON.parse(t.slice(i));E=docIn(o);rebuild();commit();ui();$('#inp').value='';toast('已套用設定')}catch(e){toast('看不懂這段文字，請貼上完整的「二胡模型設定 {…}」')}};
 }
 start();
-window.ED={get E(){return E},choose,MK:()=>MK,glb,docOut,pickAt:(x,y)=>pickAt(x,y),cam};
+window.ED={get E(){return E},choose,P:()=>P,handles,dragHandle,onPlane,proj,glb,docOut,pickAt:(x,y)=>pickAt(x,y),cam};
 </script>
 
 </body></html>
