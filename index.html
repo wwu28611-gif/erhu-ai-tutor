@@ -451,7 +451,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
 .hudbar{position:relative;flex:1;min-width:3.5rem;height:.4rem;border-radius:1rem;background:linear-gradient(90deg,#ef4444,#f59e0b 30%,#22c55e 42%,#22c55e 58%,#f59e0b 70%,#ef4444);margin-left:auto}.hudbar i{position:absolute;left:50%;top:-.15rem;bottom:-.15rem;width:2px;background:#fff;opacity:.6}.hudbar em{position:absolute;top:-.3rem;left:50%;width:.6rem;height:1rem;margin-left:-.3rem;border-radius:.3rem;background:#fff;transition:left .12s}
 
 .simcard{display:flex;align-items:center;gap:.8rem;width:100%;text-align:left;margin-top:.9rem;cursor:pointer;background:linear-gradient(135deg,var(--sf),var(--acs));border:1px solid var(--ln);color:var(--fg);font:inherit}
-.simcimg{width:2.6rem;height:2.6rem;object-fit:contain}.simci{font-size:2rem;width:3.2rem;height:3.2rem;display:grid;place-items:center;background:var(--sf);border-radius:1rem;flex:none;box-shadow:var(--sh)}.simct{flex:1;display:flex;flex-direction:column;gap:.15rem}.simct b{font-size:1rem}.simct .mut{font-size:.78rem;line-height:1.4}
+.lsim{width:100%;margin:0 0 .8rem}.simcimg{width:2.6rem;height:2.6rem;object-fit:contain}.simci{font-size:2rem;width:3.2rem;height:3.2rem;display:grid;place-items:center;background:var(--sf);border-radius:1rem;flex:none;box-shadow:var(--sh)}.simct{flex:1;display:flex;flex-direction:column;gap:.15rem}.simct b{font-size:1rem}.simct .mut{font-size:.78rem;line-height:1.4}
 .simcb{background:var(--ac);color:#fff;border-radius:2rem;padding:.4rem .85rem;font-size:.8rem;font-weight:700;white-space:nowrap}
 .simw{position:relative;margin-top:.7rem;border-radius:1.2rem;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#f4efe6 0%,#d9d0c2 70%,#c9bfaf 100%);height:min(56vh,27rem);box-shadow:var(--sh)}
 :root[data-theme="dark"] .simw{background:radial-gradient(ellipse at 50% 40%,#3a3632 0%,#24211e 70%,#1a1816 100%)}
@@ -606,12 +606,12 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div id="plD"></div><div class="gap" style="height:.8rem"></div><div id="plE"></div>
 </div></section>
 <section id="v-sim"><div class="narrow">
- <button class="quiet plback" data-go="today">‹ <span data-i="nToday"></span></button>
+ <button class="quiet plback" id="simBack" data-go="today">‹ <span data-i="nToday"></span></button>
  <div class="pt" style="margin-top:.2rem"><h1 data-i="simT"></h1><p data-i="simSub"></p></div>
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v65</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v66</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1270,6 +1270,9 @@ arHint|AR 會用手機的相機把二胡放在地上或桌上，可以走過去�
 arPhone|AR 需要用手機開啟（iPhone 用 Safari、Android 用 Chrome）|AR needs a phone (Safari on iPhone, Chrome on Android)|AR はスマホで開いてください（iPhone は Safari、Android は Chrome）
 arInApp|LINE、Messenger 等內建瀏覽器無法使用 AR，請點右上角選單「用瀏覽器開啟」|In-app browsers can't open AR. Use the menu to open in your browser|アプリ内ブラウザでは AR が使えません。メニューから「ブラウザで開く」を選んでください
 arCamOn|相機已開啟，拖曳轉動二胡、兩指縮放大小|Camera on: drag to turn, pinch to resize|カメラ オン：ドラッグで回転、ピンチで拡大縮小
+lsSimT|用 3D 二胡認識每個零件|Explore each part in 3D|3D 二胡で各パーツを見る
+lsSimD|轉一轉、點零件，還能聽語音介紹|Spin it, tap a part and listen to its explanation|回して、パーツをタップして音声で聞こう
+lsBackL|回到課程|Back to lesson|レッスンに戻る
 simSay|語音介紹|Listen|音声で聞く
 airL|虛擬二胡|Virtual erhu|バーチャル二胡
 airT|把虛擬二胡拿在手上拉|Play a virtual erhu with your body|体で弾くバーチャル二胡
@@ -1618,7 +1621,9 @@ $('#voice').onchange=e=>{S.voice=e.target.checked;save()};
 $('#click').onchange=e=>{S.click=e.target.checked;save()};
 
 $('#reset').onclick=()=>{S=Object.assign({},def);norm();try{localStorage.removeItem('erhu')}catch(e){};apply();$('#ov').classList.add('on')};
-function view(v){if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v==='cam')preloadModels();if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&v!=='play'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&v!=='play'&&P&&P.on)stopDrill();if(v==='play'||v==='drill')placeDrill(v);if(v==='sim')SIM.open();else{SIM.close();if(simStream)simCamBg(false)}if(v==='play')plUI();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));const grp=NAVG[v]||v;$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===grp));$('#ptabs').hidden=grp!=='prac'||v==='home';$$('#ptabs button').forEach(b=>b.classList.toggle('sel',b.dataset.go===v));if(v==='me')meUI();if(v==='songs')songsUI();$('main').scrollTop=0}
+let SIMBACK=null;
+function simBackUI(){const b=$('#simBack');if(!b)return;const L=SIMBACK==='lesson';b.dataset.go=L?'lesson':'today';b.querySelector('span').textContent=t(L?'lsBackL':'nToday')}
+function view(v){if(v==='sim')setTimeout(simBackUI,0);else SIMBACK=null;if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v==='cam')preloadModels();if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&v!=='play'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&v!=='play'&&P&&P.on)stopDrill();if(v==='play'||v==='drill')placeDrill(v);if(v==='sim')SIM.open();else{SIM.close();if(simStream)simCamBg(false)}if(v==='play')plUI();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));const grp=NAVG[v]||v;$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===grp));$('#ptabs').hidden=grp!=='prac'||v==='home';$$('#ptabs button').forEach(b=>b.classList.toggle('sel',b.dataset.go===v));if(v==='me')meUI();if(v==='songs')songsUI();$('main').scrollTop=0}
 $$('nav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b&&!b.disabled)view(b.dataset.go)});
 
@@ -2475,7 +2480,7 @@ const TRACKS={
  basic:[
   {u:'第一階段・認識二胡',days:'1～15',ls:[
    {id:'b1',title:'認識你的二胡',gain:'認識二胡的內弦與外弦',steps:[
-    {t:'learn',fig:[['erhu','figErhu'],['bow','figBow']],cards:[L_('二胡只有兩條弦','靠近你的是內弦，聲音比較低沉；外面那條是外弦，聲音比較明亮。','img:erhu'),L_('弓毛夾在兩弦中間','拉內弦時弓毛貼著內弦，拉外弦時貼著外弦，弓不用拿出來。','img:bow'),L_('上方的琴軸用來調音','轉動琴軸會讓弦變緊或變鬆，聲音也跟著變高或變低。','img:peg')]},
+    {t:'learn',sim:1,fig:[['erhu','figErhu'],['bow','figBow']],cards:[L_('二胡只有兩條弦','靠近你的是內弦，聲音比較低沉；外面那條是外弦，聲音比較明亮。','img:erhu'),L_('弓毛夾在兩弦中間','拉內弦時弓毛貼著內弦，拉外弦時貼著外弦，弓不用拿出來。','img:bow'),L_('上方的琴軸用來調音','轉動琴軸會讓弦變緊或變鬆，聲音也跟著變高或變低。','img:peg')]},
     {t:'self',h:'把二胡拿出來，找到內弦和外弦',p:'用手指輕輕撥一下兩條弦，聽聽哪條比較低、哪條比較高。'}]},
    {id:'b2',title:'坐好、拿好琴',gain:'放鬆地坐好、拿好琴',steps:[
     {t:'learn',cards:[L_('坐椅子的前半部','雙腳平放在地上，背挺直但不要僵硬。','🪑'),L_('琴筒放在左腿上','琴筒穩穩放在左大腿靠近腰的地方，琴桿微微往左前方傾斜。','img:erhu'),L_('肩膀放鬆','肩膀自然往下垂，不要聳起來，手才拉得久。','😌')]},
@@ -2666,7 +2671,7 @@ function renderLesson(){if(!LS)return;const l=LX[LS.lid],steps=l.steps,b=$('#lsB
   b.innerHTML=`<div class="lsdone"><div class="big">🎉</div><h2>${t('lsDoneT')}</h2><p>${t('lsDoneG')}<b>${esc(l.gain)}</b></p>${LS.xp?`<div class="xpwin">🏆 +${LS.xp} EXP</div>`:''}
    ${n&&!isDaily(l)?`<button class="btn lg" data-ls="${n.id}">${t('lsNextL')}：${esc(n.title)}</button>`:''}<button class="btn alt lg" id="lsHome" style="margin-top:.6rem">${t('lsHomeL')}</button></div>`;return}
  const st=steps[LS.si];let h='';
- if(st.t==='learn')h=`${st.vid?`<div class="lvidw"><video class="lvid" src="${st.vid}" autoplay muted loop playsinline controls></video><p class="mut">${t('vidCap')}</p></div>`:''}${st.fig?`<div class="lfig">${st.fig.map(([k,n])=>`<figure><img src="${IMG[k]}" alt=""><figcaption>${t(n)}</figcaption></figure>`).join('')}</div>`:''}<div class="lcards">${st.cards.map(c=>`<div class="lcard">${c.i.startsWith('img:')?`<img class="lcimg" src="${IMG[c.i.slice(4)]}" alt="">`:`<span class="lci">${c.i}</span>`}<div><b>${esc(c.h)}</b><p>${esc(c.p)}</p></div></div>`).join('')}</div>
+ if(st.t==='learn')h=`${st.vid?`<div class="lvidw"><video class="lvid" src="${st.vid}" autoplay muted loop playsinline controls></video><p class="mut">${t('vidCap')}</p></div>`:''}${st.fig?`<div class="lfig">${st.fig.map(([k,n])=>`<figure><img src="${IMG[k]}" alt=""><figcaption>${t(n)}</figcaption></figure>`).join('')}</div>`:''}${st.sim?`<button class="card simcard lsim" id="lsSim"><span class="simci"><img class="simcimg" src="${IMG.erhu}" alt=""></span><span class="simct"><b>${t('lsSimT')}</b><span class="mut">${t('lsSimD')}</span></span><span class="chev">›</span></button>`:''}<div class="lcards">${st.cards.map(c=>`<div class="lcard">${c.i.startsWith('img:')?`<img class="lcimg" src="${IMG[c.i.slice(4)]}" alt="">`:`<span class="lci">${c.i}</span>`}<div><b>${esc(c.h)}</b><p>${esc(c.p)}</p></div></div>`).join('')}</div>
   <div class="row2 r2e"><button class="btn alt" id="lsSay">🔊 ${t('aiListen')}</button><button class="btn" id="lsNext">${t('lsGot')}</button></div>`;
  else if(st.t==='self')h=`<div class="lstep"><span class="lsi">${SICON.self}</span><h3>${esc(st.h)}</h3><p class="mut">${esc(st.p)}</p></div><button class="btn lg" id="lsNext">${t('lsDid')}</button>`;
  else if(st.t==='rate')h=`<div class="lstep"><span class="lsi">⭐</span><h3>${t('rateT')}</h3><div class="stars">${[1,2,3,4,5].map(i=>`<button data-rate="${i}" class="${i<=LS.rate?'on':''}">★</button>`).join('')}</div><p class="mut">${t('rateD')}</p></div><button class="btn lg" id="lsNext" ${LS.rate?'':'disabled'}>${t('done')}</button>`;
@@ -2711,6 +2716,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('[data-ls]');if(a
  const r=e.target.closest('[data-rate]');if(r&&LS){LS.rate=+r.dataset.rate;const l=LX[LS.lid];(S.course.rate[today()]||(S.course.rate[today()]={}))[l.id]=LS.rate;save();renderLesson();return}
  const id=e.target.id;
  if(id==='lsNext')lsAdvance();else if(id==='lsGo')lsStartTool();else if(id==='lsSkip')lsAdvance();
+ else if(e.target.closest('#lsSim')){SIMBACK='lesson';view('sim')}
  else if(id==='lsSay'){const st=curStep();if(st&&st.cards)tts(st.cards.map(c=>c.h+'。'+c.p).join(' '),1)}
  else if(id==='lsHome'){LS=null;view('course')}
  else if(id==='lsKnow'&&LS){const n=LS.lid;LS=null;markKnown(n);view('today')}
