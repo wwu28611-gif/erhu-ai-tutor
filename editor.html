@@ -277,10 +277,9 @@ function build2(){const parts=[],Q=(id,mat,fn,o={})=>{const g=G();fn(g);if(g.i.l
   /* each pass: from the front of the neck out to the strings, hook over their front, come back to the SAME side of the neck
      and wind on round the back of the neck to where the next pass starts (no crossing between neck and strings) */
   const phi=.55;for(let k=0;k<n8;k++){const pts=[],yy=y,ys=P.nutY+(n8>1?(k/(n8-1)-.5)*P.nutBite:0),b0=Math.PI/2+.05;
-   const sd=k%2?-1:1;/* passes alternate sides so the wraps also cover the front of the neck */
-   pts.push([NX+Math.cos(phi)*rN,yy,sd*Math.sin(phi)*rN]);
-   for(let q=0;q<=16;q++){const b=b0-q/16*(2*b0);pts.push([cx+Math.cos(b)*cxr,ys,sd*Math.sin(b)*cz])}
-   for(let q=0;q<=36;q++){const a=-phi-q/36*Math.PI*2;pts.push([NX+Math.cos(a)*rN,yy+pitch*(.15+.85*q/36),sd*Math.sin(a)*rN])}
+   pts.push([NX+Math.cos(phi)*rN,yy,Math.sin(phi)*rN]);
+   for(let q=0;q<=16;q++){const b=b0-q/16*(2*b0);pts.push([cx+Math.cos(b)*cxr,ys,Math.sin(b)*cz])}
+   for(let q=0;q<=28;q++){const a=-phi-q/28*(Math.PI*2-2*phi);pts.push([NX+Math.cos(a)*rN,yy+pitch*(.15+.85*q/28),Math.sin(a)*rN])}
    dbl(pts);y+=pitch}
   for(let k=0;k<nt;k++)neckTurn();
   /* knot and tails at the back */
