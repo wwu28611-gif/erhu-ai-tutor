@@ -611,7 +611,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v66</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v67</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1621,9 +1621,11 @@ $('#voice').onchange=e=>{S.voice=e.target.checked;save()};
 $('#click').onchange=e=>{S.click=e.target.checked;save()};
 
 $('#reset').onclick=()=>{S=Object.assign({},def);norm();try{localStorage.removeItem('erhu')}catch(e){};apply();$('#ov').classList.add('on')};
-let SIMBACK=null;
+let SIMBACK=null,VCUR=null;
+/* speech belongs to the screen that started it: stop it when the screen or lesson step changes */
+function ttsStop(){try{if('speechSynthesis' in window&&(speechSynthesis.speaking||speechSynthesis.pending))speechSynthesis.cancel()}catch(e){}}
 function simBackUI(){const b=$('#simBack');if(!b)return;const L=SIMBACK==='lesson';b.dataset.go=L?'lesson':'today';b.querySelector('span').textContent=t(L?'lsBackL':'nToday')}
-function view(v){if(v==='sim')setTimeout(simBackUI,0);else SIMBACK=null;if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v==='cam')preloadModels();if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&v!=='play'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&v!=='play'&&P&&P.on)stopDrill();if(v==='play'||v==='drill')placeDrill(v);if(v==='sim')SIM.open();else{SIM.close();if(simStream)simCamBg(false)}if(v==='play')plUI();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));const grp=NAVG[v]||v;$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===grp));$('#ptabs').hidden=grp!=='prac'||v==='home';$$('#ptabs button').forEach(b=>b.classList.toggle('sel',b.dataset.go===v));if(v==='me')meUI();if(v==='songs')songsUI();$('main').scrollTop=0}
+function view(v){if(v!==VCUR)ttsStop();VCUR=v;if(v==='sim')setTimeout(simBackUI,0);else SIMBACK=null;if(LS&&LS.tool&&v!==LS.toolView&&v!=='lesson')lbHide();if(TVIEWS.includes(v)){setMode('t');if(v!=='lesson')S.lastT=v;crUI()}else if(HVIEWS.includes(v)&&!(LS&&LS.tool)){setMode('h');S.lastH=v}if(v==='cam')preloadModels();if(v!=='cam'&&camOn)stopCam();if(GK&&GK!==v&&!$('#coach').hidden)$('#coach').hidden=true;if(v!=='drill'&&v!=='play'&&DM)stopDemo();if(v==='tune'&&!stream&&!walkOn)mic();if(v!=='tune'&&stream)mic();if(v!=='cam'&&camOn)stopCam();if(S.read)setTimeout(readSec,350);if(v==='tune'||v==='drill')setTimeout(()=>guide(v),500);if(v!=='drill'&&v!=='play'&&P&&P.on)stopDrill();if(v==='play'||v==='drill')placeDrill(v);if(v==='sim')SIM.open();else{SIM.close();if(simStream)simCamBg(false)}if(v==='play')plUI();$$('section').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));const grp=NAVG[v]||v;$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.g===grp));$('#ptabs').hidden=grp!=='prac'||v==='home';$$('#ptabs button').forEach(b=>b.classList.toggle('sel',b.dataset.go===v));if(v==='me')meUI();if(v==='songs')songsUI();$('main').scrollTop=0}
 $$('nav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b&&!b.disabled)view(b.dataset.go)});
 
@@ -1996,6 +1998,7 @@ function tts(x,force){if(!x)return false;if(!force&&!(S.voice||S.read))return fa
  if(force&&!ttsOK)setTimeout(()=>{if(!ttsOK&&!speechSynthesis.speaking)ttsNo()},1800);return true}
 if('speechSynthesis' in window){try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{speechSynthesis.getVoices();try{voicePickUI()}catch(e){}}}catch(e){}}
 /* iOS/Android 需要在使用者第一次點擊時「解鎖」語音 */
+document.addEventListener('visibilitychange',()=>{if(document.hidden)ttsStop()});
 document.addEventListener('pointerdown',function unl(){document.removeEventListener('pointerdown',unl,true);try{if('speechSynthesis' in window){const u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}}catch(e){}},true);
 function speak(x,force){return tts(x,force)}
 function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove('on'),2800)}
@@ -2680,7 +2683,7 @@ function renderLesson(){if(!LS)return;const l=LX[LS.lid],steps=l.steps,b=$('#lsB
    <button class="btn lg" id="lsGo">${t('lsGo')}</button><button class="quiet tlskip" id="lsSkip">${t('lsSkipStep')}</button>`}
  if(LS.si===0&&!isDaily(l)&&!lDone(l))h+=`<button class="quiet tlskip" id="lsKnow">${t('iKnow')}</button>`;
  b.innerHTML=h}
-function lsAdvance(){LS.si++;LS.tries=0;LS.rate=0;const l=LX[LS.lid];if(LS.si>=l.steps.length)lsFinish();else lsSave();renderLesson();$('main').scrollTop=0}
+function lsAdvance(){ttsStop();LS.si++;LS.tries=0;LS.rate=0;const l=LX[LS.lid];if(LS.si>=l.steps.length)lsFinish();else lsSave();renderLesson();$('main').scrollTop=0}
 function lsFinish(){const l=LX[LS.lid],c=crInit();const first=isDaily(l)?!(c.daily[today()]||{})[l.id]:!c.done[l.id];LS.xp=first?lessonXP(l):0;if(isDaily(l))(c.daily[today()]||(c.daily[today()]={}))[l.id]=1;else c.done[l.id]=today();c.days[today()]=1;S.course.prog[progKey(l)]=0;save();tkChime();
  const m=t('lsDoneG')+l.gain;if(S.voice)speak(t('lsDoneT')+m);crUI();if(LS.xp)setTimeout(()=>gainXP(LS.xp),500);else chkBadges()}
 function markKnown(id){const l=LX[id];if(!l)return;crInit().done[id]=today();S.course.prog[id]=0;save();toast(t('skipped').replace('{n}',l.title));crUI()}
@@ -2992,7 +2995,7 @@ function controls(){const pts=new Map();let st=null,moved=0,pinch0=0,dist0=0;
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.dist=Math.max(35,Math.min(260,cam.dist*(1+Math.sign(e.deltaY)*.08)))},{passive:false})}
 /* ---------- parts ---------- */
 const PARTS=[[1,'pHead',[NX-2.5,77,0],42],[2,'pPeg',[NX-5,63.5,0],55],[3,'pNut',[NX+1.5,45,0],40],[4,'pNeck',[NX,36,0],105],[5,'pTube',[0,6,0],55],[6,'pSkin',[6.5,6,0],42],[7,'pBridge',[7,6,0],32],[8,'pStr',[4,30,0],95],[9,'pBase',[0,1,0],50],[10,'pBow',[0,18,0],130]];
-function choose(id){sel=id;const p=PARTS.find(x=>x[0]===id);const box=$('#simInfo');if(!p){box.innerHTML=`<p class="mut">${t('simTap')}</p>`;$$('#simParts button').forEach(b=>b.classList.remove('sel'));return}
+function choose(id){ttsStop();sel=id;const p=PARTS.find(x=>x[0]===id);const box=$('#simInfo');if(!p){box.innerHTML=`<p class="mut">${t('simTap')}</p>`;$$('#simParts button').forEach(b=>b.classList.remove('sel'));return}
  const [ti,de]=t(p[1]).split('§');box.innerHTML=`<div class="simih"><b>${ti}</b><button class="simsay" id="simSay" aria-label="${t('simSay')}">🔊 ${t('simSay')}</button></div><p>${de||''}</p>`;$('#simSay').onclick=()=>tts(ti+'。'+(de||''),true);$$('#simParts button').forEach(b=>b.classList.toggle('sel',+b.dataset.p===id));
  const tgt=p[2];tween({tx:tgt[0]*.5,ty:tgt[1],tz:tgt[2]*.5,dist:p[3]});tts(ti+'。'+(de||''))}
 let tw=null;function tween(to){const from={tx:cam.tx,ty:cam.ty,tz:cam.tz,dist:cam.dist},t0=performance.now();cancelAnimationFrame(tw);
@@ -3157,7 +3160,7 @@ function airSave(){const f=airFile(),a=document.createElement('a');a.href=URL.cr
 /* ---------- view wiring ---------- */
 let ready=false;
 function mdUI(){}
-function setMode(m){if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
+function setMode(m){if(m!==mode)ttsStop();if(mode==='air'&&m!=='air'){airStop();AIR.blob=null;on=true;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}mode=m;$('.simw').hidden=m==='air';$('#simAir').hidden=m!=='air';if(m==='air'){on=false;cancelAnimationFrame(raf);sel=0;$('#simLearn').hidden=true;$('#simPlay').hidden=true;$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#airIntro').hidden=false;$('#airOut').hidden=true;$('#airW').hidden=true;return}$$('#simMode button').forEach(b=>b.classList.toggle('sel',b.dataset.m===m));$('#simLearn').hidden=m!=='learn';$('#simPlay').hidden=m!=='play';
  $('.simw').classList.toggle('play',m==='play');if(m==='play'){sel=0;cam.auto=false;tween({tx:3,ty:20,tz:0,dist:96});cam.yaw=1.05;cam.pitch=.18;plUI()}else{plStop();choose(0);tween({tx:0,ty:40,tz:0,dist:158})}}
 function open(){if(!ready){if(!init($('#simCv'))){$('#simCv').hidden=true;$('#simNoGL').hidden=false;return}controls();bowPad();ready=true;
   $('#simParts').innerHTML=PARTS.map(p=>`<button data-p="${p[0]}">${t(p[1]).split('§')[0]}</button>`).join('');
