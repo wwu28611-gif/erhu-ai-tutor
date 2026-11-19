@@ -612,7 +612,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="asm" data-i="asmL"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><canvas id="asmOv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v72</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v73</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -3136,12 +3136,16 @@ function bowPad(){const pad=$('#simBow');let id=null,decay=0;
 /* ---------- 空氣二胡：自拍鏡頭偵測身體，虛擬二胡掛在左大腿，右手拉弓、左手按音 ---------- */
 const AIR={on:false,v:null,stream:null,cv:null,cx:null,mk:null,mx:null,frame:0,pose:null,sm:null,bow:0,bowPrev:null,tPrev:0,vol:0,fing:0,rec:null,chunks:[],recT0:0,blob:null};
 const ema=(o,k,v,a)=>{o[k]=o[k]==null?v:o[k]+(v-o[k])*a;return o[k]};
-function airVP(ax,ay,s,th,yaw,P0,w,h){/* model -> clip: yaw around P0, then 2D similarity (screen y down) */
- const c=Math.cos(th),sn=Math.sin(th),cy=Math.cos(yaw),sy=Math.sin(yaw),k=1/400;
- const map=p=>{const x=p[0]-P0[0],y=p[1]-P0[1],z=p[2]-P0[2],X=x*cy+z*sy,Y=y,Z=-x*sy+z*cy,px=ax+s*(c*X-sn*Y),py=ay-s*(sn*X+c*Y);return [px/(w/2)-1,1-py/(h/2),-Z*k]};
- const o=map([0,0,0]),ex=sub(map([1,0,0]),o),ey=sub(map([0,1,0]),o),ez=sub(map([0,0,1]),o);
- return {VP:[ex[0],ex[1],ex[2],0, ey[0],ey[1],ey[2],0, ez[0],ez[1],ez[2],0, o[0],o[1],o[2],1],eye:add(P0,mul([-sy,0,cy],1000)),
-  inv:(px,py)=>{const dx=(px-ax)/s,dy=(ay-py)/s,X=c*dx+sn*dy,Y=-sn*dx+c*dy;return [P0[0]+X/cy,P0[1]+Y]},fwd:p=>{const q=map(p);return [(q[0]+1)*w/2,(1-q[1])*h/2]}}}
+const AIR_YAW=-.55,AIR_PERSP=230;
+function airVP(ax,ay,s,th,yaw,P0,w,h){/* model -> clip: turn (yaw) around P0, then perspective about the anchor, then 2D rotation/scale onto the camera picture */
+ const c=Math.cos(th),sn=Math.sin(th),cy=Math.cos(yaw),sy=Math.sin(yaw),k=1/400,D=AIR_PERSP,an=ax/(w/2)-1,bn=1-ay/(h/2);
+ const R=p=>{const x=p[0]-P0[0],y=p[1]-P0[1],z=p[2]-P0[2];return [x*cy+z*sy,y,-x*sy+z*cy]};
+ const F=p=>{const [X,Y,Z]=R(p),W=1-Z/D;return [an*W+s*(c*X-sn*Y)/(w/2),bn*W+s*(sn*X+c*Y)/(h/2),-Z*k,W]};
+ const o=F([0,0,0]),e=[[1,0,0],[0,1,0],[0,0,1]].map(d=>{const q=F(d);return q.map((v,i)=>v-o[i])});
+ return {VP:[...e[0],...e[1],...e[2],...o],eye:add(P0,mul([-sy,0,cy],1000)),
+  /* screen point -> point on the erhu's own plane (model z = 0) */
+  inv:(px,py)=>{const u=(px-ax)/s,v=(ay-py)/s,Xw=c*u+sn*v,Yw=-sn*u+c*v,x=Xw/(cy-Xw*sy/D),W=1+x*sy/D;return [P0[0]+x,P0[1]+Yw*W]},
+  fwd:p=>{const q=F(p);return [(q[0]/q[3]+1)*w/2,(1-q[1]/q[3])*h/2]}}}
 function airMsg(k){$('#airMsg').textContent=k?t(k):'';$('#airMsg').hidden=!k}
 async function airRestartCam(){try{const v=AIR.v;(AIR.stream&&AIR.stream.getTracks()||[]).forEach(t=>t.stop());AIR.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:false});v.srcObject=AIR.stream;await v.play();airMsg(null)}catch(e){toast(t('camErr'))}}
 async function airStart(){const v=$('#airVid');AIR.cv=$('#airCv');AIR.cx=AIR.cv.getContext('2d');AIR.mk=document.createElement('canvas');AIR.mx=AIR.mk.getContext('2d');
@@ -3211,7 +3215,9 @@ function airStep(){const v=AIR.v,next=()=>{};
   let hp=null;if(LHd){hp=toS(LHd[9].x,LHd[9].y);AIR.lhSeen=ts;AIR.lhP=hp}else if(AIR.lhP&&ts-(AIR.lhSeen||0)<500)hp=AIR.lhP;
   const H0=BF.abs(AIR.cal.Hr||AIR.cal.Nr);
   A=AIR.last={ax,ay,sc,th,hp,hasL:!!hp,H0:[H0[0]+o[0],H0[1]+o[1]],rs:SP(16),vis16:vis(16)}}
- const P0=[NX,TY,0],M=airVP(A.ax,A.ay,A.sc,A.th,.32,P0,VW,VH);
+ /* 3D: the erhu shows its skin side like a player seen from the front, and turns with the body (shoulder depth) */
+ if(p&&p[11]&&p[12]&&p[11].z!=null){const tgt=Math.max(-.5,Math.min(.5,(p[11].z-p[12].z)*1.4));AIR.yawB=AIR.yawB==null?tgt:AIR.yawB+(tgt-AIR.yawB)*.12}
+ const yaw=AIR_YAW+(AIR.yawB||0),P0=[NX,TY,0],M=airVP(A.ax,A.ay,A.sc,A.th,yaw,P0,VW,VH);
  /* bow: frog in the right hand, axis from the hand to the strings just above the bridge */
  let rq=RHd?toS((RHd[5].x+RHd[9].x)/2,(RHd[5].y+RHd[9].y)/2):(A.vis16&&bodyOK?SP(16):null);
  if(rq){rq=[F.rx(rq[0],ts),F.ry(rq[1],ts)];const hm=M.inv(rq[0],rq[1]),vx=hm[0]-BP0[0],vy=hm[1]-BP0[1],L=Math.hypot(vx,vy)||1;
