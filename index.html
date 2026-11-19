@@ -615,7 +615,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><canvas id="asmOv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v78</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v79</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -3122,13 +3122,17 @@ function vinGeo(){const g=geo(),lie=i=>{const x=g.TX1+5.5+i*2.8;return {A:[x,13,
 const vinNutPt=i=>{const g=geo();return [g.nutX,P.nutY,(i?1:-1)*.1]};
 function vinCordLie(){const g=geo(),A=[g.TX1+6,22,VIN.z0+.12],B=[g.TX1+7.5,48,VIN.z0+.12],pts=[];for(let k=0;k<=12;k++){const t=k/12;pts.push([A[0]+(B[0]-A[0])*t+Math.sin(t*Math.PI*3)*.9,A[1]+(B[1]-A[1])*t,A[2]])}return {A,B,pts}}
 /* the cord as it is wound: q = 0..1 of the 3-second wrap */
-function vinCordGeo(q){const g=geo(),rN=g.neckRAt(P.nutY)+.07,cx=g.nutX,n=Math.max(1,Math.ceil(q*7)),pitch=.16,y0=P.nutY-n*pitch/2,segs=[],L=vinCordLie();
- let last=null;for(let k=0;k<n;k++){const y=y0+k*pitch,ring=[];const ph=.55;ring.push([NX+Math.cos(ph)*rN,y,Math.sin(ph)*rN]);
-  for(let a=0;a<=16;a++){const b=(Math.PI/2+.05)-a/16*(Math.PI+.1);ring.push([cx+Math.cos(b)*.13,P.nutY+(k-n/2)*.03,Math.sin(b)*.24])}
-  for(let a=0;a<=24;a++){const an=-ph-a/24*(Math.PI*2-2*ph);ring.push([NX+Math.cos(an)*rN,y+pitch*a/24,Math.sin(an)*rN])}segs.push(ring);last=ring[ring.length-1]}
+function vinCordGeo(q){const g=geo(),rN=g.neckRAt(P.nutY)+.07,n=Math.max(1,Math.ceil(q*7)),pitch=.16,yTop=P.nutY+3.5*pitch,segs=[],L=vinCordLie();
+ /* the cord goes over the strings from the top downward; the strings are pulled in more with every turn */
+ const cur=[0,1].map(i=>{const st=vinStrStraight(i),np=vinNutPt(i);return add(st,mul(sub(np,st),vinPull(q)))}),cx=(cur[0][0]+cur[1][0])/2,zc=(cur[0][2]+cur[1][2])/2,rz=Math.abs(cur[1][2]-cur[0][2])/2+.12;
+ let last=null;for(let k=0;k<n;k++){const y=yTop-k*pitch,ring=[];const ph=.55;ring.push([NX+Math.cos(ph)*rN,y,Math.sin(ph)*rN]);
+  for(let a=0;a<=16;a++){const b=(Math.PI/2+.05)-a/16*(Math.PI+.1);ring.push([cx+Math.cos(b)*.13,y-pitch*.3*a/16,zc+Math.sin(b)*rz])}
+  for(let a=0;a<=24;a++){const an=-ph-a/24*(Math.PI*2-2*ph);ring.push([NX+Math.cos(an)*rN,y-pitch*(.3+.7*a/24),Math.sin(an)*rN])}segs.push(ring);last=ring[ring.length-1]}
  if(q<1&&last)segs.push([last,mul(add(last,L.B),.5),L.B]);return segs}
+function vinStrStraight(i){const G=vinGeo(),a=G.over(i),b=G.top(i),t=(P.nutY-a[1])/((b[1]-a[1])||1);return add(a,mul(sub(b,a),t))}
+const vinPull=q=>Math.min(1,Math.max(0,q));
 function vinStrPts(i){const s=VIN.s[i],G=vinGeo(),L=G.lie(i);
- if(s.st==='done'&&VIN.mode==='nut'){const a=G.over(i),b=G.top(i),t=(P.nutY-a[1])/((b[1]-a[1])||1),straight=add(a,mul(sub(b,a),t)),q=VIN.nutQ||0;return [G.anchor(i),a,add(straight,mul(sub(vinNutPt(i),straight),Math.min(1,q*1.5))),b]}
+ if(s.st==='done'&&VIN.mode==='nut'){const straight=vinStrStraight(i);return [G.anchor(i),G.over(i),add(straight,mul(sub(vinNutPt(i),straight),vinPull(VIN.nutQ||0))),G.top(i)]}
  if(s.st==='lying')return [L.A,add(mul(add(L.A,L.B),.5),[.8,0,0]),L.B];
  if(s.st==='dragA')return [s.p,L.B];
  if(s.st==='hooked')return [G.anchor(i),G.over(i),L.B];
