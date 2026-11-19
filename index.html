@@ -615,7 +615,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><canvas id="asmOv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v75</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v76</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -3159,8 +3159,8 @@ function vinHand(){const v=$('#vinVid');if(!hl||!VIN.stream||!v.videoWidth)retur
  if(!lm){if(VIN.pinch2){VIN.pinch2=0;vinUp({pointerId:'hand'})}VIN.cursor=null;return null}
  const d=(a,b)=>Math.hypot((lm[a].x-lm[b].x)*vw,(lm[a].y-lm[b].y)*vh),ratio=d(4,8)/(d(0,9)||1),[cx,cy]=VIN.toCss((lm[4].x+lm[8].x)/2,(lm[4].y+lm[8].y)/2);
  VIN.cx=VIN.cx==null?cx:VIN.cx+(cx-VIN.cx)*.6;VIN.cy=VIN.cy==null?cy:VIN.cy+(cy-VIN.cy)*.6;const ev={pointerId:'hand',clientX:VIN.cx,clientY:VIN.cy};
- if(!VIN.pinch2&&ratio<.32){VIN.pinch2=1;VIN.pts.delete('hand');vinDown(ev);if(VIN.drag&&VIN.drag.k==='orbit')VIN.drag=null}
- else if(VIN.pinch2&&ratio>.5){VIN.pinch2=0;vinUp(ev)}else if(VIN.pinch2)vinMove(ev);
+ if(!VIN.pinch2&&ratio<.46){VIN.pinch2=1;VIN.openT=0;VIN.pts.delete('hand');vinDown(ev);if(VIN.drag&&VIN.drag.k==='orbit')VIN.drag=null}
+ else if(VIN.pinch2&&ratio>.7){VIN.openT=VIN.openT||tnow;if(tnow-VIN.openT>160){VIN.pinch2=0;VIN.openT=0;vinUp(ev)}else vinMove(ev)}else if(VIN.pinch2){VIN.openT=0;vinMove(ev)}
  VIN.cursor={x:VIN.cx,y:VIN.cy,on:!!VIN.pinch2};return lm}
 function vinHandLayer(){const o=$('#vinOv'),g=o.getContext('2d'),lm=VIN.hand,v=$('#vinVid');if(!lm||!VIN.vmap)return;const rc=o.getBoundingClientRect(),s=o.width/rc.width,M=VIN.vmap;
  const toS=(x,y)=>[(M.ox+x*M.vw*M.k)*s,(M.oy+y*M.vh*M.k)*s];if(!VIN.mk){VIN.mk=document.createElement('canvas')}const mk=VIN.mk;if(mk.width!==o.width||mk.height!==o.height){mk.width=o.width;mk.height=o.height}
@@ -3169,19 +3169,20 @@ function vinHandLayer(){const o=$('#vinOv'),g=o.getContext('2d'),lm=VIN.hand,v=$
  if(VIN.cursor){const c=VIN.cursor,d=Math.min(2,devicePixelRatio||1);g.beginPath();g.arc((c.x-rc.left)*s,(c.y-rc.top)*s,(c.on?10:14)*d,0,7);g.lineWidth=3*d;g.strokeStyle=c.on?'rgba(250,204,21,1)':'rgba(255,255,255,.9)';g.stroke();if(c.on){g.fillStyle='rgba(250,204,21,.55)';g.fill()}}}
 function vinFrame(){if(!VIN.on)return;VIN.raf=requestAnimationFrame(vinFrame);try{vinHand();
  const c=VIN.c;if(VIN.ori&&!VIN.touchOrbit){c.el+=(VIN.ori.el-c.el)*.15;c.az+=(VIN.ori.az-c.az)*.15}
+ if(VIN.focus){const F=VIN.focus,k=Math.min(1,(performance.now()-F.t0)/900),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;VIN.pan=F.p0.map((v,i)=>v+(F.pan[i]-v)*e);VIN.c.d=F.d0+(F.d-F.d0)*e;if(k>=1)VIN.focus=null}
  if(VIN.anim){const A=VIN.anim,k=Math.min(1,(performance.now()-A.t0)/A.dur);A.fn(k);if(k>=1){VIN.anim=null;A.end&&A.end()}}
  vinDraw();vinOverlay();vinHandLayer()}catch(e){if(!VIN.err){VIN.err=1;console.warn('vinst',e)}}}
 function vinUI(){const st=VSTEPS[VIN.si],[ti,de]=t(st.k).split('§'),n=VSTEPS.length-1;$('#vinT').textContent=st.done?ti:`${VIN.si+1} / ${n}・${ti}`;$('#vinD').textContent=de||'';
  $('#vinDots').innerHTML=VSTEPS.slice(0,n).map((x,i)=>`<span class="${i<VIN.si?'d':i===VIN.si?'c':''}">${i<VIN.si?'✓':i+1}</span>`).join('')+(st.turn?`<b class="vincnt">${t('vTurnN').replace('{n}',VIN.turns)}</b>`:'');
  $('#vinHelp').hidden=!!st.done;$('#vinSay').onclick=()=>tts(ti+'。'+(de||''),true)}
-function vinNext(){VIN.si++;try{airBeep(VSTEPS[VIN.si]&&VSTEPS[VIN.si].done?1320:880)}catch(e){}vinUI();const st=VSTEPS[VIN.si];if(S.voice&&st)tts(t(st.k).replace('§','。'));
+function vinNext(){VIN.si++;{const st=VSTEPS[VIN.si];if(st&&st.turn)VIN.focus={pan:sub([NX-4.5,(P.peg1Y+P.peg2Y)/2,0],[1.5,33,0]),d:40,t0:performance.now(),p0:VIN.pan.slice(),d0:VIN.c.d};else if(st&&st.done)VIN.focus={pan:[0,0,0],d:118,t0:performance.now(),p0:VIN.pan.slice(),d0:VIN.c.d}}try{airBeep(VSTEPS[VIN.si]&&VSTEPS[VIN.si].done?1320:880)}catch(e){}vinUI();const st=VSTEPS[VIN.si];if(S.voice&&st)tts(t(st.k).replace('§','。'));
  if(st&&st.done){setTimeout(()=>{if(!VIN.on)return;vinStop();if(VIN.onPass)VIN.onPass()},1600)}}
 function vinPx(e){const r=cv.getBoundingClientRect(),d=W/r.width;return [(e.clientX-r.left)*d,(e.clientY-r.top)*d]}
 function vinDown(e){const st=VIN.si!=null&&VSTEPS[VIN.si];if(e.pointerId!=='hand')VIN.pts.set(e.pointerId,[e.clientX,e.clientY]);if(e.pointerId!=='hand'&&VIN.pts.size===2){const [a,b]=[...VIN.pts.values()];VIN.pinch={d0:Math.hypot(a[0]-b[0],a[1]-b[1]),cd:VIN.c.d};VIN.drag=null;return}
  const [px,py]=vinPx(e),G=vinGeo();if(VIN.anim||!st||st.done){VIN.drag={k:'orbit',x:e.clientX,y:e.clientY,el:VIN.c.el,az:VIN.c.az};return}
  if(st.turn){VIN.drag={k:'turn',y:e.clientY,x:e.clientX,acc:0,peg:(()=>{let b=0,bd=1e9;[0,1].forEach(i=>{const c=vinProj(G.pegC(i));if(c){const dd=Math.hypot(c[0]-px,c[1]-py);if(dd<bd){bd=dd;b=i}}});return b})()};return}
  const i=st.s,L=G.lie(i),s=VIN.s[i],hp=vinProj(st.ph==='hook'?L.A:L.B);
- if(hp&&Math.hypot(hp[0]-px,hp[1]-py)<Math.max(55,W*.12)){VIN.drag={k:'str',i};s.st=st.ph==='hook'?'dragA':'dragB';s.p=vinUnproj(px,py,0)||(st.ph==='hook'?L.A:L.B);return}
+ if(hp&&Math.hypot(hp[0]-px,hp[1]-py)<Math.max(55,W*.12)*(e.pointerId==='hand'?1.8:1)){VIN.drag={k:'str',i};s.st=st.ph==='hook'?'dragA':'dragB';s.p=vinUnproj(px,py,0)||(st.ph==='hook'?L.A:L.B);return}
  VIN.drag={k:'orbit',x:e.clientX,y:e.clientY,el:VIN.c.el,az:VIN.c.az}}
 function vinMove(e){if(e.pointerId!=='hand'){if(!VIN.pts.has(e.pointerId))return;VIN.pts.set(e.pointerId,[e.clientX,e.clientY])}
  if(VIN.pts.size===2&&VIN.pinch){const [a,b]=[...VIN.pts.values()],dd=Math.hypot(a[0]-b[0],a[1]-b[1]);VIN.c.d=Math.max(22,Math.min(200,VIN.pinch.cd*VIN.pinch.d0/dd));return}
@@ -3191,12 +3192,12 @@ function vinMove(e){if(e.pointerId!=='hand'){if(!VIN.pts.has(e.pointerId))return
  if(D.k==='turn'){const dy=Math.abs(e.clientY-D.y)+Math.abs(e.clientX-D.x)*.5;D.y=e.clientY;D.x=e.clientX;D.acc+=dy;VIN.rot[D.peg]+=dy*.02;if(D.acc>70&&!D.counted){D.counted=1;VIN.turns++;try{airBeep(1100)}catch(err){}vinUI();if(VIN.turns>=2){VIN.drag=null;vinNext()}}}}
 function vinUp(e){VIN.pts.delete(e.pointerId);if(VIN.pts.size<2)VIN.pinch=null;const D=VIN.drag;if(!D)return;VIN.drag=null;const st=VSTEPS[VIN.si];
  if(D.k==='str'){const i=D.i,s=VIN.s[i],G=vinGeo(),tgt=st.ph==='hook'?G.anchor(i):G.top(i),a=vinProj(s.p),b=vinProj(tgt);
-  if(a&&b&&Math.hypot(a[0]-b[0],a[1]-b[1])<Math.max(48,W*.1))vinSnap(i,st.ph);else{s.st=st.ph==='hook'?'lying':'hooked'}}}
+  if(a&&b&&Math.hypot(a[0]-b[0],a[1]-b[1])<Math.max(48,W*.1)*(e.pointerId==='hand'?1.7:1))vinSnap(i,st.ph);else{s.st=st.ph==='hook'?'lying':'hooked'}}}
 function vinSnap(i,ph){const s=VIN.s[i],G=vinGeo(),from=(s.p||(ph==='hook'?G.lie(i).A:G.lie(i).B)).slice(),to=ph==='hook'?G.anchor(i):G.top(i);s.st=ph==='hook'?'dragA':'dragB';
  VIN.anim={t0:performance.now(),dur:280,fn:k=>{const e=1-Math.pow(1-k,3);s.p=add(from,mul(sub(to,from),e))},end:()=>{s.st=ph==='hook'?'hooked':'done';vinNext()}}}
 function vinHelp(){const st=VSTEPS[VIN.si];if(!st||st.done||VIN.anim)return;if(st.turn){VIN.anim={t0:performance.now(),dur:900,fn:k=>{VIN.rot[0]=k*Math.PI*4;VIN.rot[1]=k*Math.PI*4},end:()=>{VIN.turns=2;vinNext()}};return}vinSnap(st.s,st.ph)}
 async function vinStart(onPass){if(!ready){if(!init($('#simCv'))){toast(t('simNoGL'));return}controls();ready=true}on=false;cancelAnimationFrame(raf);
- VIN.on=true;VIN.onPass=onPass;VIN.si=0;VIN.turns=0;VIN.rot=[0,0];VIN.err=0;VIN.anim=null;VIN.drag=null;VIN.pinch=null;VIN.pts=new Map();VIN.touchOrbit=0;VIN.pan=[0,0,0];VIN.c={el:.62,az:0,d:118};
+ VIN.on=true;VIN.onPass=onPass;VIN.si=0;VIN.turns=0;VIN.rot=[0,0];VIN.err=0;VIN.anim=null;VIN.drag=null;VIN.pinch=null;VIN.pts=new Map();VIN.touchOrbit=0;VIN.pan=[0,0,0];VIN.focus=null;VIN.openT=0;VIN.c={el:.62,az:0,d:118};
  VIN.s=[{st:'lying'},{st:'lying'}];VIN.str=[{},{}];
  {let zm=1e9;meshes.forEach(m=>{if(![1,2,4,5,6,9].includes(m.id))return;const p=m.g.p;for(let i=2;i<p.length;i+=3)if(p[i]<zm)zm=p[i]});VIN.z0=zm}
  const w=$('#vinW');VIN.home=cv.parentNode;VIN.next=cv.nextSibling;$('#vinGL').appendChild(cv);w.hidden=false;document.body.classList.add('airon');ttsStop();
