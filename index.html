@@ -615,7 +615,7 @@ body.camlive .lbar{top:auto;bottom:calc(4.6rem + env(safe-area-inset-bottom,0px)
  <div class="seg" id="simMode"><button data-m="learn" data-i="simLearn"></button><button data-m="air" data-i="airL"></button></div>
  <div class="simw"><video id="simVid" muted playsinline hidden></video><canvas id="simCv"></canvas><canvas id="asmOv"></canvas><p id="simNoGL" class="mut" hidden data-i="simNoGL"></p><span class="simhint" data-i="simDrag"></span></div>
  <div id="simAir" hidden>
-  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v83</small></div>
+  <div class="card airintro" id="airIntro"><b data-i="airT"></b><ol><li data-i="air1"></li><li data-i="air2"></li><li data-i="air2b"></li><li data-i="air3"></li><li data-i="air4"></li><li data-i="airDrag"></li></ol><button class="btn lg" id="airGo"><span data-i="airGo"></span></button><small style="display:block;margin-top:.5rem;opacity:.5;text-align:right">v84</small></div>
   <div class="airw" id="airW" hidden><video id="airVid" playsinline muted></video><canvas id="airCv"></canvas>
    <div class="airtop"><div class="seg" id="airStr"><button data-s="in" data-i="simIn"></button><button data-s="out" data-i="simOut"></button></div><div class="seg" id="airScale"><button data-k="maj" data-i="airMaj"></button><button data-k="pen" data-i="airPen"></button><button data-k="free" data-i="airFree"></button></div></div>
    <div class="airmsg" id="airMsg" hidden></div><div class="airrect" id="airRecT" hidden></div>
@@ -1339,7 +1339,7 @@ rTip|弓尖|Tip|弓先
 rFrog|弓根|Frog|元
 rGrab|捏住松香|Pinch the rosin|松脂をつまむ
 rCnt|已擦 {n} / {m} 下|{n} / {m} strokes|{n} / {m} 回
-r1|整支弓長長地擦 10 下§弓不動，捏住包著布的松香，貼著弓毛來回擦，從弓尖一路擦到弓根算一下，共擦 10 下。右邊的長條會顯示松香擦到弓毛的哪裡。|Rub the whole length 10 times§The bow stays still. Pinch the cloth-wrapped rosin and rub it along the hair. Each pass from tip to frog counts once; do 10. The bar on the right shows where the rosin touches the hair.|弓全体を長く10回§弓は動かしません。布で包んだ松脂をつまみ、弓毛に沿って往復させます。弓先から元まで通して1回、合計10回。右の帯で松脂が当たっている位置がわかります。
+r1|整支弓長長地擦 10 下§弓不動，捏住松香，貼著弓毛來回擦，從弓尖一路擦到弓根算一下，共擦 10 下。右邊的長條會顯示松香擦到弓毛的哪裡。|Rub the whole length 10 times§The bow stays still. Pinch the rosin and rub it along the hair. Each pass from tip to frog counts once; do 10. The bar on the right shows where the rosin touches the hair.|弓全体を長く10回§弓は動かしません。松脂をつまみ、弓毛に沿って往復させます。弓先から元まで通して1回、合計10回。右の帯で松脂が当たっている位置がわかります。
 r2|弓尖多擦 3 下§把松香移到弓尖（右邊長條上方的黃色段），在這一段來回多擦 3 下。|3 more at the tip§Move the rosin to the tip of the hair (the yellow part at the top of the bar) and rub back and forth there 3 more times.|弓先をあと3回§松脂を弓先（右の帯の上の黄色い部分）へ動かし、そこで3回往復します。
 r3|弓根多擦 3 下§把松香移到弓根（右邊長條下方的黃色段），在這一段來回多擦 3 下。|3 more at the frog§Move the rosin to the frog end of the hair (the yellow part at the bottom of the bar) and rub back and forth there 3 more times.|元をあと3回§松脂を元（右の帯の下の黄色い部分）へ動かし、そこで3回往復します。
 rDone|完成！§弓上好松香了。真的弓毛上會有一層薄薄的白色粉末，琴上多餘的粉記得用軟布擦掉。|Done!§The bow is rosined. On a real bow you will see a thin white dust on the hair; wipe any extra off the erhu with a soft cloth.|完成！§松脂が塗れました。実際は弓毛に薄く白い粉が付きます。楽器に付いた余分な粉は柔らかい布で拭き取りましょう。
@@ -3217,8 +3217,8 @@ function vinDraw(){resize();const {eye,T}=vinCam(),VP=mm([1,0,0,0,0,1,0,0,0,0,1,
   gl.bindBuffer(gl.ARRAY_BUFFER,m.bp);gl.enableVertexAttribArray(a.P);gl.vertexAttribPointer(a.P,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,m.bn);gl.enableVertexAttribArray(a.N);gl.vertexAttribPointer(a.N,3,gl.FLOAT,false,0,0);
   gl.bindBuffer(gl.ARRAY_BUFFER,m.bu);gl.enableVertexAttribArray(a.U);gl.vertexAttribPointer(a.U,2,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.ib);gl.drawElements(gl.TRIANGLES,m.cnt,m.it,0)};
  if(VIN.mode==='ros'){const M=rosM(),act=st.rub&&!VIN.drag;meshes.forEach(m=>{if(m.id!==10)return;one(m,M,C[m.mat]||[.5,.5,.5],0,0,m.mat==='hair'?.2:.5)});
-  if(!VIN.rosS){const {gr}=rosGeo();VIN.rosS={r:{},c:{}};vinUploadG(VIN.rosS.r,gr)}rosPhys();vinUploadG(VIN.rosS.c,rosCloth());
-  one({...VIN.rosS.c,mat:'cloth'},trans(0,0,0),[1,.9,.62],0,0,.05);one({...VIN.rosS.r,mat:'rosin'},rosM2(),[.11,.055,.03],act?.12+.1*Math.sin(now*5):0,0,1.1);return}
+  if(!VIN.rosS){const {gr}=rosGeo();VIN.rosS={r:{},c:{}};vinUploadG(VIN.rosS.r,gr)}rosPhys();
+  one({...VIN.rosS.r,mat:'rosin'},rosM2(),[.11,.055,.03],act?.12+.1*Math.sin(now*5):0,0,1.1);return}
  meshes.forEach(m=>{if(![1,2,4,5,6,9].includes(m.id))return;let M=trans(0,0,0),glow=0;
   if(m.id===2){if(m.cy==null){const p=m.g.p;let s=0;for(let i=1;i<p.length;i+=3)s+=p[i];m.cy=s/(p.length/3)}const pi=Math.abs(m.cy-P.peg1Y)<Math.abs(m.cy-P.peg2Y)?0:1,ang=VIN.rot[pi],y=pi?P.peg2Y:P.peg1Y,c=Math.cos(ang),sn=Math.sin(ang);
    M=[1,0,0,0, 0,c,sn,0, 0,-sn,c,0, 0,y-(c*y),-(sn*y),1];if(st.turn)glow=.35+.3*Math.sin(now*5);else if(st.ph==='peg'&&pi===st.s)glow=.3+.25*Math.sin(now*5)}
